@@ -1,0 +1,658 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{085C9E62-CDDF-4B95-994D-085C74FA90FC}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Fusion</RootNamespace>
+    <AssemblyName>Fusion</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;DIRECTX</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <DocumentationFile>
+    </DocumentationFile>
+    <NoWarn>
+    </NoWarn>
+    <RegisterForComInterop>false</RegisterForComInterop>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE;DIRECTX LUA_CORE</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>FusionRuleSet.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <DocumentationFile>
+    </DocumentationFile>
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+    <NoWarn>
+    </NoWarn>
+  </PropertyGroup>
+  <PropertyGroup>
+    <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="OculusWrap">
+      <HintPath>..\SDKs\OculusWrap\OculusWrap.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.D3DCompiler, Version=2.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\SDKs\SharpDX\SharpDX.D3DCompiler.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX, Version=2.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\SDKs\SharpDX\SharpDX.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.Desktop, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\SDKs\SharpDX\SharpDX.Desktop.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.Direct3D11, Version=2.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\SDKs\SharpDX\SharpDX.Direct3D11.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.DirectInput, Version=2.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\SDKs\SharpDX\SharpDX.DirectInput.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.DirectSound, Version=2.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\SDKs\SharpDX\SharpDX.DirectSound.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.DXGI, Version=2.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\SDKs\SharpDX\SharpDX.DXGI.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.Mathematics, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\SDKs\SharpDX\SharpDX.Mathematics.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.MediaFoundation, Version=2.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\SDKs\SharpDX\SharpDX.MediaFoundation.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.RawInput, Version=2.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\SDKs\SharpDX\SharpDX.RawInput.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.XACT3, Version=2.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\SDKs\SharpDX\SharpDX.XACT3.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.XAudio2, Version=2.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\SDKs\SharpDX\SharpDX.XAudio2.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.XInput, Version=2.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\SDKs\SharpDX\SharpDX.XInput.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="System.Windows" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Triangle">
+      <HintPath>..\SDKs\Triangle\Triangle.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Build\AssetSource.cs" />
+    <Compile Include="Build\ContentBuildCmd.cs" />
+    <Compile Include="Build\ContentFileCmd.cs" />
+    <Compile Include="Build\BuildContext.cs" />
+    <Compile Include="Build\Builder.cs" />
+    <Compile Include="Build\BuildException.cs" />
+    <Compile Include="Build\BuildOptions.cs" />
+    <Compile Include="Build\BuildResult.cs" />
+    <Compile Include="Build\ContentReportCmd.cs" />
+    <Compile Include="Build\Mapping\Allocator2D.cs" />
+    <Compile Include="Build\Mapping\LRUCache.cs" />
+    <Compile Include="Build\Mapping\VTProcessor.cs" />
+    <Compile Include="Build\Mapping\VTTexel.cs" />
+    <Compile Include="Build\Mapping\VTTexture.cs" />
+    <Compile Include="Build\Mapping\TileSamplerCache.cs" />
+    <Compile Include="Build\Mapping\VTTextureTable.cs" />
+    <Compile Include="Build\Mapping\VTTile.cs" />
+    <Compile Include="Build\Processors\AssetProcessor.cs" />
+    <Compile Include="Build\Processors\AssetProcessorAttribute.cs" />
+    <Compile Include="Build\Processors\AssetProcessorBinding.cs" />
+    <Compile Include="Build\Processors\CopyProcessor.cs" />
+    <Compile Include="Build\Processors\FontProcessor.cs" />
+    <Compile Include="Build\Processors\SceneProcessor.cs" />
+    <Compile Include="Build\Processors\ScriptProcessor.cs" />
+    <Compile Include="Build\Processors\SoundProcessor.cs" />
+    <Compile Include="Build\Processors\TextureAtlasProcessor.cs" />
+    <Compile Include="Build\Processors\TextureProcessor.cs" />
+    <Compile Include="Build\Processors\UbershaderEnumerator.cs" />
+    <Compile Include="Build\Processors\UbershaderProcessor.cs" />
+    <Compile Include="Build\Processors\UbershaderProcessor.Parser.cs" />
+    <Compile Include="Build\ToolException.cs" />
+    <Compile Include="Core\Shell\TestCommand.cs" />
+    <Compile Include="Development\Dashboard.Config.cs">
+      <DependentUpon>Dashboard.cs</DependentUpon>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Development\Dashboard.Maps.cs">
+      <DependentUpon>Dashboard.cs</DependentUpon>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Development\Dashboard.Shaders.cs">
+      <DependentUpon>Dashboard.cs</DependentUpon>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Development\Dashboard.SFX.cs">
+      <DependentUpon>Dashboard.cs</DependentUpon>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Development\Dashboard.RawFiles.cs">
+      <DependentUpon>Dashboard.cs</DependentUpon>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Development\Dashboard.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Development\Dashboard.Designer.cs">
+      <DependentUpon>Dashboard.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Development\LaunchBox.cs" />
+    <Compile Include="Development\PackageSelector.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Development\PackageSelector.Designer.cs">
+      <DependentUpon>PackageSelector.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Development\TextBoxLogListener.cs" />
+    <Compile Include="Engine\Graphics\RenderComponent.cs" />
+    <Compile Include="Engine\Graphics\RequireShaderAttribute.cs" />
+    <Compile Include="Core\Collection\ConcurrentPriorityQueue.cs" />
+    <Compile Include="Core\Configuration\ConfigVariable.cs" />
+    <Compile Include="Core\Content\AssetStream.cs" />
+    <Compile Include="Core\Content\BytesLoader.cs" />
+    <Compile Include="Core\Content\StringLoader.cs" />
+    <Compile Include="Development\LaunchBoxDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Development\LaunchBoxDialog.Designer.cs">
+      <DependentUpon>LaunchBoxDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Core\Extensions\BinaryReaderExtensions.cs" />
+    <Compile Include="Core\Extensions\BinaryWriterExtensions.cs" />
+    <Compile Include="Core\Extensions\StringExtensions.cs" />
+    <Compile Include="Core\Extensions\TypeExtensions.cs" />
+    <Compile Include="Core\Extensions\MemberInfoExtensions.cs" />
+    <Compile Include="Core\Extensions\StreamExtensions.cs" />
+    <Compile Include="Core\IniParser\Exceptions\ParsingException.cs" />
+    <Compile Include="Core\IniParser\FileIniParser.cs" />
+    <Compile Include="Core\IniParser\Helpers\Assert.cs" />
+    <Compile Include="Core\IniParser\Model\Configuration\ConcatenateDuplicatedKeysIniParserConfiguration.cs" />
+    <Compile Include="Core\IniParser\Model\Configuration\IniParserConfiguration.cs" />
+    <Compile Include="Core\IniParser\Model\Formatting\AlignedIniDataFormatter.cs" />
+    <Compile Include="Core\IniParser\Model\Formatting\DefaultIniDataFormatter.cs" />
+    <Compile Include="Core\IniParser\Model\Formatting\IIniDataFormatter.cs" />
+    <Compile Include="Core\IniParser\Model\IniData.cs" />
+    <Compile Include="Core\IniParser\Model\IniDataCaseInsensitive.cs" />
+    <Compile Include="Core\IniParser\Model\KeyData.cs" />
+    <Compile Include="Core\IniParser\Model\KeyDataCollection.cs" />
+    <Compile Include="Core\IniParser\Model\SectionData.cs" />
+    <Compile Include="Core\IniParser\Model\SectionDataCollection.cs" />
+    <Compile Include="Core\IniParser\Parser\ConcatenateDuplicatedKeysIniDataParser.cs" />
+    <Compile Include="Core\IniParser\Parser\IniDataParser.cs" />
+    <Compile Include="Core\IniParser\StreamIniDataParser.cs" />
+    <Compile Include="Core\IniParser\StringIniParser.cs" />
+    <Compile Include="Core\Mathematics\Geometry.cs" />
+    <Compile Include="Core\Mathematics\Geometry.Structures.cs" />
+    <Compile Include="Core\Shell\CommandAffinity.cs" />
+    <Compile Include="Core\Shell\Commands\Toggle.cs" />
+    <Compile Include="Core\Shell\Commands\Echo.cs" />
+    <Compile Include="Core\Shell\Commands\ListVariables.cs" />
+    <Compile Include="Core\Shell\NoRollbackCommand.cs" />
+    <Compile Include="Core\Shell\Invoker.Helper.cs" />
+    <Compile Include="Core\StringConverter.cs" />
+    <Compile Include="Core\Utils\LogListener.cs" />
+    <Compile Include="Core\Utils\LogMessage.cs" />
+    <Compile Include="Core\Utils\LogMessageType.cs" />
+    <Compile Include="Core\Utils\Crc32.cs" />
+    <Compile Include="Core\Utils\Hud.cs" />
+    <Compile Include="Core\Configuration\ConfigAttribute.cs" />
+    <Compile Include="Core\Content\ContentException.cs" />
+    <Compile Include="Core\Content\ContentLoader.cs" />
+    <Compile Include="Core\Content\ContentManager.cs" />
+    <Compile Include="Core\Content\ContentUtils.cs" />
+    <Compile Include="Core\Design\BaseConverter.cs" />
+    <Compile Include="Core\Design\Color4Converter.cs" />
+    <Compile Include="Core\Design\ColorConverter.cs" />
+    <Compile Include="Core\Design\FieldPropertyDescriptor.cs" />
+    <Compile Include="Core\Design\Half2Converter.cs" />
+    <Compile Include="Core\Design\Half3Converter.cs" />
+    <Compile Include="Core\Design\Half4Converter.cs" />
+    <Compile Include="Core\Design\HalfConverter.cs" />
+    <Compile Include="Core\Design\MatrixConverter.cs" />
+    <Compile Include="Core\Design\NamespaceDoc.cs" />
+    <Compile Include="Core\Design\QuaternionConverter.cs" />
+    <Compile Include="Core\Design\Vector2Converter.cs" />
+    <Compile Include="Core\Design\Vector3Converter.cs" />
+    <Compile Include="Core\Design\Vector4Converter.cs" />
+    <Compile Include="Development\ExceptionDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Development\ExceptionDialog.Designer.cs">
+      <DependentUpon>ExceptionDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Drivers\Graphics\BytecodeUtils.cs" />
+    <Compile Include="Drivers\Graphics\Collections\ConstantBufferCollection.cs" />
+    <Compile Include="Drivers\Graphics\Collections\SamplerStateCollection.cs" />
+    <Compile Include="Drivers\Graphics\Collections\ShaderResourceCollection.cs" />
+    <Compile Include="Drivers\Graphics\GraphicsResource.cs" />
+    <Compile Include="Drivers\Graphics\Pix.cs" />
+    <Compile Include="Drivers\Graphics\Resources\FeedbackBuffer.cs" />
+    <Compile Include="Drivers\Graphics\Resources\FormattedBuffer.cs" />
+    <Compile Include="Drivers\Graphics\Resources\TextureCubeArray.cs" />
+    <Compile Include="Drivers\Graphics\Resources\VertexBufferOptions.cs" />
+    <Compile Include="Drivers\Graphics\Resources\UnorderedAccess.cs" />
+    <Compile Include="Drivers\Graphics\Resources\VolumeRWTexture.cs" />
+    <Compile Include="Drivers\Input\Touch\BackgroundTouch.cs" />
+    <Compile Include="Drivers\Input\Touch\BaseTouchHandler.cs" />
+    <Compile Include="Drivers\Input\Touch\TouchForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Drivers\Input\Touch\Win32TouchFunctions.cs" />
+    <Compile Include="Engine\Audio\AudioChannels.cs" />
+    <Compile Include="Engine\Audio\Enums.cs" />
+    <Compile Include="Engine\Audio\SoundWorld.cs" />
+    <Compile Include="Engine\Audio\SoundSystem.cs" />
+    <Compile Include="Engine\Audio\AudioEmitter.cs" />
+    <Compile Include="Engine\Audio\AudioListener.cs" />
+    <Compile Include="Engine\Audio\CurvePoint.cs" />
+    <Compile Include="Engine\Audio\SoundEffect.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Engine\Audio\SoundEffectInstance.cs" />
+    <Compile Include="Engine\Audio\SoundEffectLoader.cs" />
+    <Compile Include="Engine\Audio\SoundState.cs" />
+    <Compile Include="Engine\Audio\SoundSystem.Config.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Engine\Client\ClientState.cs" />
+    <Compile Include="Engine\Client\GameClient.Events.cs" />
+    <Compile Include="Engine\Client\GameClient.Disconnected.cs" />
+    <Compile Include="Engine\Client\GameClient.Active.cs" />
+    <Compile Include="Engine\Client\GameClient.StandBy.cs" />
+    <Compile Include="Engine\Client\GameClient.Awaiting.cs" />
+    <Compile Include="Engine\Client\GameClient.Loading.cs" />
+    <Compile Include="Engine\Client\GameClient.Connecting.cs" />
+    <Compile Include="Engine\Client\GameClient.State.cs" />
+    <Compile Include="Engine\Client\GameLoader.cs" />
+    <Compile Include="Engine\Common\AtomCollection.cs" />
+    <Compile Include="Engine\Common\Commands\SlowdownServer.cs" />
+    <Compile Include="Engine\Common\Commands\FreezeClient.cs" />
+    <Compile Include="Engine\Common\Commands\FreezeServer.cs" />
+    <Compile Include="Engine\Common\Commands\CrashClient.cs" />
+    <Compile Include="Engine\Common\Commands\CrashServer.cs" />
+    <Compile Include="Core\Configuration\ConfigManager.cs" />
+    <Compile Include="Engine\Common\UserInterface.Internal.cs" />
+    <Compile Include="Engine\Graphics\ShaderManager.cs" />
+    <Compile Include="Engine\Graphics\VirtualTexture.cs" />
+    <Compile Include="Engine\Graphics\VTStamper.cs" />
+    <Compile Include="Engine\Graphics\VTTileLoader.cs" />
+    <Compile Include="Engine\Graphics\VTTileCache.cs" />
+    <Compile Include="Engine\Graphics\VTConfig.cs" />
+    <Compile Include="Engine\Frames\Manipulator.cs" />
+    <Compile Include="Engine\Frames\TouchProcessor.cs" />
+    <Compile Include="Engine\Graphics\Design\TextureLocationEditor.cs" />
+    <Compile Include="Engine\Graphics\Effects\BitonicSort.cs" />
+    <Compile Include="Engine\Graphics\Effects\DofSettings.cs" />
+    <Compile Include="Engine\Graphics\Effects\DofFilter.cs" />
+    <Compile Include="Engine\Graphics\Effects\SsaoFilter.cs" />
+    <Compile Include="Engine\Graphics\Effects\SsaoFilter.Config.cs" />
+    <Compile Include="Engine\Graphics\VTAddress.cs" />
+    <Compile Include="Engine\Graphics\Lights\CascadedShadowMap.cs" />
+    <Compile Include="Engine\Graphics\Lights\LightRenderer.CSMController.cs" />
+    <Compile Include="Engine\Graphics\Lights\ICSMController.cs" />
+    <Compile Include="Engine\Graphics\Lights\LightRenderer.Extents.cs" />
+    <Compile Include="Engine\Graphics\Lights\LightRenderer.Tiles.cs" />
+    <Compile Include="Engine\Graphics\Lights\LightRenderer.Shadows.cs" />
+    <Compile Include="Engine\Graphics\Lights\SkyLight.cs" />
+    <Compile Include="Engine\Graphics\Particle.cs" />
+    <Compile Include="Engine\Graphics\ParticleSystem.cs" />
+    <Compile Include="Engine\Graphics\RenderCounters.cs" />
+    <Compile Include="Engine\Graphics\Scene\GeometryCache.cs" />
+    <Compile Include="Engine\Graphics\Sprites\SpriteFrame.cs" />
+    <Compile Include="Engine\Graphics\Sprites\SpriteLayerCollection.cs" />
+    <Compile Include="Engine\Graphics\SurfaceFlags.cs" />
+    <Compile Include="Engine\Graphics\Utils\DebugRender.cs" />
+    <Compile Include="Engine\Graphics\Utils\DebugRenderConfig.cs" />
+    <Compile Include="Engine\Graphics\Effects\SkySphere.cs" />
+    <Compile Include="Engine\Graphics\Commands\Screenshot.cs" />
+    <Compile Include="Engine\Graphics\Effects\HdrSettings.cs" />
+    <Compile Include="Engine\Graphics\Effects\Filter.cs" />
+    <Compile Include="Engine\Graphics\Effects\HdrFilter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Engine\Graphics\Effects\Sky.cs" />
+    <Compile Include="Engine\Graphics\Effects\SkyModel.cs" />
+    <Compile Include="Engine\Graphics\Effects\SkySettings.cs" />
+    <Compile Include="Engine\Graphics\HdrFrame.cs" />
+    <Compile Include="Engine\Graphics\Lights\EnvLight.cs" />
+    <Compile Include="Engine\Graphics\Lights\LightRenderer.cs" />
+    <Compile Include="Engine\Graphics\Lights\LightRenderer.Config.cs" />
+    <Compile Include="Engine\Graphics\Lights\DirectLight.cs" />
+    <Compile Include="Engine\Graphics\Lights\ShadowContext.cs" />
+    <Compile Include="Engine\Graphics\SceneRenderer.cs" />
+    <Compile Include="Engine\Graphics\Scene\MaterialRef.cs" />
+    <Compile Include="Engine\Graphics\Scene\VertexColorTextureTBNSkinned.cs" />
+    <Compile Include="Drivers\Graphics\States\StateFactory.cs" />
+    <Compile Include="Drivers\Graphics\UbershaderLoader.cs" />
+    <Compile Include="Drivers\Graphics\Display\BaseDisplay.cs" />
+    <Compile Include="Drivers\Graphics\Display\GenericDisplay.cs" />
+    <Compile Include="Drivers\Graphics\Display\NV3DVisionDisplay.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Drivers\Graphics\Display\OculusRiftDisplay.cs" />
+    <Compile Include="Drivers\Graphics\Display\StereoDualHeadDisplay.cs" />
+    <Compile Include="Drivers\Graphics\Display\StereoInterlacedDisplay.cs" />
+    <Compile Include="Engine\Graphics\Scene\AnimMode.cs" />
+    <Compile Include="Engine\Graphics\Textures\TextureAtlas.cs" />
+    <Compile Include="Engine\Graphics\Scene\VertexColorTextureNormal.cs" />
+    <Compile Include="Engine\Graphics\Scene\SceneLoader.cs" />
+    <Compile Include="Engine\Graphics\Scene\MeshSubset.cs" />
+    <Compile Include="Drivers\Graphics\States\BlendState.cs" />
+    <Compile Include="Drivers\Graphics\States\RasterizerState.cs" />
+    <Compile Include="Drivers\Graphics\States\PipelineState.cs" />
+    <Compile Include="Drivers\Graphics\States\ShaderBytecode.cs" />
+    <Compile Include="Drivers\Graphics\States\VertexInputElement.cs" />
+    <Compile Include="Drivers\Graphics\States\VertexOutputElement.cs" />
+    <Compile Include="Drivers\Graphics\UbershaderException.cs" />
+    <Compile Include="Drivers\Graphics\HardwareProfileChecker.cs" />
+    <Compile Include="Drivers\Graphics\Resources\DepthStencil2D.cs" />
+    <Compile Include="Drivers\Graphics\Resources\DepthStencilSurface.cs" />
+    <Compile Include="Drivers\Graphics\Resources\RenderTargetSurface.cs" />
+    <Compile Include="Drivers\Graphics\Ubershader.cs" />
+    <Compile Include="Drivers\Graphics\Resources\TextureCube.cs" />
+    <Compile Include="Drivers\Graphics\Resources\Texture3D.cs" />
+    <Compile Include="Drivers\Graphics\Enums.cs" />
+    <Compile Include="Drivers\Graphics\Resources\StructuredBuffer.cs" />
+    <Compile Include="Drivers\Graphics\Resources\Texture2D.cs" />
+    <Compile Include="Core\DisposableBase.cs" />
+    <Compile Include="Engine\Common\Commands\Connect.cs" />
+    <Compile Include="Engine\Common\Commands\Disconnect.cs" />
+    <Compile Include="Engine\Common\Commands\KillServer.cs" />
+    <Compile Include="Engine\Common\Commands\Map.cs" />
+    <Compile Include="Engine\Common\Commands\ServerInfo.cs" />
+    <Compile Include="Engine\Common\Commands\ServerDrop.cs" />
+    <Compile Include="Engine\Graphics\RenderSystem.Config.cs" />
+    <Compile Include="Engine\Graphics\Lights\LightSet.cs" />
+    <Compile Include="Engine\Graphics\Textures\TargetFormat.cs" />
+    <Compile Include="Engine\Graphics\RenderWorld.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Engine\Graphics\VTSystem.cs" />
+    <Compile Include="Engine\Imaging\Image.cs" />
+    <Compile Include="Engine\Imaging\Image.Tga.cs" />
+    <Compile Include="Engine\Input\Bind.cs" />
+    <Compile Include="Engine\Input\ListBindings.cs" />
+    <Compile Include="Engine\Input\KeyBind.cs" />
+    <Compile Include="Engine\Input\Touch.cs" />
+    <Compile Include="Engine\Input\Unbind.cs" />
+    <Compile Include="Engine\Client\GameClient.Internal.cs" />
+    <Compile Include="Engine\Media\MediaState.cs" />
+    <Compile Include="Engine\Media\Video.cs" />
+    <Compile Include="Engine\Media\VideoPlayer.cs" />
+    <Compile Include="Engine\Media\VideoSampleGrabber.cs" />
+    <Compile Include="Engine\Common\Network.cs" />
+    <Compile Include="Engine\Server\GameServer.Internal.cs" />
+    <Compile Include="Engine\Common\Game.cs" />
+    <Compile Include="Drivers\Graphics\GraphicsParameters.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Engine\Common\NetUtils.cs" />
+    <Compile Include="Engine\Common\GameException.cs" />
+    <Compile Include="Drivers\Graphics\GraphicsException.cs" />
+    <Compile Include="Drivers\Graphics\Resources\VertexAttribute.cs" />
+    <Compile Include="Drivers\Graphics\Resources\ConstantBuffer.cs" />
+    <Compile Include="Drivers\Graphics\Resources\DepthStencilCube.cs" />
+    <Compile Include="Drivers\Graphics\Resources\ShaderResource.cs" />
+    <Compile Include="Drivers\Graphics\Resources\IndexBuffer.cs" />
+    <Compile Include="Drivers\Graphics\Resources\RenderTarget2D.cs" />
+    <Compile Include="Drivers\Graphics\Resources\RenderTargetCube.cs" />
+    <Compile Include="Drivers\Graphics\Resources\VertexBuffer.cs" />
+    <Compile Include="Drivers\Graphics\States\DepthStencilState.cs" />
+    <Compile Include="Drivers\Graphics\States\SamplerState.cs" />
+    <Compile Include="Drivers\Input\GamepadButtons.cs" />
+    <Compile Include="Drivers\Input\Gamepad.cs" />
+    <Compile Include="Drivers\Input\OculusRiftSensors.cs" />
+    <Compile Include="Core\Mathematics\Angle.cs" />
+    <Compile Include="Core\Mathematics\Bool.cs" />
+    <Compile Include="Core\Mathematics\Bool4.cs" />
+    <Compile Include="Core\Mathematics\BoundingBox.cs" />
+    <Compile Include="Core\Mathematics\BoundingFrustum.cs" />
+    <Compile Include="Core\Mathematics\BoundingSphere.cs" />
+    <Compile Include="Core\Mathematics\Byte4.cs" />
+    <Compile Include="Core\Mathematics\Collision.cs" />
+    <Compile Include="Core\Mathematics\Color.cs" />
+    <Compile Include="Core\Mathematics\Color.Palette.cs" />
+    <Compile Include="Core\Mathematics\Color3.cs" />
+    <Compile Include="Core\Mathematics\Color4.cs" />
+    <Compile Include="Core\Mathematics\ColorBGRA.cs" />
+    <Compile Include="Core\Mathematics\Int2.cs" />
+    <Compile Include="Core\SharpDXHelper.cs" />
+    <Compile Include="Core\Mathematics\Enums.cs" />
+    <Compile Include="Core\Mathematics\FrustumCameraParams.cs" />
+    <Compile Include="Core\Mathematics\Half.cs" />
+    <Compile Include="Core\Mathematics\Half2.cs" />
+    <Compile Include="Core\Mathematics\Half3.cs" />
+    <Compile Include="Core\Mathematics\Half4.cs" />
+    <Compile Include="Core\Mathematics\HalfUtils.cs" />
+    <Compile Include="Core\Mathematics\Int3.cs" />
+    <Compile Include="Core\Mathematics\Int4.cs" />
+    <Compile Include="Core\Mathematics\MathUtil.cs" />
+    <Compile Include="Core\Mathematics\Matrix.cs" />
+    <Compile Include="Core\Mathematics\Matrix3x2.cs" />
+    <Compile Include="Core\Mathematics\Matrix3x3.cs" />
+    <Compile Include="Core\Mathematics\Matrix5x4.cs" />
+    <Compile Include="Core\Mathematics\OrientedBoundingBox.cs" />
+    <Compile Include="Core\Mathematics\Plane.cs" />
+    <Compile Include="Core\Mathematics\Point.cs" />
+    <Compile Include="Core\Mathematics\Quaternion.cs" />
+    <Compile Include="Core\Extensions\RandomExtensions.cs" />
+    <Compile Include="Core\Mathematics\Ray.cs" />
+    <Compile Include="Core\Mathematics\Rectangle.cs" />
+    <Compile Include="Core\Mathematics\RectangleF.cs" />
+    <Compile Include="Core\Mathematics\Size2.cs" />
+    <Compile Include="Core\Mathematics\Size2F.cs" />
+    <Compile Include="Core\Mathematics\Vector2.cs" />
+    <Compile Include="Core\Mathematics\Vector3.cs" />
+    <Compile Include="Core\Mathematics\Vector4.cs" />
+    <Compile Include="Core\Mathematics\Viewport.cs" />
+    <Compile Include="Core\Mathematics\ViewportF.cs" />
+    <Compile Include="Engine\Common\GameComponent.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Engine\Client\GameClient.cs" />
+    <Compile Include="Engine\Server\GameServer.cs" />
+    <Compile Include="Engine\Common\UserInterface.cs" />
+    <Compile Include="Engine\Graphics\Camera.cs" />
+    <Compile Include="Engine\Graphics\Sprites\SpriteEngine.cs" />
+    <Compile Include="Engine\Graphics\Sprites\SpriteFont.BMFont.cs" />
+    <Compile Include="Engine\Graphics\Sprites\SpriteFontLoader.cs" />
+    <Compile Include="Engine\Graphics\Sprites\SpriteVertex.cs" />
+    <Compile Include="Engine\Graphics\Enums.cs" />
+    <Compile Include="Engine\Graphics\RenderSystem.cs" />
+    <Compile Include="Engine\Graphics\Sprites\SpriteLayer.cs" />
+    <Compile Include="Engine\Graphics\Sprites\SpriteFont.cs" />
+    <Compile Include="Engine\Graphics\Textures\DiscTexture.cs" />
+    <Compile Include="Engine\Graphics\Textures\DynamicTexture.cs" />
+    <Compile Include="Engine\Graphics\Textures\LightProbe.cs" />
+    <Compile Include="Engine\Graphics\MeshInstance.cs" />
+    <Compile Include="Engine\Graphics\Lights\OmniLight.cs" />
+    <Compile Include="Engine\Graphics\Lights\SpotLight.cs" />
+    <Compile Include="Engine\Graphics\Textures\TargetTexture.cs" />
+    <Compile Include="Engine\Graphics\Textures\Texture.cs" />
+    <Compile Include="Engine\Graphics\Textures\UserTexture.cs" />
+    <Compile Include="Engine\Input\GamepadButtons.cs" />
+    <Compile Include="Engine\Input\GamepadCollection.cs" />
+    <Compile Include="Engine\Input\Gamepad.cs" />
+    <Compile Include="Engine\Input\Keyboard.cs" />
+    <Compile Include="Engine\Input\Events.cs" />
+    <Compile Include="Engine\Input\Keys.cs" />
+    <Compile Include="Engine\Input\Mouse.cs" />
+    <Compile Include="Engine\Common\NetDeflate.cs" />
+    <Compile Include="Engine\Server\NetCommand.cs" />
+    <Compile Include="Engine\Server\NetConnExt.cs" />
+    <Compile Include="Engine\Server\Snapshot.cs" />
+    <Compile Include="Engine\Server\SnapshotQueue.cs" />
+    <Compile Include="Engine\Storage\IStorage.cs" />
+    <Compile Include="Engine\Storage\DirectoryStorage.cs" />
+    <Compile Include="Engine\Storage\UserStorage.cs" />
+    <Compile Include="Engine\Frames\Context.cs" />
+    <Compile Include="Engine\Frames\Enums.cs" />
+    <Compile Include="Engine\Frames\Frame.cs" />
+    <Compile Include="Engine\Frames\LayoutEngine.cs" />
+    <Compile Include="Engine\Frames\Layouts\QuadLayout.cs" />
+    <Compile Include="Engine\Frames\Layouts\QuadLayoutStyle.cs" />
+    <Compile Include="Engine\Frames\Layouts\StackLayout.cs" />
+    <Compile Include="Engine\Frames\MouseProcessor.cs" />
+    <Compile Include="Engine\Frames\Transition.cs" />
+    <Compile Include="Engine\Frames\FrameProcessor.cs" />
+    <Compile Include="Engine\Frames\Utils.cs" />
+    <Compile Include="Engine\Tools\ClearCmd.cs" />
+    <Compile Include="Engine\Tools\GameConsole.Config.cs" />
+    <Compile Include="Engine\Tools\EditBox.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Engine\Graphics\Scene\VertexColorTexture.cs" />
+    <Compile Include="Engine\Graphics\Scene\VertexColorTextureTBNRigid.cs" />
+    <Compile Include="Core\Shell\CommandLineParser.cs" />
+    <Compile Include="Core\Shell\Command.cs" />
+    <Compile Include="Core\Shell\CommandAttribute.cs" />
+    <Compile Include="Core\Shell\Commands\Help.cs" />
+    <Compile Include="Core\Shell\Commands\ListCommands.cs" />
+    <Compile Include="Core\Shell\Commands\Undo.cs" />
+    <Compile Include="Core\Shell\Commands\Exit.cs" />
+    <Compile Include="Core\Shell\Commands\Set.cs" />
+    <Compile Include="Core\Shell\CommandLineParserException.cs" />
+    <Compile Include="Core\Shell\Invoker.cs" />
+    <Compile Include="Core\Test\TestAttribute.cs" />
+    <Compile Include="Core\Test\Tester.cs" />
+    <Compile Include="Core\Test\TestException.cs" />
+    <Compile Include="Core\Utils\CharStream.cs" />
+    <Compile Include="Core\Utils\ColoredLogListener.cs" />
+    <Compile Include="Core\Utils\StdLogListener.cs" />
+    <Compile Include="Core\Mathematics\KdTree3.cs" />
+    <Compile Include="Core\Mathematics\KdTree2.cs" />
+    <Compile Include="Drivers\Graphics\GraphicsDevice.cs" />
+    <Compile Include="Core\Extensions\ConsoleExtensions.cs" />
+    <Compile Include="Engine\Common\GameTime.cs" />
+    <Compile Include="Drivers\Input\InputDevice.cs" />
+    <Compile Include="Drivers\Input\Keys.cs" />
+    <Compile Include="Core\Extensions\LinqExtensions.cs" />
+    <Compile Include="Core\Utils\Log.cs" />
+    <Compile Include="Core\Extensions\Misc.cs" />
+    <Compile Include="Core\Utils\Pix.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Engine\Graphics\Scene\Mesh.cs" />
+    <Compile Include="Engine\Graphics\Scene\MeshTriangle.cs" />
+    <Compile Include="Engine\Graphics\Scene\MeshVertex.cs" />
+    <Compile Include="Engine\Graphics\Scene\Node.cs" />
+    <Compile Include="Engine\Graphics\Scene\Scene.cs" />
+    <Compile Include="Core\Mathematics\Temperature.cs" />
+    <Compile Include="Core\Utils\Wildcard.cs" />
+    <Compile Include="Core\Utils\LogRecorder.cs" />
+    <Compile Include="Engine\Tools\GameConsole.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Development\Dashboard.resx">
+      <DependentUpon>Dashboard.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Development\ExceptionDialog.resx">
+      <DependentUpon>ExceptionDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Development\LaunchBoxDialog.resx">
+      <DependentUpon>LaunchBoxDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Development\PackageSelector.resx">
+      <DependentUpon>PackageSelector.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="fusionIcon.ico" />
+    <None Include="fusionIconGrayscale.ico" />
+    <None Include="conchars.tga" />
+    <None Include="fusionSplash.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SDKs\BEPUPhysics\BEPUphysics\BEPUphysics.csproj">
+      <Project>{c0d52c9f-14b8-4008-8ddc-109c27561a5c}</Project>
+      <Name>BEPUphysics</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Native.Dds\Native.Dds.vcxproj">
+      <Project>{53af2c09-5113-4051-98fb-bb8258e268bd}</Project>
+      <Name>Native.Dds</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Native.NvApi\Native.NvApi.vcxproj">
+      <Project>{ea4b3afd-02e3-4fa3-9e26-95390f34687f}</Project>
+      <Name>Native.NvApi</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Native.Wic\Native.Wic.vcxproj">
+      <Project>{34d2ae22-ea1f-481e-b9f7-15ad914f4208}</Project>
+      <Name>Native.Wic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SDKs\LidgrenNetwork\Lidgren.Network\Lidgren.Network.csproj">
+      <Project>{49ba1c69-6104-41ac-a5d8-b54fa9f696e8}</Project>
+      <Name>Lidgren.Network</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <Import Project="..\FusionFramework.targets" />
+</Project>
