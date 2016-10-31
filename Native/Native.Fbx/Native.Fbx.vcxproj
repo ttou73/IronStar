@@ -44,14 +44,14 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(ProjectDir)..\SDKs\FbxSdk\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(ProjectDir)..\SDKs\FbxSdk\lib\x64\debug\;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)..\..\SDKs\FbxSdk\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)..\..\SDKs\FbxSdk\lib\x64\debug\;$(LibraryPath)</LibraryPath>
     <OutDir>$(Platform)\$(Configuration)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(ProjectDir)..\SDKs\FbxSdk\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(ProjectDir)..\SDKs\FbxSdk\lib\x64\release\;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)..\..\SDKs\FbxSdk\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)..\..\SDKs\FbxSdk\lib\x64\release\;$(LibraryPath)</LibraryPath>
     <OutDir>$(Platform)\$(Configuration)\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -107,7 +107,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Engine\Fusion.csproj">
+    <ProjectReference Include="..\..\Engine\Fusion.csproj">
       <Project>{085c9e62-cddf-4b95-994d-085c74fa90fc}</Project>
     </ProjectReference>
   </ItemGroup>

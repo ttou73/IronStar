@@ -75,6 +75,7 @@ namespace Fusion.Engine.Graphics {
 			this.cameraMatrixR	=	Matrix.Invert( viewMatrixR );
 
 
+			#if OCULUS
 			if (Game.Instance.GraphicsDevice.Display is OculusRiftDisplay) {
 				
 				if (OculusRiftSensors.LeftEye != null && OculusRiftSensors.RightEye != null) {
@@ -92,6 +93,7 @@ namespace Fusion.Engine.Graphics {
 					viewMatrixR = viewMatrix * Matrix.RotationQuaternion(rightRot)	* Matrix.Translation(rightEyePos);
 				}
 			}
+			#endif
 		}
 
 

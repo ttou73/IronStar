@@ -117,9 +117,22 @@
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Engine\Fusion.csproj">
+      <Project>{085c9e62-cddf-4b95-994d-085c74fa90fc}</Project>
+      <Name>Fusion</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SDKs\BEPUPhysics\BEPUphysics\BEPUphysics.csproj">
+      <Project>{c0d52c9f-14b8-4008-8ddc-109c27561a5c}</Project>
+      <Name>BEPUphysics</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SDKs\BEPUPhysics\BEPUutilities\BEPUutilities.csproj">
+      <Project>{34853dea-43a6-4f2f-a379-d1ee04d256d2}</Project>
+      <Name>BEPUutilities</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="$(registry:HKEY_CURRENT_USER\Software\FusionEngine@BuildDir)\FusionProject.targets" />
+  <!-- Import Project="$(registry:HKEY_CURRENT_USER\Software\FusionEngine@BuildDir)\FusionProject.targets" / -->
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
