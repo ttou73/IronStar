@@ -620,15 +620,15 @@
       <Project>{c0d52c9f-14b8-4008-8ddc-109c27561a5c}</Project>
       <Name>BEPUphysics</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Native.Dds\Native.Dds.vcxproj">
+    <ProjectReference Include="..\Native\Native.Dds\Native.Dds.vcxproj">
       <Project>{53af2c09-5113-4051-98fb-bb8258e268bd}</Project>
       <Name>Native.Dds</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Native.NvApi\Native.NvApi.vcxproj">
+    <ProjectReference Include="..\Native\Native.NvApi\Native.NvApi.vcxproj">
       <Project>{ea4b3afd-02e3-4fa3-9e26-95390f34687f}</Project>
       <Name>Native.NvApi</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Native.Wic\Native.Wic.vcxproj">
+    <ProjectReference Include="..\Native\Native.Wic\Native.Wic.vcxproj">
       <Project>{34d2ae22-ea1f-481e-b9f7-15ad914f4208}</Project>
       <Name>Native.Wic</Name>
     </ProjectReference>
@@ -654,5 +654,4 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-  <Import Project="..\FusionFramework.targets" />
 </Project>

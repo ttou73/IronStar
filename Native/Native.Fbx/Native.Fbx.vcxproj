@@ -107,12 +107,12 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Fusion\Fusion.csproj">
+    <ProjectReference Include="..\Engine\Fusion.csproj">
       <Project>{085c9e62-cddf-4b95-994d-085c74fa90fc}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
-  <Import Project="..\FusionFramework.targets" />
+  <!--Import Project="..\FusionFramework.targets" /-->
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
 </Project>
