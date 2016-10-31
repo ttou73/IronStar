@@ -1,0 +1,34 @@
+[Ignore]
+*.ma
+*.psd
+spots/*.tga
+sprites/*.tga
+scenes/*.tga
+
+[BinaryDirectories]
+HKEY_CURRENT_USER\Software\FusionEngine@ToolsDir
+
+[ContentDirectories]
+..\..\..\..\FusionEngine\FusionContent
+HKEY_CURRENT_USER\Software\FusionEngine@ContentDir
+
+[Textures]
+*.tga
+*.png
+*.jpg
+
+[TextureAtlas]
+*spots.atlas /width:512 /height:512
+*particles.atlas  /width:1024 /height:1024 /fill:"0, 0, 0, 0" /pad:16
+
+[Fonts]
+*.bmfc
+
+[Scenes]
+*.fbx /geom 
+
+[Sounds]
+*.wav
+
+[MegaTexture]
+*.megatex
