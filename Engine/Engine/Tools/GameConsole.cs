@@ -14,8 +14,7 @@ using Fusion.Core.Configuration;
 using Fusion.Engine.Graphics;
 using Fusion.Engine.Input;
 using Fusion.Core.Shell;
-
-
+using System.IO;
 
 namespace Fusion.Engine.Tools {
 	
@@ -44,7 +43,7 @@ namespace Fusion.Engine.Tools {
 		DiscTexture	consoleFont;
 		#else 
 		const string FontName = "conchars";
-		DiscTexture	consoleFont;
+		UserTexture	consoleFont;
 		#endif
 		SpriteLayer consoleLayer;
 		SpriteLayer editLayer;
@@ -140,11 +139,15 @@ namespace Fusion.Engine.Tools {
 		/// </summary>
 		void LoadContent ()
 		{
-			#if USE_PROFONT
+#if USE_PROFONT
 			consoleFont			=	Game.Content.Load<SpriteFont>("profont");
-			#else
-			consoleFont			=	Game.Content.Load<DiscTexture>(font);
-			#endif
+#else
+
+			using ( var ms = new MemoryStream( Properties.Resources.conchars ) ) {
+				consoleFont         =   UserTexture.CreateFromTga( Game.RenderSystem, ms, false );
+			}
+			//consoleFont			=	Game.Content.Load<DiscTexture>(font);
+#endif
 
 			RefreshConsole();
 		}
@@ -176,6 +179,11 @@ namespace Fusion.Engine.Tools {
 				Game.Keyboard.KeyDown -= Keyboard_KeyDown;
 				Game.Keyboard.FormKeyPress -= Keyboard_FormKeyPress;
 				Game.Keyboard.FormKeyDown -= Keyboard_FormKeyDown;
+
+				#if USE_PROFONT
+				#else
+				SafeDispose( ref consoleFont );
+				#endif
 
 				SafeDispose( ref consoleLayer );
 				SafeDispose( ref editLayer );

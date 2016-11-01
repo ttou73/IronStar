@@ -3,6 +3,7 @@
 
 # Maya files
 .mayaSwatches/
+Temp/
 
 # User-specific files
 *.suo

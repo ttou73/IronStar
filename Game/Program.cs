@@ -31,8 +31,8 @@ namespace ShooterDemo {
 			//	Build content on startup.
 			//	Remove this line in release code.
 			//
-			Builder.Options.InputDirectory = @"..\..\..\Content";
-			Builder.Options.TempDirectory = @"..\..\..\Temp";
+			Builder.Options.InputDirectory = @"..\..\..\..\Content";
+			Builder.Options.TempDirectory = @"..\..\..\..\Temp";
 			Builder.Options.OutputDirectory = @"Content";
 			Builder.SafeBuild();
 

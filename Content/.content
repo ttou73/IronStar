@@ -6,11 +6,13 @@ sprites/*.tga
 scenes/*.tga
 
 [BinaryDirectories]
-HKEY_CURRENT_USER\Software\FusionEngine@ToolsDir
+..\..\..\..\SDKs
+..\..\..\..\Native\FScene\bin\x64\Release
+#HKEY_CURRENT_USER\Software\FusionEngine@ToolsDir
 
 [ContentDirectories]
-..\..\..\..\FusionEngine\FusionContent
-HKEY_CURRENT_USER\Software\FusionEngine@ContentDir
+..\..\..\..\Shaders
+#HKEY_CURRENT_USER\Software\FusionEngine@ContentDir
 
 [Textures]
 *.tga
