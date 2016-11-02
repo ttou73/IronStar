@@ -49,7 +49,7 @@ namespace ShooterDemo {
 
 				//	load configuration.
 				//	first run will cause warning, 
-				//	because configuration file still does not exist.
+				//	because configuration file does not exist yet.
 				game.Config.Load( "Config.ini" );
 
 				//	enable and disable debug direct3d device :

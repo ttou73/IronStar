@@ -128,7 +128,7 @@ namespace ShooterDemo {
 			rw.HdrSettings.KeyValue     = 0.18f;
 
 			rw.SkySettings.SunPosition			= new Vector3( 1.2f, 1.4f, 1.3f );
-			rw.SkySettings.SunLightIntensity	= 100;
+			rw.SkySettings.SunLightIntensity	= 400;
 			rw.SkySettings.SkyTurbidity			= 8;
 
 			rw.LightSet.DirectLight.Direction	=	rw.SkySettings.SunLightDirection;
@@ -147,7 +147,7 @@ namespace ShooterDemo {
 				rw.LightSet.SpotLights.Add( spot );
 			} */
 
-			//rw.LightSet.EnvLights.Add( new EnvLight( new Vector3(0,4,0), 1, 500 ) );
+			rw.LightSet.EnvLights.Add( new EnvLight( new Vector3(0,4,0), 1, 500 ) );
 			/*for (float x=-32; x<=32; x+=16 ) {
 				for (float y=-32; y<=32; y+=16 ) {
 					rw.LightSet.EnvLights.Add( new EnvLight( new Vector3(x,4,y), 1, 16 ) );
