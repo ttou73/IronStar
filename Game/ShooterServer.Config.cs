@@ -12,10 +12,10 @@ using Fusion.Engine.Common;
 using Fusion.Engine.Server;
 using Fusion.Core.Content;
 using Fusion.Engine.Graphics;
-using ShooterDemo.Core;
+using IronStar.Core;
 using Fusion.Core.Configuration;
 
-namespace ShooterDemo {
+namespace IronStar {
 	public partial class ShooterServer : GameServer {
 
 		[Config] public float ServerTimeDriftRate { get; set; }

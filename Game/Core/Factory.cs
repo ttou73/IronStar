@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Fusion;
 using Fusion.Core.Utils;
 
-namespace ShooterDemo.Core {
+namespace IronStar.Core {
 	public class Factory {
 
 		/// <summary>

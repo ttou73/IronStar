@@ -6,7 +6,7 @@ using Fusion.Core.Mathematics;
 using System.Diagnostics;
 
 
-namespace ShooterDemo {
+namespace IronStar {
 	class MathConverter {
         //Vector2
         public static Vector2 Convert(BEPUutilities.Vector2 bepuVector)

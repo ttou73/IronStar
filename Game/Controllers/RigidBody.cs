@@ -13,7 +13,7 @@ using Fusion.Engine.Input;
 using Fusion.Engine.Client;
 using Fusion.Engine.Server;
 using Fusion.Engine.Graphics;
-using ShooterDemo.Core;
+using IronStar.Core;
 using BEPUphysics;
 using BEPUphysics.Entities.Prefabs;
 using BEPUphysics.EntityStateManagement;
@@ -21,7 +21,7 @@ using BEPUphysics.PositionUpdating;
 //using BEPUphysics.
 
 
-namespace ShooterDemo.Controllers {
+namespace IronStar.Controllers {
 	public class RigidBody : EntityController {
 
 		readonly Space space;

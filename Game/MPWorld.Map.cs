@@ -14,9 +14,9 @@ using Fusion.Engine.Input;
 using Fusion.Engine.Client;
 using Fusion.Engine.Server;
 using Fusion.Engine.Graphics;
-using ShooterDemo.Core;
+using IronStar.Core;
 
-namespace ShooterDemo {
+namespace IronStar {
 	public partial class MPWorld : World {
 		List<MeshInstance>	instances = new List<MeshInstance>();
 

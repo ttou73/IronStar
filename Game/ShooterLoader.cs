@@ -12,10 +12,10 @@ using Fusion.Engine.Common;
 using Fusion.Engine.Client;
 using Fusion.Engine.Server;
 using Fusion.Engine.Graphics;
-using ShooterDemo.Core;
+using IronStar.Core;
 
 
-namespace ShooterDemo {
+namespace IronStar {
 	class ShooterLoader : GameLoader {
 
 		Task loadingTask;

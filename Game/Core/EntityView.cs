@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Fusion.Engine.Common;
 
 
-namespace ShooterDemo.Core {
+namespace IronStar.Core {
 	public abstract class EntityView {
 
 		public readonly Game Game;

@@ -9,7 +9,7 @@ using Fusion.Core.Utils;
 using Fusion.Core.Mathematics;
 using System.IO;
 
-namespace ShooterDemo.Core {
+namespace IronStar.Core {
 	[Flags]
 	public enum EntityState : int {
 

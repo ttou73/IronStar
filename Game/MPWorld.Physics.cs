@@ -13,14 +13,14 @@ using Fusion.Engine.Input;
 using Fusion.Engine.Client;
 using Fusion.Engine.Server;
 using Fusion.Engine.Graphics;
-using ShooterDemo.Core;
+using IronStar.Core;
 using BEPUphysics;
 using BEPUphysics.BroadPhaseEntries;
 using BEPUVector3 = BEPUutilities.Vector3;
 using BEPUTransform = BEPUutilities.AffineTransform;
 
 
-namespace ShooterDemo {
+namespace IronStar {
 	public partial class MPWorld {
 
 		Space physSpace;

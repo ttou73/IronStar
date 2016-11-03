@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Fusion.Core.Shell;
 
-namespace ShooterDemo.Commands {
+namespace IronStar.Commands {
 
 	[Command("printCLWorldState", CommandAffinity.Client)]
 	public class ShowCLWorldState : NoRollbackCommand {

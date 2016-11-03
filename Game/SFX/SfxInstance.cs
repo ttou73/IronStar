@@ -14,12 +14,12 @@ using Fusion.Engine.Input;
 using Fusion.Engine.Client;
 using Fusion.Engine.Server;
 using Fusion.Engine.Graphics;
-using ShooterDemo.Core;
+using IronStar.Core;
 using Fusion.Engine.Audio;
-using ShooterDemo.Views;
+using IronStar.Views;
 
 
-namespace ShooterDemo.SFX {
+namespace IronStar.SFX {
 
 	/// <summary>
 	/// 

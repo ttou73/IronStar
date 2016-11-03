@@ -59,7 +59,7 @@
             "Papers",
             "paradox",
             "pulse-project",
-            "ShooterDemo",
+            "IronStar",
             "sirius",
             "SpaceMarines",
             "SpaceTDS",

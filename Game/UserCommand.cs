@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 using System.IO;
 using Fusion.Core.Mathematics;
 
-namespace ShooterDemo {
+namespace IronStar {
 
 	[Flags]
 	public enum UserCtrlFlags : int {

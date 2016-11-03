@@ -14,7 +14,7 @@ using Fusion.Engine.Client;
 using Fusion.Engine.Common;
 using Fusion.Engine.Server;
 
-namespace ShooterDemo {
+namespace IronStar {
 
 	class ShooterInterface : Fusion.Engine.Common.UserInterface {
 

@@ -13,12 +13,12 @@ using Fusion.Engine.Input;
 using Fusion.Engine.Client;
 using Fusion.Engine.Server;
 using Fusion.Engine.Graphics;
-using ShooterDemo.Core;
+using IronStar.Core;
 using BEPUphysics;
 using BEPUphysics.Character;
 
 
-namespace ShooterDemo.Views {
+namespace IronStar.Views {
 	public class HudView : WorldView {
 
 		DiscTexture	crosshair;

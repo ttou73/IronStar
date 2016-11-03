@@ -11,9 +11,9 @@ using Fusion.Core.Content;
 using Fusion.Engine.Server;
 using Fusion.Engine.Client;
 using Fusion.Core.Extensions;
-using ShooterDemo.SFX;
+using IronStar.SFX;
 
-namespace ShooterDemo.Core {
+namespace IronStar.Core {
 
 	/// <summary>
 	/// World represents entire game state.

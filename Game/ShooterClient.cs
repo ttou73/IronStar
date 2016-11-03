@@ -13,11 +13,11 @@ using Fusion.Engine.Input;
 using Fusion.Engine.Client;
 using Fusion.Engine.Server;
 using Fusion.Engine.Graphics;
-using ShooterDemo.Core;
-using ShooterDemo.Views;
+using IronStar.Core;
+using IronStar.Views;
 
 
-namespace ShooterDemo {
+namespace IronStar {
 	public partial class ShooterClient : Fusion.Engine.Client.GameClient {
 
 		World gameWorld;

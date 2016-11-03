@@ -7,11 +7,11 @@ using Fusion;
 using Fusion.Core;
 using Fusion.Core.Content;
 using Fusion.Core.Mathematics;
-using ShooterDemo;
-using ShooterDemo.Core;
+using IronStar;
+using IronStar.Core;
 using Fusion.Engine.Graphics;
 
-namespace ShooterDemo.SFX.WeaponFX {
+namespace IronStar.SFX.WeaponFX {
 
 
 	class PlayerFootStepR : SfxInstance {

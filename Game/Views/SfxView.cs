@@ -13,11 +13,11 @@ using Fusion.Engine.Input;
 using Fusion.Engine.Client;
 using Fusion.Engine.Server;
 using Fusion.Engine.Graphics;
-using ShooterDemo.Core;
-using ShooterDemo.SFX;
+using IronStar.Core;
+using IronStar.SFX;
 
 
-namespace ShooterDemo.Views {
+namespace IronStar.Views {
 	public class SfxView : EntityView {
 
 		SfxInstance sfx;

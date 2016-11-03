@@ -8,11 +8,11 @@ using Fusion.Core;
 using Fusion.Core.Content;
 using Fusion.Core.Mathematics;
 using Fusion.Core.Extensions;
-using ShooterDemo;
-using ShooterDemo.Core;
+using IronStar;
+using IronStar.Core;
 using Fusion.Engine.Graphics;
 
-namespace ShooterDemo.SFX.WeaponFX {
+namespace IronStar.SFX.WeaponFX {
 
 	class TeleportOut : SfxInstance {
 

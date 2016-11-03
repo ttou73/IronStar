@@ -7,7 +7,7 @@ using Fusion.Engine.Common;
 using Fusion.Core.Mathematics;
 
 
-namespace ShooterDemo.Core {
+namespace IronStar.Core {
 	public abstract class EntityController {
 
 		public readonly Game Game;

@@ -14,7 +14,7 @@ using Fusion.Engine.Server;
 using Fusion.Engine.Graphics;
 
 
-namespace ShooterDemo.Core {
+namespace IronStar.Core {
 	public abstract class WorldView {
 		
 		public readonly Game Game;

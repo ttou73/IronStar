@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ShooterDemo.Core {
+namespace IronStar.Core {
 	class Filter {
 
 		readonly int frameSize;

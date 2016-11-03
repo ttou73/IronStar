@@ -13,9 +13,9 @@ using Fusion.Engine.Server;
 using Fusion.Core.Content;
 using Fusion.Core.Configuration;
 using Fusion.Engine.Graphics;
-using ShooterDemo.Core;
+using IronStar.Core;
 
-namespace ShooterDemo {
+namespace IronStar {
 	public partial class ShooterServer : GameServer {
 
 		

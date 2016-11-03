@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Fusion.Engine.Input;
 using Fusion.Core.Configuration;
 
-namespace ShooterDemo {
+namespace IronStar {
 	public partial class ShooterClient : Fusion.Engine.Client.GameClient {
 
 		[Config] public float Sensitivity { get; set; }

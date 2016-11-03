@@ -13,13 +13,13 @@ using Fusion.Engine.Client;
 using Fusion.Engine.Server;
 using Fusion.Engine.Graphics;
 using Fusion.Core.Extensions;
-using ShooterDemo.Core;
+using IronStar.Core;
 using BEPUphysics;
 using BEPUphysics.Entities.Prefabs;
 using BEPUphysics.EntityStateManagement;
 using BEPUphysics.PositionUpdating;
 
-namespace ShooterDemo.Controllers {
+namespace IronStar.Controllers {
 
 	public class Projectiles : EntityController {
 

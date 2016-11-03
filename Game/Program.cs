@@ -11,7 +11,7 @@ using Fusion.Engine.Common;
 using Fusion.Core.Shell;
 using Fusion.Core.Utils;
 
-namespace ShooterDemo {
+namespace IronStar {
 
 	class Program {
 		[STAThread]
@@ -40,7 +40,7 @@ namespace ShooterDemo {
 			//
 			//	Run game :
 			//
-			using (var game = new Game( "ShooterDemo" )) {
+			using (var game = new Game( "IronStar" )) {
 
 				//	create SV, CL and UI instances :
 				game.GameServer = new ShooterServer( game );
@@ -60,7 +60,7 @@ namespace ShooterDemo {
 				game.TrackObjects = false;
 
 				//	set game title :
-				game.GameTitle = "ShooterDemo";
+				game.GameTitle = "IronStar";
 
 				//	apply command-line options here:
 				//	...
