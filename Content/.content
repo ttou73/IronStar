@@ -27,7 +27,7 @@ scenes/*.tga
 *.bmfc
 
 [Scenes]
-*.fbx /geom 
+*.fbx /geom /report
 
 [Sounds]
 *.wav

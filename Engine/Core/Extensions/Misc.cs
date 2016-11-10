@@ -230,6 +230,24 @@ namespace Fusion.Core.Extensions {
 		}
 
 
+		/// <summary>
+		/// http://haacked.com/archive/2012/07/23/get-all-types-in-an-assembly.aspx/
+		/// </summary>
+		/// <param name="assembly"></param>
+		/// <returns></returns>
+		public static IEnumerable<Type> GetLoadableTypes(this Assembly assembly)
+		{
+			if (assembly == null) throw new ArgumentNullException("assembly");
+			try
+			{
+				return assembly.GetTypes();
+			}
+			catch (ReflectionTypeLoadException e)
+			{
+				return e.Types.Where(t => t != null);
+			}
+		}
+
 
 		/// <summary>
 		/// Searches all loaded assemblies for all public subclasses of given type
@@ -242,7 +260,7 @@ namespace Fusion.Core.Extensions {
 
 			foreach ( var a in AppDomain.CurrentDomain.GetAssemblies() ) {
 
-				foreach ( var t in a.GetTypes() ) {
+				foreach ( var t in a.GetLoadableTypes() ) {
 					if (t.HasAttribute<T>()) {
 						types.Add(t);						
 					}
@@ -265,7 +283,7 @@ namespace Fusion.Core.Extensions {
 
 			foreach ( var a in AppDomain.CurrentDomain.GetAssemblies() ) {
 
-				foreach ( var t in a.GetTypes() ) {
+				foreach ( var t in a.GetLoadableTypes() ) {
 					
 					if (includeBaseClass && (t==type)) {
 						types.Add(t);

@@ -43,7 +43,7 @@ namespace Fusion.Engine.Audio {
             try
             {
                 if (Device == null) {
-                    Device = new XAudio2(XAudio2Flags.None, ProcessorSpecifier.DefaultProcessor);
+                    Device = new XAudio2(XAudio2Flags.None, ProcessorSpecifier.DefaultProcessor, XAudio2Version.Version27);
                     Device.StartEngine();
                 }
 
@@ -73,8 +73,10 @@ namespace Fusion.Engine.Audio {
 					Log.Debug( "    id   : {0}", device.DeviceID );
 				}
             }
-            catch
+            catch ( Exception e )
             {
+				Log.Error( e.ToString() );
+				
                 // Release the device and null it as
                 // we have no audio support.
                 if (Device != null)

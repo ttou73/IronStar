@@ -408,6 +408,9 @@ namespace Fusion.Drivers.Graphics {
 		/// <param name="path"></param>
 		public void SaveToFile ( string path )
 		{
+			Log.Error("Screenshot are not implemented!");
+
+			#if false			
 			lock ( device.DeviceContext ) {
 				if (SampleCount>1) {
 												
@@ -433,6 +436,7 @@ namespace Fusion.Drivers.Graphics {
 					D3D.Texture2D.ToFile( device.DeviceContext, tex2D, iff, path );
 				}
 			}
+			#endif
 		}
 	}
 }

@@ -387,29 +387,27 @@ namespace Fusion.Build.Processors {
 						.Select( entry => new SharpDX.Direct3D.ShaderMacro( entry, "1" ) )
 						.ToArray();
 
-			try {
+
+			var sourceBytes = Encoding.UTF8.GetBytes(shaderSource);
+			var result = FX.ShaderBytecode.Compile( sourceBytes, entryPoint, profile, flags, FX.EffectFlags.None, defs, include, sourceFile );
 			
-				var sourceBytes = Encoding.UTF8.GetBytes(shaderSource);
-				var result = FX.ShaderBytecode.Compile( sourceBytes, entryPoint, profile, flags, FX.EffectFlags.None, defs, include, sourceFile );
-			
-				if ( result.Message!=null ) {
+			if ( result.Message!=null ) {
+				if (result.Bytecode==null) {
+					if (result.Message.Contains("X3501")) {
+						Log.Debug("No entry point '{0}'. It's ok", entryPoint );
+						return new byte[0];
+					}
+					Log.Error( result.Message );
+					throw new BuildException( result.Message );
+				} else {
 					Log.Warning( result.Message );
 				}
-
-
-				File.WriteAllText( listing, result.Bytecode.Disassemble( FX.DisassemblyFlags.EnableColorCode, "" ) );
-
-				return result.Bytecode.Data;
-
-			} catch ( Exception ex ) {
-
-				if (ex.Message.Contains("error X3501")) {
-					Log.Debug("No entry point '{0}'. It's ok", entryPoint );
-					return new byte[0];
-				}
-
-				throw;
 			}
+
+
+			File.WriteAllText( listing, result.Bytecode.Disassemble( FX.DisassemblyFlags.EnableColorCode, "" ) );
+
+			return result.Bytecode.Data;
 		}
 
 

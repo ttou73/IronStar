@@ -48,6 +48,7 @@ namespace Fusion.Engine.Common {
 
 		public Network(Game game) : base(game)
 		{
+			Port	=	28101;
 		}
 
 
