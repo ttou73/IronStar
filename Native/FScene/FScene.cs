@@ -90,8 +90,8 @@ namespace FScene {
 					}
 
 
-					if (options.Report) {
-						var reportPath = options.Input + ".html";
+					if (!string.IsNullOrWhiteSpace(options.Report)) {
+						var reportPath = options.Report;
 						Log.Message("Writing report: {0}", reportPath);
 						File.WriteAllText( reportPath, SceneReport.CreateHtmlReport(scene));
 					}

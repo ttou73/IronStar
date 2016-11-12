@@ -61,6 +61,7 @@ namespace Fusion.Build.Processors {
 		{
 			var resolvedPath	=	assetFile.FullSourcePath;
 			var destPath		=	context.GetTempFileFullPath( assetFile.KeyPath, ".scene" );
+			var reportPath		=	context.GetTempFileFullPath( assetFile.KeyPath, ".html" );
 
 			var cmdLine			=	string.Format("\"{0}\" /out:\"{1}\" /base:\"{2}\" /merge:{3} {4} {5} {6} {7}", 
 				resolvedPath, 
@@ -69,7 +70,7 @@ namespace Fusion.Build.Processors {
 				MergeTolerance, 
 				ImportAnimation ? "/anim":"", 
 				ImportGeometry ? "/geom":"", 
-				OutputReport ? "/report":"" ,
+				OutputReport ? "/report:" + "\"" + reportPath + "\"":"" ,
 				GenerateMissingMaterials ? "/genmtrl":""
 			);
 

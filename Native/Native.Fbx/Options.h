@@ -19,7 +19,7 @@ public ref class Options {
 	bool	wait;
 	bool	anim;
 	bool	geom;
-	bool	report;
+	string^	report;
 	bool	genmtrl;
 
 	public:
@@ -78,9 +78,9 @@ public ref class Options {
 	}
 
 	[CommandLineParser::Name("report", "export html build report")]
-	property bool Report {
-		void set(bool value) { report = value; } 
-		bool get() { return report; } 
+	property string ^Report {
+		void set(string^ value) { report = value; }
+		string ^get() { return report; }
 	}
 
 	[CommandLineParser::Name("genmtrl", "generate missing materials")]

@@ -8,6 +8,7 @@ scenes/*.tga
 [BinaryDirectories]
 ..\..\..\..\SDKs
 ..\..\..\..\Native\FScene\bin\x64\Release
+#..\..\..\..\Native\FScene\bin\x64\Debug
 #HKEY_CURRENT_USER\Software\FusionEngine@ToolsDir
 
 [ContentDirectories]
