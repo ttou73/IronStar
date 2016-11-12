@@ -19,7 +19,12 @@
   10. Make project `IronStar` as StartUp Project.
   11. Run project `IronStar`. First launch will take several minutes to compile content and will show some warnings.
   12. ???
-  13. PROFIT!!!
+  13. Profit???
+  14. NO!
+  15. Press tilde.
+  16. Type `map theFailure`.
+  17. Press Enter.
+  18. PROFT!
 
 ### Common problems and solutions
   * **Problem**: I can not even build the project: `error MSB3103: Invalid Resx file. Type in the data at line 123, position 5, cannot be loaded because it threw the following exception during construction: Parameter is not valid.`
