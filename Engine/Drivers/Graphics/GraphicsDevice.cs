@@ -334,7 +334,7 @@ namespace Fusion.Drivers.Graphics {
 			if (path==null) {
 				string userImgs = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
 				string appName	= Path.GetFileNameWithoutExtension( AppDomain.CurrentDomain.FriendlyName.Replace(".vshost", "") );
-				string fileName = userImgs + @"\" + appName + @"\Screenshots\Shot-" + DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss-ffff") + ".bmp";
+				string fileName = userImgs + @"\" + appName + @"\Screenshots\Shot-" + DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss-ffff") + ".png";
 				Directory.CreateDirectory( Path.GetDirectoryName( fileName ) );
 
 				path	=	fileName;
@@ -384,7 +384,7 @@ namespace Fusion.Drivers.Graphics {
 					requestScreenShotPath = null;
 
 					BackbufferColor.SaveToFile( path );
-					Log.Message("screenshot saved: {0}", path );
+					//Log.Message("screenshot saved: {0}", path );
 				}
 
 				display.SwapBuffers( syncInterval );

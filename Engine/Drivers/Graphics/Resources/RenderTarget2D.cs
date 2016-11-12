@@ -8,6 +8,9 @@ using System.Runtime.InteropServices;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Collections.Specialized;
+using System.Windows;
+using MediaPixelFormat = System.Windows.Media.PixelFormat;
+using System.Windows.Media.Imaging;
 using SharpDX;
 using SharpDX.Direct3D;
 using SharpDX.Direct3D11;
@@ -408,9 +411,11 @@ namespace Fusion.Drivers.Graphics {
 		/// <param name="path"></param>
 		public void SaveToFile ( string path )
 		{
-			Log.Error("Screenshot are not implemented!");
+			//Log.Error("Screenshot are not implemented!");
 
-			#if false			
+			var sw = new Stopwatch();
+			sw.Start();
+
 			lock ( device.DeviceContext ) {
 				if (SampleCount>1) {
 												
@@ -420,23 +425,34 @@ namespace Fusion.Drivers.Graphics {
 					}
 				
 				} else {
-					var ext = Path.GetExtension( path ).ToLower();
 
-					var iff = ImageFileFormat.Jpg;
+					var pixelCount	=	Width * Height;
+					var pixels		=   new Color[ pixelCount ];
+					var rawData		=   new byte[ pixelCount * 3 ];
+					GetData( pixels );
 
-					if ( ext == ".bmp"  ) iff = ImageFileFormat.Bmp;
-					if ( ext == ".dds"  ) iff = ImageFileFormat.Dds;
-					if ( ext == ".gif"  ) iff = ImageFileFormat.Gif;
-					if ( ext == ".jpg"  ) iff = ImageFileFormat.Jpg;
-					if ( ext == ".png"  ) iff = ImageFileFormat.Png;
-					if ( ext == ".tiff" ) iff = ImageFileFormat.Tiff;
-					if ( ext == ".wmp"  ) iff = ImageFileFormat.Wmp;
+					for ( int i=0; i<pixelCount; i++ ) {
+						rawData[i*3 + 0] = pixels[i].B;
+						rawData[i*3 + 1] = pixels[i].G;
+						rawData[i*3 + 2] = pixels[i].R;
+					}
 
-					//
-					D3D.Texture2D.ToFile( device.DeviceContext, tex2D, iff, path );
+
+					var encoder = new PngBitmapEncoder();
+					var format  = System.Windows.Media.PixelFormats.Bgr24;
+					var source  = BitmapSource.Create( Width, Height, 96,96, format, null, rawData, Width*3 );
+					var frame   = BitmapFrame.Create( source );
+
+					encoder.Frames.Add( frame );
+
+					using ( var stream = File.OpenWrite( path ) ) {
+						encoder.Save( stream );
+					}
 				}
 			}
-			#endif
+
+			sw.Stop();
+			Log.Message("Screenshot: {1} ms, path {0}", path, sw.ElapsedMilliseconds );
 		}
 	}
 }

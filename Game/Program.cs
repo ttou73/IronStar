@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,6 +11,7 @@ using Fusion.Development;
 using Fusion.Engine.Common;
 using Fusion.Core.Shell;
 using Fusion.Core.Utils;
+using Fusion.Engine.Imaging;
 
 namespace IronStar {
 
@@ -35,6 +37,10 @@ namespace IronStar {
 			Builder.Options.TempDirectory = @"..\..\..\..\Temp";
 			Builder.Options.OutputDirectory = @"Content";
 			Builder.SafeBuild();
+
+			var img = Image.LoadPng(File.OpenRead(@"C:\GITHUB\test.png"));
+
+			Log.Warning(img.Width.ToString());
 
 
 			//
