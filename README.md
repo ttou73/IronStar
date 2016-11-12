@@ -14,10 +14,10 @@
      It's better to use command line tool: `git clone https://github.com/demiurghg/IronStar.git`
   7. Wait. Checkout will take up to ten minutes.
   7. Open `IronStar.sln`.
-  8. Set active solution configuration to `Release`, cause even debug configuration uses release version of tools.
+  8. Set active solution configuration to `Release`, because even debug configuration uses release version of tools.
   9. Build.
-  10. Make project `ShooterDemo` as StartUp Project.
-  11. Run project `ShooterDemo`. First launch will take several minutes to compile content and will show some warnings.
+  10. Make project `IronStar` as StartUp Project.
+  11. Run project `IronStar`. First launch will take several minutes to compile content and will show some warnings.
   12. ???
   13. PROFIT!!!
 
