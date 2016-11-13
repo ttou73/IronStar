@@ -5,6 +5,66 @@ Roughness	=	scenes\boxes\boxes_box_Roughness.jpg
 NormalMap	=	scenes\boxes\boxes_box_NormalMap.jpg
 Emission	=	scenes\boxes\boxes_box_Emission.jpg
 
+[testPlastic]
+BaseColor	=	scenes\test\testPlastic_BaseColor.png
+Metallic	=	scenes\test\testPlastic_Metallic.png
+Roughness	=	scenes\test\testPlastic_Roughness.png
+NormalMap	=	scenes\test\testPlastic_NormalMap.png
+
+[testPlasticMatte]
+BaseColor	=	scenes\test\testPlasticMatte_BaseColor.png
+Metallic	=	scenes\test\testPlasticMatte_Metallic.png
+Roughness	=	scenes\test\testPlasticMatte_Roughness.png
+NormalMap	=	scenes\test\testPlasticMatte_NormalMap.png
+
+[testRustFine]
+BaseColor	=	scenes\test\testRustFine_BaseColor.png
+Metallic	=	scenes\test\testRustFine_Metallic.png
+Roughness	=	scenes\test\testRustFine_Roughness.png
+NormalMap	=	scenes\test\testRustFine_NormalMap.png
+
+[testSkinHuman]
+BaseColor	=	scenes\test\testSkinHuman_BaseColor.png
+Metallic	=	scenes\test\testSkinHuman_Metallic.png
+Roughness	=	scenes\test\testSkinHuman_Roughness.png
+NormalMap	=	scenes\test\testSkinHuman_NormalMap.png
+
+[testSteelRough]
+BaseColor	=	scenes\test\testSteelRough_BaseColor.png
+Metallic	=	scenes\test\testSteelRough_Metallic.png
+Roughness	=	scenes\test\testSteelRough_Roughness.png
+NormalMap	=	scenes\test\testSteelRough_NormalMap.png
+
+[testGold]
+BaseColor	=	scenes\test\testGold_BaseColor.png
+Metallic	=	scenes\test\testGold_Metallic.png
+Roughness	=	scenes\test\testGold_Roughness.png
+NormalMap	=	scenes\test\testGold_NormalMap.png
+
+[testMachinery]
+BaseColor	=	scenes\test\testMachinery_BaseColor.png
+Metallic	=	scenes\test\testMachinery_Metallic.png
+Roughness	=	scenes\test\testMachinery_Roughness.png
+NormalMap	=	scenes\test\testMachinery
+
+[testMortar]
+BaseColor	=	scenes\test\testMortar_BaseColor.png
+Metallic	=	scenes\test\testMortar_Metallic.png
+Roughness	=	scenes\test\testMortar_Roughness.png
+NormalMap	=	scenes\test\testMortar_NormalMap.png
+
+[testLatex]
+BaseColor	=	scenes\test\testLatex_BaseColor.png
+Metallic	=	scenes\test\testLatex_Metallic.png
+Roughness	=	scenes\test\testLatex_Roughness.png
+NormalMap	=	scenes\test\testLatex_NormalMap.png
+
+[testLeather]
+BaseColor	=	scenes\test\testLeather_BaseColor.png
+Metallic	=	scenes\test\testLeather_Metallic.png
+Roughness	=	scenes\test\testLeather_Roughness.png
+NormalMap	=	scenes\test\testLeather_NormalMap.png
+
 
 # [terrainCommCenterA]
 # BaseColor	=	scenes\terrain\phong1_BaseColor.jpg

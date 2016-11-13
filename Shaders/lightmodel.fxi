@@ -62,7 +62,7 @@ float	Fresnel( float c, float Fn )
 }
 
 
-float3	CookTorrance( float3 N, float3 V, float3 L, float3 I, float3 F, float m )
+float3	CookTorrance( float3 N, float3 V, float3 L, float3 I, float3 F, float roguhness)
 {
 			L	=	normalize(L);
 			V	=	normalize(V);
@@ -81,7 +81,7 @@ float3	CookTorrance( float3 N, float3 V, float3 L, float3 I, float3 F, float m )
 		float	g2	=	2 * dot(N,H) * dot(N,L) / dot(V,H);
 		G	=	min(1, min(g1, g2));
 		
-		float	a	=	m*m;
+		float	a	=	roughness;//m*m;
 		float	D	=	a * a / PI / sqr(sqr(dot(N,H)) * (a*a-1)+1);
 
 		F.r  = Fresnel(dot(V,H), F.r);
@@ -99,7 +99,7 @@ float3	CookTorrance( float3 N, float3 V, float3 L, float3 I, float3 F, float m )
 		float	cos_a	=	dot(N,H);
 		float	sin_a	=	sqrt(abs(1 - cos_a * cos_a)); // ABS to avoid negative values
 		
-		float	D	=	exp( -(sin_a*sin_a) / (cos_a*cos_a) / (m*m) ) / (4 * m*m * cos_a * cos_a * cos_a * cos_a );
+		float	D	=	exp( -(sin_a*sin_a) / (cos_a*cos_a) / (roguhness) ) / (4 * roguhness * cos_a * cos_a * cos_a * cos_a );
 
 		F.r  = Fresnel(dot(V,H), F.r);
 		F.g  = Fresnel(dot(V,H), F.g);

@@ -108,7 +108,6 @@ void CSMain(
 	//	add half pixel to prevent visual detachment of ssao effect:
 	float4 	ssao		=	OcclusionMap	.SampleLevel(SamplerLinearClamp, (location.xy + float2(0.5,0.5))/float2(width,height), 0 );
 	
-	
 	float fresnelDecay	=	(length(normal.xyz) * 2 - 1);// * (1-0.5*specular.a);
 	
 	normal.xyz			=	normalize(normal.xyz);
