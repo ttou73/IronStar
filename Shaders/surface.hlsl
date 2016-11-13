@@ -279,6 +279,12 @@ GBuffer PSMain( PSInput input )
 		specular		=	Textures[4].Sample( SamplerLinear, finalTC ).rgba;
 	}//*/
 
+	if ( Subset.Rectangle.z==Subset.Rectangle.w && Subset.Rectangle.z==0 ) {
+		color	=	float4(0.5,0.5,0.5,1);
+		normal	=	float4(0,0,1,0);
+		specular=	float4(0,0,0,0.5f);
+	}
+	
 	/*if (mip<6 && mip>=5) { color *= float4(1,0,0,1); } else
 	if (mip<5 && mip>=4) { color *= float4(0,1,0,1); } else
 	if (mip<4 && mip>=3) { color *= float4(0,0,1,1); } else

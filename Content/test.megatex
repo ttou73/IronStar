@@ -6,3 +6,9 @@ NormalMap	=	scenes\boxes\boxes_box_NormalMap.jpg
 Emission	=	scenes\boxes\boxes_box_Emission.jpg
 
 
+# [terrainCommCenterA]
+# BaseColor	=	scenes\terrain\phong1_BaseColor.jpg
+# Metallic	=	scenes\terrain\phong1_Metallic.jpg
+# Roughness	=	scenes\terrain\phong1_Roughness.jpg
+# NormalMap	=	scenes\terrain\phong1_NormalMap.jpg
+

@@ -402,7 +402,7 @@
     </Compile>
     <Compile Include="Engine\Graphics\VTSystem.cs" />
     <Compile Include="Engine\Imaging\Image.cs" />
-    <Compile Include="Engine\Imaging\Image.Jpg.cs" />
+    <Compile Include="Engine\Imaging\Image.Jpeg.cs" />
     <Compile Include="Engine\Imaging\Image.Png.cs" />
     <Compile Include="Engine\Imaging\Image.Tga.cs" />
     <Compile Include="Engine\Input\Bind.cs" />

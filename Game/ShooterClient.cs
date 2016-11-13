@@ -129,7 +129,7 @@ namespace IronStar {
 
 			rw.SkySettings.SunPosition			= new Vector3( 1.2f, 1.4f, 1.3f );
 			rw.SkySettings.SunLightIntensity	= 400;
-			rw.SkySettings.SkyTurbidity			= 8;
+			rw.SkySettings.SkyTurbidity			= 3;
 
 			rw.LightSet.DirectLight.Direction	=	rw.SkySettings.SunLightDirection;
 			rw.LightSet.DirectLight.Intensity	=	rw.SkySettings.SunLightColor;

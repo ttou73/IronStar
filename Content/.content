@@ -4,6 +4,8 @@
 spots/*.tga
 sprites/*.tga
 scenes/*.tga
+scenes/*.png
+scenes/*.jpg
 
 [BinaryDirectories]
 ..\..\..\..\SDKs
