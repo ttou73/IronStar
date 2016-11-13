@@ -41,24 +41,24 @@ float3	Fresnel( float c, float3 Fn )
 
 float GTerm ( float roughness, float3 N, float3 V, float3 H, float3 L ) 
 {
-	float a = sqr(roughness);
-	
-	float	g1	=	2 * dot(N,H) * dot(N,V) / (dot(V,H) + a );
-	float	g2	=	2 * dot(N,H) * dot(N,L) / (dot(V,H) + a );
+	float	NoH	=	max( 0, dot(N,H) );
+	float	NoV	=	max( 0, dot(N,V) );
+	float	NoL	=	max( 0, dot(N,L) );
+	float	VoH	=	max( 0, dot(V,H) );
+#if 0
+	float	g1	=	2 * NoH * NoV / VoH;
+	float	g2	=	2 * NoH * NoL / VoH;
 	float 	G	=	min(1, min(g1, g2));
-
-	// additional attenuation due to roughness:
-	return G * (1-roughness*0.5); 
+	return G; 
+#else
+	float k = roughness * sqrt(2/3.141592f);
+    return ( NoL / (NoL * (1-k) + k) ) * ( NoV / (NoV * (1-k) + k) );
+#endif
 }
 
 float GTerm ( float roughness, float3 N, float3 V ) 
 {
-	float a = sqr(roughness)*0;
-	float	g1	=	2 * dot(N,V) / ( dot(V,N) + a );
-	float 	G	=	saturate(min(1, g1));
-
-	// additional attenuation due to roughness:
-	return G * (1-roughness*0.5);
+	return GTerm(roughness, N, V, 0, N );
 }
 
 /*-----------------------------------------------------------------------------
@@ -82,10 +82,10 @@ float3	CookTorrance( float3 N, float3 V, float3 L, float3 I, float3 F, float rou
 	//	avoid point light flickering on shiny surfaces.
 	//roughness = roughness;
 	
-	float m = roughness * roughness;
+	float m = roughness;// * roughness;
 
 	//	NB: To remove harsh edge on grazing angles :
-	float	edgeDecay	=	saturate(dot(L,N)*10);
+	float	edgeDecay	=	1;//saturate(dot(L,N)*10);
 
 	float	G		=	GTerm( roughness, N,V,H,L );
 	

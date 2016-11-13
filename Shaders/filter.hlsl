@@ -320,7 +320,7 @@ PS_IN VSMain(uint VertexID : SV_VertexID)
 
 float Beckmann( float3 N, float3 H, float roughness)
 {
-	float 	m		=	roughness * roughness;
+	float 	m		=	roughness*roughness;
 	float	cos_a	=	dot(N,H);
 	float	sin_a	=	sqrt(abs(1 - cos_a * cos_a)); // 'abs' to avoid negative values
 	return	exp( -(sin_a*sin_a) / (cos_a*cos_a) / (m*m) ) / (3.1415927 * m*m * cos_a * cos_a * cos_a * cos_a );
@@ -344,8 +344,8 @@ float4 PSMain(PS_IN input) : SV_Target
 	//	11 steps is perfect number of steps to pick every texel 
 	//	of cubemap with initial size 256x256 and get all important 
 	//	samples of Beckmann distrubution.
-	for (float x=-5; x<=5; x+=1 ) {
-		for (float y=-5; y<=5; y+=1 ) {
+	for (float x=-7; x<=7; x+=1 ) {
+		for (float y=-7; y<=7; y+=1 ) {
 			float3 H = normalize(N + tangentX * x * dxy + tangentY * y * dxy);
 			float d = Beckmann(H,N,Roughness.x);
 			weight += d;

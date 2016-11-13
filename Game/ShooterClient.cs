@@ -127,8 +127,8 @@ namespace IronStar {
 			rw.HdrSettings.DirtAmount   = 0.0f;
 			rw.HdrSettings.KeyValue     = 0.18f;
 
-			rw.SkySettings.SunPosition			= new Vector3( 1.2f, 1.4f, 1.3f );
-			rw.SkySettings.SunLightIntensity	= 400;
+			rw.SkySettings.SunPosition			= new Vector3( 1.0f, 1.4f, 1.3f );
+			rw.SkySettings.SunLightIntensity	= 200;
 			rw.SkySettings.SkyTurbidity			= 3;
 
 			rw.LightSet.DirectLight.Direction	=	rw.SkySettings.SunLightDirection;

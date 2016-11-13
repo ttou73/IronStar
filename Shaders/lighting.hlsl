@@ -135,10 +135,11 @@ void CSMain(
 		// lightColor = lerp(lightColor, float3(0,0,0), pow(saturate(-worldPos.y/8),0.5) );
 	// }
 
+	float	nDotL		=	saturate( dot(normal.xyz, lightDir) );
 	float3 diffuseTerm	=	Lambert	( normal.xyz,  lightDir, lightColor, float3(1,1,1) );
 	float3 diffuseTerm2	=	Lambert	( normal.xyz,  lightDir, lightColor, float3(1,1,1), 1 );
 	totalLight.xyz		+=	csmFactor.rgb * diffuseTerm * diffuse.rgb;
-	totalLight.xyz		+=	csmFactor.rgb * CookTorrance( normal.xyz,  viewDirN, lightDir, lightColor, specular.rgb, specular.a );
+	totalLight.xyz		+=	csmFactor.rgb * nDotL * CookTorrance( normal.xyz,  viewDirN, lightDir, lightColor, specular.rgb, specular.a );
 	
 	totalSSS.rgb		+=	csmFactor.rgb * diffuseTerm2 * scatter.rgb;
 
@@ -201,9 +202,10 @@ void CSMain(
 			float  radius    = light.PositionRadius.w;
 			float3 lightDir	 = position - worldPos.xyz;
 			float  falloff	 = LinearFalloff( length(lightDir), radius );
+			float  nDotL	 = saturate( dot(normal, normalize(lightDir)) );
 			
 			totalLight.rgb += falloff * Lambert ( normal.xyz,  lightDir, intensity, diffuse.rgb );
-			totalLight.rgb += falloff * CookTorrance( normal.xyz, viewDirN, lightDir, intensity, specular.rgb, specular.a );
+			totalLight.rgb += falloff * nDotL * CookTorrance( normal.xyz, viewDirN, lightDir, intensity, specular.rgb, specular.a );
 		}
 	}
 	
@@ -253,15 +255,15 @@ void CSMain(
 			float3 lightDir	 = position.xyz - worldPos.xyz;
 			float  falloff	 = LinearFalloff( length(lightDir), radius );
 			
-			totalLight.xyz	+=	EnvMap.SampleLevel( SamplerLinearClamp, float4(normal.xyz, lightIndex), 6).rgb * diffuse.rgb * falloff * ssao.rgb;
+			totalLight.xyz	+=	EnvMap.SampleLevel( SamplerLinearClamp, float4(normal.xyz, lightIndex), 4).rgb * diffuse.rgb * falloff * ssao.rgb;
 
-			float3	F = Fresnel(dot(viewDirN, normal.xyz), specular.rgb) * saturate(fresnelDecay*4-3);
+			float3	F = Fresnel(dot(viewDirN, normal.xyz), specular.rgb);
 			float G = GTerm( specular.w, viewDirN, normal.xyz );
 
 			//F = lerp( F, float3(1,1,1), Fc * pow(fresnelDecay,6) );
 			//F = lerp( F, float3(1,1,1), F * saturate(fresnelDecay*4-3) );
 			
-			totalLight.xyz	+=	EnvMap.SampleLevel( SamplerLinearClamp, float4(reflect(-viewDir, normal.xyz), lightIndex), specular.w*6 ).rgb * F * falloff * G * ssao.rgb;
+			totalLight.xyz	+=	EnvMap.SampleLevel( SamplerLinearClamp, float4(reflect(-viewDir, normal.xyz), lightIndex), sqrt(specular.w)*6 ).rgb * F * falloff * G * ssao.rgb;
 		}
 	}
 
@@ -304,11 +306,12 @@ void CSMain(
 			float  radius    = light.PositionRadius.w;
 			float3 lightDir	 = position - worldPos.xyz;
 			float  falloff	 = LinearFalloff( length(lightDir), radius );
+			float  nDotL	 = saturate( dot(normal, normalize(lightDir)) );
 			
 			float3 shadow	 = ComputeSpotShadow( worldPos, light, ShadowSampler, SamplerLinearClamp, SpotShadowMap, SpotMaskAtlas, Params.CSMFilterRadius.x );
 			
 			totalLight.rgb += shadow * falloff * Lambert ( normal.xyz,  lightDir, intensity, diffuse.rgb );
-			totalLight.rgb += shadow * falloff * CookTorrance( normal.xyz, viewDirN, lightDir, intensity, specular.rgb, specular.a );
+			totalLight.rgb += shadow * falloff * nDotL * CookTorrance( normal.xyz, viewDirN, lightDir, intensity, specular.rgb, specular.a );
 		}
 	}
 

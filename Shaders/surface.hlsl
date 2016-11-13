@@ -275,7 +275,7 @@ GBuffer PSMain( PSInput input )
 	}//*/
 
 	if ( Subset.Rectangle.z==Subset.Rectangle.w && Subset.Rectangle.z==0 ) {
-		color	=	float4(0.5,0.5,0.5,1);
+		color	=	float4(0.25,0.25,0.25,1);
 		normal	=	float4(0,0,1,0);
 		rme		=	float4(0,0,0,0.5f);
 	}
@@ -293,9 +293,9 @@ GBuffer PSMain( PSInput input )
 	//	G-buffer output stuff :
 	//---------------------------------
 	float3 metalS		=	color.rgb;
-	float3 nonmetalS	=	float3(0.31,0.31,0.31);
+	float3 nonmetalS	=	float3(0.04,0.04,0.04);
 	float3 metalD		=	0;
-	float3 nonmetalD	=	color.rgb * (1-0.31);
+	float3 nonmetalD	=	color.rgb * (1-0.04);
 
 	surface.Diffuse		=	lerp(nonmetalD, metalD, rme.g);
 	surface.Specular	=	lerp(nonmetalS, metalS, rme.g);
