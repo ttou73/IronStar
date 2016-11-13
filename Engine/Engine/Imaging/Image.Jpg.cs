@@ -21,19 +21,19 @@ namespace Fusion.Engine.Imaging {
 		 * 
 		-----------------------------------------------------------------------------------------*/
 
-		public static Size2 TakePngSize( Stream stream )
+		public static Size2 TakeJpgSize( Stream stream )
 		{
-			PngBitmapDecoder decoder = new PngBitmapDecoder(stream, BitmapCreateOptions.PreservePixelFormat|BitmapCreateOptions.DelayCreation, BitmapCacheOption.OnDemand);
-			BitmapSource bitmapSource = decoder.Frames[0];
+			var decoder = new JpegBitmapDecoder(stream, BitmapCreateOptions.PreservePixelFormat|BitmapCreateOptions.DelayCreation, BitmapCacheOption.OnDemand);
+			var bitmapSource = decoder.Frames[0];
 			return new Size2( bitmapSource.PixelWidth, bitmapSource.PixelHeight );
 		}
 
 
 
-		public static Image LoadPng ( Stream stream )
+		public static Image LoadJpg ( Stream stream )
 		{
-			PngBitmapDecoder decoder = new PngBitmapDecoder(stream, BitmapCreateOptions.PreservePixelFormat, BitmapCacheOption.Default);
-			BitmapSource bitmapSource = decoder.Frames[0];
+			var decoder = new JpegBitmapDecoder(stream, BitmapCreateOptions.PreservePixelFormat, BitmapCacheOption.Default);
+			var bitmapSource = decoder.Frames[0];
 
 			
 			var bpp			=	bitmapSource.Format.BitsPerPixel;

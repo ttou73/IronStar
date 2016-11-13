@@ -1,41 +1,8 @@
-scenes\boxes\box.tga
-scenes\boxes\box_glow.tga
-scenes\boxes\box_local.tga
-scenes\boxes\box_spec.tga
-scenes\characters\marine\textures\glow.tga
-scenes\characters\marine\textures\goldGlass.tga
-scenes\characters\marine\textures\goldGlass_s.tga
-scenes\characters\marine\textures\northCam.tga
-scenes\characters\marine\textures\northCam_s.tga
-scenes\characters\marine\textures\steel.tga
-scenes\characters\marine\textures\steel_s.tga
-scenes\textures\coal.tga
-scenes\textures\coal_surf.tga
-scenes\textures\dirt.tga
-scenes\textures\floorHeavy.tga
-scenes\textures\floorHeavyA.tga
-scenes\textures\floorHeavyA_local.tga
-scenes\textures\floorHeavyA_spec.tga
-scenes\textures\gold.tga
-scenes\textures\gold_spec.tga
-scenes\textures\lava.tga
-scenes\textures\lena.tga
-scenes\textures\lunarRock.tga
-scenes\textures\lunarRock_local.tga
-scenes\textures\lunarRock_spec.tga
-scenes\textures\metal_spec.tga
-scenes\textures\nonmetal_spec.tga
-scenes\textures\northCam.tga
-scenes\textures\redball.tga
-scenes\textures\rock_local.tga
-scenes\textures\skin_local.tga
-scenes\textures\stain.tga
-scenes\textures\stain2.tga
-scenes\textures\stain_spec.tga
-scenes\textures\techA.tga
-scenes\textures\techA_local.tga
-scenes\textures\techA_spec.tga
-scenes\textures\phong1.tga
-
+[boxes_box]
+BaseColor	=	scenes\boxes\boxes_box_BaseColor.jpg
+Metallic	=	scenes\boxes\boxes_box_Metallic.jpg
+Roughness	=	scenes\boxes\boxes_box_Roughness.jpg
+NormalMap	=	scenes\boxes\boxes_box_NormalMap.jpg
+Emission	=	scenes\boxes\boxes_box_Emission.jpg
 
 

@@ -38,10 +38,6 @@ namespace IronStar {
 			Builder.Options.OutputDirectory = @"Content";
 			Builder.SafeBuild();
 
-			var img = Image.LoadPng(File.OpenRead(@"C:\GITHUB\test.png"));
-
-			Log.Warning(img.Width.ToString());
-
 
 			//
 			//	Run game :

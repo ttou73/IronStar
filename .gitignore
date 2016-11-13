@@ -4,6 +4,7 @@
 # Maya files
 .mayaSwatches/
 Temp/
+_ssp/
 .alg_meta/
 
 # User-specific files

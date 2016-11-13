@@ -19,7 +19,6 @@ namespace Fusion.Build.Mapping {
 	public class VTProcessor : AssetProcessor {
 
 
-
 		/// <summary>
 		/// 
 		/// </summary>
@@ -43,8 +42,8 @@ namespace Fusion.Build.Mapping {
 			//
 			//	Parse megatexture file :
 			//
-			var textures	=	ParseMegatexFile( assetFile );
-			var pageTable	=	CreateVTTextureTable( textures, context );
+			var iniData		=	ParseMegatexIniFile( assetFile );
+			var pageTable	=	CreateVTTextureTable( iniData, context );
 
 
 			Log.Message("-------- virtual texture: {0} --------", assetFile.KeyPath );
@@ -129,8 +128,6 @@ namespace Fusion.Build.Mapping {
 		/// <param name="assetFile"></param>
 		IniData ParseMegatexIniFile ( AssetSource assetFile )
 		{
-			
-
 			var ip = new StreamIniDataParser();
 			ip.Parser.Configuration.AllowDuplicateSections	=	false;
 			ip.Parser.Configuration.AllowDuplicateKeys		=	true;
@@ -152,13 +149,12 @@ namespace Fusion.Build.Mapping {
 		/// <param name="iniData"></param>
 		/// <param name="baseDirectory"></param>
 		/// <returns></returns>
-		VTTextureTable CreateVTTextureTable ( IEnumerable<string> textures, BuildContext context )
+		VTTextureTable CreateVTTextureTable ( IniData iniData, BuildContext context )
 		{
 			var texTable	=	new VTTextureTable();
 
-			foreach ( var texturePath in textures ) {
-				var tex = new VTTexture( texturePath, context );
-
+			foreach ( var section in iniData.Sections ) {
+				var tex = new VTTexture( section, context );
 				texTable.AddTexture( tex );
 			}
 

@@ -68,6 +68,7 @@ namespace Fusion.Engine.Imaging {
 
 
 
+
 		/// <summary>
 		/// Returns address of pixel with given coordinates and adressing mode
 		/// </summary>

@@ -132,7 +132,7 @@ namespace Fusion.Engine.Graphics {
 
 
 			Subsets	=	mesh.Subsets.Select( subset => new Subset() { 
-					Name			= scene.Materials[subset.MaterialIndex].Texture, 
+					Name			= scene.Materials[subset.MaterialIndex].Name, 
 					PrimitiveCount	= subset.PrimitiveCount,
 					StartPrimitive	= subset.StartPrimitive 
 				}).ToArray();
