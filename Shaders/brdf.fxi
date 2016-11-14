@@ -41,10 +41,10 @@ float3	Fresnel( float c, float3 Fn )
 
 float GTerm ( float roughness, float3 N, float3 V, float3 H, float3 L ) 
 {
-	float	NoH	=	max( 0, dot(N,H) );
-	float	NoV	=	max( 0, dot(N,V) );
-	float	NoL	=	max( 0, dot(N,L) );
-	float	VoH	=	max( 0, dot(V,H) );
+	float	NoH	=	max( 0.0001, dot(N,H) );
+	float	NoV	=	max( 0.0001, dot(N,V) );
+	float	NoL	=	max( 0.0001, dot(N,L) );
+	float	VoH	=	max( 0.0001, dot(V,H) );
 #if 0
 	float	g1	=	2 * NoH * NoV / VoH;
 	float	g2	=	2 * NoH * NoL / VoH;
@@ -58,7 +58,10 @@ float GTerm ( float roughness, float3 N, float3 V, float3 H, float3 L )
 
 float GTerm ( float roughness, float3 N, float3 V ) 
 {
-	return GTerm(roughness, N, V, 0, N );
+	// return 1;
+	// float k = roughness * sqrt(2/3.141592f);
+	// return 1 / (k+1) / (k+1);
+	return GTerm(roughness, N, V, 0, normalize(V+N) );
 }
 
 /*-----------------------------------------------------------------------------
