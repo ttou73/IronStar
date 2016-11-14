@@ -9,6 +9,7 @@ using Fusion.Core.Configuration;
 using Fusion.Engine.Common;
 using Fusion.Drivers.Graphics;
 using System.Runtime.InteropServices;
+using System.IO;
 
 namespace Fusion.Engine.Graphics {
 	[RequireShader("lighting")]
@@ -24,6 +25,7 @@ namespace Fusion.Engine.Graphics {
 		RenderTarget2D		spotColor		;
 
 		CascadedShadowMap	cascadedShadowMap;
+		UserTexture			envLut;
 
 
 		OmniLightGPU[]		omniLightData;
@@ -134,6 +136,10 @@ namespace Fusion.Engine.Graphics {
 			spotLightBuffer		=	new StructuredBuffer( Game.GraphicsDevice, typeof(SpotLightGPU), RenderSystem.MaxSpotLights, StructuredBufferFlags.None );
 			envLightBuffer		=	new StructuredBuffer( Game.GraphicsDevice, typeof(EnvLightGPU),  RenderSystem.MaxEnvLights, StructuredBufferFlags.None );
 
+			using ( var ms = new MemoryStream( Properties.Resources.envLut ) ) {
+				envLut    =   UserTexture.CreateFromTga( rs, ms, false );
+			}
+
 			CreateShadowMaps();
 
 			LoadContent();
@@ -208,6 +214,8 @@ namespace Fusion.Engine.Graphics {
 				SafeDispose( ref omniLightBuffer );
 				SafeDispose( ref spotLightBuffer );
 				SafeDispose( ref envLightBuffer );
+
+				SafeDispose( ref envLut );
 			}
 
 			base.Dispose( disposing );
@@ -302,6 +310,7 @@ namespace Fusion.Engine.Graphics {
 					device.ComputeShaderResources[12]	=	viewLayer.RadianceCache;
 					device.ComputeShaderResources[13]	=	viewLayer.ParticleSystem.SimulatedParticles;
 					device.ComputeShaderResources[14]	=	cascadedShadowMap.ParticleShadow;
+					device.ComputeShaderResources[15]	=	envLut.Srv;
 
 					device.ComputeShaderConstants[0]	=	lightingCB;
 

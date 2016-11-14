@@ -50,6 +50,7 @@ Texture2D 			OcclusionMap		: register(t11);
 TextureCubeArray	EnvMap				: register(t12);
 StructuredBuffer<PARTICLE> Particles	: register(t13);
 Texture2D 			ParticleShadow		: register(t14);
+Texture2D 			EnvLut				: register(t15);
 
 
 float DepthToViewZ(float depthValue) {
@@ -257,13 +258,18 @@ void CSMain(
 			
 			totalLight.xyz	+=	EnvMap.SampleLevel( SamplerLinearClamp, float4(normal.xyz, lightIndex), 4).rgb * diffuse.rgb * falloff * ssao.rgb;
 
-			float3	F = Fresnel(dot(viewDirN, normal.xyz), specular.rgb);
+			float	NoV = dot(viewDirN, normal.xyz);
+			float3	F 	= Fresnel(NoV, specular.rgb);
 			float G = GTerm( specular.w, viewDirN, normal.xyz );
 
 			//F = lerp( F, float3(1,1,1), Fc * pow(fresnelDecay,6) );
 			//F = lerp( F, float3(1,1,1), F * saturate(fresnelDecay*4-3) );
-			
-			totalLight.xyz	+=	EnvMap.SampleLevel( SamplerLinearClamp, float4(reflect(-viewDir, normal.xyz), lightIndex), sqrt(specular.w)*6 ).rgb * F * falloff * G * ssao.rgb;
+			float2 ab	=	EnvLut.SampleLevel( SamplerLinearClamp, float2(specular.w, 1-NoV), 0 ).xy;
+			float3 env	=	EnvMap.SampleLevel( SamplerLinearClamp, float4(reflect(-viewDir, normal.xyz), lightIndex), sqrt(specular.w)*6 ).rgb;
+
+			totalLight.xyz	+=	env * ( specular.rgb * ab.x + ab.y ) * falloff * ssao.rgb;
+			//totalLight.xyz	=	ab.x;
+			//totalLight.xyz	+=	EnvMap.SampleLevel( SamplerLinearClamp, float4(reflect(-viewDir, normal.xyz), lightIndex), sqrt(specular.w)*6 ).rgb * F * falloff * G * ssao.rgb;
 		}
 	}
 

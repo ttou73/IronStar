@@ -134,7 +134,7 @@ float4 PSMain(float4 position : SV_POSITION, float2 uv : TEXCOORD0 ) : SV_Target
 	
 	bloom	*=	bloomMask.rgb;
 	
-	hdrImage			=	lerp( hdrImage * bloomMask.rgb, bloom, saturate(bloomMask.a * Params.DirtAmount + Params.BloomAmount));
+	hdrImage			=	lerp( hdrImage * bloomMask.rgb, bloom, 0*saturate(bloomMask.a * Params.DirtAmount + Params.BloomAmount));
 	
 
 	//

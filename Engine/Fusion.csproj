@@ -603,6 +603,7 @@
     <Content Include="fusionIcon.png" />
     <Content Include="fusionIconGrayscale.png" />
     <Content Include="launchHeader.png" />
+    <None Include="envLut.tga" />
     <None Include="fusionIconGrayscale.ico" />
     <None Include="conchars.tga" />
     <None Include="fusionSplash.png" />

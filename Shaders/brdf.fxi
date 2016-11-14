@@ -50,18 +50,27 @@ float GTerm ( float roughness, float3 N, float3 V, float3 H, float3 L )
 	float	g2	=	2 * NoH * NoL / VoH;
 	float 	G	=	min(1, min(g1, g2));
 	return G; 
-#else
+#elif 1
 	float k = roughness * sqrt(2/3.141592f);
     return ( NoL / (NoL * (1-k) + k) ) * ( NoV / (NoV * (1-k) + k) );
+#else
+	float a = roughness * roughness;
+	float a2 = a*a;
+
+	float G_SmithV = NoV + sqrt( NoV * (NoV - NoV * a2) + a2 );
+	float G_SmithL = NoL + sqrt( NoL * (NoL - NoL * a2) + a2 );
+	return saturate(rcp( G_SmithV * G_SmithL ));
 #endif
 }
 
 float GTerm ( float roughness, float3 N, float3 V ) 
 {
-	// return 1;
-	// float k = roughness * sqrt(2/3.141592f);
+	return 1-roughness;
+	float k = roughness * sqrt(2/3.141592f);
 	// return 1 / (k+1) / (k+1);
-	return GTerm(roughness, N, V, 0, normalize(V+N) );
+	float G = 1 / (k+1) / (k+1);
+	return lerp( G, 1, 0 );
+	//return GTerm(roughness, N, V, 0, normalize(V*2+N) );
 }
 
 /*-----------------------------------------------------------------------------
