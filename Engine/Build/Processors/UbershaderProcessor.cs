@@ -107,7 +107,7 @@ namespace Fusion.Build.Processors {
 			//
 			string shaderSource	=	File.ReadAllText( assetFile.FullSourcePath );
 
-			var ubershaderDecl	=	shaderSource.Split( new[]{Environment.NewLine}, StringSplitOptions.RemoveEmptyEntries )
+			var ubershaderDecl	=	shaderSource.Split( new[]{'\r','\n'}, StringSplitOptions.RemoveEmptyEntries )
 									.Select( line0 => line0.Trim() )
 									.Where( line1 => line1.StartsWith("$ubershader") )
 									.ToList();

@@ -232,7 +232,7 @@ GBuffer PSMain( PSInput input )
 	surface.Normal		= 	float3(0,0,1);
 	surface.Emission 	= 	0;
 
-	input.TexCoord.xy	=	frac(input.TexCoord.xy);
+	//input.TexCoord.xy	=	frac(input.TexCoord.xy);
 	input.TexCoord.x	=	mad( input.TexCoord.x, Subset.Rectangle.z, Subset.Rectangle.x );
 	input.TexCoord.y	=	mad( input.TexCoord.y, Subset.Rectangle.w, Subset.Rectangle.y );
 	
@@ -251,8 +251,8 @@ GBuffer PSMain( PSInput input )
 	//	Virtual texturing stuff :
 	//---------------------------------
 	float2 vtexTC		=	input.TexCoord;
-	float2 atiHack		=	float2(-0.25f/131072, -0.25f/131072) * scale; // <-- float2(0,0) for NVIdia
-	//float2 atiHack		=	float2(0,0); // <-- float2(0,0) for NVIdia
+	//float2 atiHack		=	float2(-0.25f/131072, -0.25f/131072) * scale; // <-- float2(0,0) for NVIdia
+	float2 atiHack		=	float2(0,0); // <-- float2(0,0) for NVIdia
 	
 	float4 fallback		=	float4( 0.5f, 0.5, 0.5f, 1.0f );
 	float4 physPageTC	=	Textures[1].SampleLevel( SamplerPoint, input.TexCoord + atiHack, (int)(mip) ).xyzw;
