@@ -256,10 +256,6 @@ void CSMain(
 		}
 	}
 
-	hdrTexture[dispatchThreadId.xy] = totalLight;
-	return;
-	
-	
 	//-----------------------------------------------------
 	//	SPOT LIGHTS :
 	//-----------------------------------------------------
@@ -312,8 +308,6 @@ void CSMain(
 	//	Ambient :
 	//-----------------------------------------------------
 	
-	//totalLight	+=	(diffuse + specular) * Params.AmbientColor * ssao * fresnelDecay;// * pow(normal.y*0.5+0.5, 1);
-
 	hdrTexture[dispatchThreadId.xy] = totalLight;
 }
 #endif
