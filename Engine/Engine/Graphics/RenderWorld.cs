@@ -6,6 +6,7 @@ using System.IO;
 using System.Threading.Tasks;
 using Fusion.Core.Mathematics;
 using Fusion.Core;
+using Fusion.Engine.Input;
 using Fusion.Drivers.Graphics;
 using Fusion.Engine.Common;
 using System.Diagnostics;
@@ -121,7 +122,7 @@ namespace Fusion.Engine.Graphics {
 		HdrFrame radianceFrame;
 
 		//	reuse diffuse buffer as temporal buffer for effects.
-		internal RenderTarget2D TempFXBuffer { get { return viewHdrFrame.DiffuseBuffer; } }
+		internal RenderTarget2D TempFXBuffer { get { return viewHdrFrame.GBuffer0; } }
 
 		internal RenderTarget2D	MeasuredOld;
 		internal RenderTarget2D	MeasuredNew;
@@ -325,10 +326,15 @@ namespace Fusion.Engine.Graphics {
 		/// </summary>
 		internal void Render ( GameTime gameTime, StereoEye stereoEye, RenderTargetSurface targetSurface )
 		{
+			if ( Game.Keyboard.IsKeyDown( Keys.R ) ) {
+				RenderRadiance();
+			}
+
+
 			//var targetSurface = (Target == null) ? rs.Device.BackbufferColor.Surface : Target.RenderTarget.Surface;
 
 			//	clear target buffer if necassary :
-			if (Clear) {
+			if ( Clear) {
 				rs.Device.Clear( targetSurface, ClearColor );
 			}
 
@@ -349,10 +355,8 @@ namespace Fusion.Engine.Graphics {
 		/// </summary>
 		void ClearBuffers ( HdrFrame frame )
 		{
-			Game.GraphicsDevice.Clear( frame.DiffuseBuffer.Surface,		Color4.Black );
-			Game.GraphicsDevice.Clear( frame.SpecularBuffer.Surface,	Color4.Black );
-			Game.GraphicsDevice.Clear( frame.NormalMapBuffer.Surface,	Color4.Black );
-			Game.GraphicsDevice.Clear( frame.ScatteringBuffer.Surface,	Color4.Black );
+			Game.GraphicsDevice.Clear( frame.GBuffer0.Surface,			Color4.Black );
+			Game.GraphicsDevice.Clear( frame.GBuffer1.Surface,			Color4.Black );
 
 			Game.GraphicsDevice.Clear( frame.FeedbackBufferRB.Surface,	Color4.Zero );
 
@@ -391,13 +395,13 @@ namespace Fusion.Engine.Graphics {
 			rs.SceneRenderer.RenderGBuffer( gameTime, stereoEye, Camera, viewHdrFrame, this );
 
 			//	render ssao :
-			rs.SsaoFilter.Render( stereoEye, Camera, viewHdrFrame.DepthBuffer, viewHdrFrame.NormalMapBuffer );
+			rs.SsaoFilter.Render( stereoEye, Camera, viewHdrFrame.DepthBuffer, viewHdrFrame.GBuffer1 );
 
 			switch (rs.ShowGBuffer) {
-				case 1 : rs.Filter.Copy( targetSurface, viewHdrFrame.DiffuseBuffer ); return;
-				case 2 : rs.Filter.Copy( targetSurface, viewHdrFrame.SpecularBuffer ); return;
-				case 3 : rs.Filter.Copy( targetSurface, viewHdrFrame.NormalMapBuffer ); return;
-				case 4 : rs.Filter.Copy( targetSurface, viewHdrFrame.ScatteringBuffer ); return;
+				case 1 : rs.Filter.CopyColor( targetSurface, viewHdrFrame.GBuffer0 ); return;
+				case 2 : rs.Filter.CopyAlpha( targetSurface, viewHdrFrame.GBuffer0 ); return;
+				case 3 : rs.Filter.CopyColor( targetSurface, viewHdrFrame.GBuffer1 ); return;
+				case 4 : rs.Filter.CopyAlpha( targetSurface, viewHdrFrame.GBuffer1 ); return;
 				case 5 : rs.Filter.Copy( targetSurface, rs.SsaoFilter.OcclusionMap ); return;
 				case 6 : rs.Filter.StretchRect( targetSurface, rs.LightRenderer.CascadedShadowMap.ParticleShadow ); return;
 				case 7 : rs.Filter.StretchRect( targetSurface, rs.LightRenderer.CascadedShadowMap.ColorBuffer ); return;
@@ -452,7 +456,7 @@ namespace Fusion.Engine.Graphics {
 		{
 			var sw = new Stopwatch();
 
-			Log.Message("Radiance capture...");
+			//Log.Message("Radiance capture...");
 
 			sw.Start();
 			using (new PixEvent("Capture Radiance")) {
@@ -495,7 +499,7 @@ namespace Fusion.Engine.Graphics {
 				SkySettings.SunGlowIntensity = sun;
 			}
 
-			Log.Message("{0} light probes - {1} ms", LightSet.EnvLights.Count, sw.ElapsedMilliseconds);
+			//Log.Message("{0} light probes - {1} ms", LightSet.EnvLights.Count, sw.ElapsedMilliseconds);
 		}
 
 

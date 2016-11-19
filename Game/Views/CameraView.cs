@@ -88,9 +88,9 @@ namespace IronStar.Views {
 			var uc	=	(World.GameClient as ShooterClient).UserCommand;
 
 			var m	= 	Matrix.RotationYawPitchRoll(	
-							uc.Yaw	 + MathUtil.Rad( bobYaw.Offset), 
-							uc.Pitch + MathUtil.Rad( bobPitch.Offset), 
-							uc.Roll	 + MathUtil.Rad( bobRoll.Offset)
+							uc.Yaw	 + 0*MathUtil.Rad( bobYaw.Offset), 
+							uc.Pitch + 0*MathUtil.Rad( bobPitch.Offset), 
+							uc.Roll	 + 0*MathUtil.Rad( bobRoll.Offset)
 						);
 
 			var ppos	=	player.LerpPosition(lerpFactor);

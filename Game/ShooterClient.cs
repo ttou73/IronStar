@@ -155,7 +155,7 @@ namespace IronStar {
 			} */
 
 			Log.Message("Capturing radiance...");
-			rw.RenderRadiance();
+			//rw.RenderRadiance();
 
 			(Game.UserInterface as ShooterInterface).ShowMenu = false;
 

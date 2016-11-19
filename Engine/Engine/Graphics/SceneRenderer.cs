@@ -184,15 +184,13 @@ namespace Fusion.Engine.Graphics {
 
 				var hdr			=	frame.HdrBuffer.Surface;
 				var depth		=	frame.DepthBuffer.Surface;
-				var diffuse		=	frame.DiffuseBuffer.Surface;
-				var specular	=	frame.SpecularBuffer.Surface;
-				var normals		=	frame.NormalMapBuffer.Surface;
-				var scattering	=	frame.ScatteringBuffer.Surface;
+				var gbuffer0	=	frame.GBuffer0.Surface;
+				var gbuffer1	=	frame.GBuffer1.Surface;
 				var feedback	=	frame.FeedbackBuffer.Surface;
 
 				device.ResetStates();
 
-				device.SetTargets( depth, hdr, diffuse, specular, normals, feedback );
+				device.SetTargets( depth, hdr, gbuffer0, gbuffer1, feedback );
 				device.PixelShaderSamplers[0]	= SamplerState.LinearPointClamp ;
 				device.PixelShaderSamplers[1]	= SamplerState.PointClamp;
 				device.PixelShaderSamplers[2]	= SamplerState.AnisotropicClamp;
@@ -200,7 +198,6 @@ namespace Fusion.Engine.Graphics {
 				var instances	=	rw.Instances;
 
 				if (instances.Any()) {
-					//device.PixelShaderResources[0]	= rs.VirtualTexture.FallbackTexture.Srv;
 					device.PixelShaderResources[1]	= rs.VirtualTexture.PageTable;
 					device.PixelShaderResources[2]	= rs.VirtualTexture.PhysicalPages0;
 					device.PixelShaderResources[3]	= rs.VirtualTexture.PhysicalPages1;
@@ -290,69 +287,6 @@ namespace Fusion.Engine.Graphics {
 
 			return flags;
 		}
-
-
-
-		#if false
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="context"></param>
-		internal void RenderFeedbackBuffer ( StereoEye stereoEye, Camera camera, HdrFrame frame, IEnumerable<MeshInstance> instances )
-		{
-			if (rs.SkipFeedback) {
-				return;
-			}
-
-			using ( new PixEvent("FeedbackBuffer") ) {
-				if (surfaceShader==null) {
-					return;
-				}
-
-				var device			=	Game.GraphicsDevice;
-
-				var cbData			=	new CBMeshInstanceData();
-
-				var view			=	camera.GetViewMatrix( stereoEye );
-				var projection		=	camera.GetProjectionMatrix( stereoEye );
-				var viewPosition	=	camera.GetCameraPosition4( stereoEye );
-
-				device.SetTargets( frame.FeedbackBufferDepth.Surface, frame.FeedbackBufferColor.Surface );
-				device.SetViewport( 0,0, frame.FeedbackBufferColor.Width, frame.FeedbackBufferColor.Height );
-
-				device.PixelShaderConstants[0]	= constBuffer ;
-				device.VertexShaderConstants[0]	= constBuffer ;
-				device.PixelShaderSamplers[0]	= SamplerState.AnisotropicWrap ;
-
-				cbData.Projection	=	projection;
-				cbData.View			=	view;
-				cbData.ViewPos		=	viewPosition;
-				cbData.BiasSlopeFar	=	Vector4.Zero;
-
-				//#warning INSTANSING!
-				foreach ( var instance in instances ) {
-
-					if (!instance.Visible) {
-						continue;
-					}
-
-					device.PipelineState	=	factory[ (int)ApplyFlags( instance, SurfaceFlags.FEEDBACK ) ];
-					cbData.World			=	instance.World;
-					cbData.Color			=	instance.Color;
-
-					constBuffer.SetData( cbData );
-
-					if (instance.IsSkinned) {
-						constBufferBones.SetData( instance.BoneTransforms );
-						device.VertexShaderConstants[3]	= constBufferBones ;
-					}
-
-					device.SetupVertexInput( instance.vb, instance.ib );
-					device.DrawIndexed( instance.indexCount, 0, 0 );
-				}
-			}
-		}
-		#endif
 
 
 

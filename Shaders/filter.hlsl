@@ -1,5 +1,5 @@
 #if 0
-$ubershader FXAA|COPY|DOWNSAMPLE_4|OVERLAY_ADDITIVE
+$ubershader FXAA|COPY|DOWNSAMPLE_4|OVERLAY_ADDITIVE|COPY_ALPHA
 $ubershader (STRETCH_RECT..TO_CUBE_FACE)|(DOWNSAMPLE_2_4x4..TO_CUBE_FACE)
 $ubershader GAUSS_BLUR_3x3 PASS1|PASS2
 $ubershader GAUSS_BLUR PASS1|PASS2 +BILATERAL
@@ -10,7 +10,7 @@ $ubershader FILL_ALPHA_ONE
 
 
 //-------------------------------------------------------------------------------
-#if defined(COPY) || defined(OVERLAY_ADDITIVE)
+#if defined(COPY) || defined(OVERLAY_ADDITIVE) || defined(COPY_ALPHA)
 
 Texture2D	Source : register(t0);
 
@@ -21,7 +21,11 @@ float4 VSMain(uint VertexID : SV_VertexID) : SV_POSITION
 
 float4 PSMain(float4 position : SV_POSITION) : SV_Target
 {
+	#ifdef COPY_ALPHA
+	return Source.Load(int3(position.xy, 0)).aaaa;
+	#else
 	return Source.Load(int3(position.xy, 0));
+	#endif
 }
 
 #endif

@@ -295,10 +295,8 @@ namespace Fusion.Engine.Graphics {
 					device.ComputeShaderSamplers[2]	=	SamplerState.ShadowSampler;
 					device.ComputeShaderSamplers[3]	=	SamplerState.LinearPointWrap;
 
-					device.ComputeShaderResources[0]	=	hdrFrame.DiffuseBuffer;
-					device.ComputeShaderResources[1]	=	hdrFrame.SpecularBuffer;
-					device.ComputeShaderResources[2]	=	hdrFrame.NormalMapBuffer;
-					device.ComputeShaderResources[3]	=	hdrFrame.ScatteringBuffer;
+					device.ComputeShaderResources[0]	=	hdrFrame.GBuffer0;
+					device.ComputeShaderResources[1]	=	hdrFrame.GBuffer1;
 					device.ComputeShaderResources[4]	=	hdrFrame.DepthBuffer;
 					device.ComputeShaderResources[5]	=	cascadedShadowMap.ColorBuffer;
 					device.ComputeShaderResources[6]	=	spotColor;
@@ -315,8 +313,7 @@ namespace Fusion.Engine.Graphics {
 					device.ComputeShaderConstants[0]	=	lightingCB;
 
 					device.SetCSRWTexture( 0, hdrFrame.LightAccumulator.Surface );
-					device.SetCSRWTexture( 1, hdrFrame.SSSAccumulator.Surface );
-					device.SetCSRWBuffer(  2, viewLayer.ParticleSystem.ParticleLighting );
+					device.SetCSRWBuffer(  1, viewLayer.ParticleSystem.ParticleLighting );
 
 					//
 					//	Dispatch solids :

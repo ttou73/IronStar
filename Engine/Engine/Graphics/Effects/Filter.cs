@@ -44,6 +44,7 @@ namespace Fusion.Engine.Graphics
 			NEGZ								= 1 << 19,
 			FILL_ALPHA_ONE						= 1 << 20,
 			BILATERAL							= 1 << 21,
+			COPY_ALPHA							= 1 << 22,
 
 		}
 
@@ -286,17 +287,52 @@ namespace Fusion.Engine.Graphics
 		{
 			SetDefaultRenderStates();
 
-			using( new PixEvent("Copy") ) {
+			using ( new PixEvent( "Copy" ) ) {
 
-				if(dst == null) {
+				if ( dst == null ) {
 					device.RestoreBackbuffer();
 				} else {
-					SetViewport(dst);
+					SetViewport( dst );
 					device.SetTargets( null, dst );
 				}
 
-				device.PipelineState			=	factory[ (int)ShaderFlags.COPY ];
-				device.PixelShaderResources[0]	= src;
+				device.PipelineState            =   factory[(int)ShaderFlags.COPY];
+				device.PixelShaderResources[0]  = src;
+
+				device.Draw( 3, 0 );
+			}
+			device.ResetStates();
+		}
+
+
+
+		public void CopyColor (	RenderTargetSurface dst, ShaderResource src )
+		{
+			Copy ( dst, src );
+		}
+
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="dst">target to copy to</param>
+		/// <param name="src">target to copy from</param>
+		public void CopyAlpha( RenderTargetSurface dst, ShaderResource src )
+		{
+			SetDefaultRenderStates();
+
+			using ( new PixEvent( "Copy" ) ) {
+
+				if ( dst == null ) {
+					device.RestoreBackbuffer();
+				} else {
+					SetViewport( dst );
+					device.SetTargets( null, dst );
+				}
+
+				device.PipelineState            =   factory[(int)ShaderFlags.COPY_ALPHA];
+				device.PixelShaderResources[0]  = src;
 
 				device.Draw( 3, 0 );
 			}

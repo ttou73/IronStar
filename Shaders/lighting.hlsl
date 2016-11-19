@@ -35,10 +35,8 @@ SamplerState			SamplerLinearClamp : register(s1);
 SamplerComparisonState	ShadowSampler	: register(s2);
 SamplerState			SamplerLinearWrap : register(s3);
 
-Texture2D 			GBufferDiffuse 		: register(t0);
-Texture2D 			GBufferSpecular 	: register(t1);
-Texture2D 			GBufferNormalMap 	: register(t2);
-Texture2D 			GBufferScatter 		: register(t3);
+Texture2D 			GBuffer0 			: register(t0);
+Texture2D 			GBuffer1	 		: register(t1);
 Texture2D 			GBufferDepth 		: register(t4);
 Texture2D 			CSMTexture	 		: register(t5);
 Texture2D 			SpotShadowMap 		: register(t6);
@@ -61,8 +59,7 @@ float DepthToViewZ(float depthValue) {
 	OMNI light
 -----------------------------------------------------------------------------------------------------*/
 RWTexture2D<float4> hdrTexture  : register(u0); 
-RWTexture2D<float4> hdrSSS 		: register(u1); 
-RWStructuredBuffer<float4> ParticleLighting : register(u2);
+RWStructuredBuffer<float4> ParticleLighting : register(u1);
 
 //#ifdef __COMPUTE_SHADER__
 
@@ -98,24 +95,23 @@ void CSMain(
 	int3 location		=	int3( dispatchThreadId.x, dispatchThreadId.y, 0 );
 
 	// WARNING : this reduces performance :
-	//location.xy		=	min( location.xy, int2(width-1,height-1) );
+	float3	baseColor	=	GBuffer0.Load( location ).rgb;
+	float	roughness	=	GBuffer0.Load( location ).a;
+	float3	normal		=	GBuffer1.Load( location ).rgb * 2 - 1;
+	float	metallic	=	GBuffer1.Load( location ).a;
+	float	depth 	 	=	GBufferDepth.Load( location ).r;
+	
+	//normal	=	normalize( normal );
 
-	float4	diffuse 	=	GBufferDiffuse 	.Load( location );
-	float4	specular  	=	GBufferSpecular .Load( location );
-	float4	normal	 	=	GBufferNormalMap.Load( location ) * 2 - 1;
-	float	depth 	 	=	GBufferDepth 	.Load( location ).r;
-	float4	scatter 	=	GBufferScatter 	.Load( location );
+	float3	diffuse 	=	lerp( baseColor, float3(0,0,0), metallic );
+	float3	specular  	=	lerp( float3(0.04f,0.04f,0.04f), baseColor, metallic );
 	
 	//	add half pixel to prevent visual detachment of ssao effect:
 	float4 	ssao		=	OcclusionMap	.SampleLevel(SamplerLinearClamp, (location.xy + float2(0.5,0.5))/float2(width,height), 0 );
 	
-	float fresnelDecay	=	(length(normal.xyz) * 2 - 1);// * (1-0.5*specular.a);
-	
-	normal.xyz			=	normalize(normal.xyz);
+	//normal.xyz			=	normalize(normal.xyz);
 
 	float4	projPos		=	float4( (location.x+0.5f)/(float)width*2-1, (location.y+0.5f)/(float)height*(-2)+1, depth, 1 );
-
-	//float4	projPos		=	float4( input.projPos.xy / input.projPos.w, depth, 1 );
 	float4	worldPos	=	mul( projPos, Params.InverseViewProjection );
 			worldPos	/=	worldPos.w;
 			
@@ -123,7 +119,6 @@ void CSMain(
 	float3	viewDirN	=	normalize( viewDir );
 	
 	float4	totalLight	=	0;
-	float4	totalSSS	=	float4( 0,0,0, scatter.w );
 	
 	//-----------------------------------------------------
 	//	Direct light :
@@ -132,18 +127,12 @@ void CSMain(
 	float3 lightDir		=	-normalize(Params.DirectLightDirection.xyz);
 	float3 lightColor	=	Params.DirectLightIntensity.rgb;
 	
-	// if (worldPos.y<0) {
-		// lightColor = lerp(lightColor, float3(0,0,0), pow(saturate(-worldPos.y/8),0.5) );
-	// }
-
 	float	nDotL		=	saturate( dot(normal.xyz, lightDir) );
 	float3 diffuseTerm	=	Lambert	( normal.xyz,  lightDir, lightColor, float3(1,1,1) );
 	float3 diffuseTerm2	=	Lambert	( normal.xyz,  lightDir, lightColor, float3(1,1,1), 1 );
 	totalLight.xyz		+=	csmFactor.rgb * diffuseTerm * diffuse.rgb;
-	totalLight.xyz		+=	csmFactor.rgb * nDotL * CookTorrance( normal.xyz,  viewDirN, lightDir, lightColor, specular.rgb, specular.a );
+	totalLight.xyz		+=	csmFactor.rgb * nDotL * CookTorrance( normal.xyz,  viewDirN, lightDir, lightColor, specular, roughness );
 	
-	totalSSS.rgb		+=	csmFactor.rgb * diffuseTerm2 * scatter.rgb;
-
 	//-----------------------------------------------------
 	//	Common tile-related stuff :
 	//-----------------------------------------------------
@@ -164,7 +153,7 @@ void CSMain(
 	//	OMNI LIGHTS :
 	//-----------------------------------------------------
 	
-	if (1) {
+	if (0) {
 		uint lightCount = OMNI_LIGHT_COUNT;
 		
 		uint threadCount = BLOCK_SIZE_X * BLOCK_SIZE_Y; 
@@ -205,8 +194,8 @@ void CSMain(
 			float  falloff	 = LinearFalloff( length(lightDir), radius );
 			float  nDotL	 = saturate( dot(normal, normalize(lightDir)) );
 			
-			totalLight.rgb += falloff * Lambert ( normal.xyz,  lightDir, intensity, diffuse.rgb );
-			totalLight.rgb += falloff * nDotL * CookTorrance( normal.xyz, viewDirN, lightDir, intensity, specular.rgb, specular.a );
+			totalLight.rgb += falloff * Lambert ( normal.xyz,  lightDir, intensity, diffuse );
+			totalLight.rgb += falloff * nDotL * CookTorrance( normal.xyz, viewDirN, lightDir, intensity, specular, roughness );
 		}
 	}
 	
@@ -256,23 +245,21 @@ void CSMain(
 			float3 lightDir	 = position.xyz - worldPos.xyz;
 			float  falloff	 = LinearFalloff( length(lightDir), radius );
 			
-			totalLight.xyz	+=	EnvMap.SampleLevel( SamplerLinearClamp, float4(normal.xyz, lightIndex), 4).rgb * diffuse.rgb * falloff * ssao.rgb;
+			totalLight.xyz	+=	EnvMap.SampleLevel( SamplerLinearClamp, float4(normal.xyz, lightIndex), 4).rgb * diffuse * falloff * ssao.rgb;
 
 			float	NoV = dot(viewDirN, normal.xyz);
-			float3	F 	= Fresnel(NoV, specular.rgb);
-			float G = GTerm( specular.w, viewDirN, normal.xyz );
 
-			//F = lerp( F, float3(1,1,1), Fc * pow(fresnelDecay,6) );
-			//F = lerp( F, float3(1,1,1), F * saturate(fresnelDecay*4-3) );
-			float2 ab	=	EnvLut.SampleLevel( SamplerLinearClamp, float2(specular.w, 1-NoV), 0 ).xy;
-			float3 env	=	EnvMap.SampleLevel( SamplerLinearClamp, float4(reflect(-viewDir, normal.xyz), lightIndex), sqrt(specular.w)*6 ).rgb;
+			float2 ab	=	EnvLut.SampleLevel( SamplerLinearClamp, float2(roughness, 1-NoV), 0 ).xy;
+			float3 env	=	EnvMap.SampleLevel( SamplerLinearClamp, float4(reflect(-viewDir, normal.xyz), lightIndex), sqrt(roughness)*6 ).rgb;
 
-			totalLight.xyz	+=	env * ( specular.rgb * ab.x + ab.y ) * falloff * ssao.rgb;
-			//totalLight.xyz	=	ab.x;
-			//totalLight.xyz	+=	EnvMap.SampleLevel( SamplerLinearClamp, float4(reflect(-viewDir, normal.xyz), lightIndex), sqrt(specular.w)*6 ).rgb * F * falloff * G * ssao.rgb;
+			totalLight.xyz	+=	env * ( specular * ab.x + ab.y ) * falloff * ssao.rgb;
 		}
 	}
 
+	hdrTexture[dispatchThreadId.xy] = totalLight;
+	return;
+	
+	
 	//-----------------------------------------------------
 	//	SPOT LIGHTS :
 	//-----------------------------------------------------
@@ -317,7 +304,7 @@ void CSMain(
 			float3 shadow	 = ComputeSpotShadow( worldPos, light, ShadowSampler, SamplerLinearClamp, SpotShadowMap, SpotMaskAtlas, Params.CSMFilterRadius.x );
 			
 			totalLight.rgb += shadow * falloff * Lambert ( normal.xyz,  lightDir, intensity, diffuse.rgb );
-			totalLight.rgb += shadow * falloff * nDotL * CookTorrance( normal.xyz, viewDirN, lightDir, intensity, specular.rgb, specular.a );
+			totalLight.rgb += shadow * falloff * nDotL * CookTorrance( normal.xyz, viewDirN, lightDir, intensity, specular, roughness );
 		}
 	}
 
@@ -328,7 +315,6 @@ void CSMain(
 	//totalLight	+=	(diffuse + specular) * Params.AmbientColor * ssao * fresnelDecay;// * pow(normal.y*0.5+0.5, 1);
 
 	hdrTexture[dispatchThreadId.xy] = totalLight;
-	hdrSSS[dispatchThreadId.xy] = totalSSS;
 }
 #endif
 
