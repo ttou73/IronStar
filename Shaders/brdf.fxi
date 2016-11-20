@@ -97,7 +97,6 @@ float3	CookTorrance( float3 N, float3 V, float3 L, float3 I, float3 F, float rou
 	float m = roughness;// * roughness;
 
 	//	NB: To remove harsh edge on grazing angles :
-	float	edgeDecay	=	1;//saturate(dot(L,N)*10);
 
 	float	G		=	GTerm( roughness, N,V,H,L );
 	
@@ -108,6 +107,6 @@ float3	CookTorrance( float3 N, float3 V, float3 L, float3 I, float3 F, float rou
 
 	F	=	Fresnel( dot(V,H), F );
 						  
-	return max(0, I * F * D * G / (4*abs(dot(N,L))*dot(V,N))) * edgeDecay;
+	return max(0, I * F * D * G / (4*abs(dot(N,L))*dot(V,N)));
 }
 

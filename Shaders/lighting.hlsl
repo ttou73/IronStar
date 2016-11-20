@@ -101,7 +101,7 @@ void CSMain(
 	float	metallic	=	GBuffer1.Load( location ).a;
 	float	depth 	 	=	GBufferDepth.Load( location ).r;
 	
-	//normal	=	normalize( normal );
+	normal	=	normalize( normal );
 
 	float3	diffuse 	=	lerp( baseColor, float3(0,0,0), metallic );
 	float3	specular  	=	lerp( float3(0.04f,0.04f,0.04f), baseColor, metallic );
