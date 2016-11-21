@@ -13,6 +13,7 @@ static const float PI = 3.141592f;
 -----------------------------------------------------------------------------*/
 
 #include "brdf.fxi"
+#include "fog.fxi"
 #include "lighting.fxi"
 #include "shadows.fxi"
 #include "particles.fxi"
@@ -37,6 +38,7 @@ SamplerState			SamplerLinearWrap : register(s3);
 
 Texture2D 			GBuffer0 			: register(t0);
 Texture2D 			GBuffer1	 		: register(t1);
+TextureCube			FogTable			: register(t2);
 Texture2D 			GBufferDepth 		: register(t4);
 Texture2D 			CSMTexture	 		: register(t5);
 Texture2D 			SpotShadowMap 		: register(t6);
@@ -116,6 +118,7 @@ void CSMain(
 			worldPos	/=	worldPos.w;
 			
 	float3	viewDir		=	Params.ViewPosition.xyz - worldPos.xyz;
+	float	viewDistance=	length( viewDir );
 	float3	viewDirN	=	normalize( viewDir );
 	
 	float4	totalLight	=	0;
@@ -308,6 +311,12 @@ void CSMain(
 	//	Ambient :
 	//-----------------------------------------------------
 	
+	float3 fogColor	=	FogTable.SampleLevel( SamplerLinearClamp, -viewDirN, 0 ).rgb;
+	
+	if (depth<0.9999f) {
+		totalLight.rgb = ApplyFogColor( totalLight.rgb, Params.FogDensity, viewDistance, fogColor );
+	}
+	
 	hdrTexture[dispatchThreadId.xy] = totalLight;
 }
 #endif
@@ -329,6 +338,9 @@ void CSMain(
 
 	#if 1
 		float4	worldPos	=	float4(Particles[id].Position, 1);
+		float3	viewDir		=	Params.ViewPosition.xyz - worldPos.xyz;
+		float	viewDistance=	length( viewDir );
+		float3	viewDirN	=	normalize( viewDir );
 		
 		//
 		//	Direct light :
@@ -380,7 +392,13 @@ void CSMain(
 			totalPrtLight.xyz	+=	envFactor * falloff / 6;
 		}
 		
-		ParticleLighting[id] = 	float4( totalPrtLight, 1 );
+
+		//
+		//	Apply fog :
+		//
+		float  fogAlpha	=	ApplyFogAlpha( Params.FogDensity, viewDistance );
+
+		ParticleLighting[id] = 	float4( totalPrtLight, fogAlpha );
 
 	#else
 		ParticleLighting[id]	=	float4(1,1,1,1);

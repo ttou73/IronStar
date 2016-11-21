@@ -29,6 +29,8 @@ struct LightingParams {
 	
 	int			CascadeCount;
 	float		CascadeScale;
+	
+	float		FogDensity;
 };
 
 struct PS_IN {

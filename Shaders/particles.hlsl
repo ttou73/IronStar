@@ -217,10 +217,14 @@ void GSMain( point VSOutput inputPoint[1], inout TriangleStream<GSOutput> output
 	
 	#ifdef DRAW
 	if (prt.Effects==ParticleFX_Lit || prt.Effects==ParticleFX_LitShadow) {
-		p0.Color.rgb	*= particleLighting[ prtId ].rgb;
-		p1.Color.rgb	*= particleLighting[ prtId ].rgb;
-		p2.Color.rgb	*= particleLighting[ prtId ].rgb;
-		p3.Color.rgb	*= particleLighting[ prtId ].rgb;
+		p0.Color.rgba	*= ( particleLighting[ prtId ].rgba );
+		p1.Color.rgba	*= ( particleLighting[ prtId ].rgba );
+		p2.Color.rgba	*= ( particleLighting[ prtId ].rgba );
+		p3.Color.rgba	*= ( particleLighting[ prtId ].rgba );
+		p0.Color.rgb 	*= ( particleLighting[ prtId ].a );
+		p1.Color.rgb 	*= ( particleLighting[ prtId ].a );
+		p2.Color.rgb 	*= ( particleLighting[ prtId ].a );
+		p3.Color.rgb 	*= ( particleLighting[ prtId ].a );
 	}
 	#endif
 	

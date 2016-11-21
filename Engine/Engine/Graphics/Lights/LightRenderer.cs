@@ -78,6 +78,7 @@ namespace Fusion.Engine.Graphics {
 			[FieldOffset(632)] public float		ShowCSLoadSpot;
 			[FieldOffset(636)] public int		CascadeCount;
 			[FieldOffset(640)] public float		CascadeScale;
+			[FieldOffset(644)] public float		FogDensity;
 
 		}
 
@@ -278,6 +279,8 @@ namespace Fusion.Engine.Graphics {
 					cbData.CascadeCount				=	activeCascadeCount;
 					cbData.CascadeScale				=	1.0f / (float)cascadedShadowMap.CascadeCount;
 
+					cbData.FogDensity				=	viewLayer.FogSettings.Density;
+
 
 					ComputeOmniLightsTiles( view, projection, viewLayer.LightSet );
 					ComputeSpotLightsTiles( view, projection, viewLayer.LightSet );
@@ -297,6 +300,7 @@ namespace Fusion.Engine.Graphics {
 
 					device.ComputeShaderResources[0]	=	hdrFrame.GBuffer0;
 					device.ComputeShaderResources[1]	=	hdrFrame.GBuffer1;
+					device.ComputeShaderResources[2]	=	rs.Sky.SkyCube;
 					device.ComputeShaderResources[4]	=	hdrFrame.DepthBuffer;
 					device.ComputeShaderResources[5]	=	cascadedShadowMap.ColorBuffer;
 					device.ComputeShaderResources[6]	=	spotColor;

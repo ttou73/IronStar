@@ -1,0 +1,14 @@
+
+/*-----------------------------------------------------------------------------
+	General stuff :
+-----------------------------------------------------------------------------*/
+
+float3 ApplyFogColor ( float3 color, float density, float dist, float3 fogColor )
+{
+	return lerp( fogColor, color, exp(-density*dist) );
+}
+
+float ApplyFogAlpha ( float density, float dist )
+{
+	return exp(-density*dist);
+}

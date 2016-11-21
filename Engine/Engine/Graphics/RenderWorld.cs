@@ -62,6 +62,13 @@ namespace Fusion.Engine.Graphics {
 		/// <summary>
 		/// Gets sky settings.
 		/// </summary>
+		public FogSettings FogSettings {
+			get; private set;
+		}
+
+		/// <summary>
+		/// Gets sky settings.
+		/// </summary>
 		public DofSettings DofSettings {
 			get; private set;
 		}
@@ -159,6 +166,7 @@ namespace Fusion.Engine.Graphics {
 			HdrSettings		=	new HdrSettings();
 			SkySettings		=	new SkySettings();
 			DofSettings		=	new DofSettings();
+			FogSettings		=	new FogSettings();
 
 			Instances		=	new List<MeshInstance>();
 			LightSet		=	new LightSet( Game.RenderSystem );
@@ -402,10 +410,11 @@ namespace Fusion.Engine.Graphics {
 				case 2 : rs.Filter.CopyAlpha( targetSurface, viewHdrFrame.GBuffer0 ); return;
 				case 3 : rs.Filter.CopyColor( targetSurface, viewHdrFrame.GBuffer1 ); return;
 				case 4 : rs.Filter.CopyAlpha( targetSurface, viewHdrFrame.GBuffer1 ); return;
-				case 5 : rs.Filter.Copy( targetSurface, rs.SsaoFilter.OcclusionMap ); return;
-				case 6 : rs.Filter.StretchRect( targetSurface, rs.LightRenderer.CascadedShadowMap.ParticleShadow ); return;
-				case 7 : rs.Filter.StretchRect( targetSurface, rs.LightRenderer.CascadedShadowMap.ColorBuffer ); return;
-				case 8 : rs.Filter.StretchRect( targetSurface, viewHdrFrame.FeedbackBufferRB, SamplerState.PointClamp ); return;
+				case 5 : rs.Filter.CopyColor( targetSurface, viewHdrFrame.HdrBuffer ); return;
+				case 6 : rs.Filter.Copy( targetSurface, rs.SsaoFilter.OcclusionMap ); return;
+				case 7 : rs.Filter.StretchRect( targetSurface, rs.LightRenderer.CascadedShadowMap.ParticleShadow ); return;
+				case 8 : rs.Filter.StretchRect( targetSurface, rs.LightRenderer.CascadedShadowMap.ColorBuffer ); return;
+				case 9 : rs.Filter.StretchRect( targetSurface, viewHdrFrame.FeedbackBufferRB, SamplerState.PointClamp ); return;
 			}
 
 			if (rs.VirtualTexture.ShowPhysicalTextures) {
