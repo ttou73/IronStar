@@ -7,6 +7,7 @@ using System.IO;
 using Fusion;
 using Fusion.Core;
 using Fusion.Core.Mathematics;
+using Fusion.Core.Extensions;
 using Fusion.Core.Configuration;
 using Fusion.Engine.Common;
 using Fusion.Engine.Input;
@@ -128,8 +129,9 @@ namespace IronStar {
 			rw.HdrSettings.KeyValue     = 0.18f;
 
 			rw.SkySettings.SunPosition			= new Vector3( 1.0f, 1.4f, 1.3f );
-			rw.SkySettings.SunLightIntensity	= 200;
+			rw.SkySettings.SunLightIntensity	= 100;
 			rw.SkySettings.SkyTurbidity			= 3;
+			rw.SkySettings.SkyIntensity			= 1;
 
 			rw.LightSet.DirectLight.Direction	=	rw.SkySettings.SunLightDirection;
 			rw.LightSet.DirectLight.Intensity	=	rw.SkySettings.SunLightColor;
@@ -146,13 +148,20 @@ namespace IronStar {
 				spot.TextureIndex   =   0;
 				rw.LightSet.SpotLights.Add( spot );
 			} */
+			Random rand = new Random();
 
-			rw.LightSet.EnvLights.Add( new EnvLight( new Vector3(0,4,0), 1, 500 ) );
-			/*for (float x=-32; x<=32; x+=16 ) {
+			rw.LightSet.EnvLights.Add( new EnvLight( new Vector3(0,250,0), 1, 500 ) );
+			for (float x=-32; x<=32; x+=16 ) {
 				for (float y=-32; y<=32; y+=16 ) {
 					rw.LightSet.EnvLights.Add( new EnvLight( new Vector3(x,4,y), 1, 16 ) );
 				}
-			} */
+			} //*/
+
+			for (float x=-32; x<=32; x+=8 ) {
+				for (float y=-32; y<=32; y+=8 ) {
+					rw.LightSet.OmniLights.Add( new OmniLight( new Vector3(x,4,y), new Color4(50,50,50,1), 16 ) );
+				}
+			}
 
 			Log.Message("Capturing radiance...");
 			//rw.RenderRadiance();

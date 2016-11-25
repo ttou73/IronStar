@@ -29,5 +29,32 @@ namespace Fusion.Engine.Graphics {
 		/// Omni-light outer radius.
 		/// </summary>
 		public float	RadiusOuter;
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public OmniLight ()
+		{
+			Position	=	Vector3.Zero;
+			Intensity	=	Color4.Zero;
+			RadiusInner	=	0;
+			RadiusOuter	=	1;
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="position"></param>
+		/// <param name="color"></param>
+		/// <param name="radius"></param>
+		public OmniLight ( Vector3 position, Color4 color, float radius )
+		{
+			Position	=	position;
+			Intensity	=	color;
+			RadiusInner	=	0;
+			RadiusOuter	=	radius;
+		}
 	}
 }

@@ -600,8 +600,6 @@ namespace Fusion.Engine.Common {
 
 		bool isActiveLastFrame = true;
 
-		bool skipFirstFrame	= true;
-
 
 		/// <summary>
 		/// 

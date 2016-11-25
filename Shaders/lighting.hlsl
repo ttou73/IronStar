@@ -156,7 +156,7 @@ void CSMain(
 	//	OMNI LIGHTS :
 	//-----------------------------------------------------
 	
-	if (0) {
+	if (1) {
 		uint lightCount = OMNI_LIGHT_COUNT;
 		
 		uint threadCount = BLOCK_SIZE_X * BLOCK_SIZE_Y; 
@@ -368,6 +368,18 @@ void CSMain(
 			
 			totalPrtLight	+= shadow * falloff * intensity;
 		}
+
+		for (i=0; i<OMNI_LIGHT_COUNT; i++) {
+			OMNILIGHT light = OmniLights[i];
+
+			float3 intensity = light.Intensity.rgb;
+			float3 position	 = light.PositionRadius.rgb;
+			float  radius    = light.PositionRadius.w;
+			float3 lightDir	 = position - worldPos.xyz;
+			float  falloff	 = LinearFalloff( length(lightDir), radius );
+			
+			totalPrtLight.xyz	+=	intensity * falloff;
+		}
 		
 		//
 		//	Ambient light :
@@ -396,9 +408,9 @@ void CSMain(
 		//
 		//	Apply fog :
 		//
-		float  fogAlpha	=	ApplyFogAlpha( Params.FogDensity, viewDistance );
+		//float  fogAlpha	=	ApplyFogAlpha( Params.FogDensity, viewDistance );
 
-		ParticleLighting[id] = 	float4( totalPrtLight, fogAlpha );
+		ParticleLighting[id] = 	float4( totalPrtLight, 1 );
 
 	#else
 		ParticleLighting[id]	=	float4(1,1,1,1);

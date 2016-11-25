@@ -24,6 +24,8 @@ namespace Fusion {
 		static object lockObj = new object();
 		static List<LogListener> listeners = new List<LogListener>();
 
+		static readonly bool debugger = System.Diagnostics.Debugger.IsAttached;
+
 
 		///// <summary>
 		///// Indicates that debug messages are allowed.
@@ -45,6 +47,10 @@ namespace Fusion {
 					
 					foreach (var listener in listeners) {
 						listener.Log( message );
+					}
+
+					if (debugger) {
+						System.Diagnostics.Debug.WriteLine("[{0}] {1}", message.MessageType, message.MessageText );
 					}
 				}
 			}

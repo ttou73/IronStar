@@ -48,6 +48,8 @@ namespace Fusion.Drivers.Graphics.Display {
 			this.Game	=	game;
 
 			ShowAdapterInfo( parameters );
+
+			Game.Reloading += (s,e) => LoadContent();
 		}
 
 
@@ -57,7 +59,6 @@ namespace Fusion.Drivers.Graphics.Display {
 		/// </summary>
 		public virtual void CreateDisplayResources ()
 		{
-			Game.Reloading += (s,e) => LoadContent();
 			LoadContent();
 		}
 
@@ -69,6 +70,8 @@ namespace Fusion.Drivers.Graphics.Display {
 		void LoadContent ()
 		{
 			stereo	=	Game.RenderSystem.Shaders.Load("stereo");
+
+			SafeDispose( ref factory );
 			factory	=	stereo.CreateFactory( typeof(Flags), Primitive.TriangleList, VertexInputElement.Empty, BlendState.Opaque, RasterizerState.CullNone, DepthStencilState.None );
 		}
 
@@ -117,6 +120,7 @@ namespace Fusion.Drivers.Graphics.Display {
 		protected override void Dispose ( bool disposing )
 		{
 			if (disposing) {
+				SafeDispose( ref factory );
 				SafeDispose( ref d3dDevice );
 			}
 			base.Dispose( disposing );

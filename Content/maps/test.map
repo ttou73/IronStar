@@ -1,0 +1,29 @@
+baseModel	=	scenes\commCenter.fbx
+
+[staticObj0]
+classname	=	staticObject
+model		=	scenes\antenna.fbx"
+collision	=	antenna
+origin		=	antenna
+
+[SKY:blueSky]
+classname	=	sky
+turbidity	=	5"
+sunPosition	=	10 10 10
+
+[fogFog]
+classname	=	fog
+density		=	0.05
+color		=	1 1 1
+
+[playerStart]
+classname	=	playerStart
+origin		=	startPoint*
+
+
+<sky origin	= "playerStart" />
+
+{
+	className: SKY
+	origin	: no
+}
