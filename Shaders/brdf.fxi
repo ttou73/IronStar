@@ -90,6 +90,8 @@ float3	CookTorrance( float3 N, float3 V, float3 L, float3 I, float3 F, float rou
 			V	=	normalize(V);
 	float3	H	=	normalize(V+L);
 	
+	float	delta	=	0.0009765625;
+	
 	//	Increase slightly low roughness value to 
 	//	avoid point light flickering on shiny surfaces.
 	//roughness = roughness;
@@ -107,6 +109,6 @@ float3	CookTorrance( float3 N, float3 V, float3 L, float3 I, float3 F, float rou
 
 	F	=	Fresnel( dot(V,H), F );
 						  
-	return max(0, I * F * D * G / (4*abs(dot(N,L))*dot(V,N)));
+	return max(0, I * F * D * G / (4*abs(dot(N,L))*dot(V,N)+delta));
 }
 
