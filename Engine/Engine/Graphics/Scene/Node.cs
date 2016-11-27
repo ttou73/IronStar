@@ -19,6 +19,11 @@ namespace Fusion.Engine.Graphics {
 		public string Name { get; set; }
 
 		/// <summary>
+		/// Node name.
+		/// </summary>
+		public string Comment { get; set; }
+
+		/// <summary>
 		/// Parent index in scene. Zero value means root node.
 		/// </summary>
 		public int ParentIndex	{ get; set; }
@@ -54,7 +59,9 @@ namespace Fusion.Engine.Graphics {
 		/// <summary>
 		/// Creates instance of the node.
 		/// </summary>
-		public Node () {
+		public Node () 
+		{
+			Comment		=	"";
 			MeshIndex	=	-1;
 			ParentIndex	=	-1;
 			TrackIndex	=	-1;
@@ -71,7 +78,8 @@ namespace Fusion.Engine.Graphics {
 			}
 
 			return ( this.Name			== other.Name			)
-				&& ( this.ParentIndex	== other.ParentIndex	)
+				&& ( this.ParentIndex   == other.ParentIndex	)
+				&& ( this.Comment	    == other.Comment		)
 				&& ( this.MeshIndex		== other.MeshIndex		)
 				&& ( this.TrackIndex	== other.TrackIndex		)
 				&& ( this.Transform		== other.Transform		)

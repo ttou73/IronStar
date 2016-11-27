@@ -153,6 +153,23 @@ Fusion::Engine::Graphics::Scene ^ FbxLoader::LoadScene( string ^filename, Option
 
 
 
+FbxString GetNodeProperty( FbxNode *fbxNode, FbxString propertyName )
+{
+	auto prop = fbxNode->GetFirstProperty();
+	while (prop != NULL) {
+
+		if (prop.GetName()==propertyName) {
+			return prop.Get<FbxString>();
+		}
+
+		prop = fbxNode->GetNextProperty(prop);
+	}
+
+	return "";
+}
+
+
+
 /*
 **	Fusion::Fbx::FbxLoader::IterateChildren
 */
@@ -160,6 +177,8 @@ void Native::Fbx::FbxLoader::IterateChildren( FbxNode *fbxNode, FbxScene *fbxSce
 {
 	auto node			=	gcnew Node();
 	node->Name			= 	gcnew string( fbxNode->GetName() );
+	node->Comment		=	gcnew string( GetNodeProperty( fbxNode, "notes" ) );
+
 	node->ParentIndex	=	parentIndex;
 	//	store FbxNode pointer for further use :
 	node->Tag			=	IntPtr(fbxNode);
