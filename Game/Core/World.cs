@@ -45,11 +45,6 @@ namespace IronStar.Core {
 		/// </summary>
 		readonly List<WorldView> views = new List<WorldView>();
 
-		/// <summary>
-		/// Gets list of world controllers.
-		/// </summary>
-		readonly List<WorldController> controllers = new List<WorldController>();
-
 
 		List<FXEvent> fxEvents = new List<FXEvent>();
 

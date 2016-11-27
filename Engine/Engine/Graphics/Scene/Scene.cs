@@ -576,6 +576,7 @@ namespace Fusion.Engine.Graphics {
 				for ( int i = 0; i < nodeCount; ++i ) {
 					var node = new Node();
 					node.Name			=	reader.ReadString();
+					node.Comment		=	reader.ReadString();
 					node.ParentIndex	=	reader.ReadInt32();
 					node.MeshIndex		=	reader.ReadInt32();
 					node.TrackIndex		=	reader.ReadInt32();
@@ -653,6 +654,7 @@ namespace Fusion.Engine.Graphics {
 
 				foreach ( var node in Nodes ) {
 					writer.Write( node.Name );
+					writer.Write( node.Comment );
 					writer.Write( node.ParentIndex );
 					writer.Write( node.MeshIndex );
 					writer.Write( node.TrackIndex );

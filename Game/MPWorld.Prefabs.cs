@@ -79,7 +79,7 @@ namespace IronStar {
 
 		public static void PrefabRocket ( World world, Entity entity )
 		{
-			entity.Attach( new Projectiles( entity, world, "Explosion", 30, 3, 100, 100, 5 ) );
+			entity.Attach( new Projectiles( entity, world, "Explosion", 30, 5, 100, 200, 5 ) );
 			
 			if (world.IsClientSide) {
 				entity.Attach( new ModelView( entity, world, @"scenes\weapon\projRocket", "rocket", Matrix.Scaling(0.1f), Matrix.Identity ) );

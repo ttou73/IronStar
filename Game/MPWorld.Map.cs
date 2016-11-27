@@ -61,8 +61,7 @@ namespace IronStar {
 				var name	=	node.Name;
 				var mesh	=	node.MeshIndex < 0 ? null : scene.Meshes[ node.MeshIndex ];
 
-
-				if (name.StartsWith("startPoint")) {	
+				if ( name.StartsWith("startPoint")) {	
 					Spawn("startPoint", 0, world.TranslationVector, 10 );
 					continue;
 				}
@@ -70,7 +69,6 @@ namespace IronStar {
 				if (name.StartsWith("camera")) {
 					Spawn("camera", 0, world );
 				}
-
 
 				if (mesh!=null) {
 					AddStaticCollisionMesh( mesh, world );

@@ -58,7 +58,6 @@
     <Compile Include="Controllers\Projectiles.cs" />
     <Compile Include="Controllers\Weaponry.cs" />
     <Compile Include="Core\EntityController.cs" />
-    <Compile Include="Core\WorldController.cs" />
     <Compile Include="Core\WorldView.cs" />
     <Compile Include="SFX\WeaponFX\Mist.cs" />
     <Compile Include="SFX\WeaponFX\MZShotgun.cs" />
@@ -97,7 +96,6 @@
     <Compile Include="MPWorld.Players.cs" />
     <Compile Include="MPWorld.Map.cs" />
     <Compile Include="MPWorld.Physics.cs" />
-    <Compile Include="Core\Angles.cs" />
     <Compile Include="Core\Entity.cs" />
     <Compile Include="Core\EntityView.cs" />
     <Compile Include="Core\Factory.cs" />
