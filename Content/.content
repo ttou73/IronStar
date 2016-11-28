@@ -37,3 +37,6 @@ scenes/*.jpg
 
 [MegaTexture]
 *.megatex
+
+[Copy]
+*.ini

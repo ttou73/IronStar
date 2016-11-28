@@ -14,6 +14,7 @@ using Fusion.Core.Content;
 using Fusion.Core.Configuration;
 using Fusion.Engine.Graphics;
 using IronStar.Core;
+using Fusion.Core.IniParser.Model;
 
 namespace IronStar {
 	public partial class ShooterServer : GameServer {
@@ -68,6 +69,8 @@ namespace IronStar {
 		public override void LoadContent ( string map )
 		{
 			SFX.SfxInstance.EnumerateSFX( (t) => Atoms.Add( t.Name ) );			
+
+			var iniData	=	Content.Load<IniData>(@"scripts\entities");
 
 			gameWorld	=	new MPWorld( this, map );
 			Thread.Sleep(100);

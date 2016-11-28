@@ -58,6 +58,8 @@
     <Compile Include="Controllers\Projectiles.cs" />
     <Compile Include="Controllers\Weaponry.cs" />
     <Compile Include="Core\EntityController.cs" />
+    <Compile Include="Core\ServerWorld.cs" />
+    <Compile Include="Core\World.Snapshots.cs" />
     <Compile Include="Core\WorldView.cs" />
     <Compile Include="SFX\WeaponFX\Mist.cs" />
     <Compile Include="SFX\WeaponFX\MZShotgun.cs" />
