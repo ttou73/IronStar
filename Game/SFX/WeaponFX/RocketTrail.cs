@@ -13,9 +13,9 @@ using IronStar.Core;
 using Fusion.Engine.Graphics;
 
 namespace IronStar.SFX.WeaponFX {
-	class RocketTrail : SfxInstance {
+	class RocketTrail : FXInstance {
 
-		public RocketTrail ( SfxSystem sfxSystem, FXEvent fxEvent ) : base(sfxSystem, fxEvent)
+		public RocketTrail ( FXPlayback sfxSystem, FXEvent fxEvent ) : base(sfxSystem, fxEvent)
 		{
 			//AddParticleStage("bulletSpark",		0.00f, 0.1f, 0.0f,  150, true, EmitSpark );
 			AddParticleStage("explosionFire",	0.00f, 0.2f, 0.0f,   90, true, EmitFire );

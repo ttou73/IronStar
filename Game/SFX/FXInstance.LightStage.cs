@@ -22,7 +22,7 @@ namespace IronStar.SFX {
 	/// <summary>
 	/// 
 	/// </summary>
-	public partial class SfxInstance {
+	public partial class FXInstance {
 
 		protected class LightStage : Stage {
 
@@ -42,7 +42,7 @@ namespace IronStar.SFX {
 			/// <param name="radius"></param>
 			/// <param name="fadeInRate"></param>
 			/// <param name="fadeOutRate"></param>
-			public LightStage ( SfxInstance instance, Vector3 position, Color4 color, float radius, float fadeInRate, float fadeOutRate ) : base(instance)
+			public LightStage ( FXInstance instance, Vector3 position, Color4 color, float radius, float fadeInRate, float fadeOutRate ) : base(instance)
 			{
 				if ( fadeInRate  < 0 ) {
 					throw new ArgumentOutOfRangeException("fadeInRate < 0");
@@ -65,7 +65,7 @@ namespace IronStar.SFX {
 				lightIntensity		=	0.0001f;
 				lightFadeRate		=	lightFadeInRate;
 
-				SfxInstance.rw.LightSet.OmniLights.Add(light); 
+				instance.rw.LightSet.OmniLights.Add(light); 
 			}
 
 
@@ -83,7 +83,7 @@ namespace IronStar.SFX {
 
 			public override void Kill ()
 			{
-				SfxInstance.rw.LightSet.OmniLights.Remove(light);
+				fxInstance.rw.LightSet.OmniLights.Remove(light);
 			}
 
 			public override void Update ( float dt, FXEvent fxEvent )

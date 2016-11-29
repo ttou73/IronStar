@@ -24,11 +24,11 @@ namespace IronStar.SFX {
 	/// <summary>
 	/// 
 	/// </summary>
-	public partial class SfxInstance {
+	public partial class FXInstance {
 		
 		static protected Random rand = new Random();
 
-		protected readonly SfxSystem sfxSystem;
+		protected readonly FXPlayback sfxSystem;
 		protected readonly RenderWorld rw;
 		protected readonly SoundWorld sw;
 
@@ -56,7 +56,7 @@ namespace IronStar.SFX {
 		/// </summary>
 		/// <param name="sfxSystem"></param>
 		/// <param name="fxEvent"></param>
-		public SfxInstance( SfxSystem sfxSystem, FXEvent fxEvent )
+		public FXInstance( FXPlayback sfxSystem, FXEvent fxEvent )
 		{
 			this.sfxSystem	=	sfxSystem;
 			this.rw			=	sfxSystem.rw;
@@ -139,7 +139,7 @@ namespace IronStar.SFX {
 		/// <param name="action"></param>
 		public static void EnumerateSFX ( Action<Type> action )
 		{
-			foreach ( var type in Misc.GetAllSubclassesOf( typeof(SfxInstance), false ) ) {
+			foreach ( var type in Misc.GetAllSubclassesOf( typeof(FXInstance), false ) ) {
 				action(type);
 			}
 		}

@@ -48,7 +48,7 @@ namespace IronStar.Core {
 
 		List<FXEvent> fxEvents = new List<FXEvent>();
 
-		SFX.SfxSystem	sfxSystem;
+		SFX.FXPlayback	sfxSystem;
 
 
 
@@ -137,7 +137,7 @@ namespace IronStar.Core {
 			this.UserGuid	=	client.Guid;
 			Content			=	client.Content;
 			entities		=	new Dictionary<uint,Entity>();
-			sfxSystem		=	new SFX.SfxSystem((ShooterClient)client, this);
+			sfxSystem		=	new SFX.FXPlayback((ShooterClient)client, this);
 		}
 
 
@@ -436,7 +436,7 @@ namespace IronStar.Core {
 		/// 
 		/// </summary>
 		/// <param name="fxType"></param>
-		public SfxInstance RunFX ( FXEvent fxEvent )
+		public FXInstance RunFX ( FXEvent fxEvent )
 		{
 			return sfxSystem.RunFX( fxEvent );
 		}

@@ -14,8 +14,8 @@ using Fusion.Engine.Graphics;
 
 namespace IronStar.SFX.WeaponFX {
 
-	class GenericPain : SfxInstance {
-		public GenericPain ( SfxSystem sfxSystem, FXEvent fxEvent, string sound, float shake, int bloodAmount, int gibAmount=0 ) : base(sfxSystem, fxEvent)
+	class GenericPain : FXInstance {
+		public GenericPain ( FXPlayback sfxSystem, FXEvent fxEvent, string sound, float shake, int bloodAmount, int gibAmount=0 ) : base(sfxSystem, fxEvent)
 		{
 			ShakeCamera( rand.GaussDistribution(0,shake), rand.GaussDistribution(0,shake), rand.GaussDistribution(0,shake) );
 
@@ -76,30 +76,30 @@ namespace IronStar.SFX.WeaponFX {
 
 
 	class PlayerPain25 : GenericPain {
-		public PlayerPain25 ( SfxSystem sfxSystem, FXEvent fxEvent ) : base(sfxSystem, fxEvent, @"sound\character\pain25", 50, 50)	{}
+		public PlayerPain25 ( FXPlayback sfxSystem, FXEvent fxEvent ) : base(sfxSystem, fxEvent, @"sound\character\pain25", 50, 50)	{}
 	}
 
 
 	class PlayerPain50 : GenericPain {
-		public PlayerPain50 ( SfxSystem sfxSystem, FXEvent fxEvent ) : base(sfxSystem, fxEvent, @"sound\character\pain50", 100, 50)	{}
+		public PlayerPain50 ( FXPlayback sfxSystem, FXEvent fxEvent ) : base(sfxSystem, fxEvent, @"sound\character\pain50", 100, 50)	{}
 	}
 
 
 	class PlayerPain75 : GenericPain {
-		public PlayerPain75 ( SfxSystem sfxSystem, FXEvent fxEvent ) : base(sfxSystem, fxEvent, @"sound\character\pain75", 150, 50)	{}
+		public PlayerPain75 ( FXPlayback sfxSystem, FXEvent fxEvent ) : base(sfxSystem, fxEvent, @"sound\character\pain75", 150, 50)	{}
 	}
 
 	class PlayerPain100 : GenericPain {
-		public PlayerPain100 ( SfxSystem sfxSystem, FXEvent fxEvent ) : base(sfxSystem, fxEvent, @"sound\character\pain100", 150, 50) {}
+		public PlayerPain100 ( FXPlayback sfxSystem, FXEvent fxEvent ) : base(sfxSystem, fxEvent, @"sound\character\pain100", 150, 50) {}
 	}
 
 
 	class PlayerDeath : GenericPain {
-		public PlayerDeath ( SfxSystem sfxSystem, FXEvent fxEvent ) : base(sfxSystem, fxEvent, @"sound\character\death1", 0, 0, 150) {}
+		public PlayerDeath ( FXPlayback sfxSystem, FXEvent fxEvent ) : base(sfxSystem, fxEvent, @"sound\character\death1", 0, 0, 150) {}
 	}
 
 	class PlayerDeathMeat : GenericPain {
-		public PlayerDeathMeat ( SfxSystem sfxSystem, FXEvent fxEvent ) : base(sfxSystem, fxEvent, @"sound\character\deathMeat", 0, 0, 150)	{}
+		public PlayerDeathMeat ( FXPlayback sfxSystem, FXEvent fxEvent ) : base(sfxSystem, fxEvent, @"sound\character\deathMeat", 0, 0, 150)	{}
 	}
 
 

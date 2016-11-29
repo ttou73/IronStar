@@ -12,9 +12,9 @@ using IronStar.Core;
 using Fusion.Engine.Graphics;
 
 namespace IronStar.SFX.WeaponFX {
-	class PlayerJump : SfxInstance {
+	class PlayerJump : FXInstance {
 		
-		public PlayerJump ( SfxSystem sfxSystem, FXEvent fxEvent ) : base(sfxSystem, fxEvent)
+		public PlayerJump ( FXPlayback sfxSystem, FXEvent fxEvent ) : base(sfxSystem, fxEvent)
 		{
 			AddSoundStage( @"sound\character\jump",	fxEvent.Origin, 4, false );
 		}

@@ -10,7 +10,7 @@ using Fusion.Core.Mathematics;
 using Fusion.Core.Extensions;
 using System.IO;
 
-namespace IronStar.Core {
+namespace IronStar.SFX {
 
 
 	public class FXEvent {

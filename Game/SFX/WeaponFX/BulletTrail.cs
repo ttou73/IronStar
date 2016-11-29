@@ -13,11 +13,11 @@ using IronStar.Core;
 using Fusion.Engine.Graphics;
 
 namespace IronStar.SFX.WeaponFX {
-	class BulletTrail : SfxInstance {
+	class BulletTrail : FXInstance {
 
 		Vector3 sparkDir;
 		
-		public BulletTrail ( SfxSystem sfxSystem, FXEvent fxEvent ) : base(sfxSystem, fxEvent)
+		public BulletTrail ( FXPlayback sfxSystem, FXEvent fxEvent ) : base(sfxSystem, fxEvent)
 		{
 			sparkDir = Matrix.RotationQuaternion(fxEvent.Rotation).Forward + rand.GaussRadialDistribution(0, 0.1f);
 			sparkDir.Normalize();
@@ -45,11 +45,11 @@ namespace IronStar.SFX.WeaponFX {
 	}
 
 
-	class ShotTrail : SfxInstance {
+	class ShotTrail : FXInstance {
 
 		Vector3 sparkDir;
 		
-		public ShotTrail ( SfxSystem sfxSystem, FXEvent fxEvent ) : base(sfxSystem, fxEvent)
+		public ShotTrail ( FXPlayback sfxSystem, FXEvent fxEvent ) : base(sfxSystem, fxEvent)
 		{
 			sparkDir = Matrix.RotationQuaternion(fxEvent.Rotation).Forward + rand.GaussRadialDistribution(0, 0.1f);
 			sparkDir.Normalize();

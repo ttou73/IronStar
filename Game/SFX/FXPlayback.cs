@@ -19,7 +19,7 @@ using IronStar.Views;
 
 
 namespace IronStar.SFX {
-	public class SfxSystem {
+	public class FXPlayback {
 
 		TextureAtlas spriteSheet;
 
@@ -29,7 +29,7 @@ namespace IronStar.SFX {
 		public readonly SoundWorld	sw;
 		public readonly World world;
 
-		List<SfxInstance> runningSFXes = new List<SfxInstance>();
+		List<FXInstance> runningSFXes = new List<FXInstance>();
 
 		float timeAccumulator = 0;
 
@@ -40,7 +40,7 @@ namespace IronStar.SFX {
 		/// 
 		/// </summary>
 		/// <param name="game"></param>
-		public SfxSystem ( ShooterClient client, World world )
+		public FXPlayback ( ShooterClient client, World world )
 		{
 			this.world	=	world;
 			this.client	=	client;
@@ -51,7 +51,7 @@ namespace IronStar.SFX {
 			Game_Reloading(this, EventArgs.Empty);
 			game.Reloading +=	Game_Reloading;
 
-			SfxInstance.EnumerateSFX( type => sfxDict.Add( type.Name, type ) );
+			FXInstance.EnumerateSFX( type => sfxDict.Add( type.Name, type ) );
 		}
 
 
@@ -137,7 +137,7 @@ namespace IronStar.SFX {
 		/// 
 		/// </summary>
 		/// <param name="fxEvent"></param>
-		public SfxInstance RunFX ( FXEvent fxEvent )
+		public FXInstance RunFX ( FXEvent fxEvent )
 		{
 			var fxAtomID	=	fxEvent.FXAtomID;
 
@@ -158,7 +158,7 @@ namespace IronStar.SFX {
 
 			if (sfxDict.TryGetValue( className, out fxType )) {
 				
-				var sfx = (SfxInstance)Activator.CreateInstance( fxType, this, fxEvent );
+				var sfx = (FXInstance)Activator.CreateInstance( fxType, this, fxEvent );
 				runningSFXes.Add( sfx );
 
 				return sfx;

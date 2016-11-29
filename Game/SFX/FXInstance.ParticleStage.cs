@@ -22,7 +22,7 @@ namespace IronStar.SFX {
 	/// <summary>
 	/// 
 	/// </summary>
-	public partial class SfxInstance {
+	public partial class FXInstance {
 
 		protected class ParticleStage : Stage {
 
@@ -51,7 +51,7 @@ namespace IronStar.SFX {
 			/// <param name="sleep"></param>
 			/// <param name="count"></param>
 			/// <param name="emit"></param>
-			public ParticleStage ( SfxInstance instance, int spriteIndex, float delay, float period, float sleep, int count, bool looped, EmitFunction emit ) : base(instance)
+			public ParticleStage ( FXInstance instance, int spriteIndex, float delay, float period, float sleep, int count, bool looped, EmitFunction emit ) : base(instance)
 			{
 				this.looped			=	false;
 				this.spriteIndex	=	spriteIndex	;
@@ -121,7 +121,7 @@ namespace IronStar.SFX {
 							emit( ref p, fxEvent );
  
 							//SfxInstance.rw.Debug.Trace( p.Position, 0.2f, Color.Yellow );
-							SfxInstance.rw.ParticleSystem.InjectParticle( p );
+							fxInstance.rw.ParticleSystem.InjectParticle( p );
 
 							emitCount++;
 			

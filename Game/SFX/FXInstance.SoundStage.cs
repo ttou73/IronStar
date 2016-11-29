@@ -22,7 +22,7 @@ namespace IronStar.SFX {
 	/// <summary>
 	/// 
 	/// </summary>
-	public partial class SfxInstance {
+	public partial class FXInstance {
 
 		
 		protected class SoundStage : Stage {
@@ -37,7 +37,7 @@ namespace IronStar.SFX {
 			/// <param name="instance"></param>
 			/// <param name="position"></param>
 			/// <param name="soundPath"></param>
-			public SoundStage ( SfxInstance instance, Vector3 position, float radius, string soundPath, bool looped, bool local ) : base(instance)
+			public SoundStage ( FXInstance instance, Vector3 position, float radius, string soundPath, bool looped, bool local ) : base(instance)
 			{
 				var sound	=	instance.sfxSystem.LoadSound( soundPath );
 
@@ -45,7 +45,7 @@ namespace IronStar.SFX {
 					return;
 				}
 
-				emitter	=	SfxInstance.sw.AllocEmitter();
+				emitter	=	instance.sw.AllocEmitter();
 				emitter.Position		=	position;
 				emitter.DistanceScale	=	radius;
 				emitter.DopplerScale	=	1;
@@ -71,7 +71,7 @@ namespace IronStar.SFX {
 			public override void Kill ()
 			{
 				if (emitter!=null) {
-					SfxInstance.sw.FreeEmitter( emitter );
+					fxInstance.sw.FreeEmitter( emitter );
 				}
 			}
 

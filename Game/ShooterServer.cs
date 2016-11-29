@@ -68,7 +68,7 @@ namespace IronStar {
 		/// <param name="map"></param>
 		public override void LoadContent ( string map )
 		{
-			SFX.SfxInstance.EnumerateSFX( (t) => Atoms.Add( t.Name ) );			
+			SFX.FXInstance.EnumerateSFX( (t) => Atoms.Add( t.Name ) );			
 
 			var iniData	=	Content.Load<IniData>(@"scripts\entities");
 

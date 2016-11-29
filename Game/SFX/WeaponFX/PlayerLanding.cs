@@ -13,9 +13,9 @@ using IronStar.Core;
 using Fusion.Engine.Graphics;
 
 namespace IronStar.SFX.WeaponFX {
-	class PlayerLanding : SfxInstance {
+	class PlayerLanding : FXInstance {
 		
-		public PlayerLanding ( SfxSystem sfxSystem, FXEvent fxEvent ) : base(sfxSystem, fxEvent)
+		public PlayerLanding ( FXPlayback sfxSystem, FXEvent fxEvent ) : base(sfxSystem, fxEvent)
 		{
 			float fallSpeed = Math.Abs(fxEvent.Velocity.Y);
 			ShakeCamera(0, -30 * fallSpeed, rand.GaussDistribution(0, 10*fallSpeed));

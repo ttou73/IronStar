@@ -13,11 +13,11 @@ using IronStar.Core;
 using Fusion.Engine.Graphics;
 
 namespace IronStar.SFX.WeaponFX {
-	class PlasmaExplosion : SfxInstance {
+	class PlasmaExplosion : FXInstance {
 		
 		Vector3 sparkDir;
 		
-		public PlasmaExplosion ( SfxSystem sfxSystem, FXEvent fxEvent ) : base(sfxSystem, fxEvent)
+		public PlasmaExplosion ( FXPlayback sfxSystem, FXEvent fxEvent ) : base(sfxSystem, fxEvent)
 		{
 			sparkDir = Matrix.RotationQuaternion(fxEvent.Rotation).Forward;
 

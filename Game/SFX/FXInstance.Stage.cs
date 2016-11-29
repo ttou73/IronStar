@@ -22,22 +22,22 @@ namespace IronStar.SFX {
 	/// <summary>
 	/// 
 	/// </summary>
-	public partial class SfxInstance {
+	public partial class FXInstance {
 
 		/// <summary>
 		/// Represents SfxInstance stage.
 		/// </summary>
 		protected abstract class Stage {
 
-			public readonly SfxInstance SfxInstance;
+			public readonly FXInstance fxInstance;
 			
 			/// <summary>
 			/// 
 			/// </summary>
 			/// <param name="sfxInstance"></param>
-			public Stage ( SfxInstance sfxInstance )
+			public Stage ( FXInstance sfxInstance )
 			{
-				this.SfxInstance	=	sfxInstance;
+				this.fxInstance	=	sfxInstance;
 			}
 
 
@@ -55,7 +55,7 @@ namespace IronStar.SFX {
 			public abstract void Stop ( bool immediate );
 
 			/// <summary>
-			/// Indicates whethe stage is worked out.
+			/// Indicates whether stage is worked out.
 			/// </summary>
 			/// <returns></returns>
 			public abstract bool IsExhausted ();

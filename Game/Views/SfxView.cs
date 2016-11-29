@@ -20,7 +20,7 @@ using IronStar.SFX;
 namespace IronStar.Views {
 	public class SfxView : EntityView {
 
-		SfxInstance sfx;
+		FXInstance sfx;
 
 		/// <summary>
 		/// 

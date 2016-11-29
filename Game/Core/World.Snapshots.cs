@@ -102,9 +102,7 @@ namespace IronStar.Core {
 
 					ConstructEntity( ent );
 
-					if (ReplicaSpawned!=null) {
-						ReplicaSpawned( this, new EntityEventArgs(ent) );
-					}
+					ReplicaSpawned?.Invoke( this, new EntityEventArgs( ent ) );
 				}
 			}
 

@@ -14,12 +14,12 @@ using Fusion.Engine.Graphics;
 
 namespace IronStar.SFX.WeaponFX {
 
-	class Mist : SfxInstance {
+	class Mist : FXInstance {
 
 
 		Vector3 sparkDir;
 		
-		public Mist ( SfxSystem sfxSystem, FXEvent fxEvent ) : base(sfxSystem, fxEvent)
+		public Mist ( FXPlayback sfxSystem, FXEvent fxEvent ) : base(sfxSystem, fxEvent)
 		{
 			sparkDir = Matrix.RotationQuaternion(fxEvent.Rotation).Forward;
 

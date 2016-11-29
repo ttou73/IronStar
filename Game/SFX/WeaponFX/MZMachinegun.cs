@@ -13,11 +13,11 @@ using IronStar.Core;
 using Fusion.Engine.Graphics;
 
 namespace IronStar.SFX.WeaponFX {
-	class MZMachinegun : SfxInstance {
+	class MZMachinegun : FXInstance {
 
 		Vector3 sparkDir;
 		
-		public MZMachinegun ( SfxSystem sfxSystem, FXEvent fxEvent ) : base(sfxSystem, fxEvent)
+		public MZMachinegun ( FXPlayback sfxSystem, FXEvent fxEvent ) : base(sfxSystem, fxEvent)
 		{
 			ShakeCamera( rand.GaussDistribution(0,10), rand.GaussDistribution(0,10), rand.GaussDistribution(0,10) );
 

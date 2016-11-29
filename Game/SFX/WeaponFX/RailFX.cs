@@ -14,12 +14,12 @@ using Fusion.Engine.Graphics;
 
 namespace IronStar.SFX.WeaponFX {
 
-	class RailHit : SfxInstance {
+	class RailHit : FXInstance {
 
 
 		Vector3 sparkDir;
 		
-		public RailHit ( SfxSystem sfxSystem, FXEvent fxEvent ) : base(sfxSystem, fxEvent)
+		public RailHit ( FXPlayback sfxSystem, FXEvent fxEvent ) : base(sfxSystem, fxEvent)
 		{
 			sparkDir = Matrix.RotationQuaternion(fxEvent.Rotation).Forward;
 
@@ -68,11 +68,11 @@ namespace IronStar.SFX.WeaponFX {
 
 
 
-	class RailMuzzle : SfxInstance {
+	class RailMuzzle : FXInstance {
 
 		Vector3 sparkDir;
 		
-		public RailMuzzle ( SfxSystem sfxSystem, FXEvent fxEvent ) : base(sfxSystem, fxEvent)
+		public RailMuzzle ( FXPlayback sfxSystem, FXEvent fxEvent ) : base(sfxSystem, fxEvent)
 		{
 			ShakeCamera( rand.GaussDistribution(0,20), rand.GaussDistribution(0,20), rand.GaussDistribution(0,20) );
 
@@ -92,13 +92,13 @@ namespace IronStar.SFX.WeaponFX {
 
 
 
-	class RailTrail : SfxInstance {
+	class RailTrail : FXInstance {
 
 		float sin ( float a ) { return (float)Math.Sin(a*6.28f); }
 		float cos ( float a ) { return (float)Math.Cos(a*6.28f); }
 
 		
-		public RailTrail ( SfxSystem sfxSystem, FXEvent fxEvent ) : base(sfxSystem, fxEvent)
+		public RailTrail ( FXPlayback sfxSystem, FXEvent fxEvent ) : base(sfxSystem, fxEvent)
 		{
 			var p = new Particle();
 

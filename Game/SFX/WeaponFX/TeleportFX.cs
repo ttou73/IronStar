@@ -14,12 +14,12 @@ using Fusion.Engine.Graphics;
 
 namespace IronStar.SFX.WeaponFX {
 
-	class TeleportOut : SfxInstance {
+	class TeleportOut : FXInstance {
 
 
 		Vector3 sparkDir;
 		
-		public TeleportOut ( SfxSystem sfxSystem, FXEvent fxEvent ) : base(sfxSystem, fxEvent)
+		public TeleportOut ( FXPlayback sfxSystem, FXEvent fxEvent ) : base(sfxSystem, fxEvent)
 		{
 			sparkDir = Matrix.RotationQuaternion(fxEvent.Rotation).Forward;
 

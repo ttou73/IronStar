@@ -14,9 +14,9 @@ using Fusion.Engine.Graphics;
 namespace IronStar.SFX.WeaponFX {
 
 
-	class PlayerFootStepR : SfxInstance {
+	class PlayerFootStepR : FXInstance {
 		
-		public PlayerFootStepR ( SfxSystem sfxSystem, FXEvent fxEvent ) : base(sfxSystem, fxEvent)
+		public PlayerFootStepR ( FXPlayback sfxSystem, FXEvent fxEvent ) : base(sfxSystem, fxEvent)
 		{
 			ShakeCamera(0,0,15);
 			var name = "foot" + rand.Next(0,6);
@@ -26,9 +26,9 @@ namespace IronStar.SFX.WeaponFX {
 
 
 
-	class PlayerFootStepL : SfxInstance {
+	class PlayerFootStepL : FXInstance {
 		
-		public PlayerFootStepL ( SfxSystem sfxSystem, FXEvent fxEvent ) : base(sfxSystem, fxEvent)
+		public PlayerFootStepL ( FXPlayback sfxSystem, FXEvent fxEvent ) : base(sfxSystem, fxEvent)
 		{
 			ShakeCamera(0,0,-15);
 			var name = "foot" + rand.Next(0,6);
