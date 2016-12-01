@@ -40,6 +40,12 @@ namespace IronStar {
 
 
 
+		void AddTemplate ( string classname, params string[] parameters )
+		{
+		}
+
+
+
 		/*-----------------------------------------------------------------------------------------
 		 * 
 		 *	PREFABS :
@@ -64,11 +70,10 @@ namespace IronStar {
 		/// <param name="serverSide"></param>
 		public static void PrefabPlayer ( World world, Entity entity )
 		{
-			entity.Attach( new Weaponry( entity, world ) );
 			entity.Attach( new Characters( entity, world ) );
 
 			if (world.IsClientSide) {
-				entity.Attach( new ModelView( entity, world, @"scenes\characters\marine\marine", "marine", Matrix.Scaling(0.09f) * Matrix.RotationY(MathUtil.Pi), Matrix.Translation(0,-0.85f,0) ) );
+				//entity.Attach( new ModelView( entity, world, @"scenes\characters\marine\marine", "marine", Matrix.Scaling(0.09f) * Matrix.RotationY(MathUtil.Pi), Matrix.Translation(0,-0.85f,0) ) );
 			}
 
 			entity.SetItemCount( Inventory.Health	,	100	);
@@ -82,8 +87,8 @@ namespace IronStar {
 			entity.Attach( new Projectiles( entity, world, "Explosion", 30, 5, 100, 200, 5 ) );
 			
 			if (world.IsClientSide) {
-				entity.Attach( new ModelView( entity, world, @"scenes\weapon\projRocket", "rocket", Matrix.Scaling(0.1f), Matrix.Identity ) );
-				entity.Attach( new SfxView( entity, world, "RocketTrail" ) );
+				//entity.Attach( new ModelView( entity, world, @"scenes\weapon\projRocket", "rocket", Matrix.Scaling(0.1f), Matrix.Identity ) );
+				//entity.Attach( new SfxView( entity, world, "RocketTrail" ) );
 			}
 		}
 
@@ -95,7 +100,7 @@ namespace IronStar {
 			
 			if (world.IsClientSide) {
 				//entity.Attach( new ModelView( entity, world, @"scenes\weapon\projRocket", "rocket", Matrix.Scaling(0.1f), Matrix.Identity ) );
-				entity.Attach( new SfxView( entity, world, "PlasmaTrail" ) );
+				//entity.Attach( new SfxView( entity, world, "PlasmaTrail" ) );
 			}
 		}
 
@@ -105,7 +110,7 @@ namespace IronStar {
 		{
 			if (world.IsClientSide) {
 				//entity.Attach( new ModelView( entity, world, @"scenes\weapon\projRocket", "rocket", Matrix.Scaling(0.1f), Matrix.Identity ) );
-				entity.Attach( new SfxView( entity, world, "Mist" ) );
+				//entity.Attach( new SfxView( entity, world, "Mist" ) );
 			}
 		}
 
@@ -116,7 +121,7 @@ namespace IronStar {
 			entity.Attach( new RigidBody(entity, world, 1.0f, 0.75f, 0.75f,5 ) ); 
 
 			if (world.IsClientSide) {
-				entity.Attach( new ModelView( entity, world, @"scenes\boxes\boxModel", "pCube1", Matrix.Identity, Matrix.Identity ) );
+				//entity.Attach( new ModelView( entity, world, @"scenes\boxes\boxModel", "pCube1", Matrix.Identity, Matrix.Identity ) );
 			}
 		}
 

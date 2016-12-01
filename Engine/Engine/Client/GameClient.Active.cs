@@ -175,6 +175,7 @@ namespace Fusion.Engine.Client {
 
 				if (indexDelta==0) {
 					Log.Error("Duplicate snapshot #{0}", snapshotId);
+					return;
 				} else {
 					timeDelta	/= indexDelta;
 				}

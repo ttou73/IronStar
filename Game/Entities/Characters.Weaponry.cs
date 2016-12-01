@@ -20,48 +20,9 @@ using BEPUphysics.Character;
 
 
 namespace IronStar.Controllers {
+	public partial class Characters : EntityController {
 
-	/// <summary>
-	/// Player's weaponry controller.
-	/// </summary>
-	public class Weaponry : EntityController {
-
-		Random	rand	=	new Random();
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="game"></param>
-		/// <param name="space"></param>
-		public Weaponry ( Entity entity, World world ) : base(entity, world)
-		{
-			entity.ActiveItem	=	Inventory.Machinegun;
-			entity.SetItemCount( Inventory.Bullets			,	999	);
-			entity.SetItemCount( Inventory.Machinegun		,	1	);
-
-			entity.SetItemCount( Inventory.Rockets			,	150	);
-			entity.SetItemCount( Inventory.RocketLauncher	,	1	);
-
-			entity.SetItemCount( Inventory.Slugs			,	150	);
-			entity.SetItemCount( Inventory.Railgun			,	1	);
-
-			entity.SetItemCount( Inventory.Cells			,	999	);
-			entity.SetItemCount( Inventory.HyperBlaster		,	1	);
-		}
-
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="gameTime"></param>
-		public override void Update ( float elapsedTime )
-		{
-			UpdateWeaponState( Entity, (short)(elapsedTime*1000) );
-		}
-
-
+		Random rand = new Random();
 
 		/// <summary>
 		/// 
@@ -97,13 +58,13 @@ namespace IronStar.Controllers {
 			if (attack) {
 				switch (entity.ActiveItem) {
 					case Inventory.Machinegun		:	FireBullet(world, entity, 5, 5, 100, 0.03f); break;
-					case Inventory.Shotgun			:	FireShot( world, entity, 10,10, 5.0f, 500, 0.12f); break;
+					case Inventory.Shotgun			:	FireShot( world, entity, 10,10, 5.0f, 1000, 0.12f); break;
 					case Inventory.SuperShotgun		:	break;
 					case Inventory.GrenadeLauncher	:	break;
-					case Inventory.RocketLauncher	:	FireRocket(world, entity, 500); break;
+					case Inventory.RocketLauncher	:	FireRocket(world, entity, 800); break;
 					case Inventory.HyperBlaster		:	FirePlasma(world, entity, 100); break;
 					case Inventory.Chaingun			:	break;
-					case Inventory.Railgun			:	FireRail(world, entity, 80, 100, 700 ); break;
+					case Inventory.Railgun			:	FireRail(world, entity, 80, 100, 1500 ); break;
 					case Inventory.BFG				:	break;
 					default: 
 						entity.ActiveItem = Inventory.Machinegun;
@@ -271,9 +232,6 @@ namespace IronStar.Controllers {
 
 			attacker.SetItemCount( Inventory.WeaponCooldown, cooldown );
 		}
-
-
-
 
 
 	}

@@ -340,7 +340,6 @@ namespace IronStar.Core {
 		 * 
 		-----------------------------------------------------------------------------------------------*/
 		readonly List<EntityController>	controllers = new List<EntityController>();
-		readonly List<EntityView>		views		= new List<EntityView>();
 
 		/// <summary>
 		/// Attaches controller to entity.
@@ -360,28 +359,6 @@ namespace IronStar.Core {
 		{
 			foreach ( var c in controllers ) {
 				action(c);
-			}
-		}
-
-
-		/// <summary>
-		/// Attaches controller to entity.
-		/// </summary>
-		/// <param name="controller"></param>
-		public void Attach ( EntityView view )
-		{
-			views.Add( view );
-		}
-
-
-		/// <summary>
-		/// Iterates all controllers
-		/// </summary>
-		/// <param name="action"></param>
-		public void ForeachViews ( Action<EntityView> action )
-		{
-			foreach ( var v in views ) {
-				action(v);
 			}
 		}
 	}

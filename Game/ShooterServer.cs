@@ -70,7 +70,7 @@ namespace IronStar {
 		{
 			SFX.FXInstance.EnumerateSFX( (t) => Atoms.Add( t.Name ) );			
 
-			var iniData	=	Content.Load<IniData>(@"scripts\entities");
+			//var iniData	=	Content.Load<IniData>(@"scripts\entities");
 
 			gameWorld	=	new MPWorld( this, map );
 			Thread.Sleep(100);

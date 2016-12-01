@@ -19,7 +19,7 @@ using BEPUphysics.Character;
 
 
 namespace IronStar.Controllers {
-	public class Characters : EntityController {
+	public partial class Characters : EntityController {
 
 		readonly Space space;
 
@@ -86,6 +86,20 @@ namespace IronStar.Controllers {
 			controller.Tag		=	entity;
 
 			space.Add( controller );
+
+
+			entity.ActiveItem	=	Inventory.Machinegun;
+			entity.SetItemCount( Inventory.Bullets			,	999	);
+			entity.SetItemCount( Inventory.Machinegun		,	1	);
+
+			entity.SetItemCount( Inventory.Rockets			,	150	);
+			entity.SetItemCount( Inventory.RocketLauncher	,	1	);
+
+			entity.SetItemCount( Inventory.Slugs			,	150	);
+			entity.SetItemCount( Inventory.Railgun			,	1	);
+
+			entity.SetItemCount( Inventory.Cells			,	999	);
+			entity.SetItemCount( Inventory.HyperBlaster		,	1	);
 		}
 
 
@@ -186,6 +200,7 @@ namespace IronStar.Controllers {
 				e.State &= ~EntityState.HasTraction;
 			}
 
+			UpdateWeaponState( Entity, (short)(elapsedTime*1000) );
 
 
 			UpdateWalkSFX( e, elapsedTime );

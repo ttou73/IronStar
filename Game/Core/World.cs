@@ -52,13 +52,6 @@ namespace IronStar.Core {
 
 
 
-		/// <summary>
-		/// We just received snapshot.
-		/// Need to update client-side controllers.
-		/// </summary>
-		public bool snapshotDirty = false;
-
-
 		class Prefab {
 			public string Name;
 			public EntityConstructor Construct;
@@ -239,10 +232,6 @@ namespace IronStar.Core {
 			if (IsServerSide) {
 				entity.ForeachController( c => c.Killed() );
 			}
-
-			if (IsClientSide) {
-				entity.ForeachViews( v => v.Killed() );	
-			}
 		}
 
 
@@ -280,8 +269,6 @@ namespace IronStar.Core {
 		public virtual void PresentWorld ( float deltaTime, float lerpFactor )
 		{
 			var dr = Game.RenderSystem.RenderWorld.Debug;
-
-			ForEachEntity( e => e.ForeachViews( v => v.Update( deltaTime, lerpFactor ) ) );
 
 			if (IsClientSide) {
 				foreach ( var view in views ) {
