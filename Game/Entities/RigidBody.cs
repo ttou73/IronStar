@@ -27,6 +27,13 @@ namespace IronStar.Controllers {
 		readonly Space space;
 		readonly Box box;
 
+
+		public float Width;
+		public float Height;
+		public float Depth;
+		public float Mass;
+
+
 		/// <summary>
 		/// 
 		/// </summary>

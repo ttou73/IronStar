@@ -12,6 +12,7 @@ using Fusion.Engine.Server;
 using Fusion.Engine.Client;
 using Fusion.Core.Extensions;
 using IronStar.SFX;
+using Fusion.Core.IniParser.Model;
 
 namespace IronStar.Core {
 
@@ -22,12 +23,16 @@ namespace IronStar.Core {
 
 		public readonly Guid UserGuid;
 
+		IniData entityDescriptions;
+
 		public readonly Game Game;
 		public readonly ContentManager Content;
 		readonly bool serverSide;
 
 		public delegate void EntityConstructor ( World world, Entity entity );
 		public delegate void EntityEventHandler ( object sender, EntityEventArgs e );
+
+		Dictionary<string,Type> entityControllerTypes;
 
 		Dictionary<uint, Prefab> prefabs = new Dictionary<uint,Prefab>();
 		List<uint> entityToKill = new List<uint>();
@@ -108,6 +113,11 @@ namespace IronStar.Core {
 		/// <param name="maxEntities"></param>
 		public World ( GameServer server )
 		{
+			entityDescriptions	=	server.Content.Load<IniData>(@"scripts\entities");
+
+			entityControllerTypes	=	Misc.GetAllSubclassesOf( typeof(EntityController) )
+										.ToDictionary( type => type.Name );
+
 			Log.Verbose("world: server");
 			this.serverSide	=	true;
 			this.Game		=	server.Game;
@@ -280,8 +290,9 @@ namespace IronStar.Core {
 		}
 
 		
-		
-
+		/*-----------------------------------------------------------------------------------------
+		 *	Entity creation
+		-----------------------------------------------------------------------------------------*/
 
 		/// <summary>
 		/// When called on client-side returns null.
@@ -291,7 +302,7 @@ namespace IronStar.Core {
 		/// <param name="origin"></param>
 		/// <param name="angles"></param>
 		/// <returns></returns>
-		public Entity Spawn ( string prefab, uint parentId, Vector3 origin, Quaternion orient )
+		public Entity Spawn ( string template, uint parentId, Vector3 origin, Quaternion orient )
 		{
 			//	due to server reconciliation
 			//	never create entities on client-side:
@@ -310,19 +321,30 @@ namespace IronStar.Core {
 			}
 
 
-			uint prefabId = Factory.GetPrefabID( prefab );
+			//
+			//	Get description :
+			//
+			var section = entityDescriptions[template];
 
-			var entity = new Entity(id, prefabId, parentId, origin, orient);
+			if (section==null) {
+				throw new InvalidOperationException(string.Format("Failed to create entity: template '{0}' does not exist", template ));
+			}
+
+			var classname	=	section["classname"];
+
+			if (classname==null || !entityControllerTypes.ContainsKey(classname)) {
+				throw new InvalidOperationException(string.Format("Failed to create entity: class '{0}' does not exist", classname ));
+			}
+
+			var entity = new Entity(id, 0, parentId, origin, orient);
 
 			entities.Add( id, entity );
 
-			ConstructEntity( entity );
+			entity.Controller	=	(EntityController)Activator.CreateInstance( entityControllerTypes[classname], entity, this, section );
 
-			LogTrace("spawn: {0} - #{1}", prefab, id );
+			LogTrace("spawn: {0}:{1} - #{2}", classname, template, id );
 
-			if (EntitySpawned!=null) {
-				EntitySpawned( this, new EntityEventArgs(entity) );
-			}
+			EntitySpawned?.Invoke( this, new EntityEventArgs( entity ) );
 
 			return entity;
 		}
@@ -344,6 +366,11 @@ namespace IronStar.Core {
 			return Spawn( prefab, parentId, origin, Quaternion.RotationYawPitchRoll( yaw,0,0 ) );
 		}
 
+
+		
+		/*-----------------------------------------------------------------------------------------
+		 *	FX creation
+		-----------------------------------------------------------------------------------------*/
 
 		/// <summary>
 		/// 

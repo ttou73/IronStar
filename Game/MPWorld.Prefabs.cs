@@ -35,7 +35,6 @@ namespace IronStar {
 			AddPrefab( "box"		, PrefabBox		);
 			AddPrefab( "rocket"		, PrefabRocket	);
 			AddPrefab( "plasma"		, PrefabPlasma	);
-			AddPrefab( "mist"		, PrefabMist	);
 		}
 
 

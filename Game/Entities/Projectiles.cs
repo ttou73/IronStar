@@ -25,12 +25,13 @@ namespace IronStar.Controllers {
 
 		Random rand = new Random();
 
-		public float velocity;
-		public float impulse;
-		public short damageValue;
-		public float lifeTime;
-		public string explosionFX;
-		public float radius;
+		public float Velocity;
+		public float HitImpulse;
+		public short HitDamage;
+		public float HitRadius;
+		public float LifeTime;
+		public string ExplosionFX;
+		public string TrailFX;
 
 
 		readonly Space space;
@@ -46,12 +47,12 @@ namespace IronStar.Controllers {
 			this.space	=	((MPWorld)world).PhysSpace;
 			this.world	=	(MPWorld)world;
 
-			this.velocity		=	velocity;
-			this.impulse		=	impulse;	
-			this.damageValue	=	damage;
-			this.lifeTime		=	lifeTime;
-			this.explosionFX	=	explosionFX;
-			this.radius			=	radius;
+			this.Velocity		=	velocity;
+			this.HitImpulse		=	impulse;	
+			this.HitDamage		=	damage;
+			this.LifeTime		=	lifeTime;
+			this.ExplosionFX	=	explosionFX;
+			this.HitRadius			=	radius;
 
 			//	step projectile forward compensate server latency
 			if (world.IsServerSide) {
@@ -81,9 +82,9 @@ namespace IronStar.Controllers {
 		{
 			var origin	=	projEntity.Position;
 			var dir		=	Matrix.RotationQuaternion( projEntity.Rotation ).Forward;
-			var target	=	origin + dir * velocity * elapsedTime;
+			var target	=	origin + dir * Velocity * elapsedTime;
 
-			lifeTime -= elapsedTime;
+			LifeTime -= elapsedTime;
 
 			Vector3 hitNormal, hitPoint;
 			Entity  hitEntity;
@@ -91,24 +92,24 @@ namespace IronStar.Controllers {
 			var parent	=	world.GetEntity( projEntity.ParentID );
 
 
-			if ( lifeTime <= 0 ) {
+			if ( LifeTime <= 0 ) {
 				world.Kill( projEntity.ID );
 			}
 
 			if ( world.RayCastAgainstAll( origin, target, out hitNormal, out hitPoint, out hitEntity, parent ) ) {
 
 				//	inflict damage to hit object:
-				world.InflictDamage( hitEntity, projEntity.ParentID, damageValue, dir * impulse, hitPoint, DamageType.RocketExplosion );
+				world.InflictDamage( hitEntity, projEntity.ParentID, HitDamage, dir * HitImpulse, hitPoint, DamageType.RocketExplosion );
 
-				Explode( explosionFX, projEntity.ID, hitEntity, hitPoint, hitNormal, radius, damageValue, impulse, DamageType.RocketExplosion );
+				Explode( ExplosionFX, projEntity.ID, hitEntity, hitPoint, hitNormal, HitRadius, HitDamage, HitImpulse, DamageType.RocketExplosion );
 
 				//world.SpawnFX( projectile.ExplosionFX, projEntity.ParentID, hitPoint, hitNormal );
-				projEntity.Move( hitPoint, projEntity.Rotation, dir * velocity );
+				projEntity.Move( hitPoint, projEntity.Rotation, dir * Velocity );
 
 				world.Kill( projEntity.ID );
 
 			} else {
-				projEntity.Move( target, projEntity.Rotation, dir.Normalized() * velocity );
+				projEntity.Move( target, projEntity.Rotation, dir.Normalized() * Velocity );
 			}
 		}
 
