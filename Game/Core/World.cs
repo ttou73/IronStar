@@ -440,11 +440,7 @@ namespace IronStar.Core {
 		/// <param name="damageType"></param>
 		public void InflictDamage ( Entity entity, uint attackerID, short damage, Vector3 kickImpulse, Vector3 kickPoint, DamageType damageType )
 		{
-			if (entity==null) {
-				return;
-			}
-
-			entity.ForeachController( c => c.Damage( entity.ID, attackerID, damage, kickImpulse, kickPoint, damageType ) );
+			entity?.Controller?.Damage( entity.ID, attackerID, damage, kickImpulse, kickPoint, damageType );
 		}
 
 

@@ -339,16 +339,17 @@ namespace IronStar.Core {
 		 *	Entity controllers :
 		 * 
 		-----------------------------------------------------------------------------------------------*/
-		readonly List<EntityController>	controllers = new List<EntityController>();
+		EntityController controller;
 
-		/// <summary>
-		/// Attaches controller to entity.
-		/// </summary>
-		/// <param name="controller"></param>
-		public void Attach ( EntityController controller )
-		{
-			controllers.Add( controller );
+		public EntityController	Controller {
+			get {
+				return controller;
+			}
+			set {
+				controller = value;
+			}
 		}
+
 
 
 		/// <summary>
@@ -357,8 +358,8 @@ namespace IronStar.Core {
 		/// <param name="action"></param>
 		public void ForeachController ( Action<EntityController> action )
 		{
-			foreach ( var c in controllers ) {
-				action(c);
+			if (controller!=null) {
+				action(controller);
 			}
 		}
 	}

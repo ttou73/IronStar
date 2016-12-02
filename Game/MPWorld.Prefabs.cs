@@ -70,59 +70,34 @@ namespace IronStar {
 		/// <param name="serverSide"></param>
 		public static void PrefabPlayer ( World world, Entity entity )
 		{
-			entity.Attach( new Characters( entity, world ) );
-
-			if (world.IsClientSide) {
-				//entity.Attach( new ModelView( entity, world, @"scenes\characters\marine\marine", "marine", Matrix.Scaling(0.09f) * Matrix.RotationY(MathUtil.Pi), Matrix.Translation(0,-0.85f,0) ) );
-			}
-
-			entity.SetItemCount( Inventory.Health	,	100	);
-			entity.SetItemCount( Inventory.Armor	,	0	);
+			entity.Controller	=	new Characters( entity, world );
 		}
 
 
 
 		public static void PrefabRocket ( World world, Entity entity )
 		{
-			entity.Attach( new Projectiles( entity, world, "Explosion", 30, 5, 100, 200, 5 ) );
-			
-			if (world.IsClientSide) {
-				//entity.Attach( new ModelView( entity, world, @"scenes\weapon\projRocket", "rocket", Matrix.Scaling(0.1f), Matrix.Identity ) );
-				//entity.Attach( new SfxView( entity, world, "RocketTrail" ) );
-			}
+			entity.Controller	=	new Projectiles( entity, world, "Explosion", 30, 5, 100, 200, 5 );
 		}
 
 
 
 		public static void PrefabPlasma ( World world, Entity entity )
 		{
-			entity.Attach( new Projectiles( entity, world, "PlasmaExplosion", 50, 0, 17, 20, 3 ) );
-			
-			if (world.IsClientSide) {
-				//entity.Attach( new ModelView( entity, world, @"scenes\weapon\projRocket", "rocket", Matrix.Scaling(0.1f), Matrix.Identity ) );
-				//entity.Attach( new SfxView( entity, world, "PlasmaTrail" ) );
-			}
+			entity.Controller	=	new Projectiles( entity, world, "PlasmaExplosion", 50, 0, 17, 20, 3 );
 		}
 
 
 
 		public static void PrefabMist ( World world, Entity entity )
 		{
-			if (world.IsClientSide) {
-				//entity.Attach( new ModelView( entity, world, @"scenes\weapon\projRocket", "rocket", Matrix.Scaling(0.1f), Matrix.Identity ) );
-				//entity.Attach( new SfxView( entity, world, "Mist" ) );
-			}
 		}
 
 
 
 		public static void PrefabBox ( World world, Entity entity )
 		{
-			entity.Attach( new RigidBody(entity, world, 1.0f, 0.75f, 0.75f,5 ) ); 
-
-			if (world.IsClientSide) {
-				//entity.Attach( new ModelView( entity, world, @"scenes\boxes\boxModel", "pCube1", Matrix.Identity, Matrix.Identity ) );
-			}
+			entity.Controller	=	new RigidBody(entity, world, 1.0f, 0.75f, 0.75f,5 ); 
 		}
 
 	}

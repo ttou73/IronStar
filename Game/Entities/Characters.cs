@@ -89,6 +89,10 @@ namespace IronStar.Controllers {
 
 
 			entity.ActiveItem	=	Inventory.Machinegun;
+
+			entity.SetItemCount( Inventory.Health			,	100	);
+			entity.SetItemCount( Inventory.Armor			,	0	);
+
 			entity.SetItemCount( Inventory.Bullets			,	999	);
 			entity.SetItemCount( Inventory.Machinegun		,	1	);
 
@@ -186,7 +190,7 @@ namespace IronStar.Controllers {
 			var c = controller;
 			var e = Entity;
 
-
+			UpdateWeaponState( Entity, (short)(elapsedTime*1000) );
 
 			Move();
 
@@ -199,8 +203,6 @@ namespace IronStar.Controllers {
 			} else {
 				e.State &= ~EntityState.HasTraction;
 			}
-
-			UpdateWeaponState( Entity, (short)(elapsedTime*1000) );
 
 
 			UpdateWalkSFX( e, elapsedTime );
