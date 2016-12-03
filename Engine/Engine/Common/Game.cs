@@ -727,36 +727,6 @@ namespace Fusion.Engine.Common {
 		}
 
 
-		/*-----------------------------------------------------------------------------------------
-		 * 
-		 *	Configuration stuff :
-		 * 
-		-----------------------------------------------------------------------------------------*/
-
-
-		/// <summary>
-		/// Loads configuration for each subsystem
-		/// </summary>
-		/// <param name="path"></param>
-		[Obsolete]
-		public void LoadConfiguration ( string filename )
-		{
-			Config.Load( filename );
-		}
-
-
-		/// <summary>
-		/// Saves configuration to XML file	for each subsystem
-		/// </summary>
-		/// <param name="path"></param>
-		[Obsolete]
-		public void SaveConfiguration ( string filename )
-		{	
-			Config.Save( filename );
-		}
-
-
-
 
 		/*-----------------------------------------------------------------------------------------
 		 * 
@@ -779,17 +749,17 @@ namespace Fusion.Engine.Common {
 
 
 
-		public void StartServer ( string map )
+		public void StartServer ( string map, bool dedicated )
 		{
 			var postCmd = string.Format("connect 127.0.0.1 {0}", Network.Port );
 
 			//	Disconnect!
 
-			if (GameClient!=null) {
+			if (dedicated) {
 				GameServer.StartInternal( map, null );
-				GameClient.ConnectInternal( "127.0.0.1", Network.Port );
 			} else {
 				GameServer.StartInternal( map, null );
+				GameClient.ConnectInternal( "127.0.0.1", Network.Port );
 			}
 		}
 

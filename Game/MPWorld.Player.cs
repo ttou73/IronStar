@@ -106,7 +106,7 @@ namespace IronStar {
 					respawnTime += dt;
 				}
 
-				var player = world.GetEntityOrNull( e => e.UserGuid==Guid );
+				var player = world.GetEntityOrNull( "player", e => e.UserGuid==Guid );
 
 				if (player!=null) {
 					player.Rotation			=	Quaternion.RotationYawPitchRoll( UserCmd.Yaw, UserCmd.Pitch, UserCmd.Roll );

@@ -63,7 +63,7 @@ namespace IronStar.Views {
 			var rw	= Game.RenderSystem.RenderWorld;
 			var vp	= Game.RenderSystem.DisplayBounds;
 
-			var player	=	World.GetEntityOrNull( e => e.Is("player") && e.UserGuid == World.UserGuid );
+			var player	=	World.GetEntityOrNull("player", e => e.UserGuid == World.UserGuid );
 
 			if (player==null) {
 				return;

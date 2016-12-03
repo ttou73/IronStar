@@ -101,6 +101,31 @@ namespace Fusion.Engine.Common {
 		/// <summary>
 		/// 
 		/// </summary>
+		/// <param name="atoms"></param>
+		public void AddRange ( IEnumerable<string> atoms )
+		{
+			lock ( lockObj ) {
+				if ( locked ) {
+					throw new InvalidOperationException( "Atom collection is locked" );
+				}
+
+				int count = atoms.Count();
+
+				if ( index.Count + count>=MaxAtomIndex ) {
+					throw new InvalidOperationException( "Too much atoms" );
+				}
+
+				foreach ( var atom in atoms ) {
+					Add( atom );
+				}
+			}
+		}
+
+
+
+		/// <summary>
+		/// 
+		/// </summary>
 		/// <param name="atom"></param>
 		/// <returns></returns>
 		public void Clear ()

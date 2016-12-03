@@ -29,8 +29,6 @@ namespace IronStar {
 			InitPhysSpace(16);
 			this.mapName	=	map;
 
-			InitializePrefabs();
-
 			var scene = Content.Load<Scene>(@"scenes\" + map );
 
 			ReadMapFromScene( Content, scene, IsClientSide );
@@ -43,8 +41,6 @@ namespace IronStar {
 		public MPWorld( GameClient client, string serverInfo ) : base(client)
 		{
 			InitPhysSpace(16);
-
-			InitializePrefabs();
 
 			var scene = Content.Load<Scene>(@"scenes\" + serverInfo );
 

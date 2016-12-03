@@ -32,7 +32,7 @@ namespace Fusion.Engine.Client {
 		public AtomCollection Atoms { 
 			get { 
 				if (atoms==null) {
-					throw new NullReferenceException("Atoms are ready to use at LoadContent");
+					throw new NullReferenceException("Atoms are ready to use after snapshot received.");
 				}
 				return atoms; 
 			} 

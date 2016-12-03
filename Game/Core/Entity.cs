@@ -13,6 +13,7 @@ using System.IO;
 namespace IronStar.Core {
 	public class Entity {
 
+
 		/// <summary>
 		/// Entity ID
 		/// </summary>
@@ -35,9 +36,9 @@ namespace IronStar.Core {
 		public uint ParentID { get; private set; }
 
 		/// <summary>
-		/// Gets prefab ID.
+		/// Classname atoms.
 		/// </summary>
-		public uint PrefabID { get; private set; }
+		public short ClassID;
 
 		/// <summary>
 		/// Teleportation counter.
@@ -110,8 +111,9 @@ namespace IronStar.Core {
 		/// Used to spawn entity on server side.
 		/// </summary>
 		/// <param name="id"></param>
-		public Entity ( uint id, uint prefabId, uint parentId, Vector3 position, Quaternion rotation )
+		public Entity ( uint id, short classId, uint parentId, Vector3 position, Quaternion rotation )
 		{
+			ClassID		=	classId;
 			this.ID		=	id;
 
 			TeleportCount	=	0;
@@ -120,7 +122,6 @@ namespace IronStar.Core {
 			PositionOld		=	Vector3.Zero;
 
 			UserGuid		=	new Guid();
-			PrefabID		=	prefabId;
 			ParentID		=	parentId;
 
 			Rotation		=	rotation;
@@ -220,8 +221,8 @@ namespace IronStar.Core {
 			writer.Write( UserGuid.ToByteArray() );
 
 			writer.Write( ParentID );
-			writer.Write( PrefabID );
 			writer.Write( (int)State );
+			writer.Write( ClassID );
 
 			writer.Write( TeleportCount );
 
@@ -257,8 +258,8 @@ namespace IronStar.Core {
 			UserGuid		=	new Guid( reader.ReadBytes(16) );
 								
 			ParentID		=	reader.ReadUInt32();
-			PrefabID		=	reader.ReadUInt32();
 			State			=	(EntityState)reader.ReadInt32();
+			ClassID			=	reader.ReadInt16();
 
 			TeleportCount	=	reader.ReadByte();
 
@@ -281,18 +282,6 @@ namespace IronStar.Core {
 				PositionOld	=	Position;
 				RotationOld	=	Rotation;
 			}
-		}
-
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="prefabName"></param>
-		/// <returns></returns>
-		public bool Is ( string prefabName )
-		{
-			return ( PrefabID == Factory.GetPrefabID(prefabName) );
 		}
 
 

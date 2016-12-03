@@ -20,7 +20,7 @@ using BEPUphysics.Character;
 
 
 namespace IronStar.Controllers {
-	public partial class Characters : EntityController {
+	public partial class Character : EntityController {
 
 		Random rand = new Random();
 

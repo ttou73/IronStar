@@ -18,10 +18,11 @@ using BEPUphysics;
 using BEPUphysics.Entities.Prefabs;
 using BEPUphysics.EntityStateManagement;
 using BEPUphysics.PositionUpdating;
+using Fusion.Core.IniParser.Model;
 
 namespace IronStar.Controllers {
 
-	public class Projectiles : EntityController {
+	public class Projectile : EntityController {
 
 		Random rand = new Random();
 
@@ -42,17 +43,19 @@ namespace IronStar.Controllers {
 		/// </summary>
 		/// <param name="game"></param>
 		/// <param name="space"></param>
-		public Projectiles ( Entity entity, World world, string explosionFX, float velocity, float radius, short damage, float impulse, float lifeTime ) : base(entity,world)
+		public Projectile ( Entity entity, World world, KeyDataCollection parameters ) : base(entity,world)
 		{
+			//string explosionFX, float velocity, float radius, short damage, float impulse, float lifeTime
+
 			this.space	=	((MPWorld)world).PhysSpace;
 			this.world	=	(MPWorld)world;
 
-			this.Velocity		=	velocity;
-			this.HitImpulse		=	impulse;	
-			this.HitDamage		=	damage;
-			this.LifeTime		=	lifeTime;
-			this.ExplosionFX	=	explosionFX;
-			this.HitRadius			=	radius;
+			this.Velocity		=	parameters.Get<float>	("velocity"		, 0);
+			this.HitImpulse		=	parameters.Get<float>	("impulse"		, 0);	
+			this.HitDamage		=	parameters.Get<short>	("damage"		, 0);
+			this.LifeTime		=	parameters.Get<float>	("lifetime"		, 0)/1000.0f;
+			this.ExplosionFX	=	parameters.Get<string>	("explosionFX"	, null);
+			this.HitRadius      =   parameters.Get<float>	("radius"		, 0);
 
 			//	step projectile forward compensate server latency
 			if (world.IsServerSide) {

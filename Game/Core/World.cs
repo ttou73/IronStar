@@ -13,6 +13,7 @@ using Fusion.Engine.Client;
 using Fusion.Core.Extensions;
 using IronStar.SFX;
 using Fusion.Core.IniParser.Model;
+using IronStar.Views;
 
 namespace IronStar.Core {
 
@@ -23,18 +24,25 @@ namespace IronStar.Core {
 
 		public readonly Guid UserGuid;
 
+		public AtomCollection Atoms { 
+			get {
+				if (serverSide) {
+					return GameServer.Atoms;
+				} else {
+					return GameClient.Atoms;
+				}
+			}
+		}
+
 		IniData entityDescriptions;
 
 		public readonly Game Game;
 		public readonly ContentManager Content;
 		readonly bool serverSide;
 
-		public delegate void EntityConstructor ( World world, Entity entity );
 		public delegate void EntityEventHandler ( object sender, EntityEventArgs e );
 
 		Dictionary<string,Type> entityControllerTypes;
-
-		Dictionary<uint, Prefab> prefabs = new Dictionary<uint,Prefab>();
 		List<uint> entityToKill = new List<uint>();
 
 		public Dictionary<uint, Entity> entities;
@@ -53,14 +61,7 @@ namespace IronStar.Core {
 
 		List<FXEvent> fxEvents = new List<FXEvent>();
 
-		SFX.FXPlayback	sfxSystem;
-
-
-
-		class Prefab {
-			public string Name;
-			public EntityConstructor Construct;
-		}
+		SFX.FXPlayback	fxPlayback;
 
 
 		/// <summary>
@@ -118,6 +119,8 @@ namespace IronStar.Core {
 			entityControllerTypes	=	Misc.GetAllSubclassesOf( typeof(EntityController) )
 										.ToDictionary( type => type.Name );
 
+			server.Atoms.AddRange( entityDescriptions.Sections.Select( s => s.SectionName ) );
+
 			Log.Verbose("world: server");
 			this.serverSide	=	true;
 			this.Game		=	server.Game;
@@ -140,7 +143,10 @@ namespace IronStar.Core {
 			this.UserGuid	=	client.Guid;
 			Content			=	client.Content;
 			entities		=	new Dictionary<uint,Entity>();
-			sfxSystem		=	new SFX.FXPlayback((ShooterClient)client, this);
+			fxPlayback		=	new SFX.FXPlayback((ShooterClient)client, this);
+
+			AddView( new HudView( this ) );
+			AddView( new CameraView( this ) );
 		}
 
 
@@ -205,48 +211,6 @@ namespace IronStar.Core {
 
 
 		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="prefabName"></param>
-		/// <param name="constructAction"></param>
-		public void AddPrefab ( string prefabName, EntityConstructor constructAction )
-		{
-			uint crc = Factory.GetPrefabID( prefabName );
-
-			if (prefabs.ContainsKey(crc)) {
-				throw new ArgumentException("Prefab '" + prefabName + "' cause hash collision with + '" + prefabs[crc].Name + "'");
-			}
-
-			prefabs.Add( crc, new Prefab(){ Name = prefabName, Construct = constructAction } );
-		}
-
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="prefabId"></param>
-		void ConstructEntity ( Entity entity )
-		{
-			prefabs[ entity.PrefabID ].Construct(this, entity);
-		}
-
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="entity"></param>
-		void Destruct ( Entity entity )
-		{
-			if (IsServerSide) {
-				entity.ForeachController( c => c.Killed() );
-			}
-		}
-
-
-
-		/// <summary>
 		/// Simulates world.
 		/// </summary>
 		/// <param name="gameTime"></param>
@@ -276,6 +240,7 @@ namespace IronStar.Core {
 		/// Updates visual and audial stuff
 		/// </summary>
 		/// <param name="gameTime"></param>
+		[Obsolete]
 		public virtual void PresentWorld ( float deltaTime, float lerpFactor )
 		{
 			var dr = Game.RenderSystem.RenderWorld.Debug;
@@ -285,7 +250,7 @@ namespace IronStar.Core {
 					view.Update( deltaTime, lerpFactor );
 				}
 
-				sfxSystem.Update( deltaTime );
+				fxPlayback.Update( deltaTime );
 			}
 		}
 
@@ -302,7 +267,7 @@ namespace IronStar.Core {
 		/// <param name="origin"></param>
 		/// <param name="angles"></param>
 		/// <returns></returns>
-		public Entity Spawn ( string template, uint parentId, Vector3 origin, Quaternion orient )
+		public Entity Spawn ( string classname, uint parentId, Vector3 origin, Quaternion orient )
 		{
 			//	due to server reconciliation
 			//	never create entities on client-side:
@@ -322,27 +287,38 @@ namespace IronStar.Core {
 
 
 			//
-			//	Get description :
+			//	Create instance.
+			//	If creation failed later, entity become dummy.
 			//
-			var section = entityDescriptions[template];
+			var classId	=	Atoms[classname];
 
-			if (section==null) {
-				throw new InvalidOperationException(string.Format("Failed to create entity: template '{0}' does not exist", template ));
-			}
-
-			var classname	=	section["classname"];
-
-			if (classname==null || !entityControllerTypes.ContainsKey(classname)) {
-				throw new InvalidOperationException(string.Format("Failed to create entity: class '{0}' does not exist", classname ));
-			}
-
-			var entity = new Entity(id, 0, parentId, origin, orient);
-
+			var entity = new Entity(id, classId, parentId, origin, orient);
 			entities.Add( id, entity );
 
-			entity.Controller	=	(EntityController)Activator.CreateInstance( entityControllerTypes[classname], entity, this, section );
+			LogTrace( "spawn: {0} - #{1}", classname, id );
 
-			LogTrace("spawn: {0}:{1} - #{2}", classname, template, id );
+			//
+			//	Get description :
+			//
+			var section = entityDescriptions[classname];
+
+			if (section!=null) {
+				
+				var controller   =   section["controller"];
+
+				if (!string.IsNullOrWhiteSpace(controller)) {
+					Type type;
+					if (entityControllerTypes.TryGetValue( controller, out type )) {
+						entity.Controller = (EntityController)Activator.CreateInstance( type, entity, this, section );
+					} else {
+						Log.Warning("Entity controller {0} does not exist", controller );
+					}
+				} 
+
+			} else {
+				Log.Warning("Entity {0} is dummy - no description", classname);
+			}
+
 
 			EntitySpawned?.Invoke( this, new EntityEventArgs( entity ) );
 
@@ -381,6 +357,7 @@ namespace IronStar.Core {
 		/// <param name="orient"></param>
 		public void SpawnFX ( string fxName, uint parentID, Vector3 origin, Vector3 velocity, Quaternion rotation )
 		{
+			LogTrace("fx : {0}", fxName);
 			var fxID = GameServer.Atoms[ fxName ];
 
 			if (fxID<0) {
@@ -452,7 +429,7 @@ namespace IronStar.Core {
 		/// <param name="fxType"></param>
 		public FXInstance RunFX ( FXEvent fxEvent )
 		{
-			return sfxSystem.RunFX( fxEvent );
+			return fxPlayback.RunFX( fxEvent );
 		}
 
 
@@ -509,9 +486,21 @@ namespace IronStar.Core {
 		/// </summary>
 		/// <param name="id"></param>
 		/// <returns></returns>
-		public Entity GetEntityOrNull ( Func<Entity,bool> predicate )
+		public Entity GetEntityOrNull( string classname, Func<Entity, bool> predicate )
 		{
-			return entities.FirstOrDefault( pair => predicate( pair.Value ) ).Value;
+			return GetEntities( classname ).FirstOrDefault( ent => predicate( ent ) );
+		}
+
+
+		/// <summary>
+		/// Gets entity with current id.
+		/// If entity is dead -> exception...
+		/// </summary>
+		/// <param name="id"></param>
+		/// <returns></returns>
+		public Entity GetEntityOrNull( string classname )
+		{
+			return GetEntities( classname ).FirstOrDefault();
 		}
 
 
@@ -523,11 +512,10 @@ namespace IronStar.Core {
 		/// </summary>
 		/// <param name="id"></param>
 		/// <returns></returns>
-		public IEnumerable<Entity> GetEntities ( string prefabName )
+		public IEnumerable<Entity> GetEntities ( string classname )
 		{
-			uint prefabId = Factory.GetPrefabID( prefabName );
-
-			return entities.Where( pair => pair.Value.PrefabID == prefabId ).Select( pair1 => pair1.Value );
+			var classId = Atoms[classname];
+			return entities.Where( pair => pair.Value.ClassID==classId ).Select( pair1 => pair1.Value );
 		}
 
 
@@ -575,7 +563,7 @@ namespace IronStar.Core {
 				}
 				
 				entities.Remove( id );
-				Destruct( ent );
+				ent?.Controller?.Killed();
 
 			} else {
 				Log.Warning("Entity #{0} does not exist", id);
@@ -636,7 +624,7 @@ namespace IronStar.Core {
 		/// <summary>
 		/// This method called in main thread to complete non-thread safe operations.
 		/// </summary>
-		public abstract void FinalizeLoad (); 
+		public abstract void FinalizeLoad ();
 
 
 		/// <summary>
@@ -651,7 +639,7 @@ namespace IronStar.Core {
 		public virtual void Cleanup ()
 		{
 			if (IsClientSide) {
-				sfxSystem.StopAllSFX();
+				fxPlayback.StopAllSFX();
 			}
 		}
 
@@ -668,12 +656,13 @@ namespace IronStar.Core {
 
 			foreach ( var ent in ents ) {
 				
-				var id		=	ent.ID;
-				var parent	=	ent.ParentID;
-				var prefab	=	prefabs[ ent.PrefabID ].Name;
-				var guid	=	ent.UserGuid;
+				var id			=	ent.ID;
+				var parent		=	ent.ParentID;
+				var prefab		=	Atoms[ent.ClassID];
+				var guid		=	ent.UserGuid;
+				var controller	=	ent.Controller.GetType().Name;
 
-				Log.Message("{0:X8} {1:X8} {2} {3,-32}", id, parent, guid, prefab );
+				Log.Message("{0:X8} {1:X8} {2} {3,-32} {4,-32}", id, parent, guid, prefab, controller );
 			}
 
 			Log.Message("----------------" );

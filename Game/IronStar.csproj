@@ -54,9 +54,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands\ShowWorldState.cs" />
-    <Compile Include="Entities\Characters.Weaponry.cs" />
-    <Compile Include="Entities\Characters.cs" />
-    <Compile Include="Entities\Projectiles.cs" />
+    <Compile Include="Entities\Character.Weaponry.cs" />
+    <Compile Include="Entities\Character.cs" />
+    <Compile Include="Entities\Projectile.cs" />
     <Compile Include="Core\EntityController.cs" />
     <Compile Include="Core\World.Snapshots.cs" />
     <Compile Include="Core\Old\WorldView.cs" />
@@ -91,12 +91,10 @@
     <Compile Include="Core\EntityEventArgs.cs" />
     <Compile Include="ShooterClient.Config.cs" />
     <Compile Include="Entities\RigidBody.cs" />
-    <Compile Include="MPWorld.Prefabs.cs" />
     <Compile Include="MPWorld.Players.cs" />
     <Compile Include="MPWorld.Map.cs" />
     <Compile Include="MPWorld.Physics.cs" />
     <Compile Include="Core\Entity.cs" />
-    <Compile Include="Core\Old\Factory.cs" />
     <Compile Include="Core\World.cs" />
     <Compile Include="MathConverter.cs" />
     <Compile Include="MPWorld.cs" />

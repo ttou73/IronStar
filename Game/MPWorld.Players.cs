@@ -151,7 +151,7 @@ namespace IronStar {
 		{
 			LogTrace("player left: {0}", guid );
 
-			var ent = GetEntityOrNull( e => e.UserGuid == guid );
+			var ent = GetEntityOrNull( "player", e => e.UserGuid == guid );
 
 			if (ent!=null) {
 				Kill( ent.ID );

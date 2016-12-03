@@ -100,7 +100,7 @@ namespace IronStar.Core {
 					ent.Read( reader, lerpFactor );
 					entities.Add( id, ent );
 
-					ConstructEntity( ent );
+					//ConstructEntity( ent );
 
 					ReplicaSpawned?.Invoke( this, new EntityEventArgs( ent ) );
 				}

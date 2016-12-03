@@ -66,7 +66,7 @@ namespace IronStar.Views {
 		
 			//rw.Camera.SetupCameraFov( new Vector3(10,4,10), new Vector3(0,4,0), Vector3.Up, MathUtil.Rad(90), 0.125f, 1024f, 1, 0, aspect );
 
-			var player	=	World.GetEntityOrNull( e => e.Is("player") && e.UserGuid == World.UserGuid );
+			var player	=	World.GetEntityOrNull( "player", e => e.UserGuid == World.UserGuid );
 
 			if (player==null) {
 
@@ -74,7 +74,7 @@ namespace IronStar.Views {
 
 				playerID = 0;
 
-				var camera	= World.GetEntityOrNull( e => e.Is("camera") );
+				var camera	= World.GetEntityOrNull( "camera" );
 				var cp		= camera.Position;
 				var cm		= Matrix.RotationQuaternion( camera.Rotation );
 

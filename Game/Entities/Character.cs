@@ -16,10 +16,11 @@ using Fusion.Engine.Graphics;
 using IronStar.Core;
 using BEPUphysics;
 using BEPUphysics.Character;
+using Fusion.Core.IniParser.Model;
 
 
 namespace IronStar.Controllers {
-	public partial class Characters : EntityController {
+	public partial class Character : EntityController {
 
 		readonly Space space;
 
@@ -38,28 +39,29 @@ namespace IronStar.Controllers {
 		/// </summary>
 		/// <param name="game"></param>
 		/// <param name="space"></param>
-		public Characters ( Entity entity, World world,
- 			float height = 1.7f, 
-			float crouchingHeight = 1.19f, 
-			float radius = 0.6f, 
-			float margin = 0.1f, 
-			float mass = 10f, 
-			float maximumTractionSlope = 0.8f, 
-			float maximumSupportSlope = 1.3f, 
-			float standingSpeed = 8f, 
-			float crouchingSpeed = 3f, 
-			float tractionForce = 1000f, 
-			float slidingSpeed = 6f, 
-			float slidingForce = 50f, 
-			float airSpeed = 1f, 
-			float airForce = 250f, 
-			float jumpSpeed = 6f, 
-			float slidingJumpSpeed = 3f, 
-			float maximumGlueForce = 5000f ) : base(entity,world)
+		public Character ( Entity entity, World world, KeyDataCollection parameters ) : base(entity,world)
 		{
 			this.space	=	((MPWorld)world).PhysSpace;
 
 			var pos = MathConverter.Convert( entity.Position );
+
+			float height				= 1.70f	;
+			float crouchingHeight		= 1.19f	;
+			float radius				= 0.60f	;
+			float margin				= 0.10f	;
+			float mass					= 10f	;
+			float maximumTractionSlope	= 0.80f	;
+			float maximumSupportSlope	= 1.30f	;
+			float standingSpeed			= 8f	;
+			float crouchingSpeed		= 3f	;
+			float tractionForce			= 1000f	;
+			float slidingSpeed			= 6f	;
+			float slidingForce			= 50f	;
+			float airSpeed				= 1f	;
+			float airForce				= 250f	;
+			float jumpSpeed				= 6f	;
+			float slidingJumpSpeed		= 3f	;
+			float maximumGlueForce		= 5000f	;
 
 			controller = new CharacterController( pos, 
 					height					, 
