@@ -54,7 +54,7 @@ namespace IronStar {
 		/// </summary>
 		/// <param name="mesh"></param>
 		/// <param name="transform"></param>
-		void AddStaticCollisionMesh ( Mesh mesh, Matrix transform )
+		public override void AddStaticCollisionMesh ( Mesh mesh, Matrix transform )
 		{
 			var indices		=	mesh.GetIndices();
 			var vertices	=	mesh.Vertices

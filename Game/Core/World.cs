@@ -14,6 +14,7 @@ using Fusion.Core.Extensions;
 using IronStar.SFX;
 using Fusion.Core.IniParser.Model;
 using IronStar.Views;
+using Fusion.Engine.Graphics;
 
 namespace IronStar.Core {
 
@@ -440,6 +441,15 @@ namespace IronStar.Core {
 			return fxPlayback.RunFX( fxEvent );
 		}
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="mesh"></param>
+		/// <param name="transform"></param>
+		public virtual void AddStaticCollisionMesh( Mesh mesh, Matrix transform )
+		{
+		}
 
 
 		/// <summary>

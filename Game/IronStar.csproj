@@ -54,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands\ShowWorldState.cs" />
+    <Compile Include="Core\Map.cs" />
     <Compile Include="Entities\Character.Weaponry.cs" />
     <Compile Include="Entities\Character.cs" />
     <Compile Include="Entities\Projectile.cs" />

@@ -61,12 +61,12 @@ namespace IronStar {
 				var name	=	node.Name;
 				var mesh	=	node.MeshIndex < 0 ? null : scene.Meshes[ node.MeshIndex ];
 
-				if ( name.StartsWith("startPoint")) {	
+				if ( name.StartsWith("entity_startPoint")) {	
 					Spawn("startPoint", 0, world.TranslationVector, 10 );
 					continue;
 				}
 
-				if (name.StartsWith("camera")) {
+				if (name.StartsWith("entity_camera")) {
 					Spawn("camera", 0, world );
 				}
 
