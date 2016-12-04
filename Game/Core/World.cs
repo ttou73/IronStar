@@ -114,19 +114,27 @@ namespace IronStar.Core {
 		/// <param name="maxEntities"></param>
 		public World ( GameServer server )
 		{
-			entityDescriptions	=	server.Content.Load<IniData>(@"scripts\entities");
+			Log.Verbose( "world: server" );
+			this.serverSide =   true;
+			this.Game       =   server.Game;
+			this.UserGuid   =   new Guid();
+			Content         =   server.Content;
+			entities        =   new Dictionary<uint, Entity>();
+
+			
+			ReloadDescriptors();
 
 			entityControllerTypes	=	Misc.GetAllSubclassesOf( typeof(EntityController) )
 										.ToDictionary( type => type.Name );
 
 			server.Atoms.AddRange( entityDescriptions.Sections.Select( s => s.SectionName ) );
+		}
 
-			Log.Verbose("world: server");
-			this.serverSide	=	true;
-			this.Game		=	server.Game;
-			this.UserGuid	=	new Guid();
-			Content			=	server.Content;
-			entities		=	new Dictionary<uint,Entity>();
+
+
+		public void ReloadDescriptors ()
+		{
+			entityDescriptions  =   Content.Load<IniData>( @"scripts\entities" );
 		}
 
 

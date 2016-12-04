@@ -44,6 +44,7 @@ namespace IronStar {
 		/// </summary>
 		public override void Initialize ()
 		{
+			Game.Reloading += (s,e) => World?.ReloadDescriptors();
 		}
 
 
