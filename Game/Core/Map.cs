@@ -75,13 +75,14 @@ namespace IronStar.Core {
 			//	iterate through the scene's nodes :
 			for ( int i = 0; i<scene.Nodes.Count; i++ ) {
 
-				var node	=   scene.Nodes[ i ];
-				var world   =   transforms[ i ];
+				var node	=   scene.Nodes[i];
+				var world   =   transforms[i];
 				var name	=   node.Name;
+				var desc	=	ParseComment(node.Comment);
 				var mesh	=   node.MeshIndex < 0 ? null : scene.Meshes[ node.MeshIndex ];
 
-				if ( name.StartsWith( "entity_" ) ) {
-					var classname	=	name.Replace("entity_","");
+				if (desc.ContainsKey("classname")) {
+					var classname	=	desc["classname"];
 					var origin		=	world.TranslationVector;
 					var rotation	=	Quaternion.RotationMatrix( world );
 					var spawnInfo	=	new SpawnInfo( classname, origin, rotation );
@@ -126,6 +127,24 @@ namespace IronStar.Core {
 			staticMesh.Sidedness = BEPUutilities.TriangleSidedness.Clockwise;
 
 			return staticMesh;
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="text"></param>
+		/// <returns></returns>
+		public static Dictionary<string, string> ParseComment ( string text )
+		{
+			return 
+				text
+				.Split( new[] {'\n','\r'}, StringSplitOptions.RemoveEmptyEntries )
+				.Select( line1 => line1.Trim() )
+				.Where( line2 => !line2.StartsWith("#") )
+				.Select( line3 => line3.Split(new[]{'='}, 2) )
+				.Where( pair => pair.Length == 2 )
+				.ToDictionary( pair2 => pair2[0].Trim(), pair3 => pair3[1].Trim() );
 		}
 	}
 }

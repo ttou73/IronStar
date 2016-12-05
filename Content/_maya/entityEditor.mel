@@ -1,0 +1,64 @@
+window -title "Edit Entity" editEntityWindow2;
+	columnLayout ColumnLayout;
+	frameLayout -labelVisible false -marginWidth 5 -marginHeight 5;
+	columnLayout;
+	text -label "Overall Intensity";
+	rowLayout -numberOfColumns 3;
+	string $radioButton1, $radioButton2, $radioButton3;
+	radioCollection;
+	$radioButton1 = `radioButton -label "Low"`;
+	$radioButton2 = `radioButton -label "Medium"`;
+	$radioButton3 = `radioButton -label "High"`;
+	setParent ..;
+	
+	text -label "Light Switches";
+	rowColumnLayout -numberOfColumns 2 
+	-columnWidth 1 130 -columnWidth 2 130;
+	string $checkBox1, $checkBox2, $checkBox3, $checkBox4;
+	$checkBox1 = `checkBox -label "Front Spot"`;
+	$checkBox2 = `checkBox -label "Center Spot"`;
+	$checkBox3 = `checkBox -label "Near Flood"`;
+	$checkBox4 = `checkBox -label "Sunlight"`;
+	setParent editEntityWindow2|ColumnLayout;
+	
+	textField -text "Ready" -editable false -width 278 StatusLine;
+	// Set initial state.
+	//
+	radioButton -edit -select $radioButton1;
+	
+	checkBox -edit -value on $checkBox1;
+	checkBox -edit -value off $checkBox2;
+	checkBox -edit -value off $checkBox3;
+	checkBox -edit -value on $checkBox4;
+	// Add functionality.
+	//
+	radioButton -edit -onCommand "showStatus \"Low Intensity\"" $radioButton1;
+	radioButton -edit -onCommand "showStatus \"Med Intensity\"" $radioButton2;
+	radioButton -edit -onCommand "showStatus \"High Intensity\"" $radioButton3;
+	
+	checkBox -edit
+	-changeCommand "showStatus \"Front Spot: #1\""
+	$checkBox1;
+	
+	checkBox -edit
+	-changeCommand "showStatus \"Center Spot: #1\""
+	$checkBox2;
+	
+	checkBox -edit
+	-onCommand "showStatus \"Near Flood On\"" 
+	-offCommand "showStatus \"Near Flood Off\"" 
+	$checkBox3;
+	
+	checkBox -edit 
+	-onCommand "showStatus \"Sunlight On\""
+	-offCommand "showStatus \"Sunlight Off\"" 
+	$checkBox4;
+
+	showWindow editEntityWindow2;
+
+//
+// Procedure to update the status line.
+//
+global proc showStatus (string $newStatus) {
+	textField -edit -text $newStatus editEntityWindow2|ColumnLayout|StatusLine;
+}

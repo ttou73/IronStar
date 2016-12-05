@@ -59,15 +59,15 @@ namespace IronStar {
 				var node	=	scene.Nodes[ i ];
 				var world	=	transforms[ i ];
 				var name	=	node.Name;
+				var desc	=	Map.ParseComment(node.Comment);
 				var mesh	=	node.MeshIndex < 0 ? null : scene.Meshes[ node.MeshIndex ];
 
-				if ( name.StartsWith("entity_startPoint")) {	
-					Spawn("startPoint", 0, world.TranslationVector, 10 );
+				if (desc.ContainsKey("classname")) {
+					var classname	=	desc["classname"];
+					var origin		=	world.TranslationVector;
+					var rotation	=	Quaternion.RotationMatrix( world );
+					Spawn("classname", 0, origin, rotation );
 					continue;
-				}
-
-				if (name.StartsWith("entity_camera")) {
-					Spawn("camera", 0, world );
 				}
 
 				if (mesh!=null) {
