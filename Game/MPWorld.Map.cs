@@ -66,7 +66,7 @@ namespace IronStar {
 					var classname	=	desc["classname"];
 					var origin		=	world.TranslationVector;
 					var rotation	=	Quaternion.RotationMatrix( world );
-					Spawn("classname", 0, origin, rotation );
+					Spawn(classname, 0, origin, rotation );
 					continue;
 				}
 
