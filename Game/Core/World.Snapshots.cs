@@ -18,7 +18,7 @@ namespace IronStar.Core {
 	/// <summary>
 	/// World represents entire game state.
 	/// </summary>
-	public abstract partial class World {
+	public partial class World {
 
 		int sendSnapshotCounter = 1;
 

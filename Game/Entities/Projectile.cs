@@ -36,7 +36,7 @@ namespace IronStar.Controllers {
 
 
 		readonly Space space;
-		MPWorld world;
+		World world;
 
 		/// <summary>
 		/// 
@@ -47,8 +47,8 @@ namespace IronStar.Controllers {
 		{
 			//string explosionFX, float velocity, float radius, short damage, float impulse, float lifeTime
 
-			this.space	=	((MPWorld)world).PhysSpace;
-			this.world	=	(MPWorld)world;
+			this.space	=	world.PhysSpace;
+			this.world	=	world;
 
 			this.Velocity		=	parameters.Get<float>	("velocity"		, 0);
 			this.HitImpulse		=	parameters.Get<float>	("impulse"		, 0);	

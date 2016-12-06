@@ -21,7 +21,11 @@ namespace IronStar.Core {
 	/// <summary>
 	/// World represents entire game state.
 	/// </summary>
-	public abstract partial class World {
+	public partial class World {
+
+		readonly string mapName;
+
+		Map map;
 
 		public readonly Guid UserGuid;
 
@@ -113,7 +117,7 @@ namespace IronStar.Core {
 		/// </summary>
 		/// <param name="maxPlayers"></param>
 		/// <param name="maxEntities"></param>
-		public World ( GameServer server )
+		public World ( GameServer server, string mapName )
 		{
 			Log.Verbose( "world: server" );
 			this.serverSide =   true;
@@ -125,10 +129,39 @@ namespace IronStar.Core {
 			
 			ReloadDescriptors();
 
+			InitWorldPhysics(16);
+
 			entityControllerTypes	=	Misc.GetAllSubclassesOf( typeof(EntityController) )
 										.ToDictionary( type => type.Name );
 
 			server.Atoms.AddRange( entityDescriptions.Sections.Select( s => s.SectionName ) );
+
+			//------------------------
+
+			this.mapName	=	mapName;
+
+			var scene = Content.Load<Scene>(@"scenes\" + mapName );
+
+			map		=	new Map( Content, scene, false );
+
+			foreach ( var cm in map.StaticCollisionMeshes ) {
+				PhysSpace.Add( cm );
+			}
+
+			foreach ( var si in map.SpawnInfos ) {
+				Spawn( si.Classname, 0, si.Origin, si.Rotation );
+			}
+
+
+			#region TEMP STUFF
+			Random	r = new Random();
+			for (int i=0; i<10; i++) {
+				Spawn("box", 0, Vector3.Up * 400 + r.GaussRadialDistribution(20,2), 0 );
+			}// */
+			#endregion
+
+
+			EntityKilled += MPWorld_EntityKilled;
 		}
 
 
@@ -144,7 +177,7 @@ namespace IronStar.Core {
 		/// Initializes client-side world.
 		/// </summary>
 		/// <param name="client"></param>
-		public World ( GameClient client )
+		public World ( GameClient client, string serverInfo )
 		{
 			Log.Verbose("world: client");
 			this.serverSide	=	false;
@@ -156,6 +189,11 @@ namespace IronStar.Core {
 
 			AddView( new HudView( this ) );
 			AddView( new CameraView( this ) );
+
+			//------------------------
+
+			var scene = Content.Load<Scene>(@"scenes\" + serverInfo );
+			map		=	new Map( Content, scene, true );
 		}
 
 
@@ -223,14 +261,25 @@ namespace IronStar.Core {
 		/// Simulates world.
 		/// </summary>
 		/// <param name="gameTime"></param>
-		public virtual void SimulateWorld ( float deltaTime )
+		public virtual void SimulateWorld ( float elapsedTime )
 		{
+			if (IsServerSide) {
+
+				UpdatePlayers( elapsedTime );
+
+				var dt	=	1 / GameServer.TargetFrameRate;
+				PhysSpace.TimeStepSettings.MaximumTimeStepsPerFrame = 6;
+				PhysSpace.TimeStepSettings.TimeStepDuration = 1.0f/60.0f;
+				PhysSpace.Update(dt);
+			}
+
+
 			fxSpawnSequnce++;
 
 			//
 			//	Control entities :
 			//
-			ForEachEntity( e => e.ForeachController( c => c.Update( deltaTime ) ) );
+			ForEachEntity( e => e.ForeachController( c => c.Update( elapsedTime ) ) );
 
 			//
 			//	Kill entities :
@@ -601,54 +650,23 @@ namespace IronStar.Core {
 
 
 		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="guid"></param>
-		/// <param name="userInfo"></param>
-		/// <returns></returns>
-		public abstract bool ApprovePlayer ( Guid guid, string userInfo );
-
-		/// <summary>
-		/// Called when player connected.
-		/// </summary>
-		/// <param name="guid"></param>
-		/// <param name="userInfo"></param>
-		public abstract void PlayerConnected ( Guid guid, string userInfo );
-
-		/// <summary>
-		/// Called when player enetered.
-		/// </summary>
-		/// <param name="guid"></param>
-		public abstract void PlayerEntered ( Guid guid );
-
-		/// <summary>
-		/// Called when player left.
-		/// </summary>
-		/// <param name="guid"></param>
-		public abstract void PlayerLeft ( Guid guid );
-
-		/// <summary>
-		/// Called when player disconnected.
-		/// </summary>
-		/// <param name="guid"></param>
-		public abstract void PlayerDisconnected ( Guid guid );
-
-		/// <summary>
-		/// Called when player left.
-		/// </summary>
-		/// <param name="guid"></param>
-		public abstract void PlayerCommand ( Guid guid, byte[] command, float lag );
-
-		/// <summary>
 		/// This method called in main thread to complete non-thread safe operations.
 		/// </summary>
-		public abstract void FinalizeLoad ();
+		public void FinalizeLoad ()
+		{
+			foreach ( var mi in map.MeshInstance ) {
+				Game.RenderSystem.RenderWorld.Instances.Add( mi );
+			}
+		}
 
 
 		/// <summary>
 		/// Returns server info.
 		/// </summary>
-		public abstract string ServerInfo (); 
+		public string ServerInfo ()
+		{
+			return mapName; 
+		}
 
 
 		/// <summary>
@@ -658,6 +676,10 @@ namespace IronStar.Core {
 		{
 			if (IsClientSide) {
 				fxPlayback.StopAllSFX();
+			}
+
+			if (IsClientSide) {
+				Game.RenderSystem.RenderWorld.ClearWorld();
 			}
 		}
 

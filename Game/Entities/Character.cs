@@ -41,7 +41,7 @@ namespace IronStar.Controllers {
 		/// <param name="space"></param>
 		public Character ( Entity entity, World world, KeyDataCollection parameters ) : base(entity,world)
 		{
-			this.space	=	((MPWorld)world).PhysSpace;
+			this.space	=	world.PhysSpace;
 
 			var pos = MathConverter.Convert( entity.Position );
 

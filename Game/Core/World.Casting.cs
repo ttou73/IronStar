@@ -28,8 +28,8 @@ using BEPUphysics.CollisionShapes.ConvexShapes;
 using BEPUphysics.CollisionShapes;
 using BEPUphysics.BroadPhaseEntries.MobileCollidables;
 
-namespace IronStar {
-	public partial class MPWorld : World {
+namespace IronStar.Core {
+	public partial class World  {
 
 		/// <summary>
 		/// 
@@ -68,7 +68,7 @@ namespace IronStar {
 			var rcr		= new RayCastResult();	
 			var bRay	= MathConverter.Convert( ray );
 
-			bool result = physSpace.RayCast( bRay, dist, filterFunc, out rcr );
+			bool result = PhysSpace.RayCast( bRay, dist, filterFunc, out rcr );
 
 			if (!result) {
 				return false;
@@ -102,7 +102,7 @@ namespace IronStar {
 			BU.RigidTransform	rigidXForm	= new BU.RigidTransform( MathConverter.Convert(origin) );	
 
 			var candidates = PhysicsResources.GetBroadPhaseEntryList();
-            physSpace.BroadPhase.QueryAccelerator.BroadPhase.QueryAccelerator.GetEntries(sphere, candidates);
+            PhysSpace.BroadPhase.QueryAccelerator.BroadPhase.QueryAccelerator.GetEntries(sphere, candidates);
 			
 			var result = new List<Entity>();
 

@@ -17,8 +17,8 @@ using IronStar.Core;
 using IronStar.Views;
 using IronStar.Controllers;
 
-namespace IronStar {
-	public partial class MPWorld : World {
+namespace IronStar.Core {
+	public partial class World {
 
 		Random rand = new Random();
 
@@ -37,6 +37,21 @@ namespace IronStar {
 		Player GetPlayer ( Guid guid )
 		{
 			return Players.LastOrDefault( p => p.Guid==guid );
+		}
+
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		void MPWorld_EntityKilled ( object sender, EntityEventArgs e )
+		{
+			foreach ( var pe in Players.Where( p => p.PlayerEntity == e.Entity ) ) {
+				pe.Killed(e.Entity);
+			}
+			
 		}
 
 
@@ -75,7 +90,7 @@ namespace IronStar {
 		/// <param name="guid"></param>
 		/// <param name="command"></param>
 		/// <param name="lag"></param>
-		public override void PlayerCommand ( Guid guid, byte[] command, float lag )
+		public void PlayerCommand ( Guid guid, byte[] command, float lag )
 		{
 			var p = GetPlayer(guid);
 			if (p!=null) {
@@ -85,19 +100,6 @@ namespace IronStar {
 
 
 
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		void MPWorld_EntityKilled ( object sender, EntityEventArgs e )
-		{
-			foreach ( var pe in Players.Where( p => p.PlayerEntity == e.Entity ) ) {
-				pe.Killed(e.Entity);
-			}
-			
-		}
-
 
 
 		/// <summary>
@@ -106,7 +108,7 @@ namespace IronStar {
 		/// <param name="guid"></param>
 		/// <param name="userInfo"></param>
 		/// <returns></returns>
-		public override bool ApprovePlayer ( Guid guid, string userInfo )
+		public bool ApprovePlayer ( Guid guid, string userInfo )
 		{
 			return !Players.Any( p => p.Guid == guid );
 		}
@@ -118,7 +120,7 @@ namespace IronStar {
 		/// </summary>
 		/// <param name="guid"></param>
 		/// <param name="userInfo"></param>
-		public override void PlayerConnected ( Guid guid, string userInfo )
+		public void PlayerConnected ( Guid guid, string userInfo )
 		{
 			LogTrace("player connected: {0} {1}", guid, userInfo );
 			Players.Add( new Player( guid, userInfo ) );
@@ -130,7 +132,7 @@ namespace IronStar {
 		/// Called internally when player entered.
 		/// </summary>
 		/// <param name="guid"></param>
-		public override void PlayerEntered ( Guid guid )
+		public void PlayerEntered ( Guid guid )
 		{
 			LogTrace("player entered: {0}", guid );
 
@@ -147,7 +149,7 @@ namespace IronStar {
 		/// Called internally when player left.
 		/// </summary>
 		/// <param name="guid"></param>
-		public override void PlayerLeft ( Guid guid )
+		public void PlayerLeft ( Guid guid )
 		{
 			LogTrace("player left: {0}", guid );
 
@@ -164,7 +166,7 @@ namespace IronStar {
 		/// 
 		/// </summary>
 		/// <param name="guid"></param>
-		public override void PlayerDisconnected ( Guid guid )
+		public void PlayerDisconnected ( Guid guid )
 		{
 			LogTrace("player diconnected: {0}", guid );
 			Players.RemoveAll( p => p.Guid == guid );

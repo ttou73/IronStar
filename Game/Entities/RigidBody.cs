@@ -41,7 +41,7 @@ namespace IronStar.Controllers {
 		/// <param name="space"></param>
 		public RigidBody ( Entity entity, World world, float w, float h, float d, float mass ) : base(entity,world)
 		{
-			this.space	=	((MPWorld)world).PhysSpace;
+			this.space	=	world.PhysSpace;
 
 			var ms	=	new MotionState();
 			ms.AngularVelocity	=	MathConverter.Convert( entity.AngularVelocity );

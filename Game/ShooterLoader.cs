@@ -67,7 +67,7 @@ namespace IronStar {
 		void LoadingTask ( ShooterClient client, string serverInfo )
 		{
 			try {
-				var world = new MPWorld( client, serverInfo );
+				var world = new World( client, serverInfo );
 				World	=	world;
 
 			} catch ( Exception e ) {

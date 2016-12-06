@@ -53,7 +53,7 @@ namespace IronStar.Controllers {
 			if (entity.UserCtrlFlags.HasFlag(UserCtrlFlags.Railgun			)) entity.ActiveItem = Inventory.Railgun		;
 			if (entity.UserCtrlFlags.HasFlag(UserCtrlFlags.BFG				)) entity.ActiveItem = Inventory.BFG			;
 
-			var world = (MPWorld)World;
+			var world = World;
 
 			if (attack) {
 				switch (entity.ActiveItem) {
@@ -88,7 +88,7 @@ namespace IronStar.Controllers {
 		/// <param name="world"></param>
 		/// <param name="attacker"></param>
 		/// <param name="cooldown"></param>
-		void FirePlasma( MPWorld world, Entity attacker, short cooldown )
+		void FirePlasma( World world, Entity attacker, short cooldown )
 		{
 			if (!attacker.ConsumeItem( Inventory.Cells, 1 )) {
 				return;
@@ -110,7 +110,7 @@ namespace IronStar.Controllers {
 		/// <param name="world"></param>
 		/// <param name="attacker"></param>
 		/// <param name="cooldown"></param>
-		void FireRocket( MPWorld world, Entity attacker, short cooldown )
+		void FireRocket( World world, Entity attacker, short cooldown )
 		{
 			if (!attacker.ConsumeItem( Inventory.Rockets, 1 )) {
 				return;
@@ -132,7 +132,7 @@ namespace IronStar.Controllers {
 		/// </summary>
 		/// <param name="attacker"></param>
 		/// <param name="damage"></param>
-		void FireBullet ( MPWorld world, Entity attacker, int damage, float impulse, short cooldown, float spread )
+		void FireBullet ( World world, Entity attacker, int damage, float impulse, short cooldown, float spread )
 		{
 			if (!attacker.ConsumeItem( Inventory.Bullets, 1 )) {
 				return;
@@ -166,7 +166,7 @@ namespace IronStar.Controllers {
 		/// </summary>
 		/// <param name="attacker"></param>
 		/// <param name="damage"></param>
-		void FireShot ( MPWorld world, Entity attacker, int damage, int count, float impulse, short cooldown, float spread )
+		void FireShot ( World world, Entity attacker, int damage, int count, float impulse, short cooldown, float spread )
 		{
 			if (!attacker.ConsumeItem( Inventory.Bullets, 1 )) {
 				return;
@@ -203,7 +203,7 @@ namespace IronStar.Controllers {
 		/// </summary>
 		/// <param name="attacker"></param>
 		/// <param name="damage"></param>
-		void FireRail ( MPWorld world, Entity attacker, int damage, float impulse, short cooldown )
+		void FireRail ( World world, Entity attacker, int damage, float impulse, short cooldown )
 		{
 			if (!attacker.ConsumeItem( Inventory.Slugs, 1 )) {
 				return;

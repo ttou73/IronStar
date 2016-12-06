@@ -55,6 +55,7 @@
   <ItemGroup>
     <Compile Include="Commands\ShowWorldState.cs" />
     <Compile Include="Core\Map.cs" />
+    <Compile Include="Core\World.Physics.cs" />
     <Compile Include="Entities\Character.Weaponry.cs" />
     <Compile Include="Entities\Character.cs" />
     <Compile Include="Entities\Projectile.cs" />
@@ -67,11 +68,11 @@
     <Compile Include="SFX\WeaponFX\PlasmaTrail.cs" />
     <Compile Include="SFX\WeaponFX\MZBlaster.cs" />
     <Compile Include="SFX\WeaponFX\TeleportFX.cs" />
-    <Compile Include="MPWorld.Player.cs" />
+    <Compile Include="Core\Player.cs" />
     <Compile Include="Core\Enums.cs" />
     <Compile Include="SFX\FXEvent.cs" />
     <Compile Include="Core\Old\Oscillator.cs" />
-    <Compile Include="MPWorld.Casting.cs" />
+    <Compile Include="Core\World.Casting.cs" />
     <Compile Include="Core\Old\Filter.cs" />
     <Compile Include="SFX\FXInstance.Stage.cs" />
     <Compile Include="SFX\FXInstance.SoundStage.cs" />
@@ -92,13 +93,10 @@
     <Compile Include="Core\EntityEventArgs.cs" />
     <Compile Include="ShooterClient.Config.cs" />
     <Compile Include="Entities\RigidBody.cs" />
-    <Compile Include="MPWorld.Players.cs" />
-    <Compile Include="MPWorld.Map.cs" />
-    <Compile Include="MPWorld.Physics.cs" />
+    <Compile Include="Core\World.Players.cs" />
     <Compile Include="Core\Entity.cs" />
     <Compile Include="Core\World.cs" />
     <Compile Include="MathConverter.cs" />
-    <Compile Include="MPWorld.cs" />
     <Compile Include="ShooterLoader.cs" />
     <Compile Include="ShooterClient.cs" />
     <Compile Include="ShooterServer.cs" />

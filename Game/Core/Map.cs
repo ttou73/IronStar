@@ -36,6 +36,15 @@ namespace IronStar.Core {
 		}
 
 
+		/// <summary>
+		/// Gets list of spawn infos
+		/// </summary>
+		public IEnumerable<SpawnInfo> SpawnInfos {
+			get {
+				return spawnInfos;
+			}
+		}
+
 
 		/// <summary>
 		/// 
