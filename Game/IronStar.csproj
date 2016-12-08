@@ -53,6 +53,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Client\GameInput.cs" />
+    <Compile Include="Client\GameView.cs" />
     <Compile Include="Commands\ShowWorldState.cs" />
     <Compile Include="Core\Map.cs" />
     <Compile Include="Core\EntityDescriptor.cs" />
@@ -106,8 +108,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserCommand.cs" />
     <Compile Include="SFX\FXPlayback.cs" />
-    <Compile Include="Views\CameraView.cs" />
-    <Compile Include="Views\HudView.cs" />
+    <Compile Include="Client\CameraView.cs" />
+    <Compile Include="Client\HudView.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Engine\Fusion.csproj">

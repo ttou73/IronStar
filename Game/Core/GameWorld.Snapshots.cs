@@ -68,7 +68,7 @@ namespace IronStar.Core {
 		/// Reads world state from stream reader.
 		/// </summary>
 		/// <param name="writer"></param>
-		public virtual void ReadFromSnapshot ( BinaryReader reader, uint ackCmdID, float lerpFactor )
+		public virtual void ReadFromSnapshot ( BinaryReader reader, float lerpFactor )
 		{
 			int snapshotCounter			=	reader.ReadInt32();
 			int snapshotCountrerDelta	=	snapshotCounter - recvSnapshotCounter;

@@ -16,12 +16,14 @@ using Fusion.Engine.Server;
 using Fusion.Engine.Graphics;
 using IronStar.Core;
 using IronStar.Views;
+using IronStar.Client;
 
 
 namespace IronStar {
 	public partial class ShooterClient : Fusion.Engine.Client.GameClient {
 
 		GameWorld gameWorld;
+		GameInput gameInput;
 
 		public GameWorld World {
 			get { return gameWorld; }
@@ -44,6 +46,8 @@ namespace IronStar {
 			: base( game )
 		{
 			SetDefaults();
+			
+			gameInput	=	new GameInput(this);
 		}
 
 
@@ -56,7 +60,7 @@ namespace IronStar {
 			hudLayer	=	new SpriteLayer( Game.RenderSystem, 1024 );
 			Game.RenderSystem.SpriteLayers.Add( hudLayer );
 
-			Game.Keyboard.KeyDown += Keyboard_KeyDown;
+			InitializeComponent( gameInput );
 
 			Game.RenderSystem.DisplayBoundsChanged += RenderSystem_DisplayBoundsChanged;
 		}
@@ -70,9 +74,14 @@ namespace IronStar {
 		}
 
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="disposing"></param>
 		protected override void Dispose ( bool disposing )
 		{
 			if (disposing) {
+				DisposeComponents();
 				SafeDispose( ref hudLayer );
 			}
 			base.Dispose( disposing );
@@ -196,7 +205,6 @@ namespace IronStar {
 
 		public UserCommand	UserCommand;
 
-		uint ackCommandID;
 		byte[] latestSnapshot = null;
 
 		public float entityLerpFactor {
@@ -213,7 +221,7 @@ namespace IronStar {
 		public override byte[] Update ( GameTime gameTime, uint sentCommandID )
 		{
 			// update user input :
-			UpdateInput( ref UserCommand );
+			gameInput.Update( gameTime, ref UserCommand );
 			var cmdBytes = UserCommand.GetBytes( UserCommand );
 
 			//	process incoming snapshots :
@@ -279,7 +287,7 @@ namespace IronStar {
 
 						reader.ReadSingle();
 
-						gameWorld.ReadFromSnapshot( reader, ackCommandID, entityLerpFactor );
+						gameWorld.ReadFromSnapshot( reader, entityLerpFactor );
 					
 						entityLerpFactor = 0;
 					}
@@ -296,86 +304,6 @@ namespace IronStar {
 
 
 
-		UserCtrlFlags weaponControl;
-
-
-		void Keyboard_KeyDown ( object sender, KeyEventArgs e )
-		{
-			if (e.Key==UseWeapon1) {	
-				weaponControl &= ~UserCtrlFlags.AllWeapon;
-				weaponControl |= UserCtrlFlags.Machinegun;
-			}
-			if (e.Key==UseWeapon2) {	
-				weaponControl &= ~UserCtrlFlags.AllWeapon;
-				weaponControl |= UserCtrlFlags.Shotgun;
-			}
-			if (e.Key==UseWeapon3) {	
-				weaponControl &= ~UserCtrlFlags.AllWeapon;
-				weaponControl |= UserCtrlFlags.SuperShotgun;
-			}
-			if (e.Key==UseWeapon4) {	
-				weaponControl &= ~UserCtrlFlags.AllWeapon;
-				weaponControl |= UserCtrlFlags.GrenadeLauncher;
-			}
-			if (e.Key==UseWeapon5) {	
-				weaponControl &= ~UserCtrlFlags.AllWeapon;
-				weaponControl |= UserCtrlFlags.RocketLauncher;
-			}
-			if (e.Key==UseWeapon6) {	
-				weaponControl &= ~UserCtrlFlags.AllWeapon;
-				weaponControl |= UserCtrlFlags.Chaingun;
-			}
-			if (e.Key==UseWeapon7) {	
-				weaponControl &= ~UserCtrlFlags.AllWeapon;
-				weaponControl |= UserCtrlFlags.Railgun;
-			}
-			if (e.Key==UseWeapon8) {	
-				weaponControl &= ~UserCtrlFlags.AllWeapon;
-				weaponControl |= UserCtrlFlags.HyperBlaster;
-			}
-			if (e.Key==UseWeapon9) {	
-				weaponControl &= ~UserCtrlFlags.AllWeapon;
-				weaponControl |= UserCtrlFlags.BFG;
-			}
-		}
-
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		void UpdateInput ( ref UserCommand userCommand )
-		{
-			var flags = UserCtrlFlags.None;
-			
-			if (Game.Keyboard.IsKeyDown( MoveForward	)) flags |= UserCtrlFlags.Forward;
-			if (Game.Keyboard.IsKeyDown( MoveBackward	)) flags |= UserCtrlFlags.Backward;
-			if (Game.Keyboard.IsKeyDown( StrafeLeft		)) flags |= UserCtrlFlags.StrafeLeft;
-			if (Game.Keyboard.IsKeyDown( StrafeRight	)) flags |= UserCtrlFlags.StrafeRight;
-			if (Game.Keyboard.IsKeyDown( Jump			)) flags |= UserCtrlFlags.Jump;
-			if (Game.Keyboard.IsKeyDown( Crouch			)) flags |= UserCtrlFlags.Crouch;
-			if (Game.Keyboard.IsKeyDown( Zoom			)) flags |= UserCtrlFlags.Zoom;
-			if (Game.Keyboard.IsKeyDown( Attack			)) flags |= UserCtrlFlags.Attack;
-
-
-			//	http://eliteownage.com/mousesensitivity.html 
-			//	Q3A: 16200 dot per 360 turn:
-			var vp		=	Game.RenderSystem.DisplayBounds;
-			var ui		=	Game.UserInterface as ShooterInterface;
-			var cam		=	World.GetView<CameraView>();
-
-			if (!Game.Console.IsShown) {
-				UserCommand.CtrlFlags	=	flags | weaponControl;
-				UserCommand.Yaw         -=  2 * MathUtil.Pi * 5 * Game.Mouse.PositionDelta.X / 16200.0f;
-				UserCommand.Pitch       -=  2 * MathUtil.Pi * 5 * Game.Mouse.PositionDelta.Y / 16200.0f * ( InvertMouse ? -1 : 1 );
-				//UserCommand.Yaw         -=  2 * MathUtil.Pi * cam.Sensitivity * Game.Mouse.PositionDelta.X / 16200.0f;
-				//UserCommand.Pitch       -=  2 * MathUtil.Pi * cam.Sensitivity * Game.Mouse.PositionDelta.Y / 16200.0f * ( InvertMouse ? -1 : 1 );
-				UserCommand.Roll		=	0;
-			}
-		}
-
-
-
 		/// <summary>
 		/// Feed server snapshot to client.
 		/// Called when fresh snapshot arrived.
@@ -384,8 +312,6 @@ namespace IronStar {
 		public override void FeedSnapshot ( GameTime serverTime, byte[] snapshot, uint ackCommandID )
 		{
 			this.serverTime		=	serverTime;
-
-			this.ackCommandID	=	ackCommandID;
 			this.latestSnapshot	=	snapshot;
 		}
 
