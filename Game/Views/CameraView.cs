@@ -29,7 +29,7 @@ namespace IronStar.Views {
 		/// </summary>
 		/// <param name="game"></param>
 		/// <param name="space"></param>
-		public CameraView ( World world ) : base( world )
+		public CameraView ( GameWorld world ) : base( world )
 		{
 			if (world.IsClientSide) {
 				currentFov	=	(world.GameClient as ShooterClient).Fov;

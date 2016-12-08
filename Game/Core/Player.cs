@@ -95,7 +95,7 @@ namespace IronStar {
 		/// </summary>
 		/// <param name="world"></param>
 		/// <param name="dt"></param>
-		public void Update ( World world, float dt )
+		public void Update ( GameWorld world, float dt )
 		{
 			if (!Ready) {
 				return;
@@ -125,7 +125,7 @@ namespace IronStar {
 		/// 
 		/// </summary>
 		/// <param name="world"></param>
-		public Entity Respawn (World world)
+		public Entity Respawn (GameWorld world)
 		{
 			var sp = world.GetEntities("startPoint").OrderBy( e => rand.Next() ).FirstOrDefault();					
 

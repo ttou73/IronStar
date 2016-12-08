@@ -59,12 +59,12 @@
     <Compile Include="Core\Old\Filter.cs" />
     <Compile Include="Core\Old\Oscillator.cs" />
     <Compile Include="Core\Old\WorldView.cs" />
-    <Compile Include="Core\World.Physics.cs" />
+    <Compile Include="Core\GameWorld.Physics.cs" />
     <Compile Include="Entities\Character.Weaponry.cs" />
     <Compile Include="Entities\Character.cs" />
     <Compile Include="Entities\Projectile.cs" />
     <Compile Include="Core\EntityController.cs" />
-    <Compile Include="Core\World.Snapshots.cs" />
+    <Compile Include="Core\GameWorld.Snapshots.cs" />
     <Compile Include="SFX\WeaponFX\Mist.cs" />
     <Compile Include="SFX\WeaponFX\MZShotgun.cs" />
     <Compile Include="SFX\WeaponFX\PlasmaExplosion.cs" />
@@ -74,7 +74,7 @@
     <Compile Include="Core\Player.cs" />
     <Compile Include="Core\Enums.cs" />
     <Compile Include="SFX\FXEvent.cs" />
-    <Compile Include="Core\World.Casting.cs" />
+    <Compile Include="Core\GameWorld.Casting.cs" />
     <Compile Include="SFX\FXInstance.Stage.cs" />
     <Compile Include="SFX\FXInstance.SoundStage.cs" />
     <Compile Include="SFX\FXInstance.LightStage.cs" />
@@ -94,9 +94,9 @@
     <Compile Include="Core\EntityEventArgs.cs" />
     <Compile Include="ShooterClient.Config.cs" />
     <Compile Include="Entities\RigidBody.cs" />
-    <Compile Include="Core\World.Players.cs" />
+    <Compile Include="Core\GameWorld.Players.cs" />
     <Compile Include="Core\Entity.cs" />
-    <Compile Include="Core\World.cs" />
+    <Compile Include="Core\GameWorld.cs" />
     <Compile Include="MathConverter.cs" />
     <Compile Include="ShooterLoader.cs" />
     <Compile Include="ShooterClient.cs" />

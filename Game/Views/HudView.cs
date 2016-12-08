@@ -31,7 +31,7 @@ namespace IronStar.Views {
 		/// </summary>
 		/// <param name="game"></param>
 		/// <param name="space"></param>
-		public HudView ( World world ) : base(world)
+		public HudView ( GameWorld world ) : base(world)
 		{
 			LoadContent();
 			Game.Reloading += (s,e) => LoadContent();

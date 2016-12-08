@@ -11,7 +11,7 @@ namespace IronStar.Core {
 	public abstract class EntityController {
 
 		public readonly Game Game;
-		public readonly World World;
+		public readonly GameWorld World;
 		public readonly Entity Entity;
 
 
@@ -20,7 +20,7 @@ namespace IronStar.Core {
 		/// </summary>
 		/// <param name="world"></param>
 		/// <param name="entity"></param>
-		public EntityController ( Entity entity, World world, string parameters = "" )
+		public EntityController ( Entity entity, GameWorld world, string parameters = "" )
 		{
 			this.World	=	world;
 			this.Entity	=	entity;

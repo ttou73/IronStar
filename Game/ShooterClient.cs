@@ -21,9 +21,9 @@ using IronStar.Views;
 namespace IronStar {
 	public partial class ShooterClient : Fusion.Engine.Client.GameClient {
 
-		World gameWorld;
+		GameWorld gameWorld;
 
-		public World World {
+		public GameWorld World {
 			get { return gameWorld; }
 		}
 

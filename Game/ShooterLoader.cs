@@ -23,7 +23,7 @@ namespace IronStar {
 		/// <summary>
 		/// Loaded world.
 		/// </summary>
-		public World World { get; private set; }
+		public GameWorld World { get; private set; }
 
 
 		/// <summary>
@@ -67,7 +67,7 @@ namespace IronStar {
 		void LoadingTask ( ShooterClient client, string serverInfo )
 		{
 			try {
-				var world = new World( client, serverInfo );
+				var world = new GameWorld( client, serverInfo );
 				World	=	world;
 
 			} catch ( Exception e ) {

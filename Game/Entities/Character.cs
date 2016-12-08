@@ -39,7 +39,7 @@ namespace IronStar.Controllers {
 		/// </summary>
 		/// <param name="game"></param>
 		/// <param name="space"></param>
-		public Character ( Entity entity, World world, KeyDataCollection parameters ) : base(entity,world)
+		public Character ( Entity entity, GameWorld world, KeyDataCollection parameters ) : base(entity,world)
 		{
 			this.space	=	world.PhysSpace;
 

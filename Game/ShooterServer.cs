@@ -20,9 +20,9 @@ namespace IronStar {
 	public partial class ShooterServer : GameServer {
 
 		
-		World	gameWorld;
+		GameWorld	gameWorld;
 
-		public World World {
+		public GameWorld World {
 			get { return gameWorld; }
 		}
 
@@ -73,7 +73,7 @@ namespace IronStar {
 
 			//var iniData	=	Content.Load<IniData>(@"scripts\entities");
 
-			gameWorld	=	new World( this, map );
+			gameWorld	=	new GameWorld( this, map );
 			Thread.Sleep(100);
 			for (int i=0; i<100; i++) {
 				gameWorld.SimulateWorld(0.16f);

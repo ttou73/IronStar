@@ -18,13 +18,13 @@ namespace IronStar.Core {
 	public abstract class WorldView {
 		
 		public readonly Game Game;
-		public readonly World World;
+		public readonly GameWorld World;
 
 		/// <summary>
 		/// 
 		/// </summary>
 		/// <param name="world"></param>
-		public WorldView ( World world )
+		public WorldView ( GameWorld world )
 		{
 			this.World	=	world;
 			this.Game	=	world.Game;

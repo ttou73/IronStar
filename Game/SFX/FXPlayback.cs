@@ -27,7 +27,7 @@ namespace IronStar.SFX {
 		public readonly ShooterClient	client;
 		public readonly RenderWorld	rw;
 		public readonly SoundWorld	sw;
-		public readonly World world;
+		public readonly GameWorld world;
 
 		List<FXInstance> runningSFXes = new List<FXInstance>();
 
@@ -40,7 +40,7 @@ namespace IronStar.SFX {
 		/// 
 		/// </summary>
 		/// <param name="game"></param>
-		public FXPlayback ( ShooterClient client, World world )
+		public FXPlayback ( ShooterClient client, GameWorld world )
 		{
 			this.world	=	world;
 			this.client	=	client;

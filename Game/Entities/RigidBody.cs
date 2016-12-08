@@ -39,7 +39,7 @@ namespace IronStar.Controllers {
 		/// </summary>
 		/// <param name="game"></param>
 		/// <param name="space"></param>
-		public RigidBody ( Entity entity, World world, float w, float h, float d, float mass ) : base(entity,world)
+		public RigidBody ( Entity entity, GameWorld world, float w, float h, float d, float mass ) : base(entity,world)
 		{
 			this.space	=	world.PhysSpace;
 

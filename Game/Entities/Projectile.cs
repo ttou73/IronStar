@@ -36,14 +36,14 @@ namespace IronStar.Controllers {
 
 
 		readonly Space space;
-		World world;
+		GameWorld world;
 
 		/// <summary>
 		/// 
 		/// </summary>
 		/// <param name="game"></param>
 		/// <param name="space"></param>
-		public Projectile ( Entity entity, World world, KeyDataCollection parameters ) : base(entity,world)
+		public Projectile ( Entity entity, GameWorld world, KeyDataCollection parameters ) : base(entity,world)
 		{
 			//string explosionFX, float velocity, float radius, short damage, float impulse, float lifeTime
 
