@@ -161,6 +161,11 @@ namespace Fusion.Engine.Common {
 		/// <returns>Negative value, if atom does not exist.</returns>
 		public short this[ string atom ] {
 			get {
+
+				if (atom==null) {
+					return -1;
+				}
+
 				short id;
 				if (dictionary.TryGetValue(atom, out id)) {
 					return id;

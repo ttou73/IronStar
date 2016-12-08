@@ -140,6 +140,7 @@ namespace IronStar.Core {
 										.ToDictionary( type => type.Name );
 
 			server.Atoms.AddRange( entityDescriptions.Sections.Select( s => s.SectionName ) );
+			AddPathsToAtoms();
 
 			//------------------------
 
@@ -174,6 +175,23 @@ namespace IronStar.Core {
 		public void ReloadDescriptors ()
 		{
 			entityDescriptions  =   Content.Load<IniData>( @"scripts\entities" );
+
+		}
+
+
+
+		void AddPathsToAtoms ()
+		{
+			foreach (var section in entityDescriptions.Sections) {
+				foreach (var key in section.Keys) {
+
+					var keyName = key.KeyName.ToLowerInvariant();
+
+					if (keyName.Contains("fx") || keyName.Contains("model")) {
+						Atoms.Add( key.Value );
+					}
+				}
+			}
 		}
 
 

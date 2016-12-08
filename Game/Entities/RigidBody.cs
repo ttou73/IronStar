@@ -8,6 +8,7 @@ using Fusion;
 using Fusion.Core;
 using Fusion.Core.Content;
 using Fusion.Core.Mathematics;
+using Fusion.Core.Extensions;
 using Fusion.Engine.Common;
 using Fusion.Engine.Input;
 using Fusion.Engine.Client;
@@ -18,6 +19,7 @@ using BEPUphysics;
 using BEPUphysics.Entities.Prefabs;
 using BEPUphysics.EntityStateManagement;
 using BEPUphysics.PositionUpdating;
+using Fusion.Core.IniParser.Model;
 //using BEPUphysics.
 
 
@@ -28,10 +30,11 @@ namespace IronStar.Controllers {
 		readonly Box box;
 
 
-		public float Width;
-		public float Height;
-		public float Depth;
-		public float Mass;
+		readonly float width;
+		readonly float height;
+		readonly float depth;
+		readonly float mass;
+		readonly string model;
 
 
 		/// <summary>
@@ -39,19 +42,27 @@ namespace IronStar.Controllers {
 		/// </summary>
 		/// <param name="game"></param>
 		/// <param name="space"></param>
-		public RigidBody ( Entity entity, GameWorld world, float w, float h, float d, float mass ) : base(entity,world)
+		public RigidBody ( Entity entity, GameWorld world, KeyDataCollection parameters ) : base(entity,world)
 		{
 			this.space	=	world.PhysSpace;
+
+			this.width		=	parameters.Get<float>	("width"	, 0);
+			this.height		=	parameters.Get<float>	("height"	, 0);	
+			this.depth		=	parameters.Get<float>	("depth"	, 0);
+			this.mass		=	parameters.Get<float>	("mass"		, 0);
+			this.model		=	parameters.Get<string>	("model"	, null);
 
 			var ms	=	new MotionState();
 			ms.AngularVelocity	=	MathConverter.Convert( entity.AngularVelocity );
 			ms.LinearVelocity	=	MathConverter.Convert( entity.LinearVelocity );
 			ms.Orientation		=	MathConverter.Convert( entity.Rotation );
 			ms.Position			=	MathConverter.Convert( entity.Position );
-			box	=	new Box(  ms, w, h, d, mass );
+			box	=	new Box(  ms, width, height, depth, mass );
 			box.PositionUpdateMode	=	PositionUpdateMode.Continuous;
 
 			box.Tag	=	entity;
+
+			entity.Model	=	world.Atoms[ model ];
 
 			space.Add( box );
 		}

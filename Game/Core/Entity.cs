@@ -92,6 +92,16 @@ namespace IronStar.Core {
 		/// </summary>
 		public Inventory ActiveItem;
 
+		/// <summary>
+		/// Visible model
+		/// </summary>
+		public short Model;
+
+		/// <summary>
+		/// Visible special effect
+		/// </summary>
+		public short Sfx;
+
 
 
 		/// <summary>
@@ -237,6 +247,9 @@ namespace IronStar.Core {
 			}
 
 			writer.Write( (byte)ActiveItem );
+
+			writer.Write( Model );
+			writer.Write( Sfx );
 		}
 
 
@@ -275,6 +288,9 @@ namespace IronStar.Core {
 			}
 
 			ActiveItem	=	(Inventory)reader.ReadByte();
+
+			Model		=	reader.ReadInt16();
+			Sfx			=	reader.ReadInt16();
 
 
 			//	entity teleported - reset position and rotation :

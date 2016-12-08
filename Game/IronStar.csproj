@@ -68,7 +68,6 @@
     <Compile Include="Entities\Character.cs" />
     <Compile Include="Entities\Projectile.cs" />
     <Compile Include="Core\EntityController.cs" />
-    <Compile Include="Core\GameWorld.Snapshots.cs" />
     <Compile Include="SFX\WeaponFX\Mist.cs" />
     <Compile Include="SFX\WeaponFX\MZShotgun.cs" />
     <Compile Include="SFX\WeaponFX\PlasmaExplosion.cs" />

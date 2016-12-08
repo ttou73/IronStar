@@ -22,7 +22,13 @@ namespace Fusion.Core.Extensions {
 			var stringValue = keyDataCollection[keyName];
 
 			if (!string.IsNullOrWhiteSpace(stringValue)) {
-				return StringConverter.FromString<T>( stringValue );
+
+				try {
+					return StringConverter.FromString<T>( stringValue );
+				} catch ( Exception e ) {
+					Log.Warning("Failed to parse key {0} = {1}, type {2}.default value {3} is used", keyName, typeof(T), stringValue, defaultValue);
+					return defaultValue;
+				}
 			} else {
 				return defaultValue;
 			}
