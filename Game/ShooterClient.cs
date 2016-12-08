@@ -283,14 +283,8 @@ namespace IronStar {
 
 				//	read snapshot :
 				using ( var ms = new MemoryStream(latestSnapshot) ) {
-					using ( var reader = new BinaryReader(ms) ) {
-
-						reader.ReadSingle();
-
-						gameWorld.ReadFromSnapshot( reader, entityLerpFactor );
-					
-						entityLerpFactor = 0;
-					}
+					gameWorld.ReadFromSnapshot( ms, entityLerpFactor );
+					entityLerpFactor = 0;
 				}
 
 				latestSnapshot	=	null;

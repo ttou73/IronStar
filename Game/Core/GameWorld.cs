@@ -41,6 +41,11 @@ namespace IronStar.Core {
 
 		IniData entityDescriptions;
 
+
+
+		SnapshotWriter snapshotWriter = new SnapshotWriter();
+		SnapshotReader snapshotReader = new SnapshotReader();
+
 		public readonly Game Game;
 		public readonly ContentManager Content;
 		readonly bool serverSide;
@@ -187,8 +192,8 @@ namespace IronStar.Core {
 			entities		=	new Dictionary<uint,Entity>();
 			fxPlayback		=	new SFX.FXPlayback((ShooterClient)client, this);
 
-			AddView( new HudView( this ) );
-			AddView( new CameraView( this ) );
+			AddView( new Hud( this ) );
+			AddView( new GameCamera( this ) );
 
 			//------------------------
 
@@ -681,6 +686,28 @@ namespace IronStar.Core {
 			if (IsClientSide) {
 				Game.RenderSystem.RenderWorld.ClearWorld();
 			}
+		}
+
+
+		/// <summary>
+		/// Writes world state to stream writer.
+		/// </summary>
+		/// <param name="writer"></param>
+		public virtual void WriteToSnapshot ( Stream stream )
+		{
+			snapshotWriter.Write( stream, entities, fxEvents );
+		}
+
+
+
+
+		/// <summary>
+		/// Reads world state from stream reader.
+		/// </summary>
+		/// <param name="writer"></param>
+		public virtual void ReadFromSnapshot ( Stream stream, float lerpFactor )
+		{
+			snapshotReader.Read( stream, entities, fxe=>RunFX(fxe), null, id=>KillImmediatly(id) );
 		}
 
 

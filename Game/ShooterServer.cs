@@ -108,15 +108,8 @@ namespace IronStar {
 
 			//	write world to stream :
 			using ( var ms = new MemoryStream() ) { 
-
-				using ( var writer = new BinaryWriter(ms) ) {
-
-					writer.Write( gameTime.ElapsedSec );
-
-					gameWorld.WriteToSnapshot( writer );
-
-					return ms.GetBuffer();
-				}
+				gameWorld.WriteToSnapshot( ms );
+				return ms.GetBuffer();
 			}
 
 		}

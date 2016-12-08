@@ -154,7 +154,7 @@ namespace IronStar.SFX {
 		/// <param name="roll"></param>
 		public void ShakeCamera ( float yaw, float pitch, float roll )
 		{
-			sfxSystem.world.GetView<CameraView>().Shake( fxEvent.ParentID, yaw, pitch, roll );
+			sfxSystem.world.GetView<GameCamera>().Shake( fxEvent.ParentID, yaw, pitch, roll );
 		}
 
 		/*-----------------------------------------------------------------------------------------

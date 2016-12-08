@@ -19,7 +19,7 @@ using BEPUphysics.Character;
 
 
 namespace IronStar.Views {
-	public class HudView : WorldView {
+	public class Hud : WorldView {
 
 		DiscTexture	crosshair;
 		SpriteFont	hudFont;
@@ -31,7 +31,7 @@ namespace IronStar.Views {
 		/// </summary>
 		/// <param name="game"></param>
 		/// <param name="space"></param>
-		public HudView ( GameWorld world ) : base(world)
+		public Hud ( GameWorld world ) : base(world)
 		{
 			LoadContent();
 			Game.Reloading += (s,e) => LoadContent();

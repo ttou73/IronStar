@@ -20,7 +20,7 @@ using Fusion.Engine.Audio;
 
 
 namespace IronStar.Views {
-	public class CameraView : WorldView {
+	public class GameCamera : WorldView {
 
 		uint playerID = 0;
 
@@ -29,7 +29,7 @@ namespace IronStar.Views {
 		/// </summary>
 		/// <param name="game"></param>
 		/// <param name="space"></param>
-		public CameraView ( GameWorld world ) : base( world )
+		public GameCamera ( GameWorld world ) : base( world )
 		{
 			if (world.IsClientSide) {
 				currentFov	=	(world.GameClient as ShooterClient).Fov;
