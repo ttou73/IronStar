@@ -55,6 +55,7 @@ namespace IronStar.SFX.WeaponFX {
 			SetupColor		( ref p, 1000, 1000, 0, 1 );
 			SetupTiming		( ref p, 0.2f, 0.01f, 0.9f );
 			SetupSize		( ref p, 0.15f, 0.00f );
+			//p.Effects = ParticleFX.Shadow;
 		}
 
 
@@ -71,6 +72,7 @@ namespace IronStar.SFX.WeaponFX {
 			SetupColor		( ref p, 1000, 1000, 0, 1.0f );
 			SetupTiming		( ref p, time, 0.1f, 0.2f );
 			SetupSize		( ref p, 0.2f, 0.5f );
+			p.Effects = ParticleFX.Shadow;
 		}
 
 
@@ -86,6 +88,7 @@ namespace IronStar.SFX.WeaponFX {
 			SetupColor		( ref p, 1000, 1000, 0, 1.0f );
 			SetupTiming		( ref p, time, 0.01f, 0.1f );
 			SetupSize		( ref p, 0.3f, 0.7f );
+			p.Effects = ParticleFX.Shadow;
 		}
 	}
 }

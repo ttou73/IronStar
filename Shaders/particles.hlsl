@@ -229,7 +229,7 @@ void GSMain( point VSOutput inputPoint[1], inout TriangleStream<GSOutput> output
 	#endif
 	
 	#ifdef DRAW_SHADOW
-	if (prt.Effects!=ParticleFX_LitShadow) {
+	if (prt.Effects!=ParticleFX_LitShadow && prt.Effects!=ParticleFX_Shadow) {
 		return;
 	}
 	#endif
@@ -273,15 +273,18 @@ float4 PSMain( GSOutput input, float4 vpos : SV_POSITION ) : SV_Target
 		float softFactor	=	saturate( (sceneZ - prtZ) * input.ViewPosSZ.w );
 
 		color.rgba *= softFactor;
+		
+		return color;
 	#endif
 	
 	#ifdef DRAW_SHADOW
 		float4 textureColor	=	Texture.Sample( Sampler, input.TexCoord );
 		float4 vertexColor  =  	input.Color;
 		float4 color		=	1 - vertexColor.a * textureColor.a;
+		
+		return color;
 	#endif
 	
-	return color;
 }
 #endif
 

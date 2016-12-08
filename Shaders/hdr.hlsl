@@ -69,7 +69,7 @@ float4 PSMain(float4 position : SV_POSITION) : SV_Target
 	}
 	sumLum = clamp( exp(sumLum / 1024.0f), Params.LuminanceLowBound, Params.LuminanceHighBound );
 	
-	return lerp( oldLum, sumLum, Params.AdaptationRate );
+	return lerp( oldLum, min(100,sumLum), Params.AdaptationRate );
 }
 
 #endif

@@ -25,14 +25,19 @@ namespace Fusion.Engine.Graphics {
 		Beam	=	1,
 
 		/// <summary>
-		/// Particles is lit. By default all particles are emissive.
+		/// Particle is lit. By default all particles are emissive.
 		/// </summary>
 		Lit		=	2,
 
 		/// <summary>
-		/// Particles should cast a shadow
+		/// Particle is lit and casts shadow.
 		/// </summary>
 		LitShadow	=	3,
+
+		/// <summary>
+		/// Particle casts shadow.
+		/// </summary>
+		Shadow	=	4,
 	}
 
 	/// <summary>
