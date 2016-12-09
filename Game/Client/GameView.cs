@@ -18,7 +18,23 @@ using Fusion.Engine.Graphics;
 
 
 namespace IronStar.Core {
-	class GameView {
+	public partial class GameView {
+
+		EntityCollection entities;
+		FXPlayback fxPlayback;
+		SnapshotReader snapshotReader;
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public EntityCollection Entities {
+			get {
+				return entities;
+			}
+		}
+
+
 
 		/// <summary>
 		/// 
@@ -26,6 +42,17 @@ namespace IronStar.Core {
 		/// <param name="cl"></param>
 		/// <param name="map"></param>
 		public GameView ( GameClient cl, Map map )
+		{
+			entities		=	new EntityCollection( cl.Atoms );
+			snapshotReader	=	new SnapshotReader();
+		}
+
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public void Cleanup ()
 		{
 		}
 
@@ -36,7 +63,9 @@ namespace IronStar.Core {
 		/// </summary>
 		public void FeedSnapshot ( GameTime serverTime, byte[] snapshot, uint ackCommandID )
 		{
-			
+			using ( var ms = new MemoryStream( snapshot ) ) {
+				snapshotReader.Read( ms, entities, null, null, null );
+			}
 		}
 
 
@@ -47,6 +76,7 @@ namespace IronStar.Core {
 		/// <param name="gameTime"></param>
 		public void Update ( GameTime gameTime )
 		{
+			//fxPlayback.
 		}
 
 

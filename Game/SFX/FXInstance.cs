@@ -28,7 +28,7 @@ namespace IronStar.SFX {
 		
 		static protected Random rand = new Random();
 
-		protected readonly FXPlayback sfxSystem;
+		protected readonly FXPlayback fxPlayback;
 		protected readonly RenderWorld rw;
 		protected readonly SoundWorld sw;
 
@@ -58,7 +58,7 @@ namespace IronStar.SFX {
 		/// <param name="fxEvent"></param>
 		public FXInstance( FXPlayback sfxSystem, FXEvent fxEvent )
 		{
-			this.sfxSystem	=	sfxSystem;
+			this.fxPlayback	=	sfxSystem;
 			this.rw			=	sfxSystem.rw;
 			this.sw			=	sfxSystem.sw;
 			this.fxEvent	=	fxEvent;
@@ -154,7 +154,7 @@ namespace IronStar.SFX {
 		/// <param name="roll"></param>
 		public void ShakeCamera ( float yaw, float pitch, float roll )
 		{
-			sfxSystem.world.GetView<GameCamera>().Shake( fxEvent.ParentID, yaw, pitch, roll );
+			fxPlayback.world.GetView<GameCamera>().Shake( fxEvent.ParentID, yaw, pitch, roll );
 		}
 
 		/*-----------------------------------------------------------------------------------------
@@ -177,7 +177,7 @@ namespace IronStar.SFX {
 			if (count==0) {
 				return;
 			}
-			var spriteIndex		=	sfxSystem.GetSpriteIndex( spriteName );
+			var spriteIndex		=	fxPlayback.GetSpriteIndex( spriteName );
 			var stage			=	new ParticleStage( this, spriteIndex, delay, period, sleep, count, looped, emit );
 			stages.Add( stage );
 		}

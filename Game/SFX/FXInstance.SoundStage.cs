@@ -39,7 +39,7 @@ namespace IronStar.SFX {
 			/// <param name="soundPath"></param>
 			public SoundStage ( FXInstance instance, Vector3 position, float radius, string soundPath, bool looped, bool local ) : base(instance)
 			{
-				var sound	=	instance.sfxSystem.LoadSound( soundPath );
+				var sound	=	instance.fxPlayback.LoadSound( soundPath );
 
 				if (sound==null) {
 					return;

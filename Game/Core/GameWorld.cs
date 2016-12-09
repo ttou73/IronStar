@@ -55,7 +55,7 @@ namespace IronStar.Core {
 		Dictionary<string,Type> entityControllerTypes;
 		List<uint> entityToKill = new List<uint>();
 
-		public Dictionary<uint, Entity> entities;
+		public EntityCollection entities;
 		uint idCounter = 1;
 
 		public event EntityEventHandler ReplicaSpawned;
@@ -129,7 +129,7 @@ namespace IronStar.Core {
 			this.Game       =   server.Game;
 			this.UserGuid   =   new Guid();
 			Content         =   server.Content;
-			entities        =   new Dictionary<uint, Entity>();
+			entities        =   new EntityCollection(server.Atoms);
 
 			
 			ReloadDescriptors();
@@ -172,6 +172,9 @@ namespace IronStar.Core {
 
 
 
+		/// <summary>
+		/// 
+		/// </summary>
 		public void ReloadDescriptors ()
 		{
 			entityDescriptions  =   Content.Load<IniData>( @"scripts\entities" );
@@ -180,6 +183,9 @@ namespace IronStar.Core {
 
 
 
+		/// <summary>
+		/// 
+		/// </summary>
 		void AddPathsToAtoms ()
 		{
 			foreach (var section in entityDescriptions.Sections) {
@@ -207,7 +213,7 @@ namespace IronStar.Core {
 			this.Game		=	client.Game;
 			this.UserGuid	=	client.Guid;
 			Content			=	client.Content;
-			entities		=	new Dictionary<uint,Entity>();
+			entities		=	new EntityCollection(null);
 			fxPlayback		=	new SFX.FXPlayback((ShooterClient)client, this);
 
 			AddView( new Hud( this ) );
@@ -221,18 +227,39 @@ namespace IronStar.Core {
 
 
 
-		public bool IsPlayer ( uint id )
+		/// <summary>
+		/// This method called in main thread to complete non-thread safe operations.
+		/// </summary>
+		public void FinalizeLoad()
 		{
-			if (GameClient==null) {
-				return false;
+			foreach ( var mi in map.MeshInstance ) {
+				Game.RenderSystem.RenderWorld.Instances.Add( mi );
+			}
+		}
+
+
+
+		/// <summary>
+		/// Returns server info.
+		/// </summary>
+		public string ServerInfo()
+		{
+			return mapName;
+		}
+
+
+
+		/// <summary>
+		/// Called when client or server is 
+		/// </summary>
+		public virtual void Cleanup()
+		{
+			if ( IsClientSide ) {
+				fxPlayback.StopAllSFX();
 			}
 
-			Entity e;
-
-			if (entities.TryGetValue(id, out e)) {
-				return e.UserGuid == GameClient.Guid;
-			} else {
-				return false;
+			if ( IsClientSide ) {
+				Game.RenderSystem.RenderWorld.ClearWorld();
 			}
 		}
 
@@ -297,7 +324,7 @@ namespace IronStar.Core {
 			}
 
 
-			fxSpawnSequnce++;
+			fxSpawnSequence++;
 
 			//
 			//	Control entities :
@@ -311,7 +338,7 @@ namespace IronStar.Core {
 		}
 
 
-		byte fxSpawnSequnce	=	0;
+		byte fxSpawnSequence	=	0;
 
 		List<Vector3> clPos = new List<Vector3>();
 		List<Vector3> visPos = new List<Vector3>();
@@ -408,19 +435,34 @@ namespace IronStar.Core {
 
 
 
-		public Entity Spawn( string prefab, uint parentId, Matrix transform )
+		/// <summary>
+		/// Spawns entity with specified classname, parent ID and matrix.
+		/// </summary>
+		/// <param name="prefab"></param>
+		/// <param name="parentId"></param>
+		/// <param name="transform"></param>
+		/// <returns></returns>
+		public Entity Spawn( string classname, uint parentId, Matrix transform )
 		{
 			var p	=	transform.TranslationVector;
 			var q	=	Quaternion.RotationMatrix( transform );
 
-			return Spawn( prefab, parentId, p, q );
+			return Spawn( classname, parentId, p, q );
 		}
 
 
 
-		public Entity Spawn( string prefab, uint parentId, Vector3 origin, float yaw )
+		/// <summary>
+		/// Spawns entity with specified classname, parent ID and yaw angle.
+		/// </summary>
+		/// <param name="prefab"></param>
+		/// <param name="parentId"></param>
+		/// <param name="origin"></param>
+		/// <param name="yaw"></param>
+		/// <returns></returns>
+		public Entity Spawn( string classname, uint parentId, Vector3 origin, float yaw )
 		{
-			return Spawn( prefab, parentId, origin, Quaternion.RotationYawPitchRoll( yaw,0,0 ) );
+			return Spawn( classname, parentId, origin, Quaternion.RotationYawPitchRoll( yaw,0,0 ) );
 		}
 
 
@@ -507,26 +549,6 @@ namespace IronStar.Core {
 		/// <summary>
 		/// 
 		/// </summary>
-		/// <param name="fxType"></param>
-		public FXInstance RunFX ( FXEvent fxEvent )
-		{
-			return fxPlayback.RunFX( fxEvent );
-		}
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="mesh"></param>
-		/// <param name="transform"></param>
-		public virtual void AddStaticCollisionMesh( Mesh mesh, Matrix transform )
-		{
-		}
-
-
-		/// <summary>
-		/// 
-		/// </summary>
 		/// <param name="entity"></param>
 		/// <param name="damage"></param>
 		/// <param name="kickImpulse"></param>
@@ -535,91 +557,6 @@ namespace IronStar.Core {
 		public void InflictDamage ( Entity entity, uint attackerID, short damage, Vector3 kickImpulse, Vector3 kickPoint, DamageType damageType )
 		{
 			entity?.Controller?.Damage( entity.ID, attackerID, damage, kickImpulse, kickPoint, damageType );
-		}
-
-
-
-
-		/// <summary>
-		/// Check whether entity with id is dead.
-		/// </summary>
-		/// <param name="id"></param>
-		/// <returns></returns>
-		public bool IsAlive ( uint id )
-		{
-			return entities.ContainsKey( id );
-		}
-
-
-
-		/// <summary>
-		/// Gets entity with current id.
-		/// If entity is dead -> returns null
-		/// </summary>
-		/// <param name="id"></param>
-		/// <returns></returns>
-		public Entity GetEntity ( uint id )
-		{
-			Entity e;
-			if (entities.TryGetValue( id, out e )) {
-				return e;
-			} else {
-				return null;
-			}
-		}
-
-
-
-		/// <summary>
-		/// Gets entity with current id.
-		/// If entity is dead -> exception...
-		/// </summary>
-		/// <param name="id"></param>
-		/// <returns></returns>
-		public Entity GetEntityOrNull( string classname, Func<Entity, bool> predicate )
-		{
-			return GetEntities( classname ).FirstOrDefault( ent => predicate( ent ) );
-		}
-
-
-		/// <summary>
-		/// Gets entity with current id.
-		/// If entity is dead -> exception...
-		/// </summary>
-		/// <param name="id"></param>
-		/// <returns></returns>
-		public Entity GetEntityOrNull( string classname )
-		{
-			return GetEntities( classname ).FirstOrDefault();
-		}
-
-
-
-
-		/// <summary>
-		/// Gets entity with current id.
-		/// If entity is dead -> exception...
-		/// </summary>
-		/// <param name="id"></param>
-		/// <returns></returns>
-		public IEnumerable<Entity> GetEntities ( string classname )
-		{
-			var classId = Atoms[classname];
-			return entities.Where( pair => pair.Value.ClassID==classId ).Select( pair1 => pair1.Value );
-		}
-
-
-		/// <summary>
-		/// Performs action on each entity.
-		/// </summary>
-		/// <param name="action"></param>
-		public void ForEachEntity ( Action<Entity> action )
-		{
-			var list = entities.Select( p => p.Value ).ToList();
-
-			foreach ( var e in list ) {
-				action( e );
-			}
 		}
 
 
@@ -673,41 +610,6 @@ namespace IronStar.Core {
 
 
 		/// <summary>
-		/// This method called in main thread to complete non-thread safe operations.
-		/// </summary>
-		public void FinalizeLoad ()
-		{
-			foreach ( var mi in map.MeshInstance ) {
-				Game.RenderSystem.RenderWorld.Instances.Add( mi );
-			}
-		}
-
-
-		/// <summary>
-		/// Returns server info.
-		/// </summary>
-		public string ServerInfo ()
-		{
-			return mapName; 
-		}
-
-
-		/// <summary>
-		/// Called when client or server is 
-		/// </summary>
-		public virtual void Cleanup ()
-		{
-			if (IsClientSide) {
-				fxPlayback.StopAllSFX();
-			}
-
-			if (IsClientSide) {
-				Game.RenderSystem.RenderWorld.ClearWorld();
-			}
-		}
-
-
-		/// <summary>
 		/// Writes world state to stream writer.
 		/// </summary>
 		/// <param name="writer"></param>
@@ -718,19 +620,19 @@ namespace IronStar.Core {
 
 
 
-
 		/// <summary>
 		/// Reads world state from stream reader.
 		/// </summary>
 		/// <param name="writer"></param>
 		public virtual void ReadFromSnapshot ( Stream stream, float lerpFactor )
 		{
-			snapshotReader.Read( stream, entities, fxe=>RunFX(fxe), null, id=>KillImmediatly(id) );
+			snapshotReader.Read( stream, entities, fxe=>fxPlayback.RunFX(fxe), null, id=>KillImmediatly(id) );
 		}
 
 
+
 		/// <summary>
-		/// 
+		/// Prints entire world state to console.
 		/// </summary>
 		public void PrintState ()
 		{		
