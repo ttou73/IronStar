@@ -60,7 +60,6 @@
     <Compile Include="Core\EntityCollection.cs" />
     <Compile Include="Core\GameWorld.Query.cs" />
     <Compile Include="Core\Map.cs" />
-    <Compile Include="Core\EntityDescriptor.cs" />
     <Compile Include="Core\Old\Filter.cs" />
     <Compile Include="Core\Old\Oscillator.cs" />
     <Compile Include="Core\Old\WorldView.cs" />
