@@ -27,7 +27,7 @@ namespace IronStar.SFX.WeaponFX {
 																					  
 			AddLightStage( fxEvent.Origin + sparkDir * 0.1f	, GetRailColor(0.03f), 1.0f, 100f, 3f );
 
-			if (sfxSystem.world.IsPlayer(fxEvent.ParentID)) {
+			if (sfxSystem.world.IsPlayer(fxEvent.EntityID)) {
 				AddSoundStage( @"sound\misc\teleport",	false );
 			} else {
 				AddSoundStage( @"sound\misc\teleport", fxEvent.Origin, 1, false );

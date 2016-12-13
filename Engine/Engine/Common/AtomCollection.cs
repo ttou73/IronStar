@@ -177,6 +177,13 @@ namespace Fusion.Engine.Common {
 
 
 
+		public string[] ToArray()
+		{
+			return index.ToArray();
+		}
+
+
+
 		/// <summary>
 		/// Locks table.
 		/// </summary>

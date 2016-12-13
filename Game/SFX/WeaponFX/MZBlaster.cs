@@ -27,7 +27,7 @@ namespace IronStar.SFX.WeaponFX {
 																					  
 			AddLightStage( fxEvent.Origin + sparkDir * 0.1f	, new Color4(137,137,228,1), 1, 100f, 3f );
 
-			if (sfxSystem.world.IsPlayer(fxEvent.ParentID)) {
+			if (sfxSystem.world.IsPlayer(fxEvent.EntityID)) {
 				AddSoundStage( @"sound\weapon\plasma",	false );
 			} else {
 				AddSoundStage( @"sound\weapon\plasma", fxEvent.Origin, 1, false );

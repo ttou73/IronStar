@@ -348,18 +348,35 @@ namespace IronStar.Core {
 		/// Updates visual and audial stuff
 		/// </summary>
 		/// <param name="gameTime"></param>
-		[Obsolete]
-		public virtual void PresentWorld ( float deltaTime, float lerpFactor )
+		public void PresentWorld ( float deltaTime, float lerpFactor )
 		{
 			var dr = Game.RenderSystem.RenderWorld.Debug;
 
-			if (IsClientSide) {
-				foreach ( var view in views ) {
-					view.Update( deltaTime, lerpFactor );
-				}
-
-				fxPlayback.Update( deltaTime );
+			if (!IsClientSide) {
+				throw new InvalidOperationException("PresentWorld could be called only on client side");
 			}
+
+
+			var visibleEntities = entities.Select( pair => pair.Value ).ToArray();
+
+			//
+			//	draw all entities :
+			//
+			foreach ( var entity in visibleEntities ) {
+				entity.UpdateRenderState( fxPlayback );
+			}
+
+			//
+			//	update view :
+			//
+			foreach ( var view in views ) {
+				view.Update( deltaTime, lerpFactor );
+			}
+
+			//
+			//	updare effects :
+			//	
+			fxPlayback.Update( deltaTime, lerpFactor );
 		}
 
 		
@@ -581,12 +598,13 @@ namespace IronStar.Core {
 
 			if ( entities.TryGetValue(id, out ent)) {
 
-				if (IsClientSide && ReplicaKilled!=null) {
-					ReplicaKilled( this, new EntityEventArgs(ent) );
+				if (IsClientSide) {
+					ent.DestroyRenderState(fxPlayback);
+					ReplicaKilled?.Invoke( this, new EntityEventArgs(ent) );
 				}
-				
-				if (IsServerSide && EntityKilled!=null) {
-					EntityKilled( this, new EntityEventArgs(ent) );
+
+				if (IsServerSide) {
+					EntityKilled?.Invoke( this, new EntityEventArgs(ent) );
 				}
 				
 				entities.Remove( id );

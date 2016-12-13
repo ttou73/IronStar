@@ -57,6 +57,7 @@
     <Compile Include="Client\GameView.Weather.cs" />
     <Compile Include="Client\GameView.cs" />
     <Compile Include="Commands\ShowWorldState.cs" />
+    <Compile Include="Core\EntityRenderState.cs" />
     <Compile Include="Core\EntityCollection.cs" />
     <Compile Include="Core\GameWorld.Query.cs" />
     <Compile Include="Core\Map.cs" />

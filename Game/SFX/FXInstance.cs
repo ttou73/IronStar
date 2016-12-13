@@ -36,6 +36,7 @@ namespace IronStar.SFX {
 
 		readonly List<Stage> stages = new List<Stage>();
 
+		private readonly short fxAtom;
 		private FXEvent	fxEvent;
 
 		protected readonly bool looped;
@@ -58,6 +59,7 @@ namespace IronStar.SFX {
 		/// <param name="fxEvent"></param>
 		public FXInstance( FXPlayback sfxSystem, FXEvent fxEvent )
 		{
+			this.fxAtom		=	fxEvent.FXAtom;
 			this.fxPlayback	=	sfxSystem;
 			this.rw			=	sfxSystem.rw;
 			this.sw			=	sfxSystem.sw;
@@ -97,8 +99,16 @@ namespace IronStar.SFX {
 		/// 
 		/// </summary>
 		/// <param name="elapsedTime"></param>
-		public void Update ( float dt )
+		public void Update ( float dt, float lerpFactor )
 		{
+			var ent = fxPlayback.world.GetEntity( fxEvent.EntityID );
+
+			if (ent!=null) {
+				fxEvent.Origin		=	ent.LerpPosition( lerpFactor );
+				fxEvent.Rotation	=	ent.LerpRotation( lerpFactor );
+				fxEvent.Velocity	=	ent.LinearVelocity;
+			}
+
 			foreach ( var stage in stages ) {
 				stage.Update( dt, fxEvent );
 			}
@@ -154,7 +164,7 @@ namespace IronStar.SFX {
 		/// <param name="roll"></param>
 		public void ShakeCamera ( float yaw, float pitch, float roll )
 		{
-			fxPlayback.world.GetView<GameCamera>().Shake( fxEvent.ParentID, yaw, pitch, roll );
+			fxPlayback.world.GetView<GameCamera>().Shake( fxEvent.EntityID, yaw, pitch, roll );
 		}
 
 		/*-----------------------------------------------------------------------------------------

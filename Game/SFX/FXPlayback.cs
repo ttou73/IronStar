@@ -97,7 +97,7 @@ namespace IronStar.SFX {
 		/// Updates visible meshes
 		/// </summary>
 		/// <param name="gameTime"></param>
-		public void Update ( float elapsedTime )
+		public void Update ( float elapsedTime, float lerpFactor )
 		{
 			const float dt = 1/60.0f;
 			timeAccumulator	+= elapsedTime;
@@ -106,7 +106,7 @@ namespace IronStar.SFX {
 
 				foreach ( var sfx in runningSFXes ) {
 
-					sfx.Update( dt );
+					sfx.Update( dt, lerpFactor );
 
 					if (sfx.IsExhausted) {
 						sfx.Kill();
@@ -139,7 +139,7 @@ namespace IronStar.SFX {
 		/// <param name="fxEvent"></param>
 		public FXInstance RunFX ( FXEvent fxEvent )
 		{
-			var fxAtomID	=	fxEvent.FXAtomID;
+			var fxAtomID	=	fxEvent.FXAtom;
 
 			if (fxAtomID<0) {
 				Log.Warning("RunFX: negative atom ID");

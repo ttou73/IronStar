@@ -181,6 +181,7 @@
       <DependentUpon>PackageSelector.cs</DependentUpon>
     </Compile>
     <Compile Include="Development\TextBoxLogListener.cs" />
+    <Compile Include="Engine\Common\Commands\ShowAtoms.cs" />
     <Compile Include="Engine\Graphics\Effects\FogSettings.cs" />
     <Compile Include="Engine\Graphics\RenderComponent.cs" />
     <Compile Include="Engine\Graphics\RequireShaderAttribute.cs" />

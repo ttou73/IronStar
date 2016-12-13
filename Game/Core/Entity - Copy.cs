@@ -101,26 +101,22 @@ namespace IronStar.Core {
 		/// </summary>
 		public short Model {
 			get { return model; }
-			set { model = value; RenderStateDirty = true; }
+			set { model = value; visualStateDirty = true; }
 		}
-		private short model = 0;
+		public short model;
 
 		/// <summary>
 		/// Visible special effect
 		/// </summary>
-		public short Sfx {
+		public short Sfx;
 			get { return sfx; }
-			set { 
-				sfxDirty = sfx != value; 
-				sfx = value; 
-			}
+			set { sfx = value; visualStateDirty = true; }
 		}
-		private short sfx = 0;
-		private bool sfxDirty = true;
+		public short sfx;
 
 
-		public bool RenderStateDirty = true;
 
+		bool visualStateDirty
 
 		/// <summary>
 		/// 
@@ -168,35 +164,6 @@ namespace IronStar.Core {
 			UserCtrlFlags	=	UserCtrlFlags.None;
 			Position		=	position;
 			PositionOld		=	position;
-		}
-
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="fxPlayback"></param>
-		public void UpdateRenderState ( FXPlayback fxPlayback )
-		{
-			if (sfxDirty) {
-				sfxDirty = false;
-
-				FXInstance?.Kill();
-				FXInstance = null;
-
-				if (sfx>0) {
-					var fxe = new FXEvent( sfx, ID, Position, LinearVelocity, Rotation );
-					FXInstance = fxPlayback.RunFX( fxe );
-				}
-			}
-		}
-
-
-
-		public void DestroyRenderState ( FXPlayback fxPlayback )
-		{
-			FXInstance?.Kill();
-			FXInstance = null;
 		}
 
 

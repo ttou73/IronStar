@@ -22,7 +22,7 @@ namespace IronStar.SFX.WeaponFX {
 			AddParticleStage("bloodSpray04", 0, 0f, 0.1f, bloodAmount, false, EmitBlood );
 			AddParticleStage("bloodSpray04", 0, 0f, 0.1f, gibAmount,   false, EmitGib );
 			
-			if (sfxSystem.world.IsPlayer(fxEvent.ParentID)) {
+			if (sfxSystem.world.IsPlayer(fxEvent.EntityID)) {
 				AddSoundStage( sound,	false );
 			} else {
 				AddSoundStage( sound, fxEvent.Origin, 1, false );

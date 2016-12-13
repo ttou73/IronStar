@@ -60,7 +60,7 @@ namespace IronStar.Core {
 
 		/// <summary>
 		/// Gets entity with current id.
-		/// If entity is dead -> returns null
+		/// If entity does not exist returns null
 		/// </summary>
 		/// <param name="id"></param>
 		/// <returns></returns>

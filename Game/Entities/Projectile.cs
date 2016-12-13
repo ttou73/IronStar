@@ -26,14 +26,15 @@ namespace IronStar.Controllers {
 
 		Random rand = new Random();
 
-		public float Velocity;
-		public float HitImpulse;
-		public short HitDamage;
-		public float HitRadius;
-		public float LifeTime;
-		public string ExplosionFX;
-		public string TrailFX;
+		public float	Velocity;
+		public float	HitImpulse;
+		public short	HitDamage;
+		public float	HitRadius;
+		public float	LifeTime;
+		public string	ExplosionFX;
+		public string	TrailFX;
 
+		short trailFXAtom;
 
 		readonly Space space;
 		GameWorld world;
@@ -50,12 +51,17 @@ namespace IronStar.Controllers {
 			this.space	=	world.PhysSpace;
 			this.world	=	world;
 
+			var atoms	=	world.Atoms;
+
 			this.Velocity		=	parameters.Get<float>	("velocity"		, 0);
 			this.HitImpulse		=	parameters.Get<float>	("impulse"		, 0);	
 			this.HitDamage		=	parameters.Get<short>	("damage"		, 0);
 			this.LifeTime		=	parameters.Get<float>	("lifetime"		, 0)/1000.0f;
-			this.ExplosionFX	=	parameters.Get<string>	("explosionFX"	, null);
 			this.HitRadius      =   parameters.Get<float>	("radius"		, 0);
+			this.ExplosionFX	=	parameters.Get<string>	("explosionFX"	, null) ;
+			this.TrailFX		=	parameters.Get<string>	("trailFX"		, null) ;
+
+			trailFXAtom			=	atoms[ TrailFX ]; 
 
 			//	step projectile forward compensate server latency
 			if (world.IsServerSide) {
@@ -86,6 +92,8 @@ namespace IronStar.Controllers {
 			var origin	=	projEntity.Position;
 			var dir		=	Matrix.RotationQuaternion( projEntity.Rotation ).Forward;
 			var target	=	origin + dir * Velocity * elapsedTime;
+
+			projEntity.Sfx	=	trailFXAtom;
 
 			LifeTime -= elapsedTime;
 

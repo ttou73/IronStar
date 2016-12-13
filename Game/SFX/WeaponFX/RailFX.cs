@@ -82,7 +82,7 @@ namespace IronStar.SFX.WeaponFX {
 																					  
 			AddLightStage( fxEvent.Origin, GetRailColor(0.03f), 2.0f, 100f, 3f );
 
-			if (sfxSystem.world.IsPlayer(fxEvent.ParentID)) {
+			if (sfxSystem.world.IsPlayer(fxEvent.EntityID)) {
 				AddSoundStage( @"sound\weapon\railshot2",	false );
 			} else {
 				AddSoundStage( @"sound\weapon\railshot2", fxEvent.Origin, 1, false );
