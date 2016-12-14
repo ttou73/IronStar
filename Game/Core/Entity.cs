@@ -125,13 +125,13 @@ namespace IronStar.Core {
 		/// <summary>
 		/// 
 		/// </summary>
-		public FXInstance FXInstance;
+		public FXInstance FXInstance { get; private set; }
 
 
 		/// <summary>
 		/// 
 		/// </summary>
-		public MeshInstance MeshInstance;
+		public MeshInstance MeshInstance { get; private set; }
 
 
 		/// <summary>

@@ -137,16 +137,18 @@ namespace IronStar {
 			rw.HdrSettings.DirtAmount   = 0.0f;
 			rw.HdrSettings.KeyValue     = 0.18f;
 
-			rw.SkySettings.SunPosition			= new Vector3( 1.0f, 1.4f, 1.3f );
+			rw.SkySettings.SunPosition			= new Vector3( 1.0f, 0.8f, 1.3f );
 			rw.SkySettings.SunLightIntensity	= 100;
-			rw.SkySettings.SkyTurbidity			= 3;
-			rw.SkySettings.SkyIntensity			= 1;
+			rw.SkySettings.SkyTurbidity			= 8;
+			rw.SkySettings.SkyIntensity			= 0.5f;
 
 			rw.LightSet.DirectLight.Direction	=	rw.SkySettings.SunLightDirection;
 			rw.LightSet.DirectLight.Intensity	=	rw.SkySettings.SunLightColor;
 
 			rw.LightSet.AmbientLevel	=	rw.SkySettings.AmbientLevel;
 			rw.LightSet.SpotAtlas		=	Content.Load<TextureAtlas>(@"spots\spots");
+
+			rw.FogSettings.Density		=	0.001f;
 
 			/*for (int i=0; i<1; i++) {
 				var spot = new SpotLight();
@@ -168,7 +170,7 @@ namespace IronStar {
 
 			for (float x=-32; x<=32; x+=8 ) {
 				for (float y=-32; y<=32; y+=8 ) {
-					rw.LightSet.OmniLights.Add( new OmniLight( new Vector3(x,4,y), new Color4(50,50,50,1), 16 ) );
+					//rw.LightSet.OmniLights.Add( new OmniLight( new Vector3(x,4,y), new Color4(50,50,50,1), 16 ) );
 				}
 			}
 

@@ -147,13 +147,13 @@ namespace IronStar.Controllers {
 
 			if (world.RayCastAgainstAll( origin, origin + direction * 400, out n, out p, out e, attacker )) {
 
-				world.SpawnFX( "BulletTrail",	attacker.ID, p, n );
+				world.SpawnFX( "BulletTrail",	0, p, n );
 				world.SpawnFX( "MZMachinegun",	attacker.ID, origin, n );
 
 				world.InflictDamage( e, attacker.ID, (short)damage, view.Forward * impulse, p, DamageType.BulletHit );
 
 			} else {
-				world.SpawnFX( "MZMachinegun",	attacker.ID, origin, n );
+				world.SpawnFX( "MZMachinegun",	0, origin, n );
 			}
 
 			attacker.SetItemCount( Inventory.WeaponCooldown, cooldown );
@@ -186,7 +186,7 @@ namespace IronStar.Controllers {
 
 				if (world.RayCastAgainstAll( origin, origin + direction * 400, out n, out p, out e, attacker )) {
 
-					world.SpawnFX( "ShotTrail",	attacker.ID, p, n );
+					world.SpawnFX( "ShotTrail",	0, p, n );
 
 					world.InflictDamage( e, attacker.ID, (short)damage, view.Forward * impulse, p, DamageType.BulletHit );
 
@@ -219,7 +219,7 @@ namespace IronStar.Controllers {
 			if (world.RayCastAgainstAll( origin, origin + direction * 200, out n, out p, out e, attacker )) {
 
 				//world.SpawnFX( "PlayerDeathMeat", attacker.ID, p, n );
-				world.SpawnFX( "RailHit",		attacker.ID, p, n );
+				world.SpawnFX( "RailHit",		0,					p, n );
 				world.SpawnFX( "RailMuzzle",	attacker.ID, origin, n );
 				world.SpawnFX( "RailTrail",		attacker.ID, origin, p - origin, attacker.Rotation );
 
