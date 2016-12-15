@@ -30,7 +30,7 @@ namespace IronStar.Core {
 		public readonly Guid UserGuid;
 
 		public AtomCollection Atoms { 
-			get {
+			get {																		   
 				if (serverSide) {
 					return GameServer.Atoms;
 				} else {
@@ -172,6 +172,9 @@ namespace IronStar.Core {
 
 
 
+
+
+
 		/// <summary>
 		/// 
 		/// </summary>
@@ -240,27 +243,27 @@ namespace IronStar.Core {
 
 
 		/// <summary>
-		/// Returns server info.
+		/// 
 		/// </summary>
-		public string ServerInfo()
-		{
-			return mapName;
-		}
-
-
-
-		/// <summary>
-		/// Called when client or server is 
-		/// </summary>
-		public virtual void Cleanup()
+		public void Shutdown()
 		{
 			if ( IsClientSide ) {
-				fxPlayback.StopAllSFX();
+				fxPlayback?.Shutdown();
 			}
 
 			if ( IsClientSide ) {
 				Game.RenderSystem.RenderWorld.ClearWorld();
 			}
+		}
+
+
+
+		/// <summary>
+		/// Returns server info.
+		/// </summary>
+		public string ServerInfo()
+		{
+			return mapName;
 		}
 
 
@@ -363,7 +366,7 @@ namespace IronStar.Core {
 			//	draw all entities :
 			//
 			foreach ( var entity in visibleEntities ) {
-				entity.UpdateRenderState( fxPlayback );
+				entity.UpdateRenderState( fxPlayback, Atoms, Game.RenderSystem, Content );
 			}
 
 			//

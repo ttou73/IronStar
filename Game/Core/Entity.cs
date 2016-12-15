@@ -12,6 +12,8 @@ using System.IO;
 using IronStar.SFX;
 using IronStar.SFX;
 using Fusion.Engine.Graphics;
+using Fusion.Core.Content;
+using Fusion.Engine.Common;
 
 namespace IronStar.Core {
 	public class Entity {
@@ -101,9 +103,10 @@ namespace IronStar.Core {
 		/// </summary>
 		public short Model {
 			get { return model; }
-			set { model = value; RenderStateDirty = true; }
+			set { model = value; modelDirty = true; }
 		}
-		private short model = 0;
+		private short model = -1;
+		private bool modelDirty = true;
 
 		/// <summary>
 		/// Visible special effect
@@ -115,11 +118,8 @@ namespace IronStar.Core {
 				sfx = value; 
 			}
 		}
-		private short sfx = 0;
+		private short sfx = -1;
 		private bool sfxDirty = true;
-
-
-		public bool RenderStateDirty = true;
 
 
 		/// <summary>
@@ -176,7 +176,7 @@ namespace IronStar.Core {
 		/// 
 		/// </summary>
 		/// <param name="fxPlayback"></param>
-		public void UpdateRenderState ( FXPlayback fxPlayback )
+		public void UpdateRenderState ( FXPlayback fxPlayback, AtomCollection atoms, RenderSystem rs, ContentManager content )
 		{
 			if (sfxDirty) {
 				sfxDirty = false;
@@ -184,9 +184,23 @@ namespace IronStar.Core {
 				FXInstance?.Kill();
 				FXInstance = null;
 
-				if (sfx>0) {
+				if (sfx>=0) {
 					var fxe = new FXEvent( sfx, ID, Position, LinearVelocity, Rotation );
 					FXInstance = fxPlayback.RunFX( fxe );
+				}
+			}
+
+			if (modelDirty) {
+				modelDirty = false;
+
+				try {
+					rs.RenderWorld.Instances.Remove( MeshInstance );
+					MeshInstance = null;
+
+					MeshInstance	=	MeshInstance.FromScene( rs, content, atoms[model] );
+				} catch ( Exception e ) {
+					Log.Warning("{0}", e.Message );
+					MeshInstance = null;
 				}
 			}
 		}

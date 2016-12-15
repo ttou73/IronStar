@@ -34,6 +34,7 @@ namespace Fusion.Engine.Common {
 		{
 			dictionary	=	new Dictionary<string,short>();
 			index		=	new List<string>();
+			Add("");
 		}
 
 

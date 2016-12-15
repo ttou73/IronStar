@@ -59,6 +59,17 @@ namespace IronStar.SFX {
 		/// <summary>
 		/// 
 		/// </summary>
+		public void Shutdown ()
+		{
+			StopAllSFX();
+			game.Reloading -= Game_Reloading;
+		}
+
+
+
+		/// <summary>
+		/// 
+		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
 		void Game_Reloading ( object sender, EventArgs e )

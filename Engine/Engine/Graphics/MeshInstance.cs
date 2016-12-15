@@ -7,6 +7,7 @@ using Fusion.Core.Mathematics;
 using Fusion.Core;
 using Fusion.Drivers.Graphics;
 using Fusion.Engine.Common;
+using Fusion.Core.Content;
 
 namespace Fusion.Engine.Graphics {
 	
@@ -136,6 +137,41 @@ namespace Fusion.Engine.Graphics {
 					PrimitiveCount	= subset.PrimitiveCount,
 					StartPrimitive	= subset.StartPrimitive 
 				}).ToArray();
+		}
+
+
+
+		public static MeshInstance FromScene ( RenderSystem rs, ContentManager content, string pathNode )
+		{
+			if (string.IsNullOrWhiteSpace(pathNode)) {
+				return null;
+			}
+
+			var pair	=	pathNode.Split(new[] {'|'}, 2);
+
+			var path	=	pair[0];
+			var name	=	(pair.Length==2) ? pair[1] : null;
+			
+			var scene 	=	content.Load<Scene>(path);
+
+			if (!scene.Meshes.Any()) {
+				Log.Warning("Scene does not contain meshes.");
+				return null;
+			}
+
+
+			var node	=	scene.Nodes.FirstOrDefault( n => n.Name == name );
+
+			Mesh mesh;
+
+			if (node==null) {
+				Log.Warning("Node name is not provided or node does not exist. First mesh is used.");
+				mesh	=	scene.Meshes.FirstOrDefault();
+			} else {
+				mesh	=	scene.Meshes[ node.MeshIndex ];
+			}
+
+			return new MeshInstance( rs, scene, mesh );
 		}
 	}
 }

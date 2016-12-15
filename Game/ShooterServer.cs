@@ -88,9 +88,7 @@ namespace IronStar {
 		/// </summary>
 		public override void UnloadContent ()
 		{
-			if (gameWorld!=null) {
-				gameWorld.Cleanup();
-			}
+			World?.Shutdown();
 			Content.Unload();
 		}
 

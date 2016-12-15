@@ -194,9 +194,8 @@ namespace IronStar {
 		{
 			latestSnapshot	=	null;
 
-			if (World!=null) {
-				World.Cleanup();
-			}
+			World?.Shutdown();
+
 			Game.RenderSystem.RenderWorld.ClearWorld();
 
 			Content.Unload();
