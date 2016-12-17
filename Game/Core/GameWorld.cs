@@ -71,7 +71,8 @@ namespace IronStar.Core {
 
 		List<FXEvent> fxEvents = new List<FXEvent>();
 
-		SFX.FXPlayback	fxPlayback;
+		SFX.FXPlayback		fxPlayback;
+		SFX.ModelManager	modelManager;
 
 
 		/// <summary>
@@ -191,7 +192,14 @@ namespace IronStar.Core {
 		/// </summary>
 		void AddPathsToAtoms ()
 		{
-			foreach (var section in entityDescriptions.Sections) {
+			var modelDescriptors    =   ModelDescriptor
+					.LoadCollectionFromXml( Content.Load<string>( @"scripts\models" ) )
+					.ToArray();
+
+			Atoms.AddRange( modelDescriptors.Select( md => md.Name ) );
+
+
+			foreach ( var section in entityDescriptions.Sections) {
 				foreach (var key in section.Keys) {
 
 					var keyName = key.KeyName.ToLowerInvariant();
@@ -218,6 +226,7 @@ namespace IronStar.Core {
 			Content			=	client.Content;
 			entities		=	new EntityCollection(null);
 			fxPlayback		=	new SFX.FXPlayback((ShooterClient)client, this);
+			modelManager	=	new ModelManager((ShooterClient)client, this);
 
 			AddView( new Hud( this ) );
 			AddView( new GameCamera( this ) );
@@ -249,6 +258,7 @@ namespace IronStar.Core {
 		{
 			if ( IsClientSide ) {
 				fxPlayback?.Shutdown();
+				modelManager?.Shutdown();
 			}
 
 			if ( IsClientSide ) {
@@ -366,7 +376,7 @@ namespace IronStar.Core {
 			//	draw all entities :
 			//
 			foreach ( var entity in visibleEntities ) {
-				entity.UpdateRenderState( fxPlayback, Atoms, Game.RenderSystem, Content );
+				entity.UpdateRenderState( fxPlayback, modelManager );
 			}
 
 			//
@@ -380,6 +390,7 @@ namespace IronStar.Core {
 			//	updare effects :
 			//	
 			fxPlayback.Update( deltaTime, lerpFactor );
+			modelManager.Update( deltaTime, lerpFactor );
 		}
 
 		

@@ -12,6 +12,7 @@ using Fusion.Engine.Common;
 using Fusion.Core.Shell;
 using Fusion.Core.Utils;
 using Fusion.Engine.Imaging;
+using IronStar.Editors;
 
 namespace IronStar {
 
@@ -73,9 +74,14 @@ namespace IronStar {
 				//	run:
 				game.Run();
 
+				//	close editors :
+				Editor.CloseAll();
+
 				//	save configuration :
 				game.Config.Save( "Config.ini" );
 			}
+
+			
 
 			return 0;
 		}

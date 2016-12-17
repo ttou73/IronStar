@@ -40,3 +40,4 @@ scenes/*.jpg
 
 [Copy]
 *.ini
+*.xml

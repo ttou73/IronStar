@@ -146,6 +146,7 @@
     <Compile Include="Build\ToolException.cs" />
     <Compile Include="Core\Content\IniLoader.cs" />
     <Compile Include="Core\Extensions\KeyDataCollectionExtension.cs" />
+    <Compile Include="Core\Extensions\LinkedListExtensions.cs" />
     <Compile Include="Core\Shell\TestCommand.cs" />
     <Compile Include="Development\Dashboard.Config.cs">
       <DependentUpon>Dashboard.cs</DependentUpon>
@@ -174,11 +175,17 @@
       <DependentUpon>Dashboard.cs</DependentUpon>
     </Compile>
     <Compile Include="Development\LaunchBox.cs" />
-    <Compile Include="Development\ModelEditor.cs">
+    <Compile Include="Development\NameDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Development\ModelEditor.Designer.cs">
-      <DependentUpon>ModelEditor.cs</DependentUpon>
+    <Compile Include="Development\NameDialog.Designer.cs">
+      <DependentUpon>NameDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Development\ObjectSelector.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Development\ObjectSelector.Designer.cs">
+      <DependentUpon>ObjectSelector.cs</DependentUpon>
     </Compile>
     <Compile Include="Development\PackageSelector.cs">
       <SubType>UserControl</SubType>
@@ -187,6 +194,12 @@
       <DependentUpon>PackageSelector.cs</DependentUpon>
     </Compile>
     <Compile Include="Development\TextBoxLogListener.cs" />
+    <Compile Include="Development\UserMessage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Development\UserMessage.Designer.cs">
+      <DependentUpon>UserMessage.cs</DependentUpon>
+    </Compile>
     <Compile Include="Engine\Common\Commands\ShowAtoms.cs" />
     <Compile Include="Engine\Graphics\Effects\FogSettings.cs" />
     <Compile Include="Engine\Graphics\RenderComponent.cs" />
@@ -600,11 +613,17 @@
     <EmbeddedResource Include="Development\LaunchBoxDialog.resx">
       <DependentUpon>LaunchBoxDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Development\ModelEditor.resx">
-      <DependentUpon>ModelEditor.cs</DependentUpon>
+    <EmbeddedResource Include="Development\NameDialog.resx">
+      <DependentUpon>NameDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Development\ObjectSelector.resx">
+      <DependentUpon>ObjectSelector.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Development\PackageSelector.resx">
       <DependentUpon>PackageSelector.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Development\UserMessage.resx">
+      <DependentUpon>UserMessage.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

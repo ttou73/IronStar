@@ -131,7 +131,7 @@ namespace IronStar.Core {
 		/// <summary>
 		/// 
 		/// </summary>
-		public MeshInstance MeshInstance { get; private set; }
+		public ModelInstance ModelInstance { get; private set; }
 
 
 		/// <summary>
@@ -176,7 +176,7 @@ namespace IronStar.Core {
 		/// 
 		/// </summary>
 		/// <param name="fxPlayback"></param>
-		public void UpdateRenderState ( FXPlayback fxPlayback, AtomCollection atoms, RenderSystem rs, ContentManager content )
+		public void UpdateRenderState ( FXPlayback fxPlayback, ModelManager modelManager )
 		{
 			if (sfxDirty) {
 				sfxDirty = false;
@@ -193,14 +193,11 @@ namespace IronStar.Core {
 			if (modelDirty) {
 				modelDirty = false;
 
-				try {
-					rs.RenderWorld.Instances.Remove( MeshInstance );
-					MeshInstance = null;
+				ModelInstance?.Kill();
+				ModelInstance	=	null;
 
-					MeshInstance	=	MeshInstance.FromScene( rs, content, atoms[model] );
-				} catch ( Exception e ) {
-					Log.Warning("{0}", e.Message );
-					MeshInstance = null;
+				if (model>=0) {
+					ModelInstance	=	modelManager.AddModel( model, this );
 				}
 			}
 		}
