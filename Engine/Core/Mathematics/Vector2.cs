@@ -46,7 +46,7 @@ using System;
 using System.Globalization;
 using System.Runtime.InteropServices;
 using System.ComponentModel;
-
+using System.Xml.Serialization;
 
 namespace Fusion.Core.Mathematics
 {
@@ -83,15 +83,17 @@ namespace Fusion.Core.Mathematics
         /// </summary>
         public static readonly Vector2 One = new Vector2(1.0f, 1.0f);
 
-        /// <summary>
-        /// The X component of the vector.
-        /// </summary>
-        public float X;
+		/// <summary>
+		/// The X component of the vector.
+		/// </summary>
+		[XmlAttribute]
+		public float X;
 
-        /// <summary>
-        /// The Y component of the vector.
-        /// </summary>
-        public float Y;
+		/// <summary>
+		/// The Y component of the vector.
+		/// </summary>
+		[XmlAttribute]
+		public float Y;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Vector2"/> struct.

@@ -46,7 +46,7 @@ using System;
 using System.Globalization;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
-
+using System.Xml.Serialization;
 
 namespace Fusion.Core.Mathematics
 {
@@ -78,22 +78,26 @@ namespace Fusion.Core.Mathematics
         /// <summary>
         /// The red component of the color.
         /// </summary>
+		[XmlAttribute]
         public float Red;
 
-        /// <summary>
-        /// The green component of the color.
-        /// </summary>
-        public float Green;
+		/// <summary>
+		/// The green component of the color.
+		/// </summary>
+		[XmlAttribute]
+		public float Green;
 
-        /// <summary>
-        /// The blue component of the color.
-        /// </summary>
-        public float Blue;
+		/// <summary>
+		/// The blue component of the color.
+		/// </summary>
+		[XmlAttribute]
+		public float Blue;
 
-        /// <summary>
-        /// The alpha component of the color.
-        /// </summary>
-        public float Alpha;
+		/// <summary>
+		/// The alpha component of the color.
+		/// </summary>
+		[XmlAttribute]
+		public float Alpha;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Color4"/> struct.

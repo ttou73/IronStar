@@ -21,7 +21,7 @@ using System;
 using System.Globalization;
 using System.Runtime.InteropServices;
 using System.ComponentModel;
-
+using System.Xml.Serialization;
 
 namespace Fusion.Core.Mathematics
 {
@@ -35,25 +35,29 @@ namespace Fusion.Core.Mathematics
     {
         private const string toStringFormat = "A:{0} R:{1} G:{2} B:{3}";
 
-        /// <summary>
-        /// The red component of the color.
-        /// </summary>
-        public byte R;
+		/// <summary>
+		/// The red component of the color.
+		/// </summary>
+		[XmlAttribute]
+		public byte R;
 
-        /// <summary>
-        /// The green component of the color.
-        /// </summary>
-        public byte G;
+		/// <summary>
+		/// The green component of the color.
+		/// </summary>
+		[XmlAttribute]
+		public byte G;
 
-        /// <summary>
-        /// The blue component of the color.
-        /// </summary>
-        public byte B;
+		/// <summary>
+		/// The blue component of the color.
+		/// </summary>
+		[XmlAttribute]
+		public byte B;
 
-        /// <summary>
-        /// The alpha component of the color.
-        /// </summary>
-        public byte A;
+		/// <summary>
+		/// The alpha component of the color.
+		/// </summary>
+		[XmlAttribute]
+		public byte A;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Color"/> struct.
