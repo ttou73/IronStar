@@ -204,6 +204,14 @@ namespace IronStar.Core {
 
 
 
+		public void MakeRenderStateDirty ()
+		{
+			sfxDirty	=	true;
+			modelDirty	=	true;
+		}
+
+
+
 		public void DestroyRenderState ( FXPlayback fxPlayback )
 		{
 			FXInstance?.Kill();

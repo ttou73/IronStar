@@ -142,7 +142,7 @@ PSInput VSMain( VSInput input )
 	
 	output.Position 	= 	pPos;
 	output.ProjPos		=	pPos;
-	output.Color 		= 	1;
+	output.Color 		= 	Batch.Color;
 	output.TexCoord		= 	input.TexCoord;
 	output.Normal		= 	normal.xyz;
 	output.Tangent 		=  	tangent.xyz;
@@ -263,11 +263,9 @@ GBuffer PSMain( PSInput input )
 	//	NB: Multiply normal length by local normal projection on surface normal.
 	//	Shortened normal will be used as Fresnel decay (self occlusion) factor.
 	float3 worldNormal 	= 	normalize( mul( localNormal, tbnToWorld ).xyz );
-	//worldNormal	=	input.Normal;
-	
-	float3	entityColor	=	100;
 	
 	//roughness = 0.5f;
+	float3 entityColor	=	input.Color.rgb;
 	
 	//	Use sRGB texture for better color intensity distribution
 	output.hdr			=	float4( emission * entityColor, 0 );		// <-- Multiply on entity color!!!

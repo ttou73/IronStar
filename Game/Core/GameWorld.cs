@@ -235,6 +235,8 @@ namespace IronStar.Core {
 
 			var scene = Content.Load<Scene>(@"scenes\" + serverInfo );
 			map		=	new Map( Content, scene, true );
+
+			Game.Reloading += (s,e) => ForEachEntity( ent => ent.MakeRenderStateDirty() );
 		}
 
 

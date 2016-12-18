@@ -21,6 +21,7 @@ namespace IronStar.SFX {
 	public class ModelInstance {
 
 		readonly Matrix preTransform;
+		readonly Color4 color;
 		readonly ModelManager modelManager;
 		readonly Entity entity;
 		readonly Scene scene;
@@ -47,6 +48,7 @@ namespace IronStar.SFX {
 			this.preTransform   =   descriptor.ComputePreTransformMatrix();
 			this.scene			=   scene;
 			this.entity			=	entity;
+			this.color			=	descriptor.Color;
 
 			nodeCount			=	scene.Nodes.Count;
 
@@ -81,7 +83,8 @@ namespace IronStar.SFX {
 
 			for ( int i = 0; i<nodeCount; i++ ) {
 				if (meshInstances[i]!=null) {
-					meshInstances[i].World = /*preTransform * globalTransforms[i] **/ worldMatrix;
+					meshInstances[i].World = preTransform * globalTransforms[i] * worldMatrix;
+					meshInstances[i].Color = color;
 				}
 			}
 		}

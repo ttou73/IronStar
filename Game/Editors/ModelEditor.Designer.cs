@@ -40,9 +40,9 @@
 			this.buttonExit = new System.Windows.Forms.Button();
 			this.buttonSaveAndBuild = new System.Windows.Forms.Button();
 			this.panel2 = new System.Windows.Forms.Panel();
-			this.modelListBox = new System.Windows.Forms.ListBox();
 			this.mainPropertyGrid = new System.Windows.Forms.PropertyGrid();
 			this.splitter1 = new System.Windows.Forms.Splitter();
+			this.modelListBox = new System.Windows.Forms.ListBox();
 			this.menuStrip1.SuspendLayout();
 			this.panel1.SuspendLayout();
 			this.panel2.SuspendLayout();
@@ -182,19 +182,6 @@
 			this.panel2.Size = new System.Drawing.Size(438, 493);
 			this.panel2.TabIndex = 6;
 			// 
-			// modelListBox
-			// 
-			this.modelListBox.Dock = System.Windows.Forms.DockStyle.Left;
-			this.modelListBox.FormattingEnabled = true;
-			this.modelListBox.IntegralHeight = false;
-			this.modelListBox.Location = new System.Drawing.Point(3, 3);
-			this.modelListBox.Name = "modelListBox";
-			this.modelListBox.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-			this.modelListBox.Size = new System.Drawing.Size(181, 487);
-			this.modelListBox.Sorted = true;
-			this.modelListBox.TabIndex = 2;
-			this.modelListBox.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
-			// 
 			// mainPropertyGrid
 			// 
 			this.mainPropertyGrid.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -212,6 +199,19 @@
 			this.splitter1.TabIndex = 6;
 			this.splitter1.TabStop = false;
 			// 
+			// modelListBox
+			// 
+			this.modelListBox.Dock = System.Windows.Forms.DockStyle.Left;
+			this.modelListBox.FormattingEnabled = true;
+			this.modelListBox.IntegralHeight = false;
+			this.modelListBox.Location = new System.Drawing.Point(3, 3);
+			this.modelListBox.Name = "modelListBox";
+			this.modelListBox.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
+			this.modelListBox.Size = new System.Drawing.Size(181, 487);
+			this.modelListBox.Sorted = true;
+			this.modelListBox.TabIndex = 2;
+			this.modelListBox.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
+			// 
 			// ModelEditor
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -220,7 +220,7 @@
 			this.Controls.Add(this.panel2);
 			this.Controls.Add(this.menuStrip1);
 			this.Controls.Add(this.panel1);
-			this.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.MainMenuStrip = this.menuStrip1;
 			this.MinimumSize = new System.Drawing.Size(400, 400);
 			this.Name = "ModelEditor";
