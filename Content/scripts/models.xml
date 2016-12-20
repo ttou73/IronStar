@@ -9,7 +9,4 @@
   <ModelDescriptor Name="abcdcd" ModelPath="scenes\weapon\projRocket.fbx" Scale="2">
     <Color Red="10" Green="10" Blue="10" Alpha="1" />
   </ModelDescriptor>
-  <ModelDescriptor Name="box" ModelPath="scenes\boxes\boxModel.fbx" Scale="1">
-    <Color Red="1000" Green="1000" Blue="1000" Alpha="1" />
-  </ModelDescriptor>
 </ArrayOfModelDescriptor>

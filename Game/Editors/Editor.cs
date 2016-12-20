@@ -28,7 +28,7 @@ namespace IronStar.Editors {
 			var editorForm =	Application.OpenForms.Cast<Form>().FirstOrDefault( form => form is ModelEditor );
 
 			if (editorForm==null) {
-				editorForm = new ModelEditor(game, @"scripts\models.xml");
+				editorForm = new ModelEditor(game, @"models");
 			}
 
 			editorForm.Show();

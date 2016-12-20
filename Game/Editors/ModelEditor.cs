@@ -18,33 +18,22 @@ namespace IronStar.Development {
 	public partial class ModelEditor : Form {
 
 
-		BindingList<ModelDescriptor> modelDataSource;
-		readonly string fullPath;
+		readonly string fullSourceFolder;
 		readonly Game game;
-		bool modified = false;
 
 
 		/// <summary>
 		/// 
 		/// </summary>
-		public ModelEditor( Game game, string modelsXml )
+		public ModelEditor( Game game, string sourceFolder )
 		{
 			this.game	=	game;
 			InitializeComponent();
 
-			fullPath = Path.Combine( Builder.FullInputDirectory, modelsXml );
+			fullSourceFolder = Path.Combine( Builder.FullInputDirectory, sourceFolder );
 
-			if (!File.Exists(fullPath)) {
-				modelDataSource = new BindingList<ModelDescriptor>();
-				modified = true;
-			} else {
-				var list = ModelDescriptor.LoadCollectionFromXml( File.ReadAllText(fullPath) ).ToList();
-				modelDataSource = new BindingList<ModelDescriptor>(list);
-			}
 
-			modelListBox.DataSource = modelDataSource;
-			modelListBox.DisplayMember = "Name";
-			modelListBox.ValueMember = "Name";
+			RefreshFileList();
 
 			mainPropertyGrid.PropertySort = PropertySort.Categorized;
 
@@ -52,21 +41,51 @@ namespace IronStar.Development {
 		}
 
 
+		class NamePathTarget {
+			public NamePathTarget ( string path ) {
+				Name = System.IO.Path.GetFileNameWithoutExtension(path);
+				Path = path;
+			}
+			public string Name { get; set; }
+			public string Path { get; set; } 
 
+			ModelDescriptor target;
+			public ModelDescriptor Target {
+				get {
+					if (target==null) {
+						target = ModelDescriptor.LoadFromXml( File.ReadAllText(Path) );
+					}
+					return target;
+				}
+			}
 
-		public void SaveContent ()
-		{
-			File.WriteAllText( fullPath, ModelDescriptor.SaveCollectionToXml( modelDataSource ) );
-			modified = false;
-			Log.Message("Content saved");
+			public void Save()
+			{
+				File.WriteAllText( Path, ModelDescriptor.SaveToXml( target ) );
+			}
 		}
+
+
+
+		public void RefreshFileList ()
+		{
+			modelListBox.DisplayMember = "Name";
+			modelListBox.ValueMember = "Path";
+			
+			var fileList = Directory
+				.EnumerateFiles( fullSourceFolder, "*.xml" )
+				.Select( fn => new NamePathTarget(fn) )
+				.ToList();
+			
+			modelListBox.DataSource	=	fileList;
+		}
+
 
 
 
 		public void SaveContentAndBuild ()
 		{
-			SaveContent();
-			Log.Message( "Content saved. Building..." );
+			Log.Message( "Building..." );
 			Builder.SafeBuild();
 			game.Reload();
 		}
@@ -79,17 +98,25 @@ namespace IronStar.Development {
 		/// <param name="e"></param>
 		private void listBox1_SelectedIndexChanged( object sender, EventArgs e )
 		{
-			mainPropertyGrid.SelectedObjects = modelListBox.SelectedItems.Cast<object>().ToArray();
+			mainPropertyGrid.SelectedObjects = modelListBox
+					.SelectedItems
+					.Cast<NamePathTarget>()
+					.Select( namePathTarget => namePathTarget.Target )
+					.ToArray();
 		}
+
+
+		private void mainPropertyGrid_PropertyValueChanged( object s, PropertyValueChangedEventArgs e )
+		{
+			foreach ( var target in modelListBox.SelectedItems.Cast<NamePathTarget>() ) {
+				target.Save();
+			}
+		}
+
 
 		private void buttonExit_Click( object sender, EventArgs e )
 		{
 			Close();
-		}
-
-		private void buttonSave_Click( object sender, EventArgs e )
-		{
-			SaveContent();
 		}
 
 		private void buttonSaveAndBuild_Click( object sender, EventArgs e )
@@ -109,42 +136,9 @@ namespace IronStar.Development {
 					return;
 				}
 
-				if (modelDataSource.Any( m => m.Name==name )) {
-					var r = MessageBox.Show( this, string.Format("Model '{0}' already exists", name), "Add Model", MessageBoxButtons.OKCancel );
-					if (r==DialogResult.OK) {
-						continue;
-					} else {
-						return;
-					}
-				}
+				var fileName = Path.Combine( fullSourceFolder, name + ".xml" );
 
-				modelDataSource.Add( new ModelDescriptor() { Name = name } );
-				Log.Message("Model added: '{0}'", name);
-				modified = true;
-
-				return;
-			}
-		}
-
-		private void renameModelToolStripMenuItem_Click( object sender, EventArgs e )
-		{
-			var objectToRename = modelListBox.SelectedItem as ModelDescriptor;
-
-			if (objectToRename==null) {
-				Log.Message("Nothing is selected");
-				return;
-			}
-
-			string name = objectToRename.Name;
-
-			while ( true ) {
-				name = NameDialog.Show( this, "Rename model:", "Rename Model", name );
-
-				if ( name==null ) {
-					return;
-				}
-
-				if ( modelDataSource.Any( m => m.Name==name ) ) {
+				if (File.Exists( fileName ) ) {
 					var r = MessageBox.Show( this, string.Format("Model '{0}' already exists", name), "Add Model", MessageBoxButtons.OKCancel );
 					if ( r==DialogResult.OK ) {
 						continue;
@@ -153,22 +147,12 @@ namespace IronStar.Development {
 					}
 				}
 
-				objectToRename.Name = name;
-				Log.Message( "Model renamed: '{0}'", name );
-				modified = true;
-				modelDataSource.ResetBindings();
+
+				File.WriteAllText( fileName, ModelDescriptor.SaveToXml( new ModelDescriptor() ) );
+
+				RefreshFileList();
 
 				return;
-			}
-		}
-
-		private void ModelEditor_FormClosing( object sender, FormClosingEventArgs e )
-		{
-			if (modified) {
-				var r = MessageBox.Show(this, "Unsaved changes. Save?", "Save", MessageBoxButtons.YesNo, MessageBoxIcon.Warning );
-				if (r==DialogResult.Yes) {
-					SaveContent();
-				}
 			}
 		}
 
@@ -177,38 +161,29 @@ namespace IronStar.Development {
 			Close();
 		}
 
-		private void saveToolStripMenuItem_Click( object sender, EventArgs e )
-		{
-			SaveContent();
-		}
-
+		
 		private void saveAndRebuildToolStripMenuItem_Click( object sender, EventArgs e )
 		{
 			SaveContentAndBuild();
 		}
 
+
 		private void removeModelToolStripMenuItem_Click( object sender, EventArgs e )
 		{
-			var r = MessageBox.Show(this, "Are you sure to remove models?", "Remove", MessageBoxButtons.YesNo, MessageBoxIcon.Warning );
+			var r = MessageBox.Show(this, "Are you sure to remove selected items?", "Remove", MessageBoxButtons.YesNo, MessageBoxIcon.Warning );
 
 			if (r!=DialogResult.Yes) {
 				return;
 			}
 
-			var selected = modelListBox.SelectedItems.Cast<ModelDescriptor>().ToArray();
+			var selected = modelListBox.SelectedItems.Cast<NamePathTarget>().ToArray();
 
 			foreach ( var so in selected ) {
-				modelDataSource.Remove( so );
+				File.Delete( so.Path );
 			}
+
+			RefreshFileList();
 		}
 
-		private void mainPropertyGrid_SelectedObjectsChanged( object sender, EventArgs e )
-		{
-		}
-
-		private void mainPropertyGrid_PropertyValueChanged( object s, PropertyValueChangedEventArgs e )
-		{
-			modified = true;
-		}
 	}
 }

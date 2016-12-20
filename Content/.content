@@ -41,3 +41,4 @@ scenes/*.jpg
 [Copy]
 *.ini
 *.xml
+*.txt

@@ -11,14 +11,12 @@ using System.Windows.Forms.Design;
 using System.Drawing.Design;
 using System.Xml.Serialization;
 using IronStar.Editors;
+using Fusion.Core.Content;
+using Fusion.Engine.Storage;
+using System.IO;
 
 namespace IronStar.SFX {
 	public class ModelDescriptor {
-
-		[Category( "General" )]
-		[ReadOnly( true )]
-		[XmlAttribute]
-		public string Name { get; set; }
 
 		[Category( "General" )]
 		[XmlAttribute]
@@ -44,16 +42,30 @@ namespace IronStar.SFX {
 		}
 
 
-		public static string SaveCollectionToXml( ICollection<ModelDescriptor> models )
+		public static string SaveToXml ( ModelDescriptor descriptor )
 		{
-			var array = models.ToArray();
-
-			return Misc.SaveObjectToXml( array, array.GetType() );
+			return Misc.SaveObjectToXml( descriptor, descriptor.GetType() );
 		}
 
-		public static ICollection<ModelDescriptor> LoadCollectionFromXml( string xmlText )
+		public static ModelDescriptor LoadFromXml( string xmlText )
 		{
-			return (ICollection<ModelDescriptor>)Misc.LoadObjectFromXml( typeof( ModelDescriptor[] ), xmlText );
+			return (ModelDescriptor)Misc.LoadObjectFromXml( typeof(ModelDescriptor), xmlText );
+		}
+	}
+
+
+
+	/// <summary>
+	/// Scene loader
+	/// </summary>
+	[ContentLoader( typeof( ModelDescriptor ) )]
+	public sealed class ModelDescriptorLoader : ContentLoader {
+
+		public override object Load( ContentManager content, Stream stream, Type requestedType, string assetPath, IStorage storage )
+		{
+			using ( var sr = new StreamReader( stream ) ) {
+				return ModelDescriptor.LoadFromXml( sr.ReadToEnd() );
+			}
 		}
 	}
 }

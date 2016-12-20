@@ -48,6 +48,18 @@ namespace IronStar.SFX {
 		}
 
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		void Game_Reloading( object sender, EventArgs e )
+		{
+		}
+
+
+
 		/// <summary>
 		/// 
 		/// </summary>
@@ -67,18 +79,13 @@ namespace IronStar.SFX {
 		/// <returns></returns>
 		public ModelInstance AddModel ( short modelAtom, Entity entity )
 		{
-			ModelDescriptor modelDesc;
-
 			var modelName	=	client.Atoms[modelAtom];
 
-			if (!modelDescriptors.TryGetValue( modelName, out modelDesc )) {	
-				Log.Warning("Model '{0}' does not exist", modelName );
-				return null;
-			}
+			var modelDesc	=	client.Content.Load<ModelDescriptor>( @"models\" + modelName );
 
-			var scene	=	client.Content.Load<Scene>( modelDesc.ModelPath );
+			var scene		=	client.Content.Load<Scene>( modelDesc.ModelPath );
 
-			var model	=	new ModelInstance( this, modelDesc, scene, entity );
+			var model		=	new ModelInstance( this, modelDesc, scene, entity );
 
 			models.AddLast(model);
 
@@ -112,20 +119,6 @@ namespace IronStar.SFX {
 			foreach ( var model in models ) {
 				model.Update( elapsedTime, lerpFactor );
 			}
-		}
-
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		void Game_Reloading ( object sender, EventArgs e )
-		{
-			modelDescriptors	=	ModelDescriptor
-					.LoadCollectionFromXml( client.Content.Load<string>(@"scripts\models") )
-					.ToDictionary( md => md.Name );
 		}
 
 	}

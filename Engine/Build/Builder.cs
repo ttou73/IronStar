@@ -208,6 +208,8 @@ namespace Fusion.Build {
 			assetSources.AddRange( GatherAssetFiles( ignorePatterns, iniData, context, ref result ) );
 			Log.Message("");
 
+			File.WriteAllLines( Path.Combine(options.FullOutputDirectory,"assetdb"), assetSources.Select( asset=>asset.KeyPath ).OrderBy(n=>n) );
+
 
 			//
 			//	Check hash collisions :

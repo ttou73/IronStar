@@ -69,10 +69,6 @@ namespace IronStar {
 		/// <param name="map"></param>
 		public override void LoadContent ( string map )
 		{
-			SFX.FXInstance.EnumerateSFX( (t) => Atoms.Add( t.Name ) );			
-
-			//var iniData	=	Content.Load<IniData>(@"scripts\entities");
-
 			gameWorld	=	new GameWorld( this, map );
 			Thread.Sleep(100);
 			for (int i=0; i<100; i++) {

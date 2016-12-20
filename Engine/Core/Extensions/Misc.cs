@@ -331,7 +331,25 @@ namespace Fusion.Core.Extensions {
 		{
 			XmlSerializer serializer = new XmlSerializer( type, extraTypes ?? new Type[0] );
 
-			using (TextReader textReader = new StringReader(xmlText) ) {
+			using ( TextReader textReader = new StringReader( xmlText ) ) {
+				object obj = serializer.Deserialize( textReader );
+				return obj;
+			}
+		}
+
+
+
+		/// <summary>
+		/// Loads object from Xml file
+		/// </summary>
+		/// <param name="type"></param>
+		/// <param name="fileName"></param>
+		/// <returns></returns>
+		static public object LoadObjectFromXml( Type type, Stream stream, Type[] extraTypes = null )
+		{
+			XmlSerializer serializer = new XmlSerializer( type, extraTypes ?? new Type[0] );
+
+			using ( TextReader textReader = new StreamReader( stream ) ) {
 				object obj = serializer.Deserialize( textReader );
 				return obj;
 			}

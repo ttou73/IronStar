@@ -10,7 +10,6 @@ using Fusion.Core.Mathematics;
 using Fusion.Core.Extensions;
 using System.IO;
 using IronStar.SFX;
-using IronStar.SFX;
 using Fusion.Engine.Graphics;
 using Fusion.Core.Content;
 using Fusion.Engine.Common;

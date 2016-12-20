@@ -31,14 +31,12 @@
 			this.renameModelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.removeModelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-			this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.saveAndRebuildToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
 			this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.panel1 = new System.Windows.Forms.Panel();
-			this.buttonSave = new System.Windows.Forms.Button();
 			this.buttonExit = new System.Windows.Forms.Button();
-			this.buttonSaveAndBuild = new System.Windows.Forms.Button();
+			this.buttonBuild = new System.Windows.Forms.Button();
 			this.panel2 = new System.Windows.Forms.Panel();
 			this.mainPropertyGrid = new System.Windows.Forms.PropertyGrid();
 			this.splitter1 = new System.Windows.Forms.Splitter();
@@ -65,7 +63,6 @@
             this.renameModelToolStripMenuItem,
             this.removeModelToolStripMenuItem,
             this.toolStripSeparator1,
-            this.saveToolStripMenuItem,
             this.saveAndRebuildToolStripMenuItem,
             this.toolStripSeparator2,
             this.exitToolStripMenuItem});
@@ -85,7 +82,6 @@
 			this.renameModelToolStripMenuItem.Name = "renameModelToolStripMenuItem";
 			this.renameModelToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
 			this.renameModelToolStripMenuItem.Text = "Rename Model...";
-			this.renameModelToolStripMenuItem.Click += new System.EventHandler(this.renameModelToolStripMenuItem_Click);
 			// 
 			// removeModelToolStripMenuItem
 			// 
@@ -99,18 +95,11 @@
 			this.toolStripSeparator1.Name = "toolStripSeparator1";
 			this.toolStripSeparator1.Size = new System.Drawing.Size(160, 6);
 			// 
-			// saveToolStripMenuItem
-			// 
-			this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-			this.saveToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
-			this.saveToolStripMenuItem.Text = "Save";
-			this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
-			// 
 			// saveAndRebuildToolStripMenuItem
 			// 
 			this.saveAndRebuildToolStripMenuItem.Name = "saveAndRebuildToolStripMenuItem";
 			this.saveAndRebuildToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
-			this.saveAndRebuildToolStripMenuItem.Text = "Save and Build";
+			this.saveAndRebuildToolStripMenuItem.Text = "Build";
 			this.saveAndRebuildToolStripMenuItem.Click += new System.EventHandler(this.saveAndRebuildToolStripMenuItem_Click);
 			// 
 			// toolStripSeparator2
@@ -127,25 +116,13 @@
 			// 
 			// panel1
 			// 
-			this.panel1.Controls.Add(this.buttonSave);
 			this.panel1.Controls.Add(this.buttonExit);
-			this.panel1.Controls.Add(this.buttonSaveAndBuild);
+			this.panel1.Controls.Add(this.buttonBuild);
 			this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
 			this.panel1.Location = new System.Drawing.Point(0, 517);
 			this.panel1.Name = "panel1";
 			this.panel1.Size = new System.Drawing.Size(438, 44);
 			this.panel1.TabIndex = 4;
-			// 
-			// buttonSave
-			// 
-			this.buttonSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.buttonSave.Location = new System.Drawing.Point(205, 11);
-			this.buttonSave.Name = "buttonSave";
-			this.buttonSave.Size = new System.Drawing.Size(80, 30);
-			this.buttonSave.TabIndex = 1;
-			this.buttonSave.Text = "Save";
-			this.buttonSave.UseVisualStyleBackColor = true;
-			this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
 			// 
 			// buttonExit
 			// 
@@ -158,17 +135,17 @@
 			this.buttonExit.UseVisualStyleBackColor = true;
 			this.buttonExit.Click += new System.EventHandler(this.buttonExit_Click);
 			// 
-			// buttonSaveAndBuild
+			// buttonBuild
 			// 
-			this.buttonSaveAndBuild.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.buttonSaveAndBuild.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.buttonSaveAndBuild.Location = new System.Drawing.Point(291, 11);
-			this.buttonSaveAndBuild.Name = "buttonSaveAndBuild";
-			this.buttonSaveAndBuild.Size = new System.Drawing.Size(144, 30);
-			this.buttonSaveAndBuild.TabIndex = 3;
-			this.buttonSaveAndBuild.Text = "Save and Build";
-			this.buttonSaveAndBuild.UseVisualStyleBackColor = true;
-			this.buttonSaveAndBuild.Click += new System.EventHandler(this.buttonSaveAndBuild_Click);
+			this.buttonBuild.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.buttonBuild.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.buttonBuild.Location = new System.Drawing.Point(334, 11);
+			this.buttonBuild.Name = "buttonBuild";
+			this.buttonBuild.Size = new System.Drawing.Size(100, 30);
+			this.buttonBuild.TabIndex = 3;
+			this.buttonBuild.Text = "Build";
+			this.buttonBuild.UseVisualStyleBackColor = true;
+			this.buttonBuild.Click += new System.EventHandler(this.buttonSaveAndBuild_Click);
 			// 
 			// panel2
 			// 
@@ -225,7 +202,6 @@
 			this.MinimumSize = new System.Drawing.Size(400, 400);
 			this.Name = "ModelEditor";
 			this.Text = "ModelEditor";
-			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ModelEditor_FormClosing);
 			this.menuStrip1.ResumeLayout(false);
 			this.menuStrip1.PerformLayout();
 			this.panel1.ResumeLayout(false);
@@ -241,15 +217,13 @@
 		private System.Windows.Forms.ToolStripMenuItem addModelToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem removeModelToolStripMenuItem;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-		private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem saveAndRebuildToolStripMenuItem;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
 		private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem renameModelToolStripMenuItem;
 		private System.Windows.Forms.Panel panel1;
-		private System.Windows.Forms.Button buttonSave;
 		private System.Windows.Forms.Button buttonExit;
-		private System.Windows.Forms.Button buttonSaveAndBuild;
+		private System.Windows.Forms.Button buttonBuild;
 		private System.Windows.Forms.Panel panel2;
 		private System.Windows.Forms.PropertyGrid mainPropertyGrid;
 		private System.Windows.Forms.Splitter splitter1;

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-16"?>
+<ModelDescriptor xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ModelPath="scenes\boxes\boxModel.fbx" Scale="1">
+  <Color Red="1000" Green="1000" Blue="1000" Alpha="1" />
+</ModelDescriptor>

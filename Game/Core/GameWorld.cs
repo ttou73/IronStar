@@ -140,8 +140,7 @@ namespace IronStar.Core {
 			entityControllerTypes	=	Misc.GetAllSubclassesOf( typeof(EntityController) )
 										.ToDictionary( type => type.Name );
 
-			server.Atoms.AddRange( entityDescriptions.Sections.Select( s => s.SectionName ) );
-			AddPathsToAtoms();
+			AddAtoms();
 
 			//------------------------
 
@@ -190,25 +189,16 @@ namespace IronStar.Core {
 		/// <summary>
 		/// 
 		/// </summary>
-		void AddPathsToAtoms ()
+		void AddAtoms ()
 		{
-			var modelDescriptors    =   ModelDescriptor
-					.LoadCollectionFromXml( Content.Load<string>( @"scripts\models" ) )
+			var atoms = Content
+					.Load<string>("atoms")
+					.Split(new[] {'\r','\n'}, StringSplitOptions.RemoveEmptyEntries)
+					.Distinct()
+					.OrderBy(n=>n)
 					.ToArray();
 
-			Atoms.AddRange( modelDescriptors.Select( md => md.Name ) );
-
-
-			foreach ( var section in entityDescriptions.Sections) {
-				foreach (var key in section.Keys) {
-
-					var keyName = key.KeyName.ToLowerInvariant();
-
-					if (keyName.Contains("fx") || keyName.Contains("model")) {
-						Atoms.Add( key.Value );
-					}
-				}
-			}
+			Atoms.AddRange( atoms );
 		}
 
 
