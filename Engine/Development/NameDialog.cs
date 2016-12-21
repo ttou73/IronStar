@@ -18,7 +18,7 @@ namespace Fusion.Development {
 		/// <param name="text"></param>
 		/// <param name="caption"></param>
 		/// <returns></returns>
-		public static string Show( Form owner, string text, string caption, string suggestion = "" )
+		public static string Show( IWin32Window owner, string text, string caption, string suggestion = "" )
 		{
 			var dlg	=	new NameDialog();
 			dlg.textLabel.Text	=	text;

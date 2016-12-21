@@ -72,11 +72,17 @@
     <Compile Include="Core\SnapshotWriter.cs" />
     <Compile Include="Editors\Editor.cs" />
     <Compile Include="Editors\FileLocationEditor.cs" />
-    <Compile Include="Editors\ModelEditor.cs">
+    <Compile Include="Editors\EditorForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Editors\ModelEditor.Designer.cs">
-      <DependentUpon>ModelEditor.cs</DependentUpon>
+    <Compile Include="Editors\EditorForm.Designer.cs">
+      <DependentUpon>EditorForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\ObjectEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\ObjectEditor.Designer.cs">
+      <DependentUpon>ObjectEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="Entities\Character.Weaponry.cs" />
     <Compile Include="Entities\Character.cs" />
@@ -144,8 +150,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Editors\ModelEditor.resx">
-      <DependentUpon>ModelEditor.cs</DependentUpon>
+    <EmbeddedResource Include="Editors\EditorForm.resx">
+      <DependentUpon>EditorForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editors\ObjectEditor.resx">
+      <DependentUpon>ObjectEditor.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

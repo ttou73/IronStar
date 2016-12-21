@@ -6,29 +6,20 @@ using System.Threading.Tasks;
 using Fusion;
 using Fusion.Core.Shell;
 using System.Windows.Forms;
-using IronStar.Development;
+using IronStar.Editors;
 using Fusion.Engine.Common;
+using IronStar.SFX;
 
 namespace IronStar.Editors {
 
-	public enum Editors {
-		Model,
-		FX,
-		Entity,
-		Megatexture,
-		Maps,
-	}
-
-
-
 	public static class Editor {
 		
-		public static void Run ( Game game, Editors editor )
+		public static void Run ( Game game )
 		{
-			var editorForm =	Application.OpenForms.Cast<Form>().FirstOrDefault( form => form is ModelEditor );
+			var editorForm =	Application.OpenForms.Cast<Form>().FirstOrDefault( form => form is EditorForm );
 
 			if (editorForm==null) {
-				editorForm = new ModelEditor(game, @"models");
+				editorForm = new EditorForm(game);
 			}
 
 			editorForm.Show();
@@ -39,7 +30,7 @@ namespace IronStar.Editors {
 
 		public static void CloseAll ()
 		{
-			var editorForm =    Application.OpenForms.Cast<Form>().FirstOrDefault( form => form is ModelEditor );
+			var editorForm =    Application.OpenForms.Cast<Form>().FirstOrDefault( form => form is EditorForm );
 			editorForm?.Close();
 		}
 
@@ -47,13 +38,8 @@ namespace IronStar.Editors {
 
 
 
-	[Command( "edit", CommandAffinity.Default )]
+	[Command( "editor", CommandAffinity.Default )]
 	public class EditorCommand : NoRollbackCommand {
-
-		[CommandLineParser.Required()]
-		[CommandLineParser.Name( "editor" )]
-		public Editors TargetEditor { get; set; }
-
 
 		public EditorCommand( Invoker invoker ) : base(invoker) 
 		{
@@ -61,7 +47,7 @@ namespace IronStar.Editors {
 
 		public override void Execute()
 		{
-			Editor.Run( Invoker.Game, TargetEditor );
+			Editor.Run( Invoker.Game );
 		}
 	}
 }

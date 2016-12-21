@@ -21,8 +21,6 @@ using IronStar.Views;
 namespace IronStar.SFX {
 	public class ModelManager {
 
-		Dictionary<string,ModelDescriptor> modelDescriptors;
-
 		LinkedList<ModelInstance> models;
 
 		readonly Game			game;
@@ -83,7 +81,7 @@ namespace IronStar.SFX {
 
 			var modelDesc	=	client.Content.Load<ModelDescriptor>( @"models\" + modelName );
 
-			var scene		=	client.Content.Load<Scene>( modelDesc.ModelPath );
+			var scene		=	client.Content.Load<Scene>( modelDesc.ScenePath );
 
 			var model		=	new ModelInstance( this, modelDesc, scene, entity );
 

@@ -18,16 +18,17 @@ using System.IO;
 namespace IronStar.SFX {
 	public class ModelDescriptor {
 
-		[Category( "General" )]
-		[XmlAttribute]
+		[Category( "Appearance" )]
+		[Description("Path to FBX scene")]
 		[Editor(typeof(FbxFileLocationEditor), typeof(UITypeEditor))]
-		public string ModelPath { get; set; } = "";
+		public string ScenePath { get; set; } = "";
 
 		[Category( "Appearance" )]
-		[XmlAttribute]
+		[Description("Entire model scale")]
 		public float Scale { get; set; } = 1;
 
 		[Category( "Appearance" )]
+		[Description("Model glow color multiplier")]
 		public Color4 Color { get; set; } = new Color4(10,10,10,1);
 
 
@@ -46,6 +47,7 @@ namespace IronStar.SFX {
 		{
 			return Misc.SaveObjectToXml( descriptor, descriptor.GetType() );
 		}
+
 
 		public static ModelDescriptor LoadFromXml( string xmlText )
 		{
