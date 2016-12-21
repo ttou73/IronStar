@@ -19,7 +19,7 @@ using BEPUphysics.Character;
 using Fusion.Core.IniParser.Model;
 
 
-namespace IronStar.Controllers {
+namespace IronStar.Entities {
 	public partial class Character : EntityController {
 
 		readonly Space space;
@@ -39,51 +39,33 @@ namespace IronStar.Controllers {
 		/// </summary>
 		/// <param name="game"></param>
 		/// <param name="space"></param>
-		public Character ( Entity entity, GameWorld world, KeyDataCollection parameters ) : base(entity,world)
+		public Character ( Entity entity, GameWorld world, CharacterFactory factory ) : base(entity,world)
 		{
 			this.space	=	world.PhysSpace;
 
 			var pos = MathConverter.Convert( entity.Position );
 
-			float height				= 1.70f	;
-			float crouchingHeight		= 1.19f	;
-			float radius				= 0.60f	;
-			float margin				= 0.10f	;
-			float mass					= 10f	;
-			float maximumTractionSlope	= 0.80f	;
-			float maximumSupportSlope	= 1.30f	;
-			float standingSpeed			= 8f	;
-			float crouchingSpeed		= 3f	;
-			float tractionForce			= 1000f	;
-			float slidingSpeed			= 6f	;
-			float slidingForce			= 50f	;
-			float airSpeed				= 1f	;
-			float airForce				= 250f	;
-			float jumpSpeed				= 6f	;
-			float slidingJumpSpeed		= 3f	;
-			float maximumGlueForce		= 5000f	;
-
 			controller = new CharacterController( pos, 
-					height					, 
-					crouchingHeight			, 
-					radius					, 
-					margin					, 
-					mass					,
-					maximumTractionSlope	, 
-					maximumSupportSlope		, 
-					standingSpeed			,
-					crouchingSpeed			,
-					tractionForce			, 
-					slidingSpeed			,
-					slidingForce			,
-					airSpeed				,
-					airForce				, 
-					jumpSpeed				, 
-					slidingJumpSpeed		,
-					maximumGlueForce		);
+					factory.Height				, 
+					factory.CrouchingHeight		, 
+					factory.Radius				, 
+					factory.Margin				, 
+					factory.Mass				,
+					factory.MaximumTractionSlope, 
+					factory.MaximumSupportSlope	, 
+					factory.StandingSpeed		,
+					factory.CrouchingSpeed		,
+					factory.TractionForce		, 
+					factory.SlidingSpeed		,
+					factory.SlidingForce		,
+					factory.AirSpeed			,
+					factory.AirForce			, 
+					factory.JumpSpeed			, 
+					factory.SlidingJumpSpeed	,
+					factory.MaximumGlueForce	);
 
 
-			controller.StepManager.MaximumStepHeight	=	0.5f;
+			controller.StepManager.MaximumStepHeight	=	factory.MaxStepHeight;
 			controller.Body.Tag	=	entity;
 			controller.Tag		=	entity;
 

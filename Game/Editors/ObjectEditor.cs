@@ -66,17 +66,20 @@ namespace IronStar.Editors {
 		readonly Game game;
 		readonly Type baseType;
 		readonly Type[] extraTypes;
+		readonly string objectName;
+
 
 
 
 		/// <summary>
 		/// 
 		/// </summary>
-		public ObjectEditor( Game game, string sourceFolder, Type baseTargetType, Type[] extraTargetTypes )
+		public ObjectEditor( Game game, string sourceFolder, Type baseTargetType, string objectName )
 		{
 			this.baseType	=	baseTargetType;
-			this.extraTypes	=	extraTargetTypes;
+			this.extraTypes	=	Misc.GetAllSubclassesOf( baseTargetType, false );
 			this.game		=	game;
+			this.objectName	=	objectName;
 			InitializeComponent();
 
 			fullSourceFolder = Path.Combine( Builder.FullInputDirectory, sourceFolder );
@@ -109,6 +112,8 @@ namespace IronStar.Editors {
 
 
 
+
+
 		/// <summary>
 		/// Runs create new model procedure.
 		/// </summary>
@@ -117,16 +122,26 @@ namespace IronStar.Editors {
 			string name = "";
 
 			while (true) {
-				name = NameDialog.Show( this, "Create new model:", "Add Model", name);
+
+				Type type = baseType;
+
+				if (extraTypes.Length>1) {
+					if (ObjectSelector.Show( this, "Select class", "Add", extraTypes.ToDictionary( tt => tt.Name ), out type )) {
+					} else {
+						return;
+					}
+				}
+
+				name = NameDialog.Show( this, "Create new " + objectName + ":", "Add " + objectName, name);
 
 				if (name==null) {
 					return;
 				}
 
-				var fileName = Path.Combine( fullSourceFolder, name + ".xml" );
+				var fullPath = Path.Combine( fullSourceFolder, name + ".xml" );
 
-				if (File.Exists( fileName ) ) {
-					var r = MessageBox.Show( this, string.Format("Model '{0}' already exists", name), "Add Model", MessageBoxButtons.OKCancel );
+				if (File.Exists( fullPath ) ) {
+					var r = MessageBox.Show( this, string.Format("{0} '{1}' already exists", objectName, name), "Add", MessageBoxButtons.OKCancel );
 					if ( r==DialogResult.OK ) {
 						continue;
 					} else {
@@ -135,7 +150,8 @@ namespace IronStar.Editors {
 				}
 
 
-				File.WriteAllText( fileName, ModelDescriptor.SaveToXml( new ModelDescriptor() ) );
+				var newObject = Activator.CreateInstance( type );
+				File.WriteAllText( fullPath, Misc.SaveObjectToXml( newObject, baseType, extraTypes ) );
 
 				RefreshFileList();
 
@@ -187,6 +203,16 @@ namespace IronStar.Editors {
 			foreach ( var target in objectListBox.SelectedItems.Cast<NamePathTarget>() ) {
 				target.SaveTarget();
 			}
+		}
+
+		private void buttonAdd_Click( object sender, EventArgs e )
+		{
+			AddNewObjectUI();
+		}
+
+		private void buttonRemove_Click( object sender, EventArgs e )
+		{
+			RemoveObjectUI();
 		}
 	}
 }

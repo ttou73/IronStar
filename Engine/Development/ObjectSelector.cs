@@ -12,10 +12,10 @@ using Fusion.Core.Mathematics;
 using SharpDX;
 
 namespace Fusion.Development {
-	internal partial class ObjectSelector : Form {
+	public partial class ObjectSelector : Form {
 
 
-		public static bool Show<T> ( Form owner, string text, string caption, IEnumerable<KeyValuePair<string,T>> list, out T result )
+		public static bool Show<T> ( IWin32Window owner, string text, string caption, IEnumerable<KeyValuePair<string,T>> list, out T result )
 		{
 			var objSel = new ObjectSelector();
 

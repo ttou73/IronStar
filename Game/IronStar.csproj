@@ -61,6 +61,7 @@
     <Compile Include="Client\GameView.Weather.cs" />
     <Compile Include="Client\GameView.cs" />
     <Compile Include="Commands\ShowWorldState.cs" />
+    <Compile Include="Core\EntityFactory.cs" />
     <Compile Include="Core\EntityCollection.cs" />
     <Compile Include="Core\GameWorld.Query.cs" />
     <Compile Include="Core\Map.cs" />
@@ -86,8 +87,12 @@
     </Compile>
     <Compile Include="Entities\Character.Weaponry.cs" />
     <Compile Include="Entities\Character.cs" />
+    <Compile Include="Entities\CharacterFactory.cs" />
+    <Compile Include="Entities\NullFactory.cs" />
+    <Compile Include="Entities\ProjectileFactory.cs" />
     <Compile Include="Entities\Projectile.cs" />
     <Compile Include="Core\EntityController.cs" />
+    <Compile Include="Entities\RigidBodyFactory.cs" />
     <Compile Include="SFX\ModelInstance.cs" />
     <Compile Include="SFX\ModelDescriptor.cs" />
     <Compile Include="SFX\ModelManager.cs" />

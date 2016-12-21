@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-16"?>
+<EntityFactory xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="ProjectileFactory">
+  <Velocity>30</Velocity>
+  <Impulse>100</Impulse>
+  <Damage>100</Damage>
+  <LifeTime>10</LifeTime>
+  <Radius>5</Radius>
+  <ExplosionFX>Explosion</ExplosionFX>
+  <TrailFX>RocketTrail</TrailFX>
+</EntityFactory>

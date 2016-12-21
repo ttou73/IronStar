@@ -39,10 +39,6 @@ namespace IronStar.Core {
 			}
 		}
 
-		IniData entityDescriptions;
-
-
-
 		SnapshotWriter snapshotWriter = new SnapshotWriter();
 		SnapshotReader snapshotReader = new SnapshotReader();
 
@@ -133,8 +129,6 @@ namespace IronStar.Core {
 			entities        =   new EntityCollection(server.Atoms);
 
 			
-			ReloadDescriptors();
-
 			InitWorldPhysics(16);
 
 			entityControllerTypes	=	Misc.GetAllSubclassesOf( typeof(EntityController) )
@@ -168,20 +162,6 @@ namespace IronStar.Core {
 
 
 			EntityKilled += MPWorld_EntityKilled;
-		}
-
-
-
-
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public void ReloadDescriptors ()
-		{
-			entityDescriptions  =   Content.Load<IniData>( @"scripts\entities" );
-
 		}
 
 
@@ -428,27 +408,8 @@ namespace IronStar.Core {
 
 			LogTrace( "spawn: {0} - #{1}", classname, id );
 
-			//
-			//	Get description :
-			//
-			var section = entityDescriptions[classname];
 
-			if (section!=null) {
-				
-				var controller   =   section["controller"];
-
-				if (!string.IsNullOrWhiteSpace(controller)) {
-					Type type;
-					if (entityControllerTypes.TryGetValue( controller, out type )) {
-						entity.Controller = (EntityController)Activator.CreateInstance( type, entity, this, section );
-					} else {
-						Log.Warning("Entity controller {0} does not exist", controller );
-					}
-				} 
-
-			} else {
-				Log.Warning("Entity {0} is dummy - no description", classname);
-			}
+			entity.Controller = Content.Load<EntityFactory>(@"entities\" + classname, (EntityFactory)null )?.Spawn( entity, this );
 
 
 			EntitySpawned?.Invoke( this, new EntityEventArgs( entity ) );

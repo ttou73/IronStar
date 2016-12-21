@@ -33,8 +33,9 @@
 			this.mainTabs = new System.Windows.Forms.TabControl();
 			this.tabModels = new System.Windows.Forms.TabPage();
 			this.tabEntities = new System.Windows.Forms.TabPage();
-			this.addModelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.removeModelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.buildToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.menuStrip1.SuspendLayout();
 			this.panel1.SuspendLayout();
 			this.mainTabs.SuspendLayout();
@@ -53,11 +54,12 @@
 			// toolStripMenuItem1
 			// 
 			this.toolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.addModelToolStripMenuItem,
-            this.removeModelToolStripMenuItem});
+            this.buildToolStripMenuItem,
+            this.toolStripSeparator1,
+            this.exitToolStripMenuItem});
 			this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-			this.toolStripMenuItem1.Size = new System.Drawing.Size(58, 20);
-			this.toolStripMenuItem1.Text = "Models";
+			this.toolStripMenuItem1.Size = new System.Drawing.Size(50, 20);
+			this.toolStripMenuItem1.Text = "Editor";
 			// 
 			// panel1
 			// 
@@ -109,7 +111,6 @@
 			// 
 			this.tabModels.Location = new System.Drawing.Point(4, 22);
 			this.tabModels.Name = "tabModels";
-			this.tabModels.Padding = new System.Windows.Forms.Padding(0, 1, 1, 0);
 			this.tabModels.Size = new System.Drawing.Size(424, 458);
 			this.tabModels.TabIndex = 0;
 			this.tabModels.Text = "Models";
@@ -119,25 +120,29 @@
 			// 
 			this.tabEntities.Location = new System.Drawing.Point(4, 22);
 			this.tabEntities.Name = "tabEntities";
-			this.tabEntities.Padding = new System.Windows.Forms.Padding(3);
 			this.tabEntities.Size = new System.Drawing.Size(424, 458);
 			this.tabEntities.TabIndex = 1;
 			this.tabEntities.Text = "Entities";
 			this.tabEntities.UseVisualStyleBackColor = true;
 			// 
-			// addModelToolStripMenuItem
+			// exitToolStripMenuItem
 			// 
-			this.addModelToolStripMenuItem.Name = "addModelToolStripMenuItem";
-			this.addModelToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
-			this.addModelToolStripMenuItem.Text = "Add Model...";
-			this.addModelToolStripMenuItem.Click += new System.EventHandler(this.addModelToolStripMenuItem_Click);
+			this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+			this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.exitToolStripMenuItem.Text = "Exit";
+			this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
 			// 
-			// removeModelToolStripMenuItem
+			// buildToolStripMenuItem
 			// 
-			this.removeModelToolStripMenuItem.Name = "removeModelToolStripMenuItem";
-			this.removeModelToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
-			this.removeModelToolStripMenuItem.Text = "Remove Model";
-			this.removeModelToolStripMenuItem.Click += new System.EventHandler(this.removeModelToolStripMenuItem_Click);
+			this.buildToolStripMenuItem.Name = "buildToolStripMenuItem";
+			this.buildToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.buildToolStripMenuItem.Text = "Build";
+			this.buildToolStripMenuItem.Click += new System.EventHandler(this.buildToolStripMenuItem_Click);
+			// 
+			// toolStripSeparator1
+			// 
+			this.toolStripSeparator1.Name = "toolStripSeparator1";
+			this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
 			// 
 			// EditorForm
 			// 
@@ -170,7 +175,8 @@
 		private System.Windows.Forms.TabPage tabModels;
 		private System.Windows.Forms.TabPage tabEntities;
 		private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
-		private System.Windows.Forms.ToolStripMenuItem addModelToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem removeModelToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem buildToolStripMenuItem;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
 	}
 }

@@ -30,27 +30,20 @@ namespace IronStar.Controllers {
 		readonly Box box;
 
 
-		readonly float width;
-		readonly float height;
-		readonly float depth;
-		readonly float mass;
-		readonly string model;
-
-
 		/// <summary>
 		/// 
 		/// </summary>
 		/// <param name="game"></param>
 		/// <param name="space"></param>
-		public RigidBody ( Entity entity, GameWorld world, KeyDataCollection parameters ) : base(entity,world)
+		public RigidBody ( Entity entity, GameWorld world, RigidBodyFactory factory ) : base(entity,world)
 		{
 			this.space	=	world.PhysSpace;
 
-			this.width		=	parameters.Get<float>	("width"	, 0);
-			this.height		=	parameters.Get<float>	("height"	, 0);	
-			this.depth		=	parameters.Get<float>	("depth"	, 0);
-			this.mass		=	parameters.Get<float>	("mass"		, 0);
-			this.model		=	parameters.Get<string>	("model"	, null);
+			var width		=	factory.Width;
+			var height		=	factory.Height;
+			var depth		=	factory.Depth;
+			var mass		=	factory.Mass;
+			var model		=	factory.Model;
 
 			var ms	=	new MotionState();
 			ms.AngularVelocity	=	MathConverter.Convert( entity.AngularVelocity );

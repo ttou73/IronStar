@@ -15,6 +15,7 @@ using IronStar.SFX;
 using Fusion.Development;
 using Fusion.Core.Extensions;
 using IronStar.Editors;
+using IronStar.Core;
 
 namespace IronStar.Editors {
 	public partial class EditorForm : Form {
@@ -22,6 +23,7 @@ namespace IronStar.Editors {
 		readonly Game game;
 
 		ObjectEditor modelEditor;
+		ObjectEditor entityEditor;
 
 
 		/// <summary>
@@ -33,10 +35,11 @@ namespace IronStar.Editors {
 			
 			InitializeComponent();
 
-			modelEditor	=	new ObjectEditor( game, "models", typeof(ModelDescriptor), null );
-			modelEditor.Dock = DockStyle.Fill;
+			modelEditor		=	new ObjectEditor( game, "models", typeof(ModelDescriptor), "Model"  ) { Dock = DockStyle.Fill };
+			entityEditor	=	new ObjectEditor( game, "entities", typeof(EntityFactory), "Entity" ) { Dock = DockStyle.Fill };
 
 			mainTabs.TabPages["tabModels"].Controls.Add( modelEditor );
+			mainTabs.TabPages["tabEntities"].Controls.Add( entityEditor );
 
 
 			Log.Message("Editor initialized");
@@ -82,6 +85,16 @@ namespace IronStar.Editors {
 		{
 			mainTabs.SelectTab("tabModels");
 			modelEditor?.RemoveObjectUI();
+		}
+
+		private void exitToolStripMenuItem_Click( object sender, EventArgs e )
+		{
+			Close();
+		}
+
+		private void buildToolStripMenuItem_Click( object sender, EventArgs e )
+		{
+			BuildContent();
 		}
 	}
 }

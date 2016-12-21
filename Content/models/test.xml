@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-16"?>
-<ModelDescriptor xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <ScenePath />
-  <Scale>1</Scale>
-  <Color Red="10" Green="10" Blue="10" Alpha="1" />
-</ModelDescriptor>

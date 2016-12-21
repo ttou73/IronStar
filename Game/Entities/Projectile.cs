@@ -26,16 +26,16 @@ namespace IronStar.Controllers {
 
 		Random rand = new Random();
 
-		public float	Velocity;
-		public float	HitImpulse;
-		public short	HitDamage;
-		public float	HitRadius;
-		public float	LifeTime;
-		public string	ExplosionFX;
-		public string	TrailFX;
+		readonly float	velocity;
+		readonly float	hitImpulse;
+		readonly short	hitDamage;
+		readonly float	hitRadius;
+		readonly string	explosionFX;
+		readonly string	trailFX;
 
-		short trailFXAtom;
+		float	lifeTime;
 
+		readonly short trailFXAtom;
 		readonly Space space;
 		GameWorld world;
 
@@ -44,26 +44,24 @@ namespace IronStar.Controllers {
 		/// </summary>
 		/// <param name="game"></param>
 		/// <param name="space"></param>
-		public Projectile ( Entity entity, GameWorld world, KeyDataCollection parameters ) : base(entity,world)
+		public Projectile ( Entity entity, GameWorld world, ProjectileFactory factory ) : base(entity,world)
 		{
-			//string explosionFX, float velocity, float radius, short damage, float impulse, float lifeTime
-
 			this.space	=	world.PhysSpace;
 			this.world	=	world;
 
 			var atoms	=	world.Atoms;
 
-			this.Velocity		=	parameters.Get<float>	("velocity"		, 0);
-			this.HitImpulse		=	parameters.Get<float>	("impulse"		, 0);	
-			this.HitDamage		=	parameters.Get<short>	("damage"		, 0);
-			this.LifeTime		=	parameters.Get<float>	("lifetime"		, 0)/1000.0f;
-			this.HitRadius      =   parameters.Get<float>	("radius"		, 0);
-			this.ExplosionFX	=	parameters.Get<string>	("explosionFX"	, null) ;
-			this.TrailFX		=	parameters.Get<string>	("trailFX"		, null) ;
+			this.velocity		=	factory.Velocity	;	
+			this.hitImpulse		=	factory.Impulse	;	
+			this.hitDamage		=	factory.Damage	;	
+			this.lifeTime		=	factory.LifeTime	;	
+			this.hitRadius      =   factory.Radius   ;   
+			this.explosionFX	=	factory.ExplosionFX	;
+			this.trailFX		=	factory.TrailFX		;
 
-			trailFXAtom			=	atoms[ TrailFX ]; 
+			trailFXAtom			=	atoms[ trailFX ]; 
 
-			//	step projectile forward compensate server latency
+			//	step projectile forward compensating server latency
 			if (world.IsServerSide) {
 				UpdateProjectile( entity, 1.0f / world.GameServer.TargetFrameRate );
 			}
@@ -91,11 +89,11 @@ namespace IronStar.Controllers {
 		{
 			var origin	=	projEntity.Position;
 			var dir		=	Matrix.RotationQuaternion( projEntity.Rotation ).Forward;
-			var target	=	origin + dir * Velocity * elapsedTime;
+			var target	=	origin + dir * velocity * elapsedTime;
 
 			projEntity.Sfx	=	trailFXAtom;
 
-			LifeTime -= elapsedTime;
+			lifeTime -= elapsedTime;
 
 			Vector3 hitNormal, hitPoint;
 			Entity  hitEntity;
@@ -103,24 +101,24 @@ namespace IronStar.Controllers {
 			var parent	=	world.GetEntity( projEntity.ParentID );
 
 
-			if ( LifeTime <= 0 ) {
+			if ( lifeTime <= 0 ) {
 				world.Kill( projEntity.ID );
 			}
 
 			if ( world.RayCastAgainstAll( origin, target, out hitNormal, out hitPoint, out hitEntity, parent ) ) {
 
 				//	inflict damage to hit object:
-				world.InflictDamage( hitEntity, projEntity.ParentID, HitDamage, dir * HitImpulse, hitPoint, DamageType.RocketExplosion );
+				world.InflictDamage( hitEntity, projEntity.ParentID, hitDamage, dir * hitImpulse, hitPoint, DamageType.RocketExplosion );
 
-				Explode( ExplosionFX, projEntity.ID, hitEntity, hitPoint, hitNormal, HitRadius, HitDamage, HitImpulse, DamageType.RocketExplosion );
+				Explode( explosionFX, projEntity.ID, hitEntity, hitPoint, hitNormal, hitRadius, hitDamage, hitImpulse, DamageType.RocketExplosion );
 
 				//world.SpawnFX( projectile.ExplosionFX, projEntity.ParentID, hitPoint, hitNormal );
-				projEntity.Move( hitPoint, projEntity.Rotation, dir * Velocity );
+				projEntity.Move( hitPoint, projEntity.Rotation, dir * velocity );
 
 				world.Kill( projEntity.ID );
 
 			} else {
-				projEntity.Move( target, projEntity.Rotation, dir.Normalized() * Velocity );
+				projEntity.Move( target, projEntity.Rotation, dir.Normalized() * velocity );
 			}
 		}
 

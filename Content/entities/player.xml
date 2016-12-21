@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-16"?>
+<EntityFactory xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="CharacterFactory">
+  <MaxHealth>100</MaxHealth>
+  <Height>1.7</Height>
+  <CrouchingHeight>1.19</CrouchingHeight>
+  <Radius>0.6</Radius>
+  <Margin>0.1</Margin>
+  <Mass>10</Mass>
+  <MaximumTractionSlope>0.8</MaximumTractionSlope>
+  <MaximumSupportSlope>1.3</MaximumSupportSlope>
+  <StandingSpeed>8</StandingSpeed>
+  <CrouchingSpeed>3</CrouchingSpeed>
+  <TractionForce>1000</TractionForce>
+  <SlidingSpeed>6</SlidingSpeed>
+  <SlidingForce>50</SlidingForce>
+  <AirSpeed>1</AirSpeed>
+  <AirForce>250</AirForce>
+  <JumpSpeed>6</JumpSpeed>
+  <SlidingJumpSpeed>3</SlidingJumpSpeed>
+  <MaximumGlueForce>5000</MaximumGlueForce>
+  <MaxStepHeight>0.5</MaxStepHeight>
+</EntityFactory>
