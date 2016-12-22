@@ -93,6 +93,8 @@
     <Compile Include="Entities\Projectile.cs" />
     <Compile Include="Core\EntityController.cs" />
     <Compile Include="Entities\RigidBodyFactory.cs" />
+    <Compile Include="Mapping\Map.cs" />
+    <Compile Include="Mapping\MapNode.cs" />
     <Compile Include="SFX\ModelInstance.cs" />
     <Compile Include="SFX\ModelDescriptor.cs" />
     <Compile Include="SFX\ModelManager.cs" />
