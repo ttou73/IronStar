@@ -22,6 +22,7 @@ namespace Fusion.Engine.Graphics {
 		RenderTarget2D	averageLum;
 		StateFactory	factory;
 		DynamicTexture	whiteTex;
+		DiscTexture		noiseTex;
 
 
 		//	float AdaptationRate;          // Offset:    0
@@ -41,7 +42,7 @@ namespace Fusion.Engine.Graphics {
 			[FieldOffset(28)]	public	float	Saturation;
 			[FieldOffset(32)]	public	float	MaximumOutputValue;
 			[FieldOffset(36)]	public	float	MinimumOutputValue;
-			[FieldOffset(40)]	public	float	__Value;
+			[FieldOffset(40)]	public	float	DitherAmount;
 		}
 
 
@@ -85,8 +86,9 @@ namespace Fusion.Engine.Graphics {
 		/// </summary>
 		void LoadContent ()
 		{
-			shader	=	Game.RenderSystem.Shaders.Load("hdr");
-			factory	=	shader.CreateFactory( typeof(Flags), Primitive.TriangleList, VertexInputElement.Empty, BlendState.Opaque, RasterizerState.CullNone, DepthStencilState.None );
+			shader		=	Game.RenderSystem.Shaders.Load("hdr");
+			noiseTex	=	Game.Content.Load<DiscTexture>(@"noise\hdrDitherNoise");
+			factory		=	shader.CreateFactory( typeof(Flags), Primitive.TriangleList, VertexInputElement.Empty, BlendState.Opaque, RasterizerState.CullNone, DepthStencilState.None );
 		}
 
 
@@ -153,6 +155,7 @@ namespace Fusion.Engine.Graphics {
 				paramsData.Saturation			=	settings.Saturation;
 				paramsData.MaximumOutputValue	=	settings.MaximumOutputValue;
 				paramsData.MinimumOutputValue	=	settings.MinimumOutputValue;
+				paramsData.DitherAmount			=	settings.DitherAmount;
 
 				paramsCB.SetData( paramsData );
 				device.PixelShaderConstants[0]	=	paramsCB;
@@ -180,6 +183,7 @@ namespace Fusion.Engine.Graphics {
 				device.PixelShaderResources[2]	=	viewLayer.Bloom0;// averageLum;
 				device.PixelShaderResources[3]	=	settings.DirtMask1==null ? whiteTex.Srv : settings.DirtMask1.Srv;
 				device.PixelShaderResources[4]	=	settings.DirtMask2==null ? whiteTex.Srv : settings.DirtMask2.Srv;
+				device.PixelShaderResources[5]	=	noiseTex.Srv;
 				device.PixelShaderSamplers[0]	=	SamplerState.LinearClamp;
 
 				Flags op = Flags.LINEAR;

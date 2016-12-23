@@ -111,6 +111,9 @@ namespace Fusion.Engine.Graphics {
 		public float MinimumOutputValue { get; set; }
 
 
+		public float DitherAmount { get; set; }
+
+
 		/// <summary>
 		/// Ctor.
 		/// </summary>
@@ -124,6 +127,7 @@ namespace Fusion.Engine.Graphics {
 			BloomAmount			=	0.1f;
 			GaussBlurSigma		=	3.0f;
 			DirtAmount			=	0.9f;
+			DitherAmount		=	3.0f/256.0f;
 
 			Saturation			=	1;
 			MaximumOutputValue	=	1;

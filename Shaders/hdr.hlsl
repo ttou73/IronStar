@@ -22,6 +22,7 @@ Texture2D		MasuredLuminance	: register(t1);
 Texture2D		BloomTexture		: register(t2);
 Texture2D		BloomMask1			: register(t3);
 Texture2D		BloomMask2			: register(t4);
+Texture2D		NoiseTexture		: register(t5);
 SamplerState	LinearSampler		: register(s0);
 	
 cbuffer PARAMS 		: register(b0) { 
@@ -59,7 +60,7 @@ float4 PSMain(float4 position : SV_POSITION) : SV_Target
 	float sumLum = 0;
 	const float3 lumVector = float3(0.213f, 0.715f, 0.072f );
 	
-	float oldLum = MasuredLuminance.Load(int3(0,0,0));
+	float oldLum = MasuredLuminance.Load(int3(0,0,0)).r;
 	
 	for (int x=0; x<32; x++) {
 		for (int y=0; y<32; y++) {
@@ -118,20 +119,13 @@ float4 PSMain(float4 position : SV_POSITION, float2 uv : TEXCOORD0 ) : SV_Target
 	float4	bloomMask2	=	BloomMask2.SampleLevel( LinearSampler, uv, 0 );
 	float4	bloomMask	=	lerp( bloomMask1, bloomMask2, Params.DirtMaskLerpFactor );
 	float	luminance	=	MasuredLuminance.Load(int3(0,0,0)).r;
+	float	noiseDither	=	NoiseTexture.Load( int3(xpos%256,ypos%256,0) ).r;
 
 	float3	bloom		=	( bloom0 * 1.000f  
 							+ bloom1 * 2.000f  
 							+ bloom2 * 3.000f  
 							+ bloom3 * 4.000f )/10.000f;//*/
 					
-	//
-	//	Make bloom :
-	//	
-	/*float3	bloom		=	( bloom0 * 1.000f  
-							+ bloom1 * 0.500f  
-							+ bloom2 * 0.250f  
-							+ bloom3 * 0.125f )/1.875f;//*/
-	
 	bloom	*=	bloomMask.rgb;
 	
 	hdrImage			=	lerp( hdrImage * bloomMask.rgb, bloom, saturate(bloomMask.a * Params.DirtAmount + Params.BloomAmount));
@@ -143,11 +137,11 @@ float4 PSMain(float4 position : SV_POSITION, float2 uv : TEXCOORD0 ) : SV_Target
 	float3	exposured	=	Params.KeyValue * hdrImage / luminance;
 
 	#ifdef LINEAR
-		float3 	tonemapped	=	pow( exposured, 1/2.2f );
+		float3 	tonemapped	=	pow( abs(exposured), 1/2.2f );
 	#endif
 	
 	#ifdef REINHARD
-		float3 tonemapped	=	pow( exposured / (1+exposured), 1/2.2f );
+		float3 tonemapped	=	pow( abs(exposured / (1+exposured)), 1/2.2f );
 	#endif
 	
 	#ifdef FILMIC
@@ -163,7 +157,8 @@ float4 PSMain(float4 position : SV_POSITION, float2 uv : TEXCOORD0 ) : SV_Target
 	tonemapped.g	=	lerp( Params.Minimum, Params.Maximum, tonemapped.g );
 	tonemapped.b	=	lerp( Params.Minimum, Params.Maximum, tonemapped.b );
 	
-	tonemapped	=	Dither( xpos, ypos, tonemapped );
+	tonemapped		+=	(noiseDither*2-1)*2/256.0;
+	//tonemapped	=	Dither( xpos, ypos, tonemapped );
 
 	return  float4( tonemapped, desaturated );
 }
