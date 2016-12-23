@@ -11,6 +11,7 @@ using Fusion.Engine.Common;
 using Fusion.Drivers.Graphics;
 using System.Runtime.InteropServices;
 using Fusion.Engine.Graphics;
+using Fusion.Engine.Imaging;
 
 namespace Fusion.Engine.Graphics {
 	[RequireShader("hdr")]
@@ -22,7 +23,7 @@ namespace Fusion.Engine.Graphics {
 		RenderTarget2D	averageLum;
 		StateFactory	factory;
 		DynamicTexture	whiteTex;
-		DiscTexture		noiseTex;
+		DynamicTexture	noiseTex;
 
 
 		//	float AdaptationRate;          // Offset:    0
@@ -76,6 +77,8 @@ namespace Fusion.Engine.Graphics {
 
 			LoadContent();
 
+			noiseTex	=	GenerateBayerMatrix(8);
+
 			Game.Reloading += (s,e) => LoadContent();
 		}
 
@@ -87,10 +90,70 @@ namespace Fusion.Engine.Graphics {
 		void LoadContent ()
 		{
 			shader		=	Game.RenderSystem.Shaders.Load("hdr");
-			noiseTex	=	Game.Content.Load<DiscTexture>(@"noise\hdrDitherNoise");
+			//noiseTex	=	Game.Content.Load<DiscTexture>(@"noise\hdrDitherNoise");
+			//noiseTex	=	Game.Content.Load<DiscTexture>(@"noise\bayerMatrix8x8");
+
 			factory		=	shader.CreateFactory( typeof(Flags), Primitive.TriangleList, VertexInputElement.Empty, BlendState.Opaque, RasterizerState.CullNone, DepthStencilState.None );
 		}
 
+
+
+		int[,] GenerateBayerMatrixRecursive ( int[,] matrix )
+		{
+			int[,] newMatrix;
+
+			Random rand = new Random();
+
+			if (matrix==null) {
+				return new int [2,2] { {0,2}, {3,1} };
+			}
+
+			var w = matrix.GetLength(0);
+			var h = matrix.GetLength(0);
+
+			newMatrix	=	new int [w*2,h*2];
+
+			for ( int i=0; i<w; i++) {
+				for ( int j=0; j<h; j++) {
+					newMatrix[ i+0,j+0 ] = matrix[i,j] * 4 + 0;
+					newMatrix[ i+w,j+0 ] = matrix[i,j] * 4 + 2;
+					newMatrix[ i+0,j+h ] = matrix[i,j] * 4 + 3;
+					newMatrix[ i+w,j+h ] = matrix[i,j] * 4 + 1;
+				}
+			}
+
+			return newMatrix;
+		}
+
+
+
+		DynamicTexture GenerateBayerMatrix ( int order )
+		{
+			int[,] matrix = null;
+
+			Random rand = new Random();
+
+			for ( int i=0; i<6; i++ ) {
+				matrix = GenerateBayerMatrixRecursive( matrix );
+			}
+
+			var w = matrix.GetLength(0);
+			var h = matrix.GetLength(0);
+
+			var colors = new Color[w*h];
+
+			for ( int i=0; i<w; i++) {
+				for ( int j=0; j<h; j++) {
+					colors[i+j*w] = new Color( (byte)(matrix[i,j]/16) );
+				}
+			}
+
+			var tex = new DynamicTexture( rs, w, h, typeof(Color) );
+
+			tex.SetData( colors );
+
+			return tex;
+		}
 
 
 		/// <summary>
@@ -103,6 +166,7 @@ namespace Fusion.Engine.Graphics {
 				SafeDispose( ref averageLum	 );
 				SafeDispose( ref paramsCB	 );
 				SafeDispose( ref whiteTex );
+				SafeDispose( ref noiseTex );
 			}
 
 			base.Dispose( disposing );

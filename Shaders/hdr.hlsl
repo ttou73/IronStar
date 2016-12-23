@@ -119,7 +119,7 @@ float4 PSMain(float4 position : SV_POSITION, float2 uv : TEXCOORD0 ) : SV_Target
 	float4	bloomMask2	=	BloomMask2.SampleLevel( LinearSampler, uv, 0 );
 	float4	bloomMask	=	lerp( bloomMask1, bloomMask2, Params.DirtMaskLerpFactor );
 	float	luminance	=	MasuredLuminance.Load(int3(0,0,0)).r;
-	float	noiseDither	=	NoiseTexture.Load( int3(xpos%256,ypos%256,0) ).r;
+	float	noiseDither	=	NoiseTexture.Load( int3(xpos%64,ypos%64,0) ).r;
 
 	float3	bloom		=	( bloom0 * 1.000f  
 							+ bloom1 * 2.000f  
@@ -157,7 +157,8 @@ float4 PSMain(float4 position : SV_POSITION, float2 uv : TEXCOORD0 ) : SV_Target
 	tonemapped.g	=	lerp( Params.Minimum, Params.Maximum, tonemapped.g );
 	tonemapped.b	=	lerp( Params.Minimum, Params.Maximum, tonemapped.b );
 	
-	tonemapped		+=	(noiseDither*2-1)*2/256.0;
+	//tonemapped		=	noiseDither;
+	tonemapped		+=	(noiseDither*2-1)*3/256.0;
 	//tonemapped	=	Dither( xpos, ypos, tonemapped );
 
 	return  float4( tonemapped, desaturated );
