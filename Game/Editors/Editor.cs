@@ -9,6 +9,9 @@ using System.Windows.Forms;
 using IronStar.Editors;
 using Fusion.Engine.Common;
 using IronStar.SFX;
+using Fusion.Core.Content;
+using Fusion.Build;
+using System.IO;
 
 namespace IronStar.Editors {
 
@@ -32,6 +35,56 @@ namespace IronStar.Editors {
 		{
 			var editorForm =    Application.OpenForms.Cast<Form>().FirstOrDefault( form => form is EditorForm );
 			editorForm?.Close();
+		}
+
+
+		public static bool OpenFileDialog( string filter, bool getRelativePath, out string fileName )
+		{
+			fileName = null;
+
+			using ( OpenFileDialog ofd = new OpenFileDialog() ) {
+
+				ofd.InitialDirectory    =   Builder.FullInputDirectory;
+				ofd.RestoreDirectory    =   true;
+				ofd.Filter              =   filter;
+
+				// set file filter info here
+				if ( ofd.ShowDialog() == DialogResult.OK ) {
+
+					fileName = ofd.FileName;
+
+					if ( Path.IsPathRooted( fileName ) && getRelativePath ) {
+						fileName = ContentUtils.MakeRelativePath( Builder.FullInputDirectory + @"\", fileName );
+					}
+
+					return true;
+				} else {
+					return false;
+				}
+			}
+		}
+
+
+		public static bool SaveFileDialog( string filter, out string fileName )
+		{
+			fileName = null;
+
+			using ( SaveFileDialog sfd = new SaveFileDialog() ) {
+
+				sfd.InitialDirectory    =   Builder.FullInputDirectory;
+				sfd.RestoreDirectory    =   true;
+				sfd.Filter              =   filter;
+
+				// set file filter info here
+				if ( sfd.ShowDialog() == DialogResult.OK ) {
+
+					fileName = sfd.FileName;
+
+					return true;
+				} else {
+					return false;
+				}
+			}
 		}
 
 	}

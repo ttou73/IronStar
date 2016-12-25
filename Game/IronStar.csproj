@@ -58,8 +58,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Client\GameInput.cs" />
-    <Compile Include="Client\GameView.Weather.cs" />
-    <Compile Include="Client\GameView.cs" />
     <Compile Include="Commands\ShowWorldState.cs" />
     <Compile Include="Core\EntityFactory.cs" />
     <Compile Include="Core\EntityCollection.cs" />
@@ -79,6 +77,12 @@
     <Compile Include="Editors\EditorForm.Designer.cs">
       <DependentUpon>EditorForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Editors\MapEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\MapEditor.Designer.cs">
+      <DependentUpon>MapEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Editors\ObjectEditor.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -93,8 +97,12 @@
     <Compile Include="Entities\Projectile.cs" />
     <Compile Include="Core\EntityController.cs" />
     <Compile Include="Entities\RigidBodyFactory.cs" />
+    <Compile Include="Mapping\MapEnvironment.cs" />
     <Compile Include="Mapping\Map.cs" />
+    <Compile Include="Mapping\MapEntity.cs" />
+    <Compile Include="Mapping\MapModel.cs" />
     <Compile Include="Mapping\MapNode.cs" />
+    <Compile Include="Mapping\MapTransform.cs" />
     <Compile Include="SFX\ModelInstance.cs" />
     <Compile Include="SFX\ModelDescriptor.cs" />
     <Compile Include="SFX\ModelManager.cs" />
@@ -159,6 +167,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Editors\EditorForm.resx">
       <DependentUpon>EditorForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editors\MapEditor.resx">
+      <DependentUpon>MapEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Editors\ObjectEditor.resx">
       <DependentUpon>ObjectEditor.cs</DependentUpon>

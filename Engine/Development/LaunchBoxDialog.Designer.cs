@@ -46,6 +46,7 @@
 			this.displayHeight = new System.Windows.Forms.NumericUpDown();
 			this.openConfigDir = new System.Windows.Forms.Button();
 			this.openContentDir = new System.Windows.Forms.Button();
+			this.runEditorButton = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.displayWidth)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.displayHeight)).BeginInit();
@@ -55,7 +56,7 @@
 			// 
 			this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.button1.Location = new System.Drawing.Point(178, 483);
+			this.button1.Location = new System.Drawing.Point(178, 514);
 			this.button1.Name = "button1";
 			this.button1.Size = new System.Drawing.Size(110, 32);
 			this.button1.TabIndex = 0;
@@ -86,7 +87,7 @@
 			// button3
 			// 
 			this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.button3.Location = new System.Drawing.Point(12, 483);
+			this.button3.Location = new System.Drawing.Point(12, 514);
 			this.button3.Name = "button3";
 			this.button3.Size = new System.Drawing.Size(83, 32);
 			this.button3.TabIndex = 14;
@@ -172,7 +173,8 @@
 			// 
 			// versionLabel
 			// 
-			this.versionLabel.Location = new System.Drawing.Point(12, 447);
+			this.versionLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.versionLabel.Location = new System.Drawing.Point(12, 478);
 			this.versionLabel.Name = "versionLabel";
 			this.versionLabel.Size = new System.Drawing.Size(276, 23);
 			this.versionLabel.TabIndex = 15;
@@ -193,7 +195,7 @@
 			this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.label4.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.label4.Location = new System.Drawing.Point(12, 470);
+			this.label4.Location = new System.Drawing.Point(12, 501);
 			this.label4.Name = "label4";
 			this.label4.Size = new System.Drawing.Size(276, 2);
 			this.label4.TabIndex = 19;
@@ -281,11 +283,22 @@
 			this.openContentDir.UseVisualStyleBackColor = true;
 			this.openContentDir.Click += new System.EventHandler(this.openContentDir_Click);
 			// 
+			// runEditorButton
+			// 
+			this.runEditorButton.Location = new System.Drawing.Point(114, 428);
+			this.runEditorButton.Name = "runEditorButton";
+			this.runEditorButton.Size = new System.Drawing.Size(144, 23);
+			this.runEditorButton.TabIndex = 22;
+			this.runEditorButton.Text = "Run Editor";
+			this.runEditorButton.UseVisualStyleBackColor = true;
+			this.runEditorButton.Click += new System.EventHandler(this.runEditorButton_Click);
+			// 
 			// LaunchBoxForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(300, 527);
+			this.ClientSize = new System.Drawing.Size(300, 558);
+			this.Controls.Add(this.runEditorButton);
 			this.Controls.Add(this.openContentDir);
 			this.Controls.Add(this.openConfigDir);
 			this.Controls.Add(this.displayHeight);
@@ -344,5 +357,6 @@
 		private System.Windows.Forms.NumericUpDown displayHeight;
 		private System.Windows.Forms.Button openConfigDir;
 		private System.Windows.Forms.Button openContentDir;
+		private System.Windows.Forms.Button runEditorButton;
 	}
 }

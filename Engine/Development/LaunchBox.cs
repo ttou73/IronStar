@@ -16,10 +16,10 @@ using System.Diagnostics;
 namespace Fusion.Development {
 	public static class LaunchBox {
 
-		public static bool ShowDialog ( Game game, string config )
+		public static bool ShowDialog ( Game game, string config, Action runEditor )
 		{
 			//var form = new Dashboard( game, config, true );
-			var form = new LaunchBoxForm( game, config );
+			var form = new LaunchBoxForm( game, config, runEditor );
 
 			var dr = form.ShowDialog();
 

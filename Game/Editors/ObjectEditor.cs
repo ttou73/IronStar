@@ -205,12 +205,12 @@ namespace IronStar.Editors {
 			}
 		}
 
-		private void buttonAdd_Click( object sender, EventArgs e )
+		private void addToolStripMenuItem_Click( object sender, EventArgs e )
 		{
 			AddNewObjectUI();
 		}
 
-		private void buttonRemove_Click( object sender, EventArgs e )
+		private void removeToolStripMenuItem_Click( object sender, EventArgs e )
 		{
 			RemoveObjectUI();
 		}

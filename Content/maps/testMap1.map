@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-16"?>
+<Map xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Environment>
+    <Gravity>16</Gravity>
+    <SkyTrubidity>2</SkyTrubidity>
+    <SunPosition X="1" Y="1" Z="1" />
+    <SunIntensity>100</SunIntensity>
+    <FogDensity>0.001</FogDensity>
+  </Environment>
+  <Elements>
+    <MapNode xsi:type="MapModel">
+      <Position X="0" Y="0" Z="0" />
+      <Yaw>0</Yaw>
+      <Pitch>0</Pitch>
+      <Roll>0</Roll>
+      <ScenePath />
+      <CollisionMeshes />
+      <VisibleMeshes />
+      <ModelScale>1</ModelScale>
+    </MapNode>
+    <MapNode xsi:type="MapModel">
+      <Position X="0" Y="0" Z="0" />
+      <Yaw>0</Yaw>
+      <Pitch>0</Pitch>
+      <Roll>0</Roll>
+      <ScenePath />
+      <CollisionMeshes />
+      <VisibleMeshes />
+      <ModelScale>1</ModelScale>
+    </MapNode>
+    <MapNode xsi:type="MapModel">
+      <Position X="0" Y="0" Z="0" />
+      <Yaw>0</Yaw>
+      <Pitch>0</Pitch>
+      <Roll>0</Roll>
+      <ScenePath />
+      <CollisionMeshes />
+      <VisibleMeshes />
+      <ModelScale>1</ModelScale>
+    </MapNode>
+    <MapNode xsi:type="MapModel">
+      <Position X="0" Y="0" Z="0" />
+      <Yaw>0</Yaw>
+      <Pitch>0</Pitch>
+      <Roll>0</Roll>
+      <ScenePath />
+      <CollisionMeshes />
+      <VisibleMeshes />
+      <ModelScale>1</ModelScale>
+    </MapNode>
+    <MapNode xsi:type="MapModel">
+      <Position X="0" Y="0" Z="0" />
+      <Yaw>0</Yaw>
+      <Pitch>0</Pitch>
+      <Roll>0</Roll>
+      <ScenePath />
+      <CollisionMeshes />
+      <VisibleMeshes />
+      <ModelScale>1</ModelScale>
+    </MapNode>
+    <MapNode xsi:type="MapEntity">
+      <Position X="0" Y="0" Z="0" />
+      <Yaw>0</Yaw>
+      <Pitch>0</Pitch>
+      <Roll>0</Roll>
+      <Classname />
+      <Targetname />
+    </MapNode>
+    <MapNode xsi:type="MapEntity">
+      <Position X="0" Y="0" Z="0" />
+      <Yaw>0</Yaw>
+      <Pitch>0</Pitch>
+      <Roll>0</Roll>
+      <Classname />
+      <Targetname />
+    </MapNode>
+    <MapNode xsi:type="MapEntity">
+      <Position X="0" Y="0" Z="0" />
+      <Yaw>0</Yaw>
+      <Pitch>0</Pitch>
+      <Roll>0</Roll>
+      <Classname />
+      <Targetname />
+    </MapNode>
+    <MapNode xsi:type="MapEntity">
+      <Position X="0" Y="0" Z="0" />
+      <Yaw>0</Yaw>
+      <Pitch>0</Pitch>
+      <Roll>0</Roll>
+      <Classname />
+      <Targetname />
+    </MapNode>
+    <MapNode xsi:type="MapEntity">
+      <Position X="0" Y="0" Z="0" />
+      <Yaw>0</Yaw>
+      <Pitch>0</Pitch>
+      <Roll>0</Roll>
+      <Classname />
+      <Targetname />
+    </MapNode>
+    <MapNode xsi:type="MapEntity">
+      <Position X="0" Y="0" Z="0" />
+      <Yaw>0</Yaw>
+      <Pitch>0</Pitch>
+      <Roll>0</Roll>
+      <Classname />
+      <Targetname />
+    </MapNode>
+  </Elements>
+</Map>

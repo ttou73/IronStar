@@ -27,15 +27,16 @@
 		{
 			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
 			this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+			this.buildToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+			this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.panel1 = new System.Windows.Forms.Panel();
 			this.buttonExit = new System.Windows.Forms.Button();
 			this.buttonBuild = new System.Windows.Forms.Button();
 			this.mainTabs = new System.Windows.Forms.TabControl();
 			this.tabModels = new System.Windows.Forms.TabPage();
 			this.tabEntities = new System.Windows.Forms.TabPage();
-			this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.buildToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+			this.tabMap = new System.Windows.Forms.TabPage();
 			this.menuStrip1.SuspendLayout();
 			this.panel1.SuspendLayout();
 			this.mainTabs.SuspendLayout();
@@ -47,7 +48,7 @@
             this.toolStripMenuItem1});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip1.Name = "menuStrip1";
-			this.menuStrip1.Size = new System.Drawing.Size(438, 24);
+			this.menuStrip1.Size = new System.Drawing.Size(570, 24);
 			this.menuStrip1.TabIndex = 3;
 			this.menuStrip1.Text = "menuStrip1";
 			// 
@@ -61,14 +62,33 @@
 			this.toolStripMenuItem1.Size = new System.Drawing.Size(50, 20);
 			this.toolStripMenuItem1.Text = "Editor";
 			// 
+			// buildToolStripMenuItem
+			// 
+			this.buildToolStripMenuItem.Name = "buildToolStripMenuItem";
+			this.buildToolStripMenuItem.Size = new System.Drawing.Size(101, 22);
+			this.buildToolStripMenuItem.Text = "Build";
+			this.buildToolStripMenuItem.Click += new System.EventHandler(this.buildToolStripMenuItem_Click);
+			// 
+			// toolStripSeparator1
+			// 
+			this.toolStripSeparator1.Name = "toolStripSeparator1";
+			this.toolStripSeparator1.Size = new System.Drawing.Size(98, 6);
+			// 
+			// exitToolStripMenuItem
+			// 
+			this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+			this.exitToolStripMenuItem.Size = new System.Drawing.Size(101, 22);
+			this.exitToolStripMenuItem.Text = "Exit";
+			this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+			// 
 			// panel1
 			// 
 			this.panel1.Controls.Add(this.buttonExit);
 			this.panel1.Controls.Add(this.buttonBuild);
 			this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.panel1.Location = new System.Drawing.Point(0, 517);
+			this.panel1.Location = new System.Drawing.Point(0, 526);
 			this.panel1.Name = "panel1";
-			this.panel1.Size = new System.Drawing.Size(438, 44);
+			this.panel1.Size = new System.Drawing.Size(570, 44);
 			this.panel1.TabIndex = 4;
 			// 
 			// buttonExit
@@ -86,7 +106,7 @@
 			// 
 			this.buttonBuild.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.buttonBuild.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.buttonBuild.Location = new System.Drawing.Point(334, 11);
+			this.buttonBuild.Location = new System.Drawing.Point(466, 11);
 			this.buttonBuild.Name = "buttonBuild";
 			this.buttonBuild.Size = new System.Drawing.Size(100, 30);
 			this.buttonBuild.TabIndex = 3;
@@ -101,17 +121,20 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.mainTabs.Controls.Add(this.tabModels);
 			this.mainTabs.Controls.Add(this.tabEntities);
+			this.mainTabs.Controls.Add(this.tabMap);
+			this.mainTabs.HotTrack = true;
 			this.mainTabs.Location = new System.Drawing.Point(3, 27);
 			this.mainTabs.Name = "mainTabs";
 			this.mainTabs.SelectedIndex = 0;
-			this.mainTabs.Size = new System.Drawing.Size(432, 484);
+			this.mainTabs.Size = new System.Drawing.Size(564, 493);
 			this.mainTabs.TabIndex = 5;
 			// 
 			// tabModels
 			// 
 			this.tabModels.Location = new System.Drawing.Point(4, 22);
 			this.tabModels.Name = "tabModels";
-			this.tabModels.Size = new System.Drawing.Size(424, 458);
+			this.tabModels.Padding = new System.Windows.Forms.Padding(3);
+			this.tabModels.Size = new System.Drawing.Size(556, 467);
 			this.tabModels.TabIndex = 0;
 			this.tabModels.Text = "Models";
 			this.tabModels.UseVisualStyleBackColor = true;
@@ -120,35 +143,27 @@
 			// 
 			this.tabEntities.Location = new System.Drawing.Point(4, 22);
 			this.tabEntities.Name = "tabEntities";
+			this.tabEntities.Padding = new System.Windows.Forms.Padding(3);
 			this.tabEntities.Size = new System.Drawing.Size(424, 458);
 			this.tabEntities.TabIndex = 1;
 			this.tabEntities.Text = "Entities";
 			this.tabEntities.UseVisualStyleBackColor = true;
 			// 
-			// exitToolStripMenuItem
+			// tabMap
 			// 
-			this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-			this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-			this.exitToolStripMenuItem.Text = "Exit";
-			this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
-			// 
-			// buildToolStripMenuItem
-			// 
-			this.buildToolStripMenuItem.Name = "buildToolStripMenuItem";
-			this.buildToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-			this.buildToolStripMenuItem.Text = "Build";
-			this.buildToolStripMenuItem.Click += new System.EventHandler(this.buildToolStripMenuItem_Click);
-			// 
-			// toolStripSeparator1
-			// 
-			this.toolStripSeparator1.Name = "toolStripSeparator1";
-			this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
+			this.tabMap.Location = new System.Drawing.Point(4, 22);
+			this.tabMap.Name = "tabMap";
+			this.tabMap.Padding = new System.Windows.Forms.Padding(3);
+			this.tabMap.Size = new System.Drawing.Size(424, 458);
+			this.tabMap.TabIndex = 2;
+			this.tabMap.Text = "Map Editor";
+			this.tabMap.UseVisualStyleBackColor = true;
 			// 
 			// EditorForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(438, 561);
+			this.ClientSize = new System.Drawing.Size(570, 570);
 			this.Controls.Add(this.mainTabs);
 			this.Controls.Add(this.menuStrip1);
 			this.Controls.Add(this.panel1);
@@ -178,5 +193,6 @@
 		private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem buildToolStripMenuItem;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+		private System.Windows.Forms.TabPage tabMap;
 	}
 }

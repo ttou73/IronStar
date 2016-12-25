@@ -13,6 +13,9 @@ using Fusion.Core.Shell;
 using Fusion.Core.Utils;
 using Fusion.Engine.Imaging;
 using IronStar.Editors;
+using IronStar.Core;
+using IronStar.Mapping;
+using Fusion.Core.Extensions;
 
 namespace IronStar {
 
@@ -67,7 +70,7 @@ namespace IronStar {
 
 				//	apply command-line options here:
 				//	...
-				if (!LaunchBox.ShowDialog(game, "Config.ini")) {
+				if (!LaunchBox.ShowDialog(game, "Config.ini", ()=>Editor.Run(game))) {
 					return 0;
 				}
 

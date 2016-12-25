@@ -22,12 +22,16 @@ namespace Fusion.Development {
 		string configPath;
 		string configName;
 
+		Action runEditor;
 
-		public LaunchBoxForm ( Game game, string config )
+
+		public LaunchBoxForm ( Game game, string config, Action runEditor )
 		{
 			this.game	=	game;
 			configName	=	config;
 			configPath	=	game.UserStorage.GetFullPath(config);
+
+			this.runEditor	=	runEditor;
 
 
 			InitializeComponent();
@@ -157,6 +161,11 @@ namespace Fusion.Development {
 		private void rebuildContent_Click ( object sender, EventArgs e )
 		{
 			game.Invoker.PushAndExecute("contentBuild /force");
+		}
+
+		private void runEditorButton_Click( object sender, EventArgs e )
+		{
+			runEditor?.Invoke();
 		}
 	}
 }
