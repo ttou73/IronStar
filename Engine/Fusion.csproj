@@ -200,6 +200,8 @@
     <Compile Include="Development\UserMessage.Designer.cs">
       <DependentUpon>UserMessage.cs</DependentUpon>
     </Compile>
+    <Compile Include="Engine\Client\IGameLoader.cs" />
+    <Compile Include="Engine\Client\IClientInstance.cs" />
     <Compile Include="Engine\Common\Commands\ShowAtoms.cs" />
     <Compile Include="Engine\Graphics\Effects\FogSettings.cs" />
     <Compile Include="Engine\Graphics\RenderComponent.cs" />
@@ -537,6 +539,7 @@
     <Compile Include="Engine\Input\Keys.cs" />
     <Compile Include="Engine\Input\Mouse.cs" />
     <Compile Include="Engine\Common\NetDeflate.cs" />
+    <Compile Include="Engine\Server\IServerInstance.cs" />
     <Compile Include="Engine\Server\NetCommand.cs" />
     <Compile Include="Engine\Server\NetConnExt.cs" />
     <Compile Include="Engine\Server\Snapshot.cs" />
