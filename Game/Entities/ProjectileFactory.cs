@@ -21,7 +21,7 @@ using BEPUphysics.PositionUpdating;
 using Fusion.Core.IniParser.Model;
 using System.ComponentModel;
 
-namespace IronStar.Controllers {
+namespace IronStar.Entities {
 
 	public class ProjectileFactory : EntityFactory {
 

@@ -32,11 +32,13 @@
 			this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+			this.updateNodesFromSceneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.addMapModelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.addMapEntityToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.removeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.duplicateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+			this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+			this.showToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.mapPropertyGrid = new System.Windows.Forms.PropertyGrid();
 			this.splitter1 = new System.Windows.Forms.Splitter();
 			this.mapListBox = new System.Windows.Forms.ListBox();
@@ -48,7 +50,8 @@
 			this.mapMenu.BackColor = System.Drawing.SystemColors.ControlLightLight;
 			this.mapMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItem1,
-            this.editToolStripMenuItem});
+            this.editToolStripMenuItem,
+            this.showToolStripMenuItem});
 			this.mapMenu.Location = new System.Drawing.Point(0, 0);
 			this.mapMenu.Name = "mapMenu";
 			this.mapMenu.Size = new System.Drawing.Size(737, 24);
@@ -64,7 +67,9 @@
             this.openToolStripMenuItem,
             this.saveToolStripMenuItem,
             this.saveAsToolStripMenuItem,
-            this.closeToolStripMenuItem});
+            this.closeToolStripMenuItem,
+            this.toolStripSeparator1,
+            this.updateNodesFromSceneToolStripMenuItem});
 			this.toolStripMenuItem1.Name = "toolStripMenuItem1";
 			this.toolStripMenuItem1.Size = new System.Drawing.Size(43, 20);
 			this.toolStripMenuItem1.Text = "Map";
@@ -73,73 +78,84 @@
 			// newMapToolStripMenuItem
 			// 
 			this.newMapToolStripMenuItem.Name = "newMapToolStripMenuItem";
-			this.newMapToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
+			this.newMapToolStripMenuItem.Size = new System.Drawing.Size(212, 22);
 			this.newMapToolStripMenuItem.Text = "New";
 			this.newMapToolStripMenuItem.Click += new System.EventHandler(this.newMapToolStripMenuItem_Click);
 			// 
 			// openToolStripMenuItem
 			// 
 			this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-			this.openToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
+			this.openToolStripMenuItem.Size = new System.Drawing.Size(212, 22);
 			this.openToolStripMenuItem.Text = "Open...";
+			this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
 			// 
 			// saveToolStripMenuItem
 			// 
 			this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-			this.saveToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
+			this.saveToolStripMenuItem.Size = new System.Drawing.Size(212, 22);
 			this.saveToolStripMenuItem.Text = "Save";
 			this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
 			// 
 			// saveAsToolStripMenuItem
 			// 
 			this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-			this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
+			this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(212, 22);
 			this.saveAsToolStripMenuItem.Text = "Save As...";
 			this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.saveAsToolStripMenuItem_Click);
 			// 
 			// closeToolStripMenuItem
 			// 
 			this.closeToolStripMenuItem.Name = "closeToolStripMenuItem";
-			this.closeToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
+			this.closeToolStripMenuItem.Size = new System.Drawing.Size(212, 22);
 			this.closeToolStripMenuItem.Text = "Close";
 			this.closeToolStripMenuItem.Click += new System.EventHandler(this.closeToolStripMenuItem_Click);
+			// 
+			// toolStripSeparator1
+			// 
+			this.toolStripSeparator1.Name = "toolStripSeparator1";
+			this.toolStripSeparator1.Size = new System.Drawing.Size(209, 6);
+			// 
+			// updateNodesFromSceneToolStripMenuItem
+			// 
+			this.updateNodesFromSceneToolStripMenuItem.Name = "updateNodesFromSceneToolStripMenuItem";
+			this.updateNodesFromSceneToolStripMenuItem.Size = new System.Drawing.Size(212, 22);
+			this.updateNodesFromSceneToolStripMenuItem.Text = "Update Nodes from Scene";
+			this.updateNodesFromSceneToolStripMenuItem.Click += new System.EventHandler(this.updateNodesFromSceneToolStripMenuItem_Click);
 			// 
 			// editToolStripMenuItem
 			// 
 			this.editToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.addMapModelToolStripMenuItem,
-            this.addMapEntityToolStripMenuItem,
             this.removeToolStripMenuItem,
-            this.duplicateToolStripMenuItem});
+            this.toolStripSeparator2,
+            this.toolStripMenuItem2});
 			this.editToolStripMenuItem.Name = "editToolStripMenuItem";
 			this.editToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
 			this.editToolStripMenuItem.Text = "Edit";
 			// 
-			// addMapModelToolStripMenuItem
-			// 
-			this.addMapModelToolStripMenuItem.Name = "addMapModelToolStripMenuItem";
-			this.addMapModelToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
-			this.addMapModelToolStripMenuItem.Text = "Add Map Model...";
-			this.addMapModelToolStripMenuItem.Click += new System.EventHandler(this.addMapModelToolStripMenuItem_Click);
-			// 
-			// addMapEntityToolStripMenuItem
-			// 
-			this.addMapEntityToolStripMenuItem.Name = "addMapEntityToolStripMenuItem";
-			this.addMapEntityToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
-			this.addMapEntityToolStripMenuItem.Text = "Add Map Entity...";
-			this.addMapEntityToolStripMenuItem.Click += new System.EventHandler(this.addMapEntityToolStripMenuItem_Click);
-			// 
 			// removeToolStripMenuItem
 			// 
 			this.removeToolStripMenuItem.Name = "removeToolStripMenuItem";
-			this.removeToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
-			this.removeToolStripMenuItem.Text = "Remove";
+			this.removeToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
+			this.removeToolStripMenuItem.Text = "Remove Selected";
+			this.removeToolStripMenuItem.Click += new System.EventHandler(this.removeToolStripMenuItem_Click);
 			// 
-			// duplicateToolStripMenuItem
+			// toolStripSeparator2
 			// 
-			this.duplicateToolStripMenuItem.Name = "duplicateToolStripMenuItem";
-			this.duplicateToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
-			this.duplicateToolStripMenuItem.Text = "Duplicate";
+			this.toolStripSeparator2.Name = "toolStripSeparator2";
+			this.toolStripSeparator2.Size = new System.Drawing.Size(178, 6);
+			// 
+			// toolStripMenuItem2
+			// 
+			this.toolStripMenuItem2.Enabled = false;
+			this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+			this.toolStripMenuItem2.Size = new System.Drawing.Size(181, 22);
+			this.toolStripMenuItem2.Text = "Assign New Factory:";
+			// 
+			// showToolStripMenuItem
+			// 
+			this.showToolStripMenuItem.Name = "showToolStripMenuItem";
+			this.showToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
+			this.showToolStripMenuItem.Text = "Show";
 			// 
 			// mapPropertyGrid
 			// 
@@ -199,11 +215,13 @@
 		private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem saveAsToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem addMapModelToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem addMapEntityToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem removeToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem duplicateToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem closeToolStripMenuItem;
 		private System.Windows.Forms.ListBox mapListBox;
+		private System.Windows.Forms.ToolStripMenuItem showToolStripMenuItem;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+		private System.Windows.Forms.ToolStripMenuItem updateNodesFromSceneToolStripMenuItem;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+		private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
 	}
 }

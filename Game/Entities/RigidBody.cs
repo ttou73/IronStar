@@ -23,7 +23,7 @@ using Fusion.Core.IniParser.Model;
 //using BEPUphysics.
 
 
-namespace IronStar.Controllers {
+namespace IronStar.Entities {
 	public class RigidBody : EntityController {
 
 		readonly Space space;

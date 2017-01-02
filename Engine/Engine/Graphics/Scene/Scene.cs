@@ -161,6 +161,22 @@ namespace Fusion.Engine.Graphics {
 
 
 		/// <summary>
+		/// Creates dictionary of string-Node mapping
+		/// </summary>
+		/// <returns></returns>
+		public IDictionary<string,Node> ExportNodePathMapping ()
+		{
+			var dict = new Dictionary<string,Node>();
+
+			for ( int i=0; i<Nodes.Count; i++) {
+				dict.Add( GetFullNodePath(Nodes[i]), Nodes[i] );
+			}
+
+			return dict;
+		}
+
+
+		/// <summary>
 		/// Copies absolute transform to provided array.
 		/// </summary>
 		/// <param name="destination"></param>

@@ -99,5 +99,10 @@ namespace IronStar.Editors {
 		{
 			BuildContent();
 		}
+
+		private void EditorForm_FormClosing( object sender, FormClosingEventArgs e )
+		{
+			mapEditor.CloseMap();
+		}
 	}
 }

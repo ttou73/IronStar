@@ -20,7 +20,7 @@ using BEPUphysics.EntityStateManagement;
 using BEPUphysics.PositionUpdating;
 using Fusion.Core.IniParser.Model;
 
-namespace IronStar.Controllers {
+namespace IronStar.Entities {
 
 	public class Projectile : EntityController {
 

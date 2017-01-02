@@ -38,7 +38,12 @@ namespace IronStar.Editors {
 		}
 
 
-		public static bool OpenFileDialog( string filter, bool getRelativePath, out string fileName )
+		public static bool OpenFileDialog( string filter, bool getRelativePath, out string fileName )		{
+			return OpenFileDialog( "Open", filter, getRelativePath, out fileName );
+		}
+
+
+		public static bool OpenFileDialog( string caption, string filter, bool getRelativePath, out string fileName )
 		{
 			fileName = null;
 
@@ -47,6 +52,7 @@ namespace IronStar.Editors {
 				ofd.InitialDirectory    =   Builder.FullInputDirectory;
 				ofd.RestoreDirectory    =   true;
 				ofd.Filter              =   filter;
+				ofd.Title				=	caption;
 
 				// set file filter info here
 				if ( ofd.ShowDialog() == DialogResult.OK ) {

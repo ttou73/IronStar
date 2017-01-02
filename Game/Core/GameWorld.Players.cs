@@ -15,7 +15,7 @@ using Fusion.Engine.Server;
 using Fusion.Engine.Graphics;
 using IronStar.Core;
 using IronStar.Views;
-using IronStar.Controllers;
+using IronStar.Entities;
 
 namespace IronStar.Core {
 	public partial class GameWorld {

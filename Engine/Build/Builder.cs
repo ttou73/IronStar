@@ -114,6 +114,29 @@ namespace Fusion.Build {
 
 
 		/// <summary>
+		/// Gets relative to input directory path for to specified file 
+		/// </summary>
+		/// <param name="fullPath"></param>
+		/// <returns></returns>
+		public static string GetRelativePath ( string fullPath )
+		{
+			return ContentUtils.MakeRelativePath( Builder.FullInputDirectory + @"\", fullPath );
+		}
+
+
+
+		/// <summary>
+		/// Gets full path
+		/// </summary>
+		/// <param name="path"></param>
+		/// <returns></returns>
+		public static string GetFullPath ( string path )
+		{
+			return Path.Combine( FullInputDirectory, path ); 
+		}
+
+
+		/// <summary>
 		/// 
 		/// </summary>
 		/// <param name="options"></param>

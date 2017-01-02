@@ -24,7 +24,7 @@ using System.ComponentModel;
 //using BEPUphysics.
 
 
-namespace IronStar.Controllers {
+namespace IronStar.Entities {
 	public class RigidBodyFactory : EntityFactory {
 
 		[Category("Physics")]

@@ -11,12 +11,21 @@ using IronStar.Core;
 namespace IronStar.Mapping {
 	public class MapNode {
 
+		/// <summary>
+		/// Node path
+		/// </summary>
+		public string NodePath { get; set; }
 
 		/// <summary>
-		/// 
+		/// Entity factory
 		/// </summary>
-		public MapNode ()
+		[TypeConverter(typeof(ExpandableObjectConverter))]		
+		public EntityFactory Factory { get; set; }
+
+
+		public override string ToString()
 		{
+			return "[" + Factory.GetType().Name + "] " + NodePath;
 		}
 	}
 }

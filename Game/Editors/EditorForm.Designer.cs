@@ -144,7 +144,7 @@
 			this.tabEntities.Location = new System.Drawing.Point(4, 22);
 			this.tabEntities.Name = "tabEntities";
 			this.tabEntities.Padding = new System.Windows.Forms.Padding(3);
-			this.tabEntities.Size = new System.Drawing.Size(424, 458);
+			this.tabEntities.Size = new System.Drawing.Size(556, 467);
 			this.tabEntities.TabIndex = 1;
 			this.tabEntities.Text = "Entities";
 			this.tabEntities.UseVisualStyleBackColor = true;
@@ -154,7 +154,7 @@
 			this.tabMap.Location = new System.Drawing.Point(4, 22);
 			this.tabMap.Name = "tabMap";
 			this.tabMap.Padding = new System.Windows.Forms.Padding(3);
-			this.tabMap.Size = new System.Drawing.Size(424, 458);
+			this.tabMap.Size = new System.Drawing.Size(556, 467);
 			this.tabMap.TabIndex = 2;
 			this.tabMap.Text = "Map Editor";
 			this.tabMap.UseVisualStyleBackColor = true;
@@ -172,6 +172,7 @@
 			this.MinimumSize = new System.Drawing.Size(400, 400);
 			this.Name = "EditorForm";
 			this.Text = "Object Editor";
+			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.EditorForm_FormClosing);
 			this.menuStrip1.ResumeLayout(false);
 			this.menuStrip1.PerformLayout();
 			this.panel1.ResumeLayout(false);
