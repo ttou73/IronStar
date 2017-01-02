@@ -129,7 +129,7 @@ namespace IronStar.Editors {
 		{
 			MapFile.Modified = true;
 
-			var targets = mapListBox.SelectedItems.Cast<MapNode>();
+			var targets = mapListBox.SelectedItems.Cast<MapFactory>();
 
 			foreach ( var target in targets ) {
 				target.Factory = (Core.EntityFactory)Activator.CreateInstance( type );
@@ -151,7 +151,7 @@ namespace IronStar.Editors {
 				mapListBox.Items.Clear();
 			} else {
 				mapListBox.Items.Clear();
-				mapListBox.Items.AddRange( MapFile.Map.Nodes.Where( n => visibleTypes.Contains(n.Factory.GetType()) ).ToArray() );
+				mapListBox.Items.AddRange( MapFile.Map.Factories.Where( n => visibleTypes.Contains(n.Factory.GetType()) ).ToArray() );
 			}
 		}
 
@@ -170,7 +170,7 @@ namespace IronStar.Editors {
 			if (Editor.OpenFileDialog("Select Scene to Import Nodes", "FBX Scene (*.fbx)|*.fbx", false, out fullPath )) {
 
 				MapFile =   new MapFileState() { Map = new Map(), Path = null };
-				MapFile.Map.BaseScene = Builder.GetRelativePath( fullPath );
+				MapFile.Map.ScenePath = Builder.GetRelativePath( fullPath );
 				ImportSceneNodes();
 
 				UpdateMapList();
@@ -250,16 +250,16 @@ namespace IronStar.Editors {
 			var map = MapFile.Map;
 			var loader = new FbxLoader();
 			var options = new Options();
-			var scene = loader.LoadScene( Builder.GetFullPath( map.BaseScene ), new Options() );
+			var scene = loader.LoadScene( Builder.GetFullPath( map.ScenePath ), new Options() );
 
 			var hashset = new HashSet<string>( scene.Nodes.Select( n => scene.GetFullNodePath(n) ) );
 
-			if ( map.Nodes==null ) {
-				map.Nodes = new List<MapNode>();
+			if ( map.Factories==null ) {
+				map.Factories = new List<MapFactory>();
 			}
 
 			//	detect non-existing nodes :
-			var nonexisting = map.Nodes
+			var nonexisting = map.Factories
 						.Where( n => hashset.Contains( n.NodePath ) )
 						.ToArray();
 
@@ -268,7 +268,7 @@ namespace IronStar.Editors {
 
 
 			//	add new nodes :
-			hashset = new HashSet<string>( map.Nodes.Select( n => n.NodePath ) );
+			hashset = new HashSet<string>( map.Factories.Select( n => n.NodePath ) );
 
 			foreach ( var node in scene.Nodes ) {
 
@@ -277,7 +277,7 @@ namespace IronStar.Editors {
 
 				Core.EntityFactory factory = null;
 				
-				factory     =   new Entities.StaticFactory();
+				factory     =   new Entities.StaticModelFactory();
 
 				if ( node.ParentIndex<0 ) {
 					factory		=	new Entities.WorldspawnFactory();
@@ -289,7 +289,7 @@ namespace IronStar.Editors {
 
 				newNodes.Add( nodePath );
 
-				map.Nodes.Add( new MapNode() { NodePath = nodePath, Factory = factory } );
+				map.Factories.Add( new MapFactory() { NodePath = nodePath, Factory = factory } );
 			}
 
 			Log.Message( "Scene hierarchy import completed:" );
@@ -299,7 +299,7 @@ namespace IronStar.Editors {
 
 
 
-		public void AddNode ( MapNode node )
+		public void AddNode ( MapFactory node )
 		{
 			throw new NotImplementedException();
 			/*if ( MapFile!=null ) {
@@ -312,7 +312,7 @@ namespace IronStar.Editors {
 
 		void PopulatePropertyGrid ()
 		{
-			mapPropertyGrid.SelectedObjects = mapListBox.SelectedItems.Cast<MapNode>().Select( n => n.Factory ).ToArray();
+			mapPropertyGrid.SelectedObjects = mapListBox.SelectedItems.Cast<MapFactory>().Select( n => n.Factory ).ToArray();
 		}
 
 
@@ -370,7 +370,7 @@ namespace IronStar.Editors {
 
 		private void removeToolStripMenuItem_Click( object sender, EventArgs e )
 		{
-			var names = string.Join("\r\n\t", mapListBox.SelectedItems.Cast<MapNode>().Select( n => n.NodePath ) );
+			var names = string.Join("\r\n\t", mapListBox.SelectedItems.Cast<MapFactory>().Select( n => n.NodePath ) );
 
 			var r = MessageBox.Show(this, "Are you sure to remove the selected nodes:\r\n\t" + names, "Remove Nodes", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning );
 
@@ -378,10 +378,10 @@ namespace IronStar.Editors {
 				return;
 			}
 
-			var selected = mapListBox.SelectedItems.Cast<MapNode>().ToArray();
+			var selected = mapListBox.SelectedItems.Cast<MapFactory>().ToArray();
 
 			foreach (var mapNode in selected) {
-				MapFile.Map.Nodes.Remove( mapNode );
+				MapFile.Map.Factories.Remove( mapNode );
 				MapFile.Modified = true;
 			}
 			UpdateMapList();

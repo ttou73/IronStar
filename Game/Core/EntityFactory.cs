@@ -14,10 +14,15 @@ using Fusion.Engine.Graphics;
 using Fusion.Core.Content;
 using Fusion.Engine.Common;
 using Fusion.Engine.Storage;
+using System.ComponentModel;
 
 namespace IronStar.Core {
 
 	public abstract class EntityFactory {
+
+		[Category("Common")]
+		public string Targetname { get; set; }
+
 		public abstract EntityController Spawn (Entity entity, GameWorld world);
 	}
 

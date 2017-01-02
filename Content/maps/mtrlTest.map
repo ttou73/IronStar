@@ -1,0 +1,545 @@
+<?xml version="1.0" encoding="utf-16"?>
+<Map xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ScenePath="scenes\mtrlTest.fbx">
+  <Factories>
+    <MapFactory>
+      <NodePath>(root)</NodePath>
+      <Factory xsi:type="WorldspawnFactory">
+        <Gravity>16</Gravity>
+        <SkyTrubidity>2</SkyTrubidity>
+        <SunPosition X="1" Y="1" Z="1" />
+        <SunIntensity>100</SunIntensity>
+        <FogDensity>0.001</FogDensity>
+      </Factory>
+    </MapFactory>
+    <MapFactory>
+      <NodePath>entity_startPoint</NodePath>
+      <Factory xsi:type="ProxyFactory">
+        <Classname>startPoint</Classname>
+      </Factory>
+    </MapFactory>
+    <MapFactory>
+      <NodePath>entity_camera</NodePath>
+      <Factory xsi:type="ProxyFactory">
+        <Classname>camera</Classname>
+      </Factory>
+    </MapFactory>
+    <MapFactory>
+      <NodePath>pPlane1</NodePath>
+      <Factory xsi:type="StaticModelFactory">
+        <Visible>true</Visible>
+        <Collidable>true</Collidable>
+      </Factory>
+    </MapFactory>
+    <MapFactory>
+      <NodePath>pCube1</NodePath>
+      <Factory xsi:type="StaticModelFactory">
+        <Visible>true</Visible>
+        <Collidable>true</Collidable>
+      </Factory>
+    </MapFactory>
+    <MapFactory>
+      <NodePath>pCube2</NodePath>
+      <Factory xsi:type="StaticModelFactory">
+        <Visible>true</Visible>
+        <Collidable>true</Collidable>
+      </Factory>
+    </MapFactory>
+    <MapFactory>
+      <NodePath>pCube3</NodePath>
+      <Factory xsi:type="StaticModelFactory">
+        <Visible>true</Visible>
+        <Collidable>true</Collidable>
+      </Factory>
+    </MapFactory>
+    <MapFactory>
+      <NodePath>pCube4</NodePath>
+      <Factory xsi:type="StaticModelFactory">
+        <Visible>true</Visible>
+        <Collidable>true</Collidable>
+      </Factory>
+    </MapFactory>
+    <MapFactory>
+      <NodePath>pCube5</NodePath>
+      <Factory xsi:type="StaticModelFactory">
+        <Visible>true</Visible>
+        <Collidable>true</Collidable>
+      </Factory>
+    </MapFactory>
+    <MapFactory>
+      <NodePath>pCube6</NodePath>
+      <Factory xsi:type="StaticModelFactory">
+        <Visible>true</Visible>
+        <Collidable>true</Collidable>
+      </Factory>
+    </MapFactory>
+    <MapFactory>
+      <NodePath>pCube7</NodePath>
+      <Factory xsi:type="StaticModelFactory">
+        <Visible>true</Visible>
+        <Collidable>true</Collidable>
+      </Factory>
+    </MapFactory>
+    <MapFactory>
+      <NodePath>pCube8</NodePath>
+      <Factory xsi:type="StaticModelFactory">
+        <Visible>true</Visible>
+        <Collidable>true</Collidable>
+      </Factory>
+    </MapFactory>
+    <MapFactory>
+      <NodePath>pCube9</NodePath>
+      <Factory xsi:type="StaticModelFactory">
+        <Visible>true</Visible>
+        <Collidable>true</Collidable>
+      </Factory>
+    </MapFactory>
+    <MapFactory>
+      <NodePath>pCube10</NodePath>
+      <Factory xsi:type="StaticModelFactory">
+        <Visible>true</Visible>
+        <Collidable>true</Collidable>
+      </Factory>
+    </MapFactory>
+    <MapFactory>
+      <NodePath>pCube11</NodePath>
+      <Factory xsi:type="StaticModelFactory">
+        <Visible>true</Visible>
+        <Collidable>true</Collidable>
+      </Factory>
+    </MapFactory>
+    <MapFactory>
+      <NodePath>pCube12</NodePath>
+      <Factory xsi:type="StaticModelFactory">
+        <Visible>true</Visible>
+        <Collidable>true</Collidable>
+      </Factory>
+    </MapFactory>
+    <MapFactory>
+      <NodePath>pCube13</NodePath>
+      <Factory xsi:type="StaticModelFactory">
+        <Visible>true</Visible>
+        <Collidable>true</Collidable>
+      </Factory>
+    </MapFactory>
+    <MapFactory>
+      <NodePath>pCube14</NodePath>
+      <Factory xsi:type="StaticModelFactory">
+        <Visible>true</Visible>
+        <Collidable>true</Collidable>
+      </Factory>
+    </MapFactory>
+    <MapFactory>
+      <NodePath>pCube15</NodePath>
+      <Factory xsi:type="StaticModelFactory">
+        <Visible>true</Visible>
+        <Collidable>true</Collidable>
+      </Factory>
+    </MapFactory>
+    <MapFactory>
+      <NodePath>pCube16</NodePath>
+      <Factory xsi:type="StaticModelFactory">
+        <Visible>true</Visible>
+        <Collidable>true</Collidable>
+      </Factory>
+    </MapFactory>
+    <MapFactory>
+      <NodePath>pCube17</NodePath>
+      <Factory xsi:type="StaticModelFactory">
+        <Visible>true</Visible>
+        <Collidable>true</Collidable>
+      </Factory>
+    </MapFactory>
+    <MapFactory>
+      <NodePath>pCube18</NodePath>
+      <Factory xsi:type="StaticModelFactory">
+        <Visible>true</Visible>
+        <Collidable>true</Collidable>
+      </Factory>
+    </MapFactory>
+    <MapFactory>
+      <NodePath>pCube19</NodePath>
+      <Factory xsi:type="StaticModelFactory">
+        <Visible>true</Visible>
+        <Collidable>true</Collidable>
+      </Factory>
+    </MapFactory>
+    <MapFactory>
+      <NodePath>pCube20</NodePath>
+      <Factory xsi:type="StaticModelFactory">
+        <Visible>true</Visible>
+        <Collidable>true</Collidable>
+      </Factory>
+    </MapFactory>
+    <MapFactory>
+      <NodePath>pCube21</NodePath>
+      <Factory xsi:type="StaticModelFactory">
+        <Visible>true</Visible>
+        <Collidable>true</Collidable>
+      </Factory>
+    </MapFactory>
+    <MapFactory>
+      <NodePath>pCube22</NodePath>
+      <Factory xsi:type="StaticModelFactory">
+        <Visible>true</Visible>
+        <Collidable>true</Collidable>
+      </Factory>
+    </MapFactory>
+    <MapFactory>
+      <NodePath>pCube23</NodePath>
+      <Factory xsi:type="StaticModelFactory">
+        <Visible>true</Visible>
+        <Collidable>true</Collidable>
+      </Factory>
+    </MapFactory>
+    <MapFactory>
+      <NodePath>pCube24</NodePath>
+      <Factory xsi:type="StaticModelFactory">
+        <Visible>true</Visible>
+        <Collidable>true</Collidable>
+      </Factory>
+    </MapFactory>
+    <MapFactory>
+      <NodePath>pCube25</NodePath>
+      <Factory xsi:type="StaticModelFactory">
+        <Visible>true</Visible>
+        <Collidable>true</Collidable>
+      </Factory>
+    </MapFactory>
+    <MapFactory>
+      <NodePath>pCube26</NodePath>
+      <Factory xsi:type="StaticModelFactory">
+        <Visible>true</Visible>
+        <Collidable>true</Collidable>
+      </Factory>
+    </MapFactory>
+    <MapFactory>
+      <NodePath>pCube27</NodePath>
+      <Factory xsi:type="StaticModelFactory">
+        <Visible>true</Visible>
+        <Collidable>true</Collidable>
+      </Factory>
+    </MapFactory>
+    <MapFactory>
+      <NodePath>pCube28</NodePath>
+      <Factory xsi:type="StaticModelFactory">
+        <Visible>true</Visible>
+        <Collidable>true</Collidable>
+      </Factory>
+    </MapFactory>
+    <MapFactory>
+      <NodePath>pCube29</NodePath>
+      <Factory xsi:type="StaticModelFactory">
+        <Visible>true</Visible>
+        <Collidable>true</Collidable>
+      </Factory>
+    </MapFactory>
+    <MapFactory>
+      <NodePath>pCube30</NodePath>
+      <Factory xsi:type="StaticModelFactory">
+        <Visible>true</Visible>
+        <Collidable>true</Collidable>
+      </Factory>
+    </MapFactory>
+    <MapFactory>
+      <NodePath>pCube31</NodePath>
+      <Factory xsi:type="StaticModelFactory">
+        <Visible>true</Visible>
+        <Collidable>true</Collidable>
+      </Factory>
+    </MapFactory>
+    <MapFactory>
+      <NodePath>cubes</NodePath>
+      <Factory xsi:type="StaticModelFactory">
+        <Visible>true</Visible>
+        <Collidable>true</Collidable>
+      </Factory>
+    </MapFactory>
+    <MapFactory>
+      <NodePath>pCube33</NodePath>
+      <Factory xsi:type="StaticModelFactory">
+        <Visible>true</Visible>
+        <Collidable>true</Collidable>
+      </Factory>
+    </MapFactory>
+    <MapFactory>
+      <NodePath>pCube34</NodePath>
+      <Factory xsi:type="StaticModelFactory">
+        <Visible>true</Visible>
+        <Collidable>true</Collidable>
+      </Factory>
+    </MapFactory>
+    <MapFactory>
+      <NodePath>cubes1</NodePath>
+      <Factory xsi:type="StaticModelFactory">
+        <Visible>true</Visible>
+        <Collidable>true</Collidable>
+      </Factory>
+    </MapFactory>
+    <MapFactory>
+      <NodePath>pCube36</NodePath>
+      <Factory xsi:type="StaticModelFactory">
+        <Visible>true</Visible>
+        <Collidable>true</Collidable>
+      </Factory>
+    </MapFactory>
+    <MapFactory>
+      <NodePath>pCube37</NodePath>
+      <Factory xsi:type="StaticModelFactory">
+        <Visible>true</Visible>
+        <Collidable>true</Collidable>
+      </Factory>
+    </MapFactory>
+    <MapFactory>
+      <NodePath>pCube38</NodePath>
+      <Factory xsi:type="StaticModelFactory">
+        <Visible>true</Visible>
+        <Collidable>true</Collidable>
+      </Factory>
+    </MapFactory>
+    <MapFactory>
+      <NodePath>pCube39</NodePath>
+      <Factory xsi:type="StaticModelFactory">
+        <Visible>true</Visible>
+        <Collidable>true</Collidable>
+      </Factory>
+    </MapFactory>
+    <MapFactory>
+      <NodePath>pCube40</NodePath>
+      <Factory xsi:type="StaticModelFactory">
+        <Visible>true</Visible>
+        <Collidable>true</Collidable>
+      </Factory>
+    </MapFactory>
+    <MapFactory>
+      <NodePath>pCube41</NodePath>
+      <Factory xsi:type="StaticModelFactory">
+        <Visible>true</Visible>
+        <Collidable>true</Collidable>
+      </Factory>
+    </MapFactory>
+    <MapFactory>
+      <NodePath>pCube42</NodePath>
+      <Factory xsi:type="StaticModelFactory">
+        <Visible>true</Visible>
+        <Collidable>true</Collidable>
+      </Factory>
+    </MapFactory>
+    <MapFactory>
+      <NodePath>pCube43</NodePath>
+      <Factory xsi:type="StaticModelFactory">
+        <Visible>true</Visible>
+        <Collidable>true</Collidable>
+      </Factory>
+    </MapFactory>
+    <MapFactory>
+      <NodePath>cubes2</NodePath>
+      <Factory xsi:type="StaticModelFactory">
+        <Visible>true</Visible>
+        <Collidable>true</Collidable>
+      </Factory>
+    </MapFactory>
+    <MapFactory>
+      <NodePath>pCube45</NodePath>
+      <Factory xsi:type="StaticModelFactory">
+        <Visible>true</Visible>
+        <Collidable>true</Collidable>
+      </Factory>
+    </MapFactory>
+    <MapFactory>
+      <NodePath>pCube46</NodePath>
+      <Factory xsi:type="StaticModelFactory">
+        <Visible>true</Visible>
+        <Collidable>true</Collidable>
+      </Factory>
+    </MapFactory>
+    <MapFactory>
+      <NodePath>cubes3</NodePath>
+      <Factory xsi:type="StaticModelFactory">
+        <Visible>true</Visible>
+        <Collidable>true</Collidable>
+      </Factory>
+    </MapFactory>
+    <MapFactory>
+      <NodePath>pCube48</NodePath>
+      <Factory xsi:type="StaticModelFactory">
+        <Visible>true</Visible>
+        <Collidable>true</Collidable>
+      </Factory>
+    </MapFactory>
+    <MapFactory>
+      <NodePath>pPipe1</NodePath>
+      <Factory xsi:type="StaticModelFactory">
+        <Visible>true</Visible>
+        <Collidable>true</Collidable>
+      </Factory>
+    </MapFactory>
+    <MapFactory>
+      <NodePath>pPipe2</NodePath>
+      <Factory xsi:type="StaticModelFactory">
+        <Visible>true</Visible>
+        <Collidable>true</Collidable>
+      </Factory>
+    </MapFactory>
+    <MapFactory>
+      <NodePath>pPipe3</NodePath>
+      <Factory xsi:type="StaticModelFactory">
+        <Visible>true</Visible>
+        <Collidable>true</Collidable>
+      </Factory>
+    </MapFactory>
+    <MapFactory>
+      <NodePath>pPipe4</NodePath>
+      <Factory xsi:type="StaticModelFactory">
+        <Visible>true</Visible>
+        <Collidable>true</Collidable>
+      </Factory>
+    </MapFactory>
+    <MapFactory>
+      <NodePath>pPipe5</NodePath>
+      <Factory xsi:type="StaticModelFactory">
+        <Visible>true</Visible>
+        <Collidable>true</Collidable>
+      </Factory>
+    </MapFactory>
+    <MapFactory>
+      <NodePath>pPipe6</NodePath>
+      <Factory xsi:type="StaticModelFactory">
+        <Visible>true</Visible>
+        <Collidable>true</Collidable>
+      </Factory>
+    </MapFactory>
+    <MapFactory>
+      <NodePath>pPipe7</NodePath>
+      <Factory xsi:type="StaticModelFactory">
+        <Visible>true</Visible>
+        <Collidable>true</Collidable>
+      </Factory>
+    </MapFactory>
+    <MapFactory>
+      <NodePath>pPipe8</NodePath>
+      <Factory xsi:type="StaticModelFactory">
+        <Visible>true</Visible>
+        <Collidable>true</Collidable>
+      </Factory>
+    </MapFactory>
+    <MapFactory>
+      <NodePath>pPipe9</NodePath>
+      <Factory xsi:type="StaticModelFactory">
+        <Visible>true</Visible>
+        <Collidable>true</Collidable>
+      </Factory>
+    </MapFactory>
+    <MapFactory>
+      <NodePath>pSphere1</NodePath>
+      <Factory xsi:type="StaticModelFactory">
+        <Visible>true</Visible>
+        <Collidable>true</Collidable>
+      </Factory>
+    </MapFactory>
+    <MapFactory>
+      <NodePath>pSphere2</NodePath>
+      <Factory xsi:type="StaticModelFactory">
+        <Visible>true</Visible>
+        <Collidable>true</Collidable>
+      </Factory>
+    </MapFactory>
+    <MapFactory>
+      <NodePath>pSphere3</NodePath>
+      <Factory xsi:type="StaticModelFactory">
+        <Visible>true</Visible>
+        <Collidable>true</Collidable>
+      </Factory>
+    </MapFactory>
+    <MapFactory>
+      <NodePath>pSphere4</NodePath>
+      <Factory xsi:type="StaticModelFactory">
+        <Visible>true</Visible>
+        <Collidable>true</Collidable>
+      </Factory>
+    </MapFactory>
+    <MapFactory>
+      <NodePath>pSphere5</NodePath>
+      <Factory xsi:type="StaticModelFactory">
+        <Visible>true</Visible>
+        <Collidable>true</Collidable>
+      </Factory>
+    </MapFactory>
+    <MapFactory>
+      <NodePath>pSphere6</NodePath>
+      <Factory xsi:type="StaticModelFactory">
+        <Visible>true</Visible>
+        <Collidable>true</Collidable>
+      </Factory>
+    </MapFactory>
+    <MapFactory>
+      <NodePath>pSphere7</NodePath>
+      <Factory xsi:type="StaticModelFactory">
+        <Visible>true</Visible>
+        <Collidable>true</Collidable>
+      </Factory>
+    </MapFactory>
+    <MapFactory>
+      <NodePath>pSphere8</NodePath>
+      <Factory xsi:type="StaticModelFactory">
+        <Visible>true</Visible>
+        <Collidable>true</Collidable>
+      </Factory>
+    </MapFactory>
+    <MapFactory>
+      <NodePath>pSphere9</NodePath>
+      <Factory xsi:type="StaticModelFactory">
+        <Visible>true</Visible>
+        <Collidable>true</Collidable>
+      </Factory>
+    </MapFactory>
+    <MapFactory>
+      <NodePath>pSphere10</NodePath>
+      <Factory xsi:type="StaticModelFactory">
+        <Visible>true</Visible>
+        <Collidable>true</Collidable>
+      </Factory>
+    </MapFactory>
+    <MapFactory>
+      <NodePath>pSphere11</NodePath>
+      <Factory xsi:type="StaticModelFactory">
+        <Visible>true</Visible>
+        <Collidable>true</Collidable>
+      </Factory>
+    </MapFactory>
+    <MapFactory>
+      <NodePath>pSphere12</NodePath>
+      <Factory xsi:type="StaticModelFactory">
+        <Visible>true</Visible>
+        <Collidable>true</Collidable>
+      </Factory>
+    </MapFactory>
+    <MapFactory>
+      <NodePath>pSphere13</NodePath>
+      <Factory xsi:type="StaticModelFactory">
+        <Visible>true</Visible>
+        <Collidable>true</Collidable>
+      </Factory>
+    </MapFactory>
+    <MapFactory>
+      <NodePath>pSphere14</NodePath>
+      <Factory xsi:type="StaticModelFactory">
+        <Visible>true</Visible>
+        <Collidable>true</Collidable>
+      </Factory>
+    </MapFactory>
+    <MapFactory>
+      <NodePath>pSphere15</NodePath>
+      <Factory xsi:type="StaticModelFactory">
+        <Visible>true</Visible>
+        <Collidable>true</Collidable>
+      </Factory>
+    </MapFactory>
+    <MapFactory>
+      <NodePath>pRocks</NodePath>
+      <Factory xsi:type="StaticModelFactory">
+        <Visible>true</Visible>
+        <Collidable>true</Collidable>
+      </Factory>
+    </MapFactory>
+  </Factories>
+</Map>

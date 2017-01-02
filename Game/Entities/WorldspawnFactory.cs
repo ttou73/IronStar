@@ -15,16 +15,24 @@ namespace IronStar.Entities {
 		public float Gravity { get; set; } = 16;
 
 		[Category( "Sky" )]
-		public float Turbidity { get; set; } = 2;
+		public float SkyTrubidity {
+			get {
+				return turbidity;
+			}
+			set {
+				turbidity = MathUtil.Clamp( value, 2, 8 );
+			}
+		}
+		float turbidity = 2;
 
 		[Category( "Sky" )]
-		public Vector3 SunDirection { get; set; } = Vector3.One;
+		public Vector3 SunPosition { get; set; } = Vector3.One;
 
 		[Category( "Sky" )]
-		public float SunIntensity { get; set; } = 6000;
+		public float SunIntensity { get; set; } = 100;
 
-		[Category( "Sky" )]
-		public float SkyIntensity { get; set; } = 1;
+		[Category( "Fog" )]
+		public float FogDensity { get; set; } = 0.001f;
 
 
 

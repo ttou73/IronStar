@@ -40,10 +40,11 @@ namespace IronStar.Core {
 
 
 	[Flags]
-	public enum EntityState : int {
-
+	public enum EntityState : short {
 		None				=	0x0000,
 		HasTraction			=	0x0001,
+		CameraEntity		=	0x0002,
+		UseInlineModel		=	0x0004,
 	}
 
 

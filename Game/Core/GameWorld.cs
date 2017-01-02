@@ -15,6 +15,7 @@ using IronStar.SFX;
 using Fusion.Core.IniParser.Model;
 using IronStar.Views;
 using Fusion.Engine.Graphics;
+using IronStar.Mapping;
 
 namespace IronStar.Core {
 
@@ -140,17 +141,9 @@ namespace IronStar.Core {
 
 			this.mapName	=	mapName;
 
-			var scene = Content.Load<Scene>(@"scenes\" + mapName );
+			map     =   Content.Load<Map>( @"maps\" + mapName );
 
-			map		=	new Map( Content, scene, false );
-
-			foreach ( var cm in map.StaticCollisionMeshes ) {
-				PhysSpace.Add( cm );
-			}
-
-			foreach ( var si in map.SpawnInfos ) {
-				Spawn( si.Classname, 0, si.Origin, si.Rotation );
-			}
+			map.ActivateMap( this );
 
 
 			#region TEMP STUFF
@@ -203,8 +196,7 @@ namespace IronStar.Core {
 
 			//------------------------
 
-			var scene = Content.Load<Scene>(@"scenes\" + serverInfo );
-			map		=	new Map( Content, scene, true );
+			map     =   Content.Load<Map>( @"maps\" + serverInfo );
 
 			Game.Reloading += (s,e) => ForEachEntity( ent => ent.MakeRenderStateDirty() );
 		}
@@ -365,10 +357,46 @@ namespace IronStar.Core {
 			modelManager.Update( deltaTime, lerpFactor );
 		}
 
-		
+
 		/*-----------------------------------------------------------------------------------------
 		 *	Entity creation
 		-----------------------------------------------------------------------------------------*/
+
+
+		public Entity Spawn( EntityFactory factory, short classID, uint parentId, Vector3 origin, Quaternion orient )
+		{
+			//	due to server reconciliation
+			//	never create entities on client-side:
+			if ( IsClientSide ) {
+				return null;
+			}
+
+			//	get ID :
+			uint id = idCounter;
+
+			idCounter++;
+
+			if ( idCounter==0 ) {
+				//	this actually will never happen, about 103 day of intense playing.
+				throw new InvalidOperationException( "Too much entities were spawned" );
+			}
+
+			//
+			//	Create instance.
+			//	If creation failed later, entity become dummy.
+			//
+			var entity = new Entity(id, classID, parentId, origin, orient);
+			entities.Add( id, entity );
+
+			//LogTrace( "spawn: {0} - #{1}", factory?.GetType(), id );
+
+			entity.Controller = factory?.Spawn( entity, this );
+
+			EntitySpawned?.Invoke( this, new EntityEventArgs( entity ) );
+
+			return entity;
+		}
+
 
 		/// <summary>
 		/// When called on client-side returns null.
@@ -396,27 +424,15 @@ namespace IronStar.Core {
 				throw new InvalidOperationException("Too much entities were spawned");
 			}
 
-
 			//
 			//	Create instance.
 			//	If creation failed later, entity become dummy.
 			//
-			var classId	=	Atoms[classname];
+			var classID	=	Atoms[classname];
+			var factory	=	Content.Load<EntityFactory>(@"entities\" + classname, (EntityFactory)null );
 
-			var entity = new Entity(id, classId, parentId, origin, orient);
-			entities.Add( id, entity );
-
-			LogTrace( "spawn: {0} - #{1}", classname, id );
-
-
-			entity.Controller = Content.Load<EntityFactory>(@"entities\" + classname, (EntityFactory)null )?.Spawn( entity, this );
-
-
-			EntitySpawned?.Invoke( this, new EntityEventArgs( entity ) );
-
-			return entity;
+			return Spawn( factory, classID, parentId, origin, orient );
 		}
-
 
 
 		/// <summary>

@@ -61,9 +61,7 @@
     <Compile Include="Commands\ShowWorldState.cs" />
     <Compile Include="Core\EntityFactory.cs" />
     <Compile Include="Core\EntityCollection.cs" />
-    <Compile Include="Core\EntityFlags.cs" />
     <Compile Include="Core\GameWorld.Query.cs" />
-    <Compile Include="Core\Map.cs" />
     <Compile Include="Core\Old\Filter.cs" />
     <Compile Include="Core\Old\Oscillator.cs" />
     <Compile Include="Core\Old\WorldView.cs" />
@@ -71,6 +69,7 @@
     <Compile Include="Core\SnapshotReader.cs" />
     <Compile Include="Core\SnapshotWriter.cs" />
     <Compile Include="Editors\Editor.cs" />
+    <Compile Include="Editors\EntityListConverter.cs" />
     <Compile Include="Editors\FileLocationEditor.cs" />
     <Compile Include="Editors\EditorForm.cs">
       <SubType>Form</SubType>
@@ -104,10 +103,11 @@
     <Compile Include="Entities\Projectile.cs" />
     <Compile Include="Core\EntityController.cs" />
     <Compile Include="Entities\RigidBodyFactory.cs" />
+    <Compile Include="Entities\ProxyFactory.cs" />
     <Compile Include="Entities\WorldspawnFactory.cs" />
-    <Compile Include="Entities\StaticFactory.cs" />
+    <Compile Include="Entities\StaticModelFactory.cs" />
     <Compile Include="Mapping\Map.cs" />
-    <Compile Include="Mapping\MapNode.cs" />
+    <Compile Include="Mapping\MapFactory.cs" />
     <Compile Include="SFX\ModelInstance.cs" />
     <Compile Include="SFX\ModelDescriptor.cs" />
     <Compile Include="SFX\ModelManager.cs" />

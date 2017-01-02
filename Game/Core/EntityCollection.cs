@@ -57,40 +57,40 @@ namespace IronStar.Core {
 
 
 
-		/// <summary>
-		/// Gets entity of given classname that meets given predicate.
-		/// </summary>
-		/// <param name="id"></param>
-		/// <returns></returns>
-		public Entity GetEntityOrNull( string classname, Func<Entity, bool> predicate )
-		{
-			return GetEntities( classname ).FirstOrDefault( ent => predicate( ent ) );
-		}
+		///// <summary>
+		///// Gets entity of given classname that meets given predicate.
+		///// </summary>
+		///// <param name="id"></param>
+		///// <returns></returns>
+		//public Entity GetEntityOrNull( string classname, Func<Entity, bool> predicate )
+		//{
+		//	return GetEntities( classname ).FirstOrDefault( ent => predicate( ent ) );
+		//}
 
 
-		/// <summary>
-		/// Gets first entity of given class or null.
-		/// </summary>
-		/// <param name="id"></param>
-		/// <returns></returns>
-		public Entity GetEntityOrNull( string classname )
-		{
-			return GetEntities( classname ).FirstOrDefault();
-		}
+		///// <summary>
+		///// Gets first entity of given class or null.
+		///// </summary>
+		///// <param name="id"></param>
+		///// <returns></returns>
+		//public Entity GetEntityOrNull( string classname )
+		//{
+		//	return GetEntities( classname ).FirstOrDefault();
+		//}
 
 
 
 
-		/// <summary>
-		/// Gets all entities of given class.
-		/// </summary>
-		/// <param name="id"></param>
-		/// <returns></returns>
-		public IEnumerable<Entity> GetEntities( string classname )
-		{
-			var classId = atoms[classname];
-			return this.Where( pair => pair.Value.ClassID==classId ).Select( pair1 => pair1.Value );
-		}
+		///// <summary>
+		///// Gets all entities of given class.
+		///// </summary>
+		///// <param name="id"></param>
+		///// <returns></returns>
+		//public IEnumerable<Entity> GetEntities( string classname )
+		//{
+		//	var classId = atoms[classname];
+		//	return this.Where( pair => pair.Value.ClassID==classId ).Select( pair1 => pair1.Value );
+		//}
 
 
 	}

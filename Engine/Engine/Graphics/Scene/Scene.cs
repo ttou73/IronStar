@@ -161,18 +161,12 @@ namespace Fusion.Engine.Graphics {
 
 
 		/// <summary>
-		/// Creates dictionary of string-Node mapping
+		/// Gets map dictionary
 		/// </summary>
 		/// <returns></returns>
-		public IDictionary<string,Node> ExportNodePathMapping ()
+		public Dictionary<string,Node> GetPathNodeMapping ()
 		{
-			var dict = new Dictionary<string,Node>();
-
-			for ( int i=0; i<Nodes.Count; i++) {
-				dict.Add( GetFullNodePath(Nodes[i]), Nodes[i] );
-			}
-
-			return dict;
+			return Nodes.ToDictionary( node => GetFullNodePath(node), node => node );
 		}
 
 

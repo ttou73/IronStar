@@ -1,24 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using IronStar.Core;
+using IronStar.Editors;
 
 namespace IronStar.Entities {
-	public class StaticFactory : EntityFactory {
+	public class ProxyFactory : EntityFactory {
 
 		
-		/// <summary>
-		/// 
-		/// </summary>
-		public bool Visible { get; set; } = true;
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public bool Collidable { get; set; } = true;
+		[TypeConverter(typeof(EntityListConverter))]
+		public string Classname { get; set; } = "";
 
 
 		/// <summary>
@@ -29,7 +23,9 @@ namespace IronStar.Entities {
 		/// <returns></returns>
 		public override EntityController Spawn( Entity entity, GameWorld world )
 		{
-			throw new InvalidOperationException("StaticFactory do not spawn entities!");
+			var factory = world.Content.Load<EntityFactory>(@"entities\" + Classname);
+
+			return factory.Spawn( entity, world );
 		}
 
 	}

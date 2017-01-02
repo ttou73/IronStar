@@ -9,7 +9,7 @@ using Fusion.Core.Mathematics;
 using IronStar.Core;
 
 namespace IronStar.Mapping {
-	public class MapNode {
+	public class MapFactory {
 
 		/// <summary>
 		/// Node path

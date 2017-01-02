@@ -20,7 +20,7 @@ namespace IronStar.Core {
 		/// </summary>
 		/// <param name="world"></param>
 		/// <param name="entity"></param>
-		public EntityController ( Entity entity, GameWorld world, string parameters = "" )
+		public EntityController ( Entity entity, GameWorld world )
 		{
 			this.World	=	world;
 			this.Entity	=	entity;

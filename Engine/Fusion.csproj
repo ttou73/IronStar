@@ -332,6 +332,7 @@
     <Compile Include="Engine\Common\Commands\CrashServer.cs" />
     <Compile Include="Core\Configuration\ConfigManager.cs" />
     <Compile Include="Engine\Common\UserInterface.Internal.cs" />
+    <Compile Include="Engine\Graphics\Scene\SceneMapping.cs" />
     <Compile Include="Engine\Graphics\ShaderManager.cs" />
     <Compile Include="Engine\Graphics\VirtualTexture.cs" />
     <Compile Include="Engine\Graphics\VTStamper.cs" />

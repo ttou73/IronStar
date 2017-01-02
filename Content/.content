@@ -42,3 +42,4 @@ scenes/*.jpg
 *.ini
 *.xml
 *.txt
+*.map
