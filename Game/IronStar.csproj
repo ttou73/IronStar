@@ -104,6 +104,7 @@
     <Compile Include="Core\EntityController.cs" />
     <Compile Include="Entities\RigidBodyFactory.cs" />
     <Compile Include="Entities\ProxyFactory.cs" />
+    <Compile Include="Entities\StartPoint.cs" />
     <Compile Include="Entities\WorldspawnFactory.cs" />
     <Compile Include="Entities\StaticModelFactory.cs" />
     <Compile Include="Mapping\Map.cs" />

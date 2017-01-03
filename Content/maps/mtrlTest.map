@@ -13,14 +13,14 @@
     </MapFactory>
     <MapFactory>
       <NodePath>|entity_startPoint</NodePath>
-      <Factory xsi:type="ProxyFactory">
-        <Classname />
+      <Factory xsi:type="StartPointFactory">
+        <StartPointType>SinglePlayer</StartPointType>
       </Factory>
     </MapFactory>
     <MapFactory>
       <NodePath>|entity_camera</NodePath>
-      <Factory xsi:type="ProxyFactory">
-        <Classname />
+      <Factory xsi:type="StartPointFactory">
+        <StartPointType>IntermissionCamera</StartPointType>
       </Factory>
     </MapFactory>
     <MapFactory>

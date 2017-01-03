@@ -75,6 +75,12 @@ namespace IronStar.Core {
 		}
 
 
+		public IEnumerable<Entity> GetEntities ()
+		{
+			return entities.Select( pair => pair.Value ).OrderBy( e => e.ID );
+		}
+
+
 
 		/// <summary>
 		/// Gets entity with current id.
@@ -82,6 +88,7 @@ namespace IronStar.Core {
 		/// </summary>
 		/// <param name="id"></param>
 		/// <returns></returns>
+		[Obsolete]
 		public Entity GetEntityOrNull( string classname, Func<Entity, bool> predicate )
 		{
 			return GetEntities( classname ).FirstOrDefault( ent => predicate( ent ) );
@@ -94,6 +101,7 @@ namespace IronStar.Core {
 		/// </summary>
 		/// <param name="id"></param>
 		/// <returns></returns>
+		[Obsolete]
 		public Entity GetEntityOrNull( string classname )
 		{
 			return GetEntities( classname ).FirstOrDefault();
@@ -108,6 +116,7 @@ namespace IronStar.Core {
 		/// </summary>
 		/// <param name="id"></param>
 		/// <returns></returns>
+		[Obsolete]
 		public IEnumerable<Entity> GetEntities ( string classname )
 		{
 			var classId = Atoms[classname];

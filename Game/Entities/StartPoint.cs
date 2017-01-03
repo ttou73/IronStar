@@ -18,32 +18,32 @@ using System.ComponentModel;
 
 namespace IronStar.Entities {
 
-	public enum SpawnTarget {
+	public enum StartPointType {
 		SinglePlayer,
 		IntermissionCamera,
 	}
 
 
-	public class SpawnPoint : EntityController {
+	public class StartPoint : EntityController {
 
-		public readonly SpawnTarget SpawnTarget;
+		public readonly StartPointType StartPointType;
 
-		public SpawnPoint( Entity entity, GameWorld world, SpawnTarget target ) : base( entity, world )
+		public StartPoint( Entity entity, GameWorld world, StartPointType startPointType ) : base( entity, world )
 		{
-			SpawnTarget = target;
+			StartPointType = startPointType;
 		}
 	}
 
 
 
-	public class SpawnPointFactory : EntityFactory {
+	public class StartPointFactory : EntityFactory {
 
-		[Category("Common")]
-		public SpawnTarget SpawnTarget { get; set; }
+		[Category( "Common" )]
+		public StartPointType StartPointType { get; set; }
 
 		public override EntityController Spawn( Entity entity, GameWorld world )
 		{
-			return new SpawnPoint( entity, world, SpawnTarget );
+			return new StartPoint( entity, world, StartPointType );
 		}
 	}
 }

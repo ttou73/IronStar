@@ -127,7 +127,10 @@ namespace IronStar {
 		/// <param name="world"></param>
 		public Entity Respawn (GameWorld world)
 		{
-			var sp = world.GetEntities("startPoint").OrderBy( e => rand.Next() ).FirstOrDefault();					
+			var sp = world.GetEntities()
+				.Where( e1 => e1.Controller is StartPoint && (e1.Controller as StartPoint).StartPointType==StartPointType.SinglePlayer)
+				.OrderBy( e => rand.Next() )
+				.FirstOrDefault();					
 
 			Entity ent;
 
