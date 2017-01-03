@@ -42,19 +42,9 @@ namespace IronStar.Entities {
 		/// <param name="world"></param>
 		/// <param name="scene"></param>
 		/// <param name="node"></param>
-		public void SetupServerWorld( GameWorld world, Scene scene, Node node )
+		public void SetupWorldPhysics( GameWorld gameWorld )
 		{
-		}
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="world"></param>
-		/// <param name="scene"></param>
-		/// <param name="node"></param>
-		public void SetupClientWorld( GameWorld world, Scene scene, Node node )
-		{
+			gameWorld.PhysSpace.ForceUpdater.Gravity = BEPUutilities.Vector3.Down * Gravity;
 		}
 
 
@@ -66,7 +56,7 @@ namespace IronStar.Entities {
 		/// <returns></returns>
 		public override EntityController Spawn( Entity entity, GameWorld world )
 		{
-			throw new InvalidOperationException("StaticFactory do not spawn entities!");
+			throw new InvalidOperationException("WorldspawnFactory do not spawn entities!");
 		}
 
 	}

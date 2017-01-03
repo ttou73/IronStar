@@ -144,7 +144,7 @@ Fusion::Engine::Graphics::Scene ^ FbxLoader::LoadScene( string ^filename, Option
 		}
 	}
 
-	scene->Nodes[0]->Name = "(root)";
+	scene->Nodes[0]->Name = "";
 
 	//	do not destroy...
 	// 	stack overflow happens...

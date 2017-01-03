@@ -167,7 +167,7 @@ namespace IronStar.Editors {
 
 			string fullPath;
 
-			if (Editor.OpenFileDialog("Select Scene to Import Nodes", "FBX Scene (*.fbx)|*.fbx", false, out fullPath )) {
+			if (Editor.OpenFileDialog("Select Scene to Import Nodes", "FBX Scene (*.fbx)|*.fbx", "Scenes", false, out fullPath )) {
 
 				MapFile =   new MapFileState() { Map = new Map(), Path = null };
 				MapFile.Map.ScenePath = Builder.GetRelativePath( fullPath );
@@ -185,14 +185,16 @@ namespace IronStar.Editors {
 				return;
 			}
 
-			if ( !MapFile.Modified ) {	
-				Log.Message("Map Editor : Nothing to save");
-				return;
+			if ( !saveAs ) {
+				if ( !MapFile.Modified ) {	
+					Log.Message("Map Editor : Nothing to save");
+					return;
+				}
 			}
 
 			if ( saveAs || string.IsNullOrWhiteSpace(mapFile.Path) ) {
 				string fileName;
-				if (Editor.SaveFileDialog("IronStar Map File (*.map)|*.map", out fileName )) {
+				if (Editor.SaveFileDialog("IronStar Map File (*.map)|*.map", "Maps", out fileName )) {
 					MapFile.Path = fileName;
 				} else {
 					Log.Message( "Map Editor : Saving canceled" );
@@ -213,7 +215,7 @@ namespace IronStar.Editors {
 			}
 
 			string fileName;
-			if ( Editor.OpenFileDialog( "IronStar Map File (*.map)|*.map", false, out fileName ) ) {
+			if ( Editor.OpenFileDialog( "IronStar Map File (*.map)|*.map", "Maps", false, out fileName ) ) {
 			} else {
 				Log.Message( "Map Editor : Open canceled" );
 				return;
@@ -273,7 +275,7 @@ namespace IronStar.Editors {
 			foreach ( var node in scene.Nodes ) {
 
 
-				var nodePath    =   scene.GetFullNodePath(node).Replace("(root)|","");
+				var nodePath    =   scene.GetFullNodePath(node);
 
 				Core.EntityFactory factory = null;
 				

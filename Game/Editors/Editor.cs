@@ -38,18 +38,18 @@ namespace IronStar.Editors {
 		}
 
 
-		public static bool OpenFileDialog( string filter, bool getRelativePath, out string fileName )		{
-			return OpenFileDialog( "Open", filter, getRelativePath, out fileName );
+		public static bool OpenFileDialog( string filter, string dir, bool getRelativePath, out string fileName )		{
+			return OpenFileDialog( "Open", filter, dir, getRelativePath, out fileName );
 		}
 
 
-		public static bool OpenFileDialog( string caption, string filter, bool getRelativePath, out string fileName )
+		public static bool OpenFileDialog( string caption, string filter, string dir, bool getRelativePath, out string fileName )
 		{
 			fileName = null;
 
 			using ( OpenFileDialog ofd = new OpenFileDialog() ) {
 
-				ofd.InitialDirectory    =   Builder.FullInputDirectory;
+				ofd.InitialDirectory    =	Path.Combine(Builder.FullInputDirectory, dir);
 				ofd.RestoreDirectory    =   true;
 				ofd.Filter              =   filter;
 				ofd.Title				=	caption;
@@ -71,13 +71,13 @@ namespace IronStar.Editors {
 		}
 
 
-		public static bool SaveFileDialog( string filter, out string fileName )
+		public static bool SaveFileDialog( string filter, string dir, out string fileName )
 		{
 			fileName = null;
 
 			using ( SaveFileDialog sfd = new SaveFileDialog() ) {
 
-				sfd.InitialDirectory    =   Builder.FullInputDirectory;
+				sfd.InitialDirectory    =   Path.Combine(Builder.FullInputDirectory, dir);
 				sfd.RestoreDirectory    =   true;
 				sfd.Filter              =   filter;
 

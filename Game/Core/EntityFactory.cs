@@ -24,6 +24,11 @@ namespace IronStar.Core {
 		public string Targetname { get; set; }
 
 		public abstract EntityController Spawn (Entity entity, GameWorld world);
+
+		public override string ToString()
+		{
+			return GetType().Name;
+		}
 	}
 
 

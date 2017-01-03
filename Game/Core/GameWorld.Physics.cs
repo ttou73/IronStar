@@ -28,7 +28,7 @@ namespace IronStar.Core {
 	/// </summary>
 	public partial class GameWorld {
 
-		Space physSpace;
+		Space physSpace = new BEPUphysics.Space();
 
 		/// <summary>
 		/// Gets physical space
@@ -38,19 +38,5 @@ namespace IronStar.Core {
 				return physSpace;
 			}
 		}
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="gravity"></param>
-		void InitWorldPhysics ( float gravity )
-		{
-			physSpace	=	new BEPUphysics.Space();
-			physSpace.ForceUpdater.Gravity	=	BEPUVector3.Down * gravity;
-		}
-
-
-
 	}
 }

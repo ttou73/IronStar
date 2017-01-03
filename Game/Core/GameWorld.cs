@@ -129,9 +129,6 @@ namespace IronStar.Core {
 			Content         =   server.Content;
 			entities        =   new EntityCollection(server.Atoms);
 
-			
-			InitWorldPhysics(16);
-
 			entityControllerTypes	=	Misc.GetAllSubclassesOf( typeof(EntityController) )
 										.ToDictionary( type => type.Name );
 
@@ -208,9 +205,10 @@ namespace IronStar.Core {
 		/// </summary>
 		public void FinalizeLoad()
 		{
-			foreach ( var mi in map.MeshInstance ) {
-				Game.RenderSystem.RenderWorld.Instances.Add( mi );
-			}
+			map.ActivateMap( this );
+			//foreach ( var mi in map.MeshInstance ) {
+			//	Game.RenderSystem.RenderWorld.Instances.Add( mi );
+			//}
 		}
 
 

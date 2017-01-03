@@ -75,8 +75,9 @@ namespace IronStar.Views {
 				playerID = 0;
 
 				var camera	= World.GetEntityOrNull( "camera" );
-				var cp		= camera.Position;
-				var cm		= Matrix.RotationQuaternion( camera.Rotation );
+				#warning use camera
+				var cp		= Vector3.Up * 10;
+				var cm		= Matrix.Identity;
 
 				rw.Camera.SetupCameraFov( cp, cp + cm.Right, cm.Up, MathUtil.Rad(90), 0.125f, 1024f, 2, 0.05f, aspect );
 				return;

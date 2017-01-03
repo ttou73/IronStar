@@ -144,9 +144,28 @@ namespace IronStar.Mapping {
 
 				if (nodePathMap.TryGetValue( factory.NodePath, out node ) ) {
 
-					var index		=	scene.Nodes.IndexOf( node );
-					var position	=	transforms[ index ].TranslationVector;
-					var rotation	=	Quaternion.RotationMatrix( transforms[ index ] );
+					var modeIndex	=	scene.Nodes.IndexOf( node );
+					var meshIndex	=	node.MeshIndex;
+					var transform	=	transforms[ modeIndex ];
+					var position	=	transform.TranslationVector;
+					var rotation	=	Quaternion.RotationMatrix( transform );
+
+					if (factory.Factory is StaticModelFactory) {
+						var smf	=	(StaticModelFactory)factory.Factory;
+
+						smf.CreateStaticCollisionModel( gameWorld, scene, node, transform );
+						smf.CreateStaticVisibleModel( gameWorld, scene, node, transform );
+							
+						continue;
+					}
+
+					if (factory.Factory is WorldspawnFactory) {
+						var wsf =	(WorldspawnFactory)factory.Factory;
+
+						wsf.SetupWorldPhysics( gameWorld );
+
+						continue;
+					}
 
 					var entity		=	gameWorld.Spawn( factory.Factory, -1, 0, position, rotation );
 					
@@ -156,26 +175,6 @@ namespace IronStar.Mapping {
 			}
 		}
 
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="mesh"></param>
-		/// <param name="world"></param>
-		/// <returns></returns>
-		StaticMesh CreateStaticMesh( Mesh mesh, Matrix world )
-		{
-			var indices     =   mesh.GetIndices();
-			var vertices    =   mesh.Vertices
-								.Select( v1 => Vector3.TransformCoordinate( v1.Position, world ) )
-								.Select( v2 => MathConverter.Convert( v2 ) )
-								.ToArray();
-
-			var staticMesh = new StaticMesh( vertices, indices );
-			staticMesh.Sidedness = BEPUutilities.TriangleSidedness.Clockwise;
-
-			return staticMesh;
-		}
 	}
 
 

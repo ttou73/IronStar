@@ -25,7 +25,8 @@ namespace IronStar.Mapping {
 
 		public override string ToString()
 		{
-			return "[" + Factory.GetType().Name + "] " + NodePath;
+			var nodePath = string.IsNullOrEmpty(NodePath) ? "(root)" : NodePath;
+			return "[" + Factory.ToString() + "] " + nodePath;
 		}
 	}
 }

@@ -129,11 +129,22 @@ namespace IronStar {
 		{
 			var sp = world.GetEntities("startPoint").OrderBy( e => rand.Next() ).FirstOrDefault();					
 
+			Entity ent;
+
 			if (sp==null) {
+				#warning do not spawn player
 				Log.Warning("No 'startPoint' found");
+
+				ent = world.Spawn( "player", 0, Vector3.Up*10, Quaternion.Identity );
+				world.SpawnFX( "TeleportOut", ent.ID, Vector3.Up*10 );
+				ent.UserGuid = Guid;
+
+				PlayerEntity = ent;
+
+				return ent;
 			}
 
-			var ent = world.Spawn( "player", 0, sp.Position, sp.Rotation );
+			ent = world.Spawn( "player", 0, sp.Position, sp.Rotation );
 			world.SpawnFX("TeleportOut", ent.ID, sp.Position );
 			ent.UserGuid = Guid;
 
