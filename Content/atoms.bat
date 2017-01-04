@@ -1,3 +1,3 @@
 >atoms.txt (
-  for %%F in (models\*;effects\*;entities\*) do @echo %%~nF
+  for %%F in (models\*;effects\*;entities\*;fx\*) do @echo %%~nF
 )

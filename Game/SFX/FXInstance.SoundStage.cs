@@ -25,7 +25,7 @@ namespace IronStar.SFX {
 	public partial class FXInstance {
 
 		
-		protected class SoundStage : Stage {
+		public class SoundStage : Stage {
 
 			AudioEmitter	emitter;
 
@@ -37,20 +37,20 @@ namespace IronStar.SFX {
 			/// <param name="instance"></param>
 			/// <param name="position"></param>
 			/// <param name="soundPath"></param>
-			public SoundStage ( FXInstance instance, Vector3 position, float radius, string soundPath, bool looped, bool local ) : base(instance)
+			public SoundStage ( FXInstance instance, FXSoundStage stageDesc, FXEvent fxEvent, bool looped ) : base(instance)
 			{
-				var sound	=	instance.fxPlayback.LoadSound( soundPath );
+				var sound	=	instance.fxPlayback.LoadSound( stageDesc.Sound );
 
 				if (sound==null) {
 					return;
 				}
 
 				emitter	=	instance.sw.AllocEmitter();
-				emitter.Position		=	position;
-				emitter.DistanceScale	=	radius;
+				emitter.Position		=	fxEvent.Origin;
+				emitter.DistanceScale	=	FXFactory.GetRadius( stageDesc.Attenuation );
 				emitter.DopplerScale	=	1;
 				emitter.VolumeCurve		=	null;
-				emitter.LocalSound		=	local;
+				emitter.LocalSound		=	false;
 
 				emitter.PlaySound( sound, looped ? PlayOptions.Looped : PlayOptions.None );
 			}
@@ -63,10 +63,12 @@ namespace IronStar.SFX {
 				}
 			}
 
+
 			public override bool IsExhausted ()
 			{
 				return (emitter==null || emitter.SoundState==SoundState.Stopped);
 			}
+
 
 			public override void Kill ()
 			{
@@ -74,6 +76,7 @@ namespace IronStar.SFX {
 					fxInstance.sw.FreeEmitter( emitter );
 				}
 			}
+
 
 			public override void Update ( float dt, FXEvent fxEvent )
 			{

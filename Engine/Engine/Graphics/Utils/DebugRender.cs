@@ -53,7 +53,7 @@ namespace Fusion.Engine.Graphics {
 			this.Game	=	game;
 			var dev		=	Game.GraphicsDevice;
 
-			effect		=	Game.RenderSystem.Shaders.Load("debugRender.hlsl");
+			effect		=	Game.RenderSystem.Shaders.Load("debugRender");
 			factory		=	effect.CreateFactory( typeof(RenderFlags), Primitive.LineList, VertexInputElement.FromStructure( typeof(LineVertex) ), BlendState.AlphaBlend, RasterizerState.CullNone, DepthStencilState.None );
 
 			constData	=	new ConstData();

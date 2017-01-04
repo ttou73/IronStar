@@ -147,8 +147,8 @@ namespace IronStar.Entities {
 
 			if (world.RayCastAgainstAll( origin, origin + direction * 400, out n, out p, out e, attacker )) {
 
-				world.SpawnFX( "BulletTrail",	0, p, n );
-				world.SpawnFX( "MZMachinegun",	attacker.ID, origin, n );
+				world.SpawnFX( "bullet_Hit",	0, p, n );
+				//world.SpawnFX( "MZMachinegun",	attacker.ID, origin, n );
 
 				world.InflictDamage( e, attacker.ID, (short)damage, view.Forward * impulse, p, DamageType.BulletHit );
 

@@ -57,13 +57,16 @@ namespace IronStar.SFX {
 		/// </summary>
 		/// <param name="sfxSystem"></param>
 		/// <param name="fxEvent"></param>
-		public FXInstance( FXPlayback sfxSystem, FXEvent fxEvent )
+		public FXInstance( FXPlayback sfxSystem, FXEvent fxEvent, FXFactory fxFactory, bool looped )
 		{
 			this.fxAtom		=	fxEvent.FXAtom;
 			this.fxPlayback	=	sfxSystem;
 			this.rw			=	sfxSystem.rw;
 			this.sw			=	sfxSystem.sw;
 			this.fxEvent	=	fxEvent;
+
+			AddLightStage( fxFactory.LightStage, fxEvent, looped );
+			AddSoundStage( fxFactory.SoundStage, fxEvent, looped );
 		}
 
 
@@ -144,19 +147,6 @@ namespace IronStar.SFX {
 
 
 		/// <summary>
-		/// Enumerates all SFX instance classes.
-		/// </summary>
-		/// <param name="action"></param>
-		public static void EnumerateSFX ( Action<Type> action )
-		{
-			foreach ( var type in Misc.GetAllSubclassesOf( typeof(FXInstance), false ) ) {
-				action(type);
-			}
-		}
-
-
-
-		/// <summary>
 		/// Shakes camera associated with parent entity only.
 		/// </summary>
 		/// <param name="yaw"></param>
@@ -182,7 +172,7 @@ namespace IronStar.SFX {
 		/// <param name="sleep"></param>
 		/// <param name="count"></param>
 		/// <param name="emit"></param>
-		protected void AddParticleStage ( string spriteName, float delay, float period, float sleep, int count, bool looped, EmitFunction emit )
+		public void AddParticleStage ( string spriteName, float delay, float period, float sleep, int count, bool looped, EmitFunction emit )
 		{
 			if (count==0) {
 				return;
@@ -194,21 +184,16 @@ namespace IronStar.SFX {
 
 
 
-		protected void AddLightStage ( Vector3 position, Color4 color, float radius, float fadeInRate, float fadeOutRate )
+		public void AddLightStage ( FXLightStage stageDesc, FXEvent fxEvent, bool looped )
 		{
-			var stage = new LightStage( this, position, color, radius, fadeInRate, fadeOutRate );
+			var stage = new LightStage( this, stageDesc, fxEvent, looped );
 			stages.Add( stage );
 		}
 
 
-		protected void AddSoundStage ( string path, Vector3 position, float radius, bool looped )
+		public void AddSoundStage ( FXSoundStage stageDesc, FXEvent fxEvent, bool looped )
 		{
-			stages.Add( new SoundStage( this, position, radius, path, looped, false ) );
-		}
-
-		protected void AddSoundStage ( string path, bool looped )
-		{
-			stages.Add( new SoundStage( this, Vector3.Zero, 1, path, looped, true ) );
+			stages.Add( new SoundStage( this, stageDesc, fxEvent, looped ) );
 		}
 
 		/*-----------------------------------------------------------------------------------------

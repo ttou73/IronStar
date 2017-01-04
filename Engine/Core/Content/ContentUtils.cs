@@ -201,11 +201,11 @@ namespace Fusion.Core.Content {
 		/// <param name="assetPath"></param>
 		/// <param name="ext"></param>
 		/// <returns></returns>
-		public static string GetHashedFileName ( string keyAssetPath, string ext )
+		public static string GetHashedFileName( string keyAssetPath, string ext )
 		{
-			keyAssetPath = new string(keyAssetPath.TakeWhile(ch => ch != '|').ToArray());
+			keyAssetPath = new string( keyAssetPath.TakeWhile( ch => ch != '|' ).ToArray() );
 
-			return CalculateMD5Hash( GetPathWithoutExtension( BackslashesToSlashes(keyAssetPath).ToLower()) ) + ext;
+			return CalculateMD5Hash( BackslashesToSlashes( GetPathWithoutExtension( keyAssetPath ).ToLower() ) ) + ext;
 		}
 
 

@@ -18,10 +18,12 @@ using System.Xml.Serialization;
 using Fusion.Engine.Graphics;
 using IronStar.Editors;
 using System.Drawing.Design;
+using Fusion.Core.Content;
+using Fusion.Engine.Storage;
 
 namespace IronStar.SFX {
 
-	public class FXFactory {
+	public partial class FXFactory {
 
 		[Category("General")]
 		public float Period { get; set; } = 1;
@@ -53,8 +55,26 @@ namespace IronStar.SFX {
 		[Category( "Particle Stages" )]
 		[TypeConverter( typeof( ExpandableObjectConverter ) )]
 		public FXParticleStage ParticleStage4 { get; set; } = new FXParticleStage();
+
+
+		public FXInstance CreateFXInstance( FXPlayback fxPlayback, FXEvent fxEvent, bool looped )
+		{
+			return new FXInstance( fxPlayback, fxEvent, this, looped );
+		}
 	}
 
+
+
+	[ContentLoader( typeof( FXFactory ) )]
+	public sealed class FXFactoryLoader : ContentLoader {
+
+		static Type[] extraTypes;
+
+		public override object Load( ContentManager content, Stream stream, Type requestedType, string assetPath, IStorage storage )
+		{
+			return Misc.LoadObjectFromXml( typeof( FXFactory ), stream, extraTypes );
+		}
+	}
 
 
 	public enum FXDistribution {
@@ -109,6 +129,13 @@ namespace IronStar.SFX {
 		}
 	}
 
+
+	public enum FXSoundAttenuation {
+		Local,
+		Normal,
+		Loud,
+		Distant,
+	}
 
 
 	public class FXLifetime {
@@ -302,7 +329,7 @@ namespace IronStar.SFX {
 		public override string ToString()
 		{
 			if ( Enabled ) {
-				return string.Format( "R:{0} [{1}]", Radius, Sound );
+				return string.Format( "{0} [{1}]", Attenuation, Sound );
 			} else {
 				return string.Format( "Disabled" );
 			}
@@ -319,7 +346,7 @@ namespace IronStar.SFX {
 
 		[XmlAttribute]
 		[Description( "Sound emitter radius" )]
-		public float Radius { get; set; } = 5;
+		public FXSoundAttenuation Attenuation { get; set; } = FXSoundAttenuation.Normal;
 	}
 
 

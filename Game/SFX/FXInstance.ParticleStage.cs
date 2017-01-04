@@ -24,7 +24,7 @@ namespace IronStar.SFX {
 	/// </summary>
 	public partial class FXInstance {
 
-		protected class ParticleStage : Stage {
+		public class ParticleStage : Stage {
 
 			bool looped;
 			bool stopped;

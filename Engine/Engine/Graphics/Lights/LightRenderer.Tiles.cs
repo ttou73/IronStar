@@ -46,11 +46,11 @@ namespace Fusion.Engine.Graphics {
 			}
 
 			//#warning Debug omni-lights.
-			#if false
-			if (Config.ShowOmniLights) {
-				var dr	=	Game.GetService<DebugRender>();
+			#if true
+			if (ShowOmniLights) {
+				var dr	=	rs.RenderWorld.Debug;
 
-				foreach ( var light in omniLights ) {
+				foreach ( var light in lightSet.OmniLights ) {
 					dr.DrawPoint( light.Position, 1, Color.LightYellow );
 					dr.DrawSphere( light.Position, light.RadiusOuter, Color.LightYellow, 16 );
 				}

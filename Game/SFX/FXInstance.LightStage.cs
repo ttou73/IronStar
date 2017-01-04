@@ -24,14 +24,11 @@ namespace IronStar.SFX {
 	/// </summary>
 	public partial class FXInstance {
 
-		protected class LightStage : Stage {
+		public class LightStage : Stage {
 
 			OmniLight	light = null;
-			float	lightIntensity;
-			float	lightFadeInRate;
-			float	lightFadeOutRate;
-			float	lightFadeRate;
-			Color4	lightColor;
+			FXLightStage stageDesc;
+			bool stopped = false;
 
 			/// <summary>
 			/// 
@@ -42,28 +39,16 @@ namespace IronStar.SFX {
 			/// <param name="radius"></param>
 			/// <param name="fadeInRate"></param>
 			/// <param name="fadeOutRate"></param>
-			public LightStage ( FXInstance instance, Vector3 position, Color4 color, float radius, float fadeInRate, float fadeOutRate ) : base(instance)
+			public LightStage ( FXInstance instance, FXLightStage stageDesc, FXEvent fxEvent, bool looped ) : base(instance)
 			{
-				if ( fadeInRate  < 0 ) {
-					throw new ArgumentOutOfRangeException("fadeInRate < 0");
-				}
-				if ( fadeOutRate < 0 ) {
-					throw new ArgumentOutOfRangeException("fadeOutRate < 0");
-				}
-
 				light				=	new OmniLight();
-				light.Position		=	position;
-				light.RadiusInner	=	radius * 0.1f;
-				light.RadiusOuter	=	radius;
-				light.Intensity		=	Color4.Zero;
+				this.stageDesc		=	stageDesc;
 
-				lightColor			=	color;
+				light.Position		=	FXFactory.GetPosition( stageDesc.OffsetDirection, stageDesc.OffsetFactor, fxEvent );
 
-				lightFadeInRate		=	fadeInRate;
-				lightFadeOutRate	=	fadeOutRate;
-
-				lightIntensity		=	0.0001f;
-				lightFadeRate		=	lightFadeInRate;
+				light.RadiusInner	=	stageDesc.Radius * 0.1f;
+				light.RadiusOuter	=	stageDesc.Radius;
+				light.Intensity     =   stageDesc.Intensity;
 
 				instance.rw.LightSet.OmniLights.Add(light); 
 			}
@@ -71,14 +56,12 @@ namespace IronStar.SFX {
 
 			public override void Stop ( bool immediate )
 			{
-				if (immediate) {
-					lightIntensity	=	0;
-				}
+				stopped	=	true;
 			}
 
 			public override bool IsExhausted ()
 			{
-				return lightIntensity <= 0;
+				return stopped;
 			}
 
 			public override void Kill ()
@@ -88,17 +71,7 @@ namespace IronStar.SFX {
 
 			public override void Update ( float dt, FXEvent fxEvent )
 			{
-				light.Position	=	fxEvent.Origin;
-
-				lightIntensity += dt * lightFadeRate;
-				lightIntensity =  MathUtil.Clamp( lightIntensity, 0, 1 );
-
-				if ( lightIntensity >= 1 ) {
-					lightIntensity = 1;
-					lightFadeRate = -lightFadeOutRate;
-				}
-
-				light.Intensity = lightColor * lightIntensity;
+				light.Position      =   FXFactory.GetPosition( stageDesc.OffsetDirection, stageDesc.OffsetFactor, fxEvent );
 			}
 		}
 

@@ -27,7 +27,7 @@ namespace IronStar.SFX {
 		/// <summary>
 		/// Represents SfxInstance stage.
 		/// </summary>
-		protected abstract class Stage {
+		public abstract class Stage {
 
 			public readonly FXInstance fxInstance;
 			

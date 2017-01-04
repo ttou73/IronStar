@@ -33,8 +33,6 @@ namespace IronStar.SFX {
 
 		float timeAccumulator = 0;
 
-		Dictionary<string,Type> sfxDict = new Dictionary<string,Type>();
-
 
 		/// <summary>
 		/// 
@@ -50,8 +48,6 @@ namespace IronStar.SFX {
 
 			Game_Reloading(this, EventArgs.Empty);
 			game.Reloading +=	Game_Reloading;
-
-			FXInstance.EnumerateSFX( type => sfxDict.Add( type.Name, type ) );
 		}
 
 
@@ -88,6 +84,9 @@ namespace IronStar.SFX {
 		/// <returns></returns>
 		public SoundEffect	LoadSound ( string path )
 		{
+			if (string.IsNullOrWhiteSpace(path)) {
+				return null;
+			}
 			return client.Content.Load<SoundEffect>( path, (SoundEffect)null );
 		}
 
@@ -165,19 +164,17 @@ namespace IronStar.SFX {
 			}
 
 
-			Type fxType;
+			var factory		=	client.Content.Load<FXFactory>( Path.Combine("fx", className), (FXFactory)null );
 
-			if (sfxDict.TryGetValue( className, out fxType )) {
-				
-				var sfx = (FXInstance)Activator.CreateInstance( fxType, this, fxEvent );
-				runningSFXes.Add( sfx );
-
-				return sfx;
-
-			} else {
-				Log.Warning("RunFX: Bad FX type name: {0}", className );
+			if (factory==null) {
 				return null;
 			}
+
+			var fxInstance	=	factory.CreateFXInstance( this, fxEvent, false );
+
+			runningSFXes.Add( fxInstance );
+
+			return fxInstance;
 		}
 	}
 }
