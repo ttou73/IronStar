@@ -84,6 +84,10 @@ namespace IronStar.Editors {
 
 			fullSourceFolder = Path.Combine( Builder.FullInputDirectory, sourceFolder );
 
+			if (!Directory.Exists(fullSourceFolder)) {
+				Log.Warning("Directory {0} does not exist.", fullSourceFolder);
+				Directory.CreateDirectory(fullSourceFolder);
+			}
 
 			RefreshFileList();
 

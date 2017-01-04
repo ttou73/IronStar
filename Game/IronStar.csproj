@@ -109,6 +109,7 @@
     <Compile Include="Entities\StaticModelFactory.cs" />
     <Compile Include="Mapping\Map.cs" />
     <Compile Include="Mapping\MapFactory.cs" />
+    <Compile Include="SFX\FXFactory.cs" />
     <Compile Include="SFX\ModelInstance.cs" />
     <Compile Include="SFX\ModelDescriptor.cs" />
     <Compile Include="SFX\ModelManager.cs" />

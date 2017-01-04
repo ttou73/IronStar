@@ -37,6 +37,7 @@
 			this.tabModels = new System.Windows.Forms.TabPage();
 			this.tabEntities = new System.Windows.Forms.TabPage();
 			this.tabMap = new System.Windows.Forms.TabPage();
+			this.tabFX = new System.Windows.Forms.TabPage();
 			this.menuStrip1.SuspendLayout();
 			this.panel1.SuspendLayout();
 			this.mainTabs.SuspendLayout();
@@ -122,6 +123,7 @@
 			this.mainTabs.Controls.Add(this.tabModels);
 			this.mainTabs.Controls.Add(this.tabEntities);
 			this.mainTabs.Controls.Add(this.tabMap);
+			this.mainTabs.Controls.Add(this.tabFX);
 			this.mainTabs.HotTrack = true;
 			this.mainTabs.Location = new System.Drawing.Point(3, 27);
 			this.mainTabs.Name = "mainTabs";
@@ -159,6 +161,16 @@
 			this.tabMap.Text = "Map Editor";
 			this.tabMap.UseVisualStyleBackColor = true;
 			// 
+			// tabFX
+			// 
+			this.tabFX.Location = new System.Drawing.Point(4, 22);
+			this.tabFX.Name = "tabFX";
+			this.tabFX.Padding = new System.Windows.Forms.Padding(3);
+			this.tabFX.Size = new System.Drawing.Size(556, 467);
+			this.tabFX.TabIndex = 3;
+			this.tabFX.Text = "FX";
+			this.tabFX.UseVisualStyleBackColor = true;
+			// 
 			// EditorForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -195,5 +207,6 @@
 		private System.Windows.Forms.ToolStripMenuItem buildToolStripMenuItem;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
 		private System.Windows.Forms.TabPage tabMap;
+		private System.Windows.Forms.TabPage tabFX;
 	}
 }

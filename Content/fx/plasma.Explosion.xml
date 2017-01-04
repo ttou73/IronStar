@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-16"?>
+<FXFactory xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Period>1</Period>
+  <ParticleStage1>
+    <Enabled>true</Enabled>
+    <Sprite>sprites\fire.tga</Sprite>
+    <Effect>LitShadow</Effect>
+    <Count>1</Count>
+    <Timing Delay="0" Bunch="1" FadeIn="0.1" FadeOut="0.8" />
+    <Color0 Red="0" Green="0" Blue="0" Alpha="0" />
+    <Color1 Red="4" Green="2" Blue="1" Alpha="1" />
+    <Lifetime Distribution="Uniform" Average="1" Deviation="0" />
+    <Rotation EnableRotation="false" InitialAngle="0" MinAngularVelocity="0" MaxAngularVelocity="0" />
+    <Position OffsetDirection="None" OffsetFactor="0" Distribution="UniformRadial" AverageSize="0.2" SizeDeviation="0" />
+    <Velocity Direction="None" LinearDistribution="Uniform" LinearAverage="1" LinearDeviation="0.33" RadialDistribution="UniformRadial" RadialAverage="1" RadialDeviation="1" Advection="0" />
+    <Acceleration GravityFactor="1" Damping="3" DragForce="0.3" Turbulence="0.1" />
+  </ParticleStage1>
+  <ParticleStage2>
+    <Enabled>false</Enabled>
+    <Sprite />
+    <Effect>LitShadow</Effect>
+    <Count>1</Count>
+    <Timing Delay="0" Bunch="1" FadeIn="0.1" FadeOut="0.1" />
+    <Color0 Red="0" Green="0" Blue="0" Alpha="0" />
+    <Color1 Red="1" Green="1" Blue="1" Alpha="1" />
+    <Lifetime Distribution="Uniform" Average="1" Deviation="0" />
+    <Rotation EnableRotation="false" InitialAngle="0" MinAngularVelocity="0" MaxAngularVelocity="0" />
+    <Position OffsetDirection="None" OffsetFactor="0" Distribution="UniformRadial" AverageSize="0" SizeDeviation="0" />
+    <Velocity Direction="None" LinearDistribution="Uniform" LinearAverage="1" LinearDeviation="0" RadialDistribution="UniformRadial" RadialAverage="1" RadialDeviation="0" Advection="0" />
+    <Acceleration GravityFactor="0" Damping="0" DragForce="0" Turbulence="0" />
+  </ParticleStage2>
+  <ParticleStage3>
+    <Enabled>false</Enabled>
+    <Sprite />
+    <Effect>LitShadow</Effect>
+    <Count>1</Count>
+    <Timing Delay="0" Bunch="1" FadeIn="0.1" FadeOut="0.1" />
+    <Color0 Red="0" Green="0" Blue="0" Alpha="0" />
+    <Color1 Red="1" Green="1" Blue="1" Alpha="1" />
+    <Lifetime Distribution="Uniform" Average="1" Deviation="0" />
+    <Rotation EnableRotation="false" InitialAngle="0" MinAngularVelocity="0" MaxAngularVelocity="0" />
+    <Position OffsetDirection="None" OffsetFactor="0" Distribution="UniformRadial" AverageSize="0" SizeDeviation="0" />
+    <Velocity Direction="None" LinearDistribution="Uniform" LinearAverage="1" LinearDeviation="0" RadialDistribution="UniformRadial" RadialAverage="1" RadialDeviation="0" Advection="0" />
+    <Acceleration GravityFactor="0" Damping="0" DragForce="0" Turbulence="0" />
+  </ParticleStage3>
+  <ParticleStage4>
+    <Enabled>false</Enabled>
+    <Sprite />
+    <Effect>LitShadow</Effect>
+    <Count>1</Count>
+    <Timing Delay="0" Bunch="1" FadeIn="0.1" FadeOut="0.1" />
+    <Color0 Red="0" Green="0" Blue="0" Alpha="0" />
+    <Color1 Red="1" Green="1" Blue="1" Alpha="1" />
+    <Lifetime Distribution="Uniform" Average="1" Deviation="0" />
+    <Rotation EnableRotation="false" InitialAngle="0" MinAngularVelocity="0" MaxAngularVelocity="0" />
+    <Position OffsetDirection="None" OffsetFactor="0" Distribution="UniformRadial" AverageSize="0" SizeDeviation="0" />
+    <Velocity Direction="None" LinearDistribution="Uniform" LinearAverage="1" LinearDeviation="0" RadialDistribution="UniformRadial" RadialAverage="1" RadialDeviation="0" Advection="0" />
+    <Acceleration GravityFactor="0" Damping="0" DragForce="0" Turbulence="0" />
+  </ParticleStage4>
+</FXFactory>

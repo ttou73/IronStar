@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-16"?>
+<FXFactory xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Period>0</Period>
+  <ParticleStage1>
+    <Enabled>false</Enabled>
+    <Sprite />
+    <Count>2</Count>
+    <Timing Delay="0" Bunch="1" FadeIn="0.1" FadeOut="0.1" />
+    <Color0 Red="0" Green="0" Blue="0" Alpha="0" />
+    <Color1 Red="1" Green="1" Blue="1" Alpha="1" />
+    <Lifetime Distribution="Uniform" Average="1" Deviation="0" />
+    <Rotation>Constant</Rotation>
+    <AngularVelocity>None</AngularVelocity>
+    <PositionDistribution>UniformRadial</PositionDistribution>
+    <PositionMean>1</PositionMean>
+    <PositionDeviation>0</PositionDeviation>
+    <Velocity Direction="LocalBackward" LinearDistribution="Gauss" LinearAverage="5" LinearDeviation="2" RadialDistribution="UniformRadial" RadialAverage="1" RadialDeviation="0" Advection="0" />
+    <Acceleration GravityFactor="0" Damping="0" DragForce="0" Turbulence="0" />
+  </ParticleStage1>
+  <ParticleStage2>
+    <Enabled>false</Enabled>
+    <Sprite />
+    <Count>1</Count>
+    <Timing Delay="0" Bunch="1" FadeIn="0.1" FadeOut="0.1" />
+    <Color0 Red="0" Green="0" Blue="0" Alpha="0" />
+    <Color1 Red="1" Green="1" Blue="1" Alpha="1" />
+    <Lifetime Distribution="Uniform" Average="1" Deviation="0" />
+    <Rotation>None</Rotation>
+    <AngularVelocity>None</AngularVelocity>
+    <PositionDistribution>UniformRadial</PositionDistribution>
+    <PositionMean>1</PositionMean>
+    <PositionDeviation>0</PositionDeviation>
+    <Velocity Direction="None" LinearDistribution="Uniform" LinearAverage="1" LinearDeviation="0" RadialDistribution="UniformRadial" RadialAverage="1" RadialDeviation="0" Advection="0" />
+    <Acceleration GravityFactor="0" Damping="0" DragForce="0" Turbulence="0" />
+  </ParticleStage2>
+  <ParticleStage3>
+    <Enabled>false</Enabled>
+    <Sprite />
+    <Count>1</Count>
+    <Timing Delay="0" Bunch="1" FadeIn="0.1" FadeOut="0.1" />
+    <Color0 Red="0" Green="0" Blue="0" Alpha="0" />
+    <Color1 Red="1" Green="1" Blue="1" Alpha="1" />
+    <Lifetime Distribution="Uniform" Average="1" Deviation="0" />
+    <Rotation>None</Rotation>
+    <AngularVelocity>None</AngularVelocity>
+    <PositionDistribution>UniformRadial</PositionDistribution>
+    <PositionMean>1</PositionMean>
+    <PositionDeviation>0</PositionDeviation>
+    <Velocity Direction="None" LinearDistribution="Uniform" LinearAverage="1" LinearDeviation="0" RadialDistribution="UniformRadial" RadialAverage="1" RadialDeviation="0" Advection="0" />
+    <Acceleration GravityFactor="0" Damping="0" DragForce="0" Turbulence="0" />
+  </ParticleStage3>
+  <ParticleStage4>
+    <Enabled>false</Enabled>
+    <Sprite />
+    <Count>1</Count>
+    <Timing Delay="0" Bunch="1" FadeIn="0.1" FadeOut="0.1" />
+    <Color0 Red="0" Green="0" Blue="0" Alpha="0" />
+    <Color1 Red="1" Green="1" Blue="1" Alpha="1" />
+    <Lifetime Distribution="Uniform" Average="1" Deviation="0" />
+    <Rotation>None</Rotation>
+    <AngularVelocity>None</AngularVelocity>
+    <PositionDistribution>UniformRadial</PositionDistribution>
+    <PositionMean>1</PositionMean>
+    <PositionDeviation>0</PositionDeviation>
+    <Velocity Direction="None" LinearDistribution="Uniform" LinearAverage="1" LinearDeviation="0" RadialDistribution="UniformRadial" RadialAverage="1" RadialDeviation="0" Advection="0" />
+    <Acceleration GravityFactor="0" Damping="0" DragForce="0" Turbulence="0" />
+  </ParticleStage4>
+</FXFactory>

@@ -24,6 +24,7 @@ namespace IronStar.Editors {
 
 		ObjectEditor modelEditor;
 		ObjectEditor entityEditor;
+		ObjectEditor fxEditor;
 		MapEditor	mapEditor;
 
 
@@ -38,11 +39,13 @@ namespace IronStar.Editors {
 
 			modelEditor		=	new ObjectEditor( game, "models", typeof(ModelDescriptor), "Model"  ) { Dock = DockStyle.Fill };
 			entityEditor	=	new ObjectEditor( game, "entities", typeof(EntityFactory), "Entity" ) { Dock = DockStyle.Fill };
+			fxEditor		=	new ObjectEditor( game, "fx", typeof(FXFactory), "FX" ) { Dock = DockStyle.Fill };
 			mapEditor		=	new MapEditor() { Dock = DockStyle.Fill };
 
 			mainTabs.TabPages["tabModels"].Controls.Add( modelEditor );
 			mainTabs.TabPages["tabEntities"].Controls.Add( entityEditor );
 			mainTabs.TabPages["tabMap"].Controls.Add( mapEditor );
+			mainTabs.TabPages["tabFX"].Controls.Add( fxEditor );
 
 
 			Log.Message("Editor initialized");
