@@ -16,6 +16,8 @@ using Fusion.Core.IniParser.Model;
 using System.ComponentModel;
 using System.Xml.Serialization;
 using Fusion.Engine.Graphics;
+using IronStar.Editors;
+using System.Drawing.Design;
 
 namespace IronStar.SFX {
 
@@ -24,21 +26,33 @@ namespace IronStar.SFX {
 		[Category("General")]
 		public float Period { get; set; } = 1;
 
-		[Category( "Particle Stages" )]
+		[Category( "Misc Stages" )]
 		[TypeConverter( typeof( ExpandableObjectConverter ) )]
-		public FXFactoryParticles ParticleStage1 { get; set; } = new FXFactoryParticles();
+		public FXSoundStage SoundStage { get; set; } = new FXSoundStage();
+
+		[Category( "Misc Stages" )]
+		[TypeConverter( typeof( ExpandableObjectConverter ) )]
+		public FXLightStage LightStage { get; set; } = new FXLightStage();
+
+		[Category( "Misc Stages" )]
+		[TypeConverter( typeof( ExpandableObjectConverter ) )]
+		public FXCameraShake CameraShake { get; set; } = new FXCameraShake();
 
 		[Category( "Particle Stages" )]
 		[TypeConverter( typeof( ExpandableObjectConverter ) )]
-		public FXFactoryParticles ParticleStage2 { get; set; } = new FXFactoryParticles();
+		public FXParticleStage ParticleStage1 { get; set; } = new FXParticleStage();
 
 		[Category( "Particle Stages" )]
 		[TypeConverter( typeof( ExpandableObjectConverter ) )]
-		public FXFactoryParticles ParticleStage3 { get; set; } = new FXFactoryParticles();
+		public FXParticleStage ParticleStage2 { get; set; } = new FXParticleStage();
 
 		[Category( "Particle Stages" )]
 		[TypeConverter( typeof( ExpandableObjectConverter ) )]
-		public FXFactoryParticles ParticleStage4 { get; set; } = new FXFactoryParticles();
+		public FXParticleStage ParticleStage3 { get; set; } = new FXParticleStage();
+
+		[Category( "Particle Stages" )]
+		[TypeConverter( typeof( ExpandableObjectConverter ) )]
+		public FXParticleStage ParticleStage4 { get; set; } = new FXParticleStage();
 	}
 
 
@@ -226,7 +240,7 @@ namespace IronStar.SFX {
 	}
 
 
-	public class FXFactoryParticles {
+	public class FXParticleStage {
 
 		public override string ToString()
 		{
@@ -241,6 +255,7 @@ namespace IronStar.SFX {
 		public bool Enabled { get; set; } = false;
 
 		[Description( "Particle sprite name" )]
+		[Editor( typeof( SpriteFileLocationEditor ), typeof( UITypeEditor ) )]
 		public string Sprite { get; set; } = "";
 
 		[Description( "Particle visual effect" )]
@@ -279,7 +294,90 @@ namespace IronStar.SFX {
 		[TypeConverter( typeof( ExpandableObjectConverter ) )]
 		public FXAcceleration Acceleration { get; set; } = new FXAcceleration();
 	}
+
+
+
+	public class FXSoundStage {
+
+		public override string ToString()
+		{
+			if ( Enabled ) {
+				return string.Format( "R:{0} [{1}]", Radius, Sound );
+			} else {
+				return string.Format( "Disabled" );
+			}
+		}
+
+		[XmlAttribute]
+		[Description( "Enables and disables sound stage" )]
+		public bool Enabled { get; set; } = false;
+
+		[XmlAttribute]
+		[Description( "Sound path" )]
+		[Editor( typeof( SoundFileLocationEditor ), typeof( UITypeEditor ) )]
+		public string Sound { get; set; } = "";
+
+		[XmlAttribute]
+		[Description( "Sound emitter radius" )]
+		public float Radius { get; set; } = 5;
+	}
+
+
+
+	public class FXLightStage {
+
+		public override string ToString()
+		{
+			if ( Enabled ) {
+				return string.Format( "R:{0} I:[{1}{2}{3}]", Radius, Intensity.Red, Intensity.Green, Intensity.Blue );
+			} else {
+				return string.Format( "Disabled" );
+			}
+		}
+
+		[XmlAttribute]
+		[Description( "Enables and disables light stage" )]
+		public bool Enabled { get; set; } = false;
+
+		[Description( "Light intensity" )]
+		public Color4 Intensity { get; set; } = new Color4(10,10,10,1);
+
+		[XmlAttribute]
+		[Description( "Light radius" )]
+		public float Radius { get; set; } = 5;
+
+		[XmlAttribute]
+		[Description( "Fade-in rate (1/sec)" )]
+		public float FadeInRate { get; set; } = 100;
+
+		[XmlAttribute]
+		[Description( "Fade-out rate (1/sec)" )]
+		public float FadeOutRate { get; set; } = 100;
+
+		[XmlAttribute]
+		[Description( "Offset direction" )]
+		public FXDirection OffsetDirection { get; set; } = FXDirection.None;
+
+		[XmlAttribute]
+		[Description( "Offset along offset direction" )]
+		public float OffsetFactor { get; set; } = 0;
+	}
+
+
+	public class FXCameraShake {
+
+		public override string ToString()
+		{
+			if ( Enabled ) {
+				return string.Format( "Enabled" );
+			} else {
+				return string.Format( "Disabled" );
+			}
+		}
+
+		[XmlAttribute]
+		[Description( "Enables and disables camera shake stage" )]
+		public bool Enabled { get; set; } = false;
+
+	}
 }
-
-
-

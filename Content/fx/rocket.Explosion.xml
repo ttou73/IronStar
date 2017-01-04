@@ -1,67 +1,63 @@
 <?xml version="1.0" encoding="utf-16"?>
 <FXFactory xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <Period>0</Period>
+  <SoundStage Enabled="true" Sound="" Radius="5" />
+  <LightStage Enabled="false" Radius="5" OffsetDirection="None" OffsetFactor="0">
+    <Intensity Red="10" Green="10" Blue="10" Alpha="1" />
+  </LightStage>
   <ParticleStage1>
     <Enabled>false</Enabled>
     <Sprite />
+    <Effect>LitShadow</Effect>
     <Count>2</Count>
     <Timing Delay="0" Bunch="1" FadeIn="0.1" FadeOut="0.1" />
     <Color0 Red="0" Green="0" Blue="0" Alpha="0" />
     <Color1 Red="1" Green="1" Blue="1" Alpha="1" />
     <Lifetime Distribution="Uniform" Average="1" Deviation="0" />
-    <Rotation>Constant</Rotation>
-    <AngularVelocity>None</AngularVelocity>
-    <PositionDistribution>UniformRadial</PositionDistribution>
-    <PositionMean>1</PositionMean>
-    <PositionDeviation>0</PositionDeviation>
+    <Rotation EnableRotation="false" InitialAngle="0" MinAngularVelocity="0" MaxAngularVelocity="0" />
+    <Position OffsetDirection="None" OffsetFactor="0" Distribution="UniformRadial" AverageSize="0" SizeDeviation="0" />
     <Velocity Direction="LocalBackward" LinearDistribution="Gauss" LinearAverage="5" LinearDeviation="2" RadialDistribution="UniformRadial" RadialAverage="1" RadialDeviation="0" Advection="0" />
     <Acceleration GravityFactor="0" Damping="0" DragForce="0" Turbulence="0" />
   </ParticleStage1>
   <ParticleStage2>
     <Enabled>false</Enabled>
     <Sprite />
+    <Effect>LitShadow</Effect>
     <Count>1</Count>
     <Timing Delay="0" Bunch="1" FadeIn="0.1" FadeOut="0.1" />
     <Color0 Red="0" Green="0" Blue="0" Alpha="0" />
     <Color1 Red="1" Green="1" Blue="1" Alpha="1" />
     <Lifetime Distribution="Uniform" Average="1" Deviation="0" />
-    <Rotation>None</Rotation>
-    <AngularVelocity>None</AngularVelocity>
-    <PositionDistribution>UniformRadial</PositionDistribution>
-    <PositionMean>1</PositionMean>
-    <PositionDeviation>0</PositionDeviation>
+    <Rotation EnableRotation="false" InitialAngle="0" MinAngularVelocity="0" MaxAngularVelocity="0" />
+    <Position OffsetDirection="None" OffsetFactor="0" Distribution="UniformRadial" AverageSize="0" SizeDeviation="0" />
     <Velocity Direction="None" LinearDistribution="Uniform" LinearAverage="1" LinearDeviation="0" RadialDistribution="UniformRadial" RadialAverage="1" RadialDeviation="0" Advection="0" />
     <Acceleration GravityFactor="0" Damping="0" DragForce="0" Turbulence="0" />
   </ParticleStage2>
   <ParticleStage3>
     <Enabled>false</Enabled>
     <Sprite />
+    <Effect>LitShadow</Effect>
     <Count>1</Count>
     <Timing Delay="0" Bunch="1" FadeIn="0.1" FadeOut="0.1" />
     <Color0 Red="0" Green="0" Blue="0" Alpha="0" />
     <Color1 Red="1" Green="1" Blue="1" Alpha="1" />
     <Lifetime Distribution="Uniform" Average="1" Deviation="0" />
-    <Rotation>None</Rotation>
-    <AngularVelocity>None</AngularVelocity>
-    <PositionDistribution>UniformRadial</PositionDistribution>
-    <PositionMean>1</PositionMean>
-    <PositionDeviation>0</PositionDeviation>
+    <Rotation EnableRotation="false" InitialAngle="0" MinAngularVelocity="0" MaxAngularVelocity="0" />
+    <Position OffsetDirection="None" OffsetFactor="0" Distribution="UniformRadial" AverageSize="0" SizeDeviation="0" />
     <Velocity Direction="None" LinearDistribution="Uniform" LinearAverage="1" LinearDeviation="0" RadialDistribution="UniformRadial" RadialAverage="1" RadialDeviation="0" Advection="0" />
     <Acceleration GravityFactor="0" Damping="0" DragForce="0" Turbulence="0" />
   </ParticleStage3>
   <ParticleStage4>
     <Enabled>false</Enabled>
     <Sprite />
+    <Effect>LitShadow</Effect>
     <Count>1</Count>
     <Timing Delay="0" Bunch="1" FadeIn="0.1" FadeOut="0.1" />
     <Color0 Red="0" Green="0" Blue="0" Alpha="0" />
     <Color1 Red="1" Green="1" Blue="1" Alpha="1" />
     <Lifetime Distribution="Uniform" Average="1" Deviation="0" />
-    <Rotation>None</Rotation>
-    <AngularVelocity>None</AngularVelocity>
-    <PositionDistribution>UniformRadial</PositionDistribution>
-    <PositionMean>1</PositionMean>
-    <PositionDeviation>0</PositionDeviation>
+    <Rotation EnableRotation="false" InitialAngle="0" MinAngularVelocity="0" MaxAngularVelocity="0" />
+    <Position OffsetDirection="None" OffsetFactor="0" Distribution="UniformRadial" AverageSize="0" SizeDeviation="0" />
     <Velocity Direction="None" LinearDistribution="Uniform" LinearAverage="1" LinearDeviation="0" RadialDistribution="UniformRadial" RadialAverage="1" RadialDeviation="0" Advection="0" />
     <Acceleration GravityFactor="0" Damping="0" DragForce="0" Turbulence="0" />
   </ParticleStage4>

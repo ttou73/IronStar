@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-16"?>
 <FXFactory xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <Period>1</Period>
+  <SoundStage Enabled="false" Sound="sound\machineGun.wav" Radius="5" />
+  <LightStage Enabled="true" Radius="5" FadeInRate="100" FadeOutRate="100" OffsetDirection="None" OffsetFactor="0">
+    <Intensity Red="10" Green="10" Blue="10" Alpha="1" />
+  </LightStage>
+  <CameraShake Enabled="false" />
   <ParticleStage1>
     <Enabled>true</Enabled>
     <Sprite>sprites\fire.tga</Sprite>

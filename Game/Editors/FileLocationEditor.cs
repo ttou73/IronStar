@@ -20,6 +20,12 @@ namespace IronStar.Editors {
 			}
 		}
 
+		public virtual string InitialDirectory {
+			get {
+				return null;
+			}
+		}
+
 		//
 		public override UITypeEditorEditStyle GetEditStyle( ITypeDescriptorContext context )
 		{
@@ -30,7 +36,7 @@ namespace IronStar.Editors {
 		{
 			using ( OpenFileDialog ofd = new OpenFileDialog() ) {
 
-				ofd.InitialDirectory	= 	Builder.FullInputDirectory;
+				ofd.InitialDirectory	= 	Path.Combine(Builder.FullInputDirectory, InitialDirectory??"");
 				ofd.RestoreDirectory	=	true;
 				ofd.Filter				=	Filter;
 
@@ -55,6 +61,34 @@ namespace IronStar.Editors {
 		public override string Filter {
 			get {
 				return "FBX Files (*.fbx)|*.fbx";
+			}
+		}
+	}
+
+
+	public class SpriteFileLocationEditor : FileLocationEditor {
+		public override string Filter {
+			get {
+				return "TGA Images (*.tga)|*.tga";
+			}
+		}
+		public override string InitialDirectory {
+			get {
+				return "sprites";
+			}
+		}
+	}
+
+
+	public class SoundFileLocationEditor : FileLocationEditor {
+		public override string Filter {
+			get {
+				return "WAV Sounds (*.wav)|*.wav";
+			}
+		}
+		public override string InitialDirectory {
+			get {
+				return "sound";
 			}
 		}
 	}
