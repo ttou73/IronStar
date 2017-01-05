@@ -174,7 +174,11 @@ namespace IronStar.SFX {
 		/// <param name="emit"></param>
 		public void AddParticleStage ( string spriteName, float delay, float period, float sleep, int count, bool looped, EmitFunction emit )
 		{
-			if (count==0) {
+			/*if ( !stageDesc.Enabled ) {
+				return;
+			}*/
+
+			if ( count==0) {
 				return;
 			}
 			var spriteIndex		=	fxPlayback.GetSpriteIndex( spriteName );
@@ -186,6 +190,10 @@ namespace IronStar.SFX {
 
 		public void AddLightStage ( FXLightStage stageDesc, FXEvent fxEvent, bool looped )
 		{
+			if (!stageDesc.Enabled) {
+				return;
+			}
+
 			var stage = new LightStage( this, stageDesc, fxEvent, looped );
 			stages.Add( stage );
 		}
@@ -193,6 +201,10 @@ namespace IronStar.SFX {
 
 		public void AddSoundStage ( FXSoundStage stageDesc, FXEvent fxEvent, bool looped )
 		{
+			if ( !stageDesc.Enabled ) {
+				return;
+			}
+
 			stages.Add( new SoundStage( this, stageDesc, fxEvent, looped ) );
 		}
 

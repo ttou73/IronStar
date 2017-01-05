@@ -8,6 +8,7 @@ using Fusion;
 using Fusion.Core;
 using Fusion.Core.Content;
 using Fusion.Core.Mathematics;
+using Fusion.Core.Extensions;
 using Fusion.Engine.Common;
 using Fusion.Engine.Input;
 using Fusion.Engine.Client;
@@ -26,9 +27,18 @@ namespace IronStar.SFX {
 
 		public class LightStage : Stage {
 
+			static Random rand = new Random();
+
 			OmniLight	light = null;
 			FXLightStage stageDesc;
-			bool stopped = false;
+
+			readonly bool			looped;
+			readonly float			period;
+
+			float   timer = 0;
+			bool	stopped = false;
+			float	intensityScale = 1;
+			int		counter;
 
 			/// <summary>
 			/// 
@@ -46,11 +56,17 @@ namespace IronStar.SFX {
 
 				light.Position		=	FXFactory.GetPosition( stageDesc.OffsetDirection, stageDesc.OffsetFactor, fxEvent );
 
-				light.RadiusInner	=	stageDesc.Radius * 0.1f;
-				light.RadiusOuter	=	stageDesc.Radius;
+				light.RadiusInner	=	stageDesc.InnerRadius;
+				light.RadiusOuter	=	stageDesc.OuterRadius;
 				light.Intensity     =   stageDesc.Intensity;
 
+				this.period			=	stageDesc.Period;
+				this.looped         =   looped;
+
 				instance.rw.LightSet.OmniLights.Add(light); 
+
+				UpdatePeriodIntensity();
+				UpdateLightStyle();
 			}
 
 
@@ -71,7 +87,64 @@ namespace IronStar.SFX {
 
 			public override void Update ( float dt, FXEvent fxEvent )
 			{
+				timer += dt;
+
+
+				while (timer>stageDesc.Period) {
+					timer -= period;
+
+					if ( !looped) {
+						stopped = true;
+						Kill();
+					} else {
+						counter++;
+						UpdatePeriodIntensity();
+					}
+				}
+
+				UpdateLightStyle();
+
 				light.Position      =   FXFactory.GetPosition( stageDesc.OffsetDirection, stageDesc.OffsetFactor, fxEvent );
+			}
+
+
+			void UpdatePeriodIntensity ()
+			{
+				if ( stageDesc.LightStyle==FXLightStyle.Random ) {
+					intensityScale = rand.NextFloat( 0, 1 );
+				}
+				if ( stageDesc.LightStyle==FXLightStyle.Strobe ) {
+					intensityScale = counter % 1;
+				}
+			}
+
+
+			float GetPulseString ( string pulse, float frac )
+			{
+				var index = (int)Math.Floor(frac * pulse.Length);
+				return (pulse[index] - 'a') / 26.0f;
+			}
+
+
+			void UpdateLightStyle()
+			{
+				float frac = 0;
+				if ( period>0 ) {
+					frac = (timer / period) % 1;
+				}
+
+				float scale = 1;
+
+				switch ( stageDesc.LightStyle ) {
+					case FXLightStyle.Const:		scale = 1; break;
+					case FXLightStyle.Saw:			scale = 1 - frac; break;
+					case FXLightStyle.InverseSaw:	scale = frac; break;
+					default: scale = 1; break;
+				}
+
+				var pulse = GetPulseString( stageDesc.PulseString, frac );
+
+				light.Intensity = stageDesc.Intensity * scale * intensityScale * pulse;
 			}
 		}
 

@@ -138,6 +138,15 @@ namespace IronStar.SFX {
 	}
 
 
+	public enum FXLightStyle {
+		Const,
+		Saw,
+		InverseSaw,
+		Random,
+		Strobe,
+	}
+
+
 	public class FXLifetime {
 		[XmlAttribute]
 		[Description( "Lifetime distribution" )]
@@ -356,7 +365,7 @@ namespace IronStar.SFX {
 		public override string ToString()
 		{
 			if ( Enabled ) {
-				return string.Format( "R:{0} I:[{1}{2}{3}]", Radius, Intensity.Red, Intensity.Green, Intensity.Blue );
+				return string.Format( "R:{0} I:[{1}{2}{3}]", OuterRadius, Intensity.Red, Intensity.Green, Intensity.Blue );
 			} else {
 				return string.Format( "Disabled" );
 			}
@@ -366,20 +375,28 @@ namespace IronStar.SFX {
 		[Description( "Enables and disables light stage" )]
 		public bool Enabled { get; set; } = false;
 
+		[XmlAttribute]
+		[Description( "Enables and disables light stage" )]
+		public float Period { get; set; } = 1;
+
 		[Description( "Light intensity" )]
 		public Color4 Intensity { get; set; } = new Color4(10,10,10,1);
 
 		[XmlAttribute]
 		[Description( "Light radius" )]
-		public float Radius { get; set; } = 5;
+		public float InnerRadius { get; set; } = 0;
 
 		[XmlAttribute]
-		[Description( "Fade-in rate (1/sec)" )]
-		public float FadeInRate { get; set; } = 100;
+		[Description( "Light radius" )]
+		public float OuterRadius { get; set; } = 5;
 
 		[XmlAttribute]
-		[Description( "Fade-out rate (1/sec)" )]
-		public float FadeOutRate { get; set; } = 100;
+		[Description( "Pulse string: 'a' - means zero intensity, 'z' - means double intensity" )]
+		public string PulseString { get; set; } = "m";
+
+		[XmlAttribute]
+		[Description( "Light style" )]
+		public FXLightStyle LightStyle { get; set; } = FXLightStyle.Const;
 
 		[XmlAttribute]
 		[Description( "Offset direction" )]
