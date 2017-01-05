@@ -77,6 +77,11 @@ namespace IronStar.Editors {
 				return "sprites";
 			}
 		}
+
+		public override object EditValue( ITypeDescriptorContext context, IServiceProvider provider, object value )
+		{
+			return Path.GetFileNameWithoutExtension( (string)base.EditValue( context, provider, value ) );
+		}
 	}
 
 

@@ -7,31 +7,33 @@
   </LightStage>
   <CameraShake Enabled="false" />
   <ParticleStage1>
-    <Enabled>false</Enabled>
-    <Sprite />
-    <Effect>LitShadow</Effect>
-    <Count>1</Count>
-    <Timing Delay="0" Bunch="1" FadeIn="0.1" FadeOut="0.1" />
-    <Color0 Red="0" Green="0" Blue="0" Alpha="0" />
-    <Color1 Red="1" Green="1" Blue="1" Alpha="1" />
-    <Lifetime Distribution="Uniform" Average="1" Deviation="0" />
-    <Rotation EnableRotation="false" InitialAngle="0" MinAngularVelocity="0" MaxAngularVelocity="0" />
+    <Enabled>true</Enabled>
+    <Sprite>bulletSpark</Sprite>
+    <Effect>Shadow</Effect>
+    <Count>15</Count>
+    <Period>0.5</Period>
+    <Timing Delay="0" Bunch="0" FadeIn="0.1" FadeOut="0.1" />
+    <Color0 Red="500" Green="500" Blue="500" Alpha="1" />
+    <Color1 Red="500" Green="500" Blue="500" Alpha="1" />
+    <Lifetime Distribution="Gauss" Average="0.3" Deviation="0.1" />
+    <Shape Size0="0.1" Size1="0" EnableRotation="false" InitialAngle="0" MinAngularVelocity="0" MaxAngularVelocity="0" />
     <Position OffsetDirection="None" OffsetFactor="0" Distribution="UniformRadial" AverageSize="0" SizeDeviation="0" />
-    <Velocity Direction="None" LinearDistribution="Uniform" LinearAverage="1" LinearDeviation="0" RadialDistribution="UniformRadial" RadialAverage="1" RadialDeviation="0" Advection="0" />
-    <Acceleration GravityFactor="0" Damping="0" DragForce="0" Turbulence="0" />
+    <Velocity Direction="LocalForward" LinearDistribution="Gauss" LinearAverage="4" LinearDeviation="3" RadialDistribution="GaussRadial" RadialAverage="0" RadialDeviation="0.7" Advection="0" />
+    <Acceleration GravityFactor="1" Damping="0" DragForce="0" Turbulence="0" />
   </ParticleStage1>
   <ParticleStage2>
-    <Enabled>false</Enabled>
-    <Sprite />
+    <Enabled>true</Enabled>
+    <Sprite>smoke</Sprite>
     <Effect>LitShadow</Effect>
-    <Count>1</Count>
-    <Timing Delay="0" Bunch="1" FadeIn="0.1" FadeOut="0.1" />
+    <Count>5</Count>
+    <Period>1</Period>
+    <Timing Delay="0" Bunch="0" FadeIn="0.1" FadeOut="0.1" />
     <Color0 Red="0" Green="0" Blue="0" Alpha="0" />
-    <Color1 Red="1" Green="1" Blue="1" Alpha="1" />
-    <Lifetime Distribution="Uniform" Average="1" Deviation="0" />
-    <Rotation EnableRotation="false" InitialAngle="0" MinAngularVelocity="0" MaxAngularVelocity="0" />
+    <Color1 Red="0.3" Green="0.3" Blue="0.3" Alpha="0.5" />
+    <Lifetime Distribution="Gauss" Average="0.3" Deviation="0.2" />
+    <Shape Size0="0.25" Size1="1.5" EnableRotation="true" InitialAngle="5" MinAngularVelocity="0" MaxAngularVelocity="0" />
     <Position OffsetDirection="None" OffsetFactor="0" Distribution="UniformRadial" AverageSize="0" SizeDeviation="0" />
-    <Velocity Direction="None" LinearDistribution="Uniform" LinearAverage="1" LinearDeviation="0" RadialDistribution="UniformRadial" RadialAverage="1" RadialDeviation="0" Advection="0" />
+    <Velocity Direction="LocalForward" LinearDistribution="Uniform" LinearAverage="1.2" LinearDeviation="0.4" RadialDistribution="GaussRadial" RadialAverage="0" RadialDeviation="0.2" Advection="0" />
     <Acceleration GravityFactor="0" Damping="0" DragForce="0" Turbulence="0" />
   </ParticleStage2>
   <ParticleStage3>
@@ -39,11 +41,12 @@
     <Sprite />
     <Effect>LitShadow</Effect>
     <Count>1</Count>
+    <Period>1</Period>
     <Timing Delay="0" Bunch="1" FadeIn="0.1" FadeOut="0.1" />
     <Color0 Red="0" Green="0" Blue="0" Alpha="0" />
     <Color1 Red="1" Green="1" Blue="1" Alpha="1" />
     <Lifetime Distribution="Uniform" Average="1" Deviation="0" />
-    <Rotation EnableRotation="false" InitialAngle="0" MinAngularVelocity="0" MaxAngularVelocity="0" />
+    <Shape Size0="1" Size1="1" EnableRotation="false" InitialAngle="0" MinAngularVelocity="0" MaxAngularVelocity="0" />
     <Position OffsetDirection="None" OffsetFactor="0" Distribution="UniformRadial" AverageSize="0" SizeDeviation="0" />
     <Velocity Direction="None" LinearDistribution="Uniform" LinearAverage="1" LinearDeviation="0" RadialDistribution="UniformRadial" RadialAverage="1" RadialDeviation="0" Advection="0" />
     <Acceleration GravityFactor="0" Damping="0" DragForce="0" Turbulence="0" />
@@ -53,11 +56,12 @@
     <Sprite />
     <Effect>LitShadow</Effect>
     <Count>1</Count>
+    <Period>1</Period>
     <Timing Delay="0" Bunch="1" FadeIn="0.1" FadeOut="0.1" />
     <Color0 Red="0" Green="0" Blue="0" Alpha="0" />
     <Color1 Red="1" Green="1" Blue="1" Alpha="1" />
     <Lifetime Distribution="Uniform" Average="1" Deviation="0" />
-    <Rotation EnableRotation="false" InitialAngle="0" MinAngularVelocity="0" MaxAngularVelocity="0" />
+    <Shape Size0="1" Size1="1" EnableRotation="false" InitialAngle="0" MinAngularVelocity="0" MaxAngularVelocity="0" />
     <Position OffsetDirection="None" OffsetFactor="0" Distribution="UniformRadial" AverageSize="0" SizeDeviation="0" />
     <Velocity Direction="None" LinearDistribution="Uniform" LinearAverage="1" LinearDeviation="0" RadialDistribution="UniformRadial" RadialAverage="1" RadialDeviation="0" Advection="0" />
     <Acceleration GravityFactor="0" Damping="0" DragForce="0" Turbulence="0" />

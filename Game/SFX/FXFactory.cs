@@ -155,12 +155,17 @@ namespace IronStar.SFX {
 		[Description( "Average (mean) value of particle lifetime" )]
 		public float Average { get; set; } = 1;
 		[XmlAttribute]
-		[Description( "Distribution amplitude (three-sigma rule for Gauss distribution)" )]
+		[Description( "Probability interval (three-sigma rule for Gauss distribution)" )]
 		public float Deviation { get; set; } = 0;
 
 		public override string ToString()
 		{
 			return string.Format( "{0}: [{1:0.##}, {2:0.##}]", Distribution, Average, Deviation );
+		}
+
+		public float GetLifetime ( Random rand )
+		{
+			return FXFactory.GetLinearDistribution( rand, Distribution, Average, Deviation );
 		}
 	}
 
@@ -225,6 +230,16 @@ namespace IronStar.SFX {
 		{
 			return string.Format( "L:{0}:{1:0.##} R:{2}:{3:0.##}", LinearDistribution, LinearAverage, RadialDistribution, RadialAverage );
 		}
+
+		public Vector3 GetVelocity( FXEvent fxEvent, Random rand )
+		{
+			var velocityValue   =   FXFactory.GetLinearDistribution( rand, LinearDistribution, LinearAverage, LinearDeviation );
+			var velocity		=   FXFactory.GetDirection( Direction, velocityValue, fxEvent );
+			var addition		=	FXFactory.GetRadialDistribution( rand, RadialDistribution, RadialAverage, RadialDeviation );
+			var advection		=	fxEvent.Velocity * Advection;
+
+			return velocity + addition + advection;
+		}
 	}
 
 
@@ -253,10 +268,23 @@ namespace IronStar.SFX {
 		{
 			return string.Format( "D:{0}:{1:0.##} Sz:{2}:{3:0.##}", OffsetDirection, OffsetFactor, Distribution, AverageSize );
 		}
+
+		public Vector3 GetPosition ( FXEvent fxEvent, Random rand )
+		{
+			var position = FXFactory.GetPosition( OffsetDirection, OffsetFactor, fxEvent);
+			var radial	= FXFactory.GetRadialDistribution( rand, Distribution, AverageSize, SizeDeviation );
+			return position + radial;
+		}
 	}
 
 
-	public class FXRotation {
+	public class FXShape {
+		[XmlAttribute]
+		public float Size0 { get; set; } = 1;
+
+		[XmlAttribute]
+		public float Size1 { get; set; } = 1;
+
 		[XmlAttribute]
 		public bool EnableRotation { get; set; } = false;
 
@@ -271,7 +299,19 @@ namespace IronStar.SFX {
 
 		public override string ToString()
 		{
-			return string.Format( "{0} {1:0.##} [{2:0.##} {3:0.##}]", EnableRotation?"Enabled":"Disabled", InitialAngle, MinAngularVelocity, MaxAngularVelocity );
+			return string.Format( "{0} {1} {2:0.##} [{3:0.##} {4:0.##}]", Size0/2+Size1/2, EnableRotation?"Enabled":"Disabled", InitialAngle, MinAngularVelocity, MaxAngularVelocity );
+		}
+
+		public void GetAngles ( Random rand, out float a, out float b )
+		{
+			a = b = 0;
+
+			if (!EnableRotation) {
+				return;
+			}
+
+			a = MathUtil.DegreesToRadians( rand.NextFloat( -InitialAngle, InitialAngle ) );
+			b = MathUtil.DegreesToRadians( a + rand.NextFloat( MinAngularVelocity, MinAngularVelocity ) );
 		}
 	}
 
@@ -298,7 +338,10 @@ namespace IronStar.SFX {
 		public ParticleFX Effect { get; set; } = ParticleFX.LitShadow;
 
 		[Description( "Total number of emitted particles per active period" )]
-		public int Count { get; set; } = 1;
+		public int Count { get; set; } = 10;
+
+		[Description( "Particle stage actie period" )]
+		public float Period { get; set; } = 1;
 
 		[Description( "Defines temporal properties of particle stage" )]
 		[TypeConverter( typeof( ExpandableObjectConverter ) )]
@@ -314,9 +357,9 @@ namespace IronStar.SFX {
 		[TypeConverter( typeof( ExpandableObjectConverter ) )]
 		public FXLifetime Lifetime { get; set; } = new FXLifetime();
 
-		[Description( "Defines rotation of particles" )]
+		[Description( "Defines shape of particles" )]
 		[TypeConverter( typeof( ExpandableObjectConverter ) )]
-		public FXRotation Rotation { get; set; } = new FXRotation();
+		public FXShape Shape { get; set; } = new FXShape();
 
 		[Description( "Defines particle spawn area" )]
 		[TypeConverter( typeof( ExpandableObjectConverter ) )]

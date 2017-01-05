@@ -220,7 +220,12 @@ namespace Fusion.Engine.Graphics {
 		/// <returns></returns>
 		public int IndexOf( string name )
 		{
-			return dictionary[name].Index;
+			Element e;
+			if (dictionary.TryGetValue(name, out e)) {
+				return e.Index;
+			} else {
+				return -1;
+			}
 		}
 		
 

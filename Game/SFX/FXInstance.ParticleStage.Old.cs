@@ -8,7 +8,6 @@ using Fusion;
 using Fusion.Core;
 using Fusion.Core.Content;
 using Fusion.Core.Mathematics;
-using Fusion.Core.Extensions;
 using Fusion.Engine.Common;
 using Fusion.Engine.Input;
 using Fusion.Engine.Client;
@@ -27,13 +26,19 @@ namespace IronStar.SFX {
 
 		public class ParticleStage : Stage {
 
-			private bool	looped;
-			readonly int    spriteIndex;
-			private bool	stopped;
-			private float	time		= 0;
-			private int		emitCount	= 0;
+			bool looped;
+			bool stopped;
 
-			FXParticleStage	stage;
+			readonly int			spriteIndex;
+			readonly float 			delay;
+			readonly float			period;
+			readonly float			sleep;
+			readonly int			count;
+			readonly EmitFunction	emit;
+
+
+			protected float			time		= 0;
+			protected int			emitCount	= 0;
 			
 
 			/// <summary>
@@ -46,11 +51,16 @@ namespace IronStar.SFX {
 			/// <param name="sleep"></param>
 			/// <param name="count"></param>
 			/// <param name="emit"></param>
-			public ParticleStage ( FXInstance instance, FXParticleStage stageDesc, FXEvent fxEvent, bool looped ) : base(instance)
+			public ParticleStage ( FXInstance instance, int spriteIndex, float delay, float period, float sleep, int count, bool looped, EmitFunction emit ) : base(instance)
 			{
-				this.stage			=	stageDesc;
+				this.looped			=	false;
+				this.spriteIndex	=	spriteIndex	;
+				this.delay			=	delay		;
+				this.period			=	period		;
+				this.sleep			=	sleep		;
+				this.count			=	count		;
+				this.emit			=	emit		;
 				this.looped			=	looped;
-				this.spriteIndex	=	instance.fxPlayback.GetSpriteIndex( stageDesc.Sprite );
 			}
 
 
@@ -79,46 +89,6 @@ namespace IronStar.SFX {
 			}
 
 
-
-			/// <summary>
-			/// 
-			/// </summary>
-			/// <param name="p"></param>
-			/// <param name="fxEvent"></param>
-			void Emit ( ref Particle p, FXEvent fxEvent )
-			{
-				p.Effects		=	stage.Effect;
-
-				p.ImageIndex	=	spriteIndex;
-
-				p.Color0        =   stage.Color0;
-				p.Color1        =   stage.Color1;
-
-				p.LifeTime		=	stage.Lifetime.GetLifetime(rand);
-
-				p.FadeIn		=	stage.Timing.FadeIn;
-				p.FadeOut		=	stage.Timing.FadeOut;
-
-				float a, b;
-				stage.Shape.GetAngles( rand, out a, out b );
-				p.Rotation0     =   a;
-				p.Rotation1     =   b;
-
-				p.Size0         =   stage.Shape.Size0;
-				p.Size1         =   stage.Shape.Size1;
-
-				p.Position		=	stage.Position.GetPosition(fxEvent, rand);
-
-				p.Velocity		=	stage.Velocity.GetVelocity(fxEvent, rand);
-
-				var turbulence	=	rand.GaussRadialDistribution(0, stage.Acceleration.Turbulence);
-				p.Acceleration	=	stage.Acceleration.DragForce * p.Velocity + turbulence;
-				p.Damping		=	stage.Acceleration.Damping;
-				p.Gravity		=	stage.Acceleration.GravityFactor;
-			}
-
-
-
 			/// <summary>
 			/// 
 			/// </summary>
@@ -136,7 +106,6 @@ namespace IronStar.SFX {
 	
 						float prt_time	= GetParticleEmitTime( part );
 						float prt_dt	= prt_time - old_time;
-
 		
 						if (prt_time <= new_time) {
 
@@ -149,13 +118,10 @@ namespace IronStar.SFX {
 							p.ImageIndex	=	spriteIndex;
 							p.Position		=	fxEvent.Origin;
 
-							if (looped || emitCount < stage.Count) {
-								Emit( ref p, fxEvent );
-								fxInstance.rw.ParticleSystem.InjectParticle( p );
-							} else {
-								stopped = true;
-								break;
-							}
+							emit( ref p, fxEvent );
+ 
+							//SfxInstance.rw.Debug.Trace( p.Position, 0.2f, Color.Yellow );
+							fxInstance.rw.ParticleSystem.InjectParticle( p );
 
 							emitCount++;
 			
@@ -164,9 +130,9 @@ namespace IronStar.SFX {
 						}
 					}
 
-					//if ( !looped && ( emitCount >= stage.Count ) ) {
-					//	stopped = true;
-					//}
+					if ( !looped && ( time >= delay + period ) ) {
+						stopped = true;
+					}
 
 					time += dt;
 				}
@@ -182,18 +148,14 @@ namespace IronStar.SFX {
 			/// <returns></returns>
 			float GetParticleEmitTime( int index )
 			{
-				float	period				=	stage.Period;
-				float	delay				=	stage.Timing.Delay;
-				float	bunch				=	stage.Timing.Bunch;
-				int		count				=	stage.Count;
-
-				int		indexInPeriod		=	index % count;
-				int		periodCount			=	index / count;
-				float	interval			=	period * bunch / count;
-
-				return	period * periodCount 
-					+	period * delay
-					+	interval * indexInPeriod;
+				float	full_cycle			= delay + period + sleep;
+				int		num_cycles			= index / count;
+				int		part_ind_in_bunch	= index	% count;
+				float	interval			= period / (float)count;
+	
+				return	full_cycle * num_cycles + 
+						delay +
+						interval * part_ind_in_bunch;
 			}
 		}
 

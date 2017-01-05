@@ -138,7 +138,13 @@ namespace IronStar.SFX {
 		/// <returns></returns>
 		public int GetSpriteIndex ( string spriteName )
 		{
-			return spriteSheet.IndexOf( spriteName );
+			var name	=	Path.GetFileName(spriteName);
+			int index	=	spriteSheet.IndexOf( name );
+
+			if (index<0) {
+				Log.Warning("{0} not included to sprite sheet", spriteName);
+			}
+			return index;
 		}
 
 

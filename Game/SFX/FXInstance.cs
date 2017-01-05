@@ -65,6 +65,11 @@ namespace IronStar.SFX {
 			this.sw			=	sfxSystem.sw;
 			this.fxEvent	=	fxEvent;
 
+			AddParticleStage( fxFactory.ParticleStage1, fxEvent, looped );
+			AddParticleStage( fxFactory.ParticleStage2, fxEvent, looped );
+			AddParticleStage( fxFactory.ParticleStage3, fxEvent, looped );
+			AddParticleStage( fxFactory.ParticleStage4, fxEvent, looped );
+
 			AddLightStage( fxFactory.LightStage, fxEvent, looped );
 			AddSoundStage( fxFactory.SoundStage, fxEvent, looped );
 		}
@@ -172,17 +177,16 @@ namespace IronStar.SFX {
 		/// <param name="sleep"></param>
 		/// <param name="count"></param>
 		/// <param name="emit"></param>
-		public void AddParticleStage ( string spriteName, float delay, float period, float sleep, int count, bool looped, EmitFunction emit )
+		public void AddParticleStage ( FXParticleStage stageDesc, FXEvent fxEvent, bool looped )
 		{
-			/*if ( !stageDesc.Enabled ) {
-				return;
-			}*/
-
-			if ( count==0) {
+			if ( !stageDesc.Enabled ) {
 				return;
 			}
-			var spriteIndex		=	fxPlayback.GetSpriteIndex( spriteName );
-			var stage			=	new ParticleStage( this, spriteIndex, delay, period, sleep, count, looped, emit );
+			if ( stageDesc.Count==0) {
+				return;
+			}
+			var stage			=	new ParticleStage( this, stageDesc, fxEvent, looped );
+
 			stages.Add( stage );
 		}
 
