@@ -12,11 +12,18 @@ using IronStar.SFX;
 using Fusion.Core.Content;
 using Fusion.Build;
 using System.IO;
+using System.Reflection;
 
 namespace IronStar.Editors {
 
 	public static class Editor {
-		
+
+		public static void RefreshListBox ( this ListBox listBox )
+		{
+			listBox.GetType().GetMethod( "RefreshItems", BindingFlags.NonPublic|BindingFlags.Instance ).Invoke( listBox, new object[0] );
+		}
+
+
 		public static void Run ( Game game )
 		{
 			var editorForm =	Application.OpenForms.Cast<Form>().FirstOrDefault( form => form is EditorForm );

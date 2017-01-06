@@ -26,6 +26,7 @@ namespace IronStar.Editors {
 		ObjectEditor entityEditor;
 		ObjectEditor fxEditor;
 		MapEditor	mapEditor;
+		VTEditor	vtEditor;
 
 
 		/// <summary>
@@ -41,12 +42,13 @@ namespace IronStar.Editors {
 			entityEditor	=	new ObjectEditor( game, "entities", typeof(EntityFactory), "Entity" ) { Dock = DockStyle.Fill };
 			fxEditor		=	new ObjectEditor( game, "fx", typeof(FXFactory), "FX" ) { Dock = DockStyle.Fill };
 			mapEditor		=	new MapEditor() { Dock = DockStyle.Fill };
+			vtEditor		=	new VTEditor("megatexture.ini") { Dock = DockStyle.Fill };
 
 			mainTabs.TabPages["tabModels"].Controls.Add( modelEditor );
 			mainTabs.TabPages["tabEntities"].Controls.Add( entityEditor );
 			mainTabs.TabPages["tabMap"].Controls.Add( mapEditor );
 			mainTabs.TabPages["tabFX"].Controls.Add( fxEditor );
-
+			mainTabs.TabPages["tabMegatexture"].Controls.Add( vtEditor );
 
 			Log.Message("Editor initialized");
 		}
@@ -59,6 +61,9 @@ namespace IronStar.Editors {
 		/// </summary>
 		public void BuildContent ()
 		{
+			mapEditor.SaveMap(false);
+			vtEditor.Save();
+
 			Log.Message( "Building..." );
 			Builder.SafeBuild();
 			game.Reload();
@@ -81,18 +86,6 @@ namespace IronStar.Editors {
 			BuildContent();
 		}
 
-		private void addModelToolStripMenuItem_Click( object sender, EventArgs e )
-		{
-			mainTabs.SelectTab("tabModels");
-			modelEditor?.AddNewObjectUI();
-		}
-
-		private void removeModelToolStripMenuItem_Click( object sender, EventArgs e )
-		{
-			mainTabs.SelectTab("tabModels");
-			modelEditor?.RemoveObjectUI();
-		}
-
 		private void exitToolStripMenuItem_Click( object sender, EventArgs e )
 		{
 			Close();
@@ -106,6 +99,7 @@ namespace IronStar.Editors {
 		private void EditorForm_FormClosing( object sender, FormClosingEventArgs e )
 		{
 			mapEditor.CloseMap();
+			vtEditor.Save();
 		}
 	}
 }

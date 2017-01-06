@@ -66,6 +66,15 @@ namespace IronStar.Editors {
 	}
 
 
+	public class ImageFileLocationEditor : FileLocationEditor {
+		public override string Filter {
+			get {
+				return "Image Files (*.tga;*.jpg;*.png)|*.tga;*.jpg;*.png";
+			}
+		}
+	}
+
+
 	public class SpriteFileLocationEditor : FileLocationEditor {
 		public override string Filter {
 			get {

@@ -141,7 +141,7 @@ namespace IronStar.Editors {
 
 		void RefreshMapListItems ()
 		{
-			mapListBox.GetType().GetMethod( "RefreshItems", BindingFlags.NonPublic|BindingFlags.Instance ).Invoke( mapListBox, new object[0] );
+			mapListBox.RefreshListBox();
 		}
 
 
@@ -181,7 +181,7 @@ namespace IronStar.Editors {
 		public void SaveMap( bool saveAs )
 		{
 			if ( MapFile==null) {
-				Log.Warning("Map Editor : Map is not created");
+				Log.Message("Map Editor : Map is not created");
 				return;
 			}
 
