@@ -29,7 +29,7 @@ namespace Fusion.Engine.Graphics {
 			public override object Load( ContentManager content, Stream stream, Type requestedType, string assetPath, IStorage storage )
 			{
 				//bool srgb = assetPath.ToLowerInvariant().Contains("|srgb");
-				return new VirtualTexture(content.Game.RenderSystem, stream, storage );
+				return new VirtualTexture(content.Game.RenderSystem, stream, content.VTStorage );
 			}
 		}
 

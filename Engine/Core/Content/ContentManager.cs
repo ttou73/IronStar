@@ -29,6 +29,16 @@ namespace Fusion.Core.Content {
 		List<ContentLoader> loaders;
 		readonly string contentDirectory;
 
+		DirectoryStorage	vtStorage;
+
+
+		/// <summary>
+		/// Gets virtual texture page storage
+		/// </summary>
+		public IStorage VTStorage {
+			get { return vtStorage; }
+		}
+
 
 
 		/// <summary>
@@ -45,6 +55,8 @@ namespace Fusion.Core.Content {
 			loaders	=	ContentLoader.GatherContentLoaders()
 						.Select( clt => (ContentLoader)Activator.CreateInstance( clt ) )
 						.ToList();
+
+			vtStorage	=	new DirectoryStorage(Path.Combine(contentDirectory, ".vtstorage"));
 		}
 
 
@@ -57,6 +69,7 @@ namespace Fusion.Core.Content {
 		{
 			if (disposing) {
 				Unload();
+				SafeDispose( ref vtStorage );
 			}
 			base.Dispose(disposing);
 		}

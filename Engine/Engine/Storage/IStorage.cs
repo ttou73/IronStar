@@ -10,7 +10,7 @@ namespace Fusion.Engine.Storage {
 	/// <summary>
 	/// Represents any kind of storage
 	/// </summary>
-	public interface IStorage {
+	public interface IStorage : IDisposable {
 
 		/// <summary>
 		/// Creates directory.

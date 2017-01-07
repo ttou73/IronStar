@@ -36,7 +36,6 @@ namespace Fusion.Build.Mapping {
 		public override void Process ( AssetSource assetFile, BuildContext context )
 		{
 			var localFileDir	=	Path.GetDirectoryName( assetFile.KeyPath );
-			var mapStorage		=	context.GetAssetStorage(assetFile);
 			var dependencies	=	new List<string>();//( assetFile.GetAllDependencies() );
 
 			//
@@ -69,15 +68,18 @@ namespace Fusion.Build.Mapping {
 			Log.Message("Packing textures to atlas...");
 			PackTextureAtlas( pageTable.SourceTextures );
 
-			//	generating pages :
-			Log.Message("Generating pages...");
-			GenerateMostDetailedPages( pageTable.SourceTextures, context, pageTable, mapStorage );
+			using ( var tileStorage = context.GetVTStorage() ) {
 
-			//	generating mipmaps :
-			Log.Message("Generating mipmaps...");
-			for (int mip=0; mip<VTConfig.MipCount-1; mip++) {
-				Log.Message("Generating mip level {0}/{1}...", mip, VTConfig.MipCount);
-				GenerateMipLevels( context, pageTable, mip, mapStorage );
+				//	generating pages :
+				Log.Message( "Generating pages..." );
+				GenerateMostDetailedPages( pageTable.SourceTextures, context, pageTable, tileStorage );
+
+				//	generating mipmaps :
+				Log.Message("Generating mipmaps...");
+				for (int mip=0; mip<VTConfig.MipCount-1; mip++) {
+					Log.Message("Generating mip level {0}/{1}...", mip, VTConfig.MipCount);
+					GenerateMipLevels( context, pageTable, mip, tileStorage );
+				}
 			}
 
 			//	generating fallback image :

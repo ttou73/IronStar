@@ -111,6 +111,17 @@ namespace Fusion.Build {
 		/// <summary>
 		/// 
 		/// </summary>
+		/// <returns></returns>
+		public IStorage GetVTStorage ()
+		{
+			var path = Path.Combine( Options.FullOutputDirectory, ".vtstorage" );
+			return new DirectoryStorage(path);
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
 		/// <param name="iniData"></param>
 		/// <param name="sectionName"></param>
 		/// <returns></returns>
