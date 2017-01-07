@@ -161,12 +161,11 @@ namespace IronStar.Core {
 		/// </summary>
 		void AddAtoms ()
 		{
-			var atoms = Content
-					.Load<string>("atoms")
-					.Split(new[] {'\r','\n'}, StringSplitOptions.RemoveEmptyEntries)
-					.Distinct()
-					.OrderBy(n=>n)
-					.ToArray();
+			var atoms = new List<string>();
+
+			atoms.AddRange( Content.EnumerateAssets( "fx" ) );
+			atoms.AddRange( Content.EnumerateAssets( "entities" ) );
+			atoms.AddRange( Content.EnumerateAssets( "models" ) );
 
 			Atoms.AddRange( atoms );
 		}

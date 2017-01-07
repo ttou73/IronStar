@@ -115,6 +115,20 @@ namespace Fusion.Core.Content {
 
 
 		/// <summary>
+		/// Return list of asset name in given directory
+		/// </summary>
+		/// <param name="directory"></param>
+		/// <returns></returns>
+		public IEnumerable<string> EnumerateAssets ( string directory )
+		{
+			return Directory
+				.EnumerateFiles( Path.Combine(contentDirectory, directory), "*.asset")
+				.Select( path => Path.GetFileNameWithoutExtension(path) )
+				.ToArray();
+		}
+
+
+		/// <summary>
 		/// Opens a stream for reading the specified asset.
 		/// </summary>
 		/// <param name="path"></param>
