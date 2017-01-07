@@ -132,7 +132,8 @@ namespace IronStar.Editors {
 
 		public void Save()
 		{
-			SaveMegatextureFile();
+			#warning Megatexture save disabled
+			//SaveMegatextureFile();
 		}
 
 

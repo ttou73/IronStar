@@ -51,7 +51,8 @@ namespace Fusion.Build {
 		/// </summary>
 		public string TargetName {
 			get {
-				return ContentUtils.GetHashedFileName( KeyPath, ".asset" );
+				return ContentUtils.SlashesToBackslashes( Path.ChangeExtension( KeyPath, ".asset" ) );
+				//return ContentUtils.GetHashedFileName( KeyPath, ".asset" );
 			}
 		}
 
@@ -60,6 +61,7 @@ namespace Fusion.Build {
 		/// <summary>
 		/// Gets filename hash.
 		/// </summary>
+		[Obsolete]
 		public string Hash {
 			get {
 				return ContentUtils.GetHashedFileName( KeyPath, "" );
@@ -241,6 +243,10 @@ namespace Fusion.Build {
 		/// <returns></returns>
 		public Stream OpenTargetStream ( IEnumerable<string> dependencies )
 		{
+			var dir = Path.GetDirectoryName( FullTargetPath );
+
+			Directory.CreateDirectory( dir );
+
 			var args	=	string.Join(" ", BuildArguments);
 			return AssetStream.OpenWrite( FullTargetPath, args, dependencies.Concat( new[]{ KeyPath } ).Distinct().ToArray() );
 		}

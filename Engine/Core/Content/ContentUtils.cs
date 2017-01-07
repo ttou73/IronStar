@@ -151,10 +151,24 @@ namespace Fusion.Core.Content {
 		/// </summary>
 		/// <param name="input"></param>
 		/// <returns></returns>
-		public static string BackslashesToSlashes ( string input ) 
+		public static string BackslashesToSlashes( string input )
 		{
-			var words	=	input.Split(new[]{'\\', '/'}, StringSplitOptions.RemoveEmptyEntries);
-			var path	 =	string.Join( "/", words );
+			var words   =   input.Split(new[]{'\\', '/'}, StringSplitOptions.RemoveEmptyEntries);
+			var path     =  string.Join( "/", words );
+
+			return path;
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="input"></param>
+		/// <returns></returns>
+		public static string SlashesToBackslashes( string input )
+		{
+			var words   =   input.Split(new[]{'\\', '/'}, StringSplitOptions.RemoveEmptyEntries);
+			var path     =  string.Join( "\\", words );
 
 			return path;
 		}
@@ -188,7 +202,7 @@ namespace Fusion.Core.Content {
 		/// </summary>
 		/// <param name="path"></param>
 		/// <returns></returns>
-		static string GetPathWithoutExtension ( string path )
+		public static string GetPathWithoutExtension ( string path )
 		{
 			return Path.Combine( Path.GetDirectoryName( path ), Path.GetFileNameWithoutExtension( path ) );
 		}// */

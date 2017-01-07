@@ -5,6 +5,6 @@ plasma
 player
 rocket
 startPoint
-bullet_Hit
-plasma.Explosion
-rocket.Explosion
+bullet_hit
+plasma_explosion
+rocket_explosion

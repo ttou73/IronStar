@@ -109,7 +109,7 @@ namespace Fusion.Core.Content {
 			//	take characters until dash '|' :
 			assetPath = new string( assetPath.TakeWhile( ch => ch!='|' ).ToArray() );
 
-			return Path.Combine(contentDirectory, ContentUtils.GetHashedFileName( assetPath, ".asset" ) );
+			return Path.Combine(contentDirectory, Path.ChangeExtension( assetPath, ".asset" ) );
 		}
 
 

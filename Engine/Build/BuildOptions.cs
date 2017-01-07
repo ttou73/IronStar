@@ -83,7 +83,7 @@ namespace Fusion.Build {
 		[CommandLineParser.Ignore]
 		public string FullVTDirectory { 
 			get {
-				return Path.GetFullPath( Path.Combine(OutputDirectory, "VTPages") );
+				return Path.GetFullPath( Path.Combine(OutputDirectory, ".vtstorage") );
 			}
 		}
 

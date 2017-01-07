@@ -445,14 +445,14 @@ namespace Fusion.Build {
 		/// <param name="files"></param>
 		void CleanStaleContent ( string outputFolder, IEnumerable<AssetSource> inputFiles )
 		{
-			var dictinary	=	inputFiles.ToDictionary( file => file.Hash );
-			var outputFiles =	Directory.EnumerateFiles( outputFolder );
+			var dictinary	=	inputFiles.ToDictionary( file => file.FullTargetPath, StringComparer.CurrentCultureIgnoreCase );
+			var outputFiles =	Directory.EnumerateFiles( outputFolder, "*.asset", SearchOption.AllDirectories ).ToArray();
 
-			int totalOutput	=	outputFiles.Count();
+			int totalOutput	=	outputFiles.Length;
 			
-			var staleFiles	=	outputFiles.Where( file => !dictinary.ContainsKey(Path.GetFileNameWithoutExtension(file)) );
+			var staleFiles	=	outputFiles.Where( file => !dictinary.ContainsKey(file) ).ToArray();
 
-			int totalStale	=	staleFiles.Count();
+			int totalStale	=	staleFiles.Length;
 
 			foreach ( var name in staleFiles ) {
 				File.Delete( name );
