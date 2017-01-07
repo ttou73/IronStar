@@ -302,7 +302,7 @@ namespace IronStar.SFX {
 			return string.Format( "{0} {1} {2:0.##} [{3:0.##} {4:0.##}]", Size0/2+Size1/2, EnableRotation?"Enabled":"Disabled", InitialAngle, MinAngularVelocity, MaxAngularVelocity );
 		}
 
-		public void GetAngles ( Random rand, out float a, out float b )
+		public void GetAngles ( Random rand, float lifetime, out float a, out float b )
 		{
 			a = b = 0;
 
@@ -310,8 +310,11 @@ namespace IronStar.SFX {
 				return;
 			}
 
+			var sign = (rand.NextFloat(-1,1) > 0) ? 1 : -1;
+
 			a = MathUtil.DegreesToRadians( rand.NextFloat( -InitialAngle, InitialAngle ) );
-			b = MathUtil.DegreesToRadians( a + rand.NextFloat( MinAngularVelocity, MinAngularVelocity ) );
+
+			b = a + MathUtil.DegreesToRadians( rand.NextFloat( MinAngularVelocity, MaxAngularVelocity ) * lifetime * sign );
 		}
 	}
 

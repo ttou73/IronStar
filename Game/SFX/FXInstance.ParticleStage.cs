@@ -100,7 +100,7 @@ namespace IronStar.SFX {
 				p.FadeOut		=	stage.Timing.FadeOut;
 
 				float a, b;
-				stage.Shape.GetAngles( rand, out a, out b );
+				stage.Shape.GetAngles( rand, p.LifeTime, out a, out b );
 				p.Rotation0     =   a;
 				p.Rotation1     =   b;
 
