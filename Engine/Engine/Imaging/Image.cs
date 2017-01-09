@@ -249,6 +249,26 @@ namespace Fusion.Engine.Imaging {
 
 
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="x"></param>
+		/// <param name="y"></param>
+		/// <param name="w"></param>
+		/// <param name="h"></param>
+		/// <param name="color"></param>
+		public void DrawRectangle ( int x, int y, int w, int h, Color color )
+		{
+			for (var i=x; i<x+w; i++) {
+				for (var j=y; j<y+h; j++) {
+					Write( i,j, color );	
+				}
+			}
+		}
+
+
+
 		/// <summary>
 		/// Create half-sized image using bilinear filtering
 		/// </summary>

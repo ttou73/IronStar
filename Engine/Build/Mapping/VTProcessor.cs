@@ -177,7 +177,7 @@ namespace Fusion.Build.Mapping {
 
 				var size = Math.Max(tex.Width/128, tex.Height/128);
 
-				var addr = allocator.Alloc( size, tex );
+				var addr = allocator.Alloc( size, tex.KeyPath );
 
 				tex.TexelOffsetX	=	addr.X * 128;
 				tex.TexelOffsetY	=	addr.Y * 128;
