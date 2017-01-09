@@ -147,6 +147,10 @@ namespace Fusion.Build {
 		{
 			var removedDeps = new List<string>();
 
+			if (!TargetFileExists) {
+				throw new InvalidOperationException("Target file does not exist");
+			}
+
 			using ( var assetStream = AssetStream.OpenRead( FullTargetPath ) ) {
 					
 				foreach ( var dependency in assetStream.Dependencies ) {
@@ -169,6 +173,10 @@ namespace Fusion.Build {
 		public IEnumerable<string> GetChangedDependencies ()
 		{
 			var changedDeps = new List<string>();
+
+			if (!TargetFileExists) {
+				throw new InvalidOperationException("Target file does not exist");
+			}
 
 			var targetTime	=	File.GetLastWriteTime( FullTargetPath );
 

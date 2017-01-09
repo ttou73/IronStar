@@ -16,6 +16,7 @@ using IronStar.Editors;
 using IronStar.Core;
 using IronStar.Mapping;
 using Fusion.Core.Extensions;
+using Fusion.Build.Mapping;
 
 namespace IronStar {
 
@@ -31,6 +32,9 @@ namespace IronStar {
 
 			//	set verbosity :
 			Log.VerbosityLevel = LogMessageType.Verbose;
+
+			//Allocator2D.RunTest(512, 1024, @"C:\GITHUB\_alloc_test");
+			//return 0; 
 
 
 			//

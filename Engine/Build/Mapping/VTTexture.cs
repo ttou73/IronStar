@@ -30,6 +30,7 @@ namespace Fusion.Build.Mapping {
 
 		public int TexelOffsetX;
 		public int TexelOffsetY;
+		public bool Modified = false;
 
 		public readonly int Width;
 		public readonly int Height;

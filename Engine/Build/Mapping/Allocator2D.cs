@@ -155,6 +155,38 @@ namespace Fusion.Build.Mapping {
 
 
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
+		public IEnumerable<BlockInfo> GetAllocatedBlockInfo ()
+		{
+			var list = new List<BlockInfo>();
+
+			var S = new Stack<Block>();
+
+			S.Push( rootBlock );
+
+			while (S.Any()) {
+
+				var block = S.Pop();
+
+				if (block.State==BlockState.Allocated) {
+					list.Add( new BlockInfo(block.Address, block.Size, block.Tag) );
+				}
+
+				if (block.State==BlockState.Split) {
+					S.Push( block.BottomRight );
+					S.Push( block.BottomLeft );
+					S.Push( block.TopRight );
+					S.Push( block.TopLeft );
+				}
+			}
+
+			return list;
+		}
+
+
 
 		/// <summary>
 		/// 
@@ -168,15 +200,27 @@ namespace Fusion.Build.Mapping {
 
 
 
+		public static void SaveState ( Stream targetStream, Allocator2D allocator )
+		{
+			var writer = new BinaryWriter(targetStream, Encoding.Default, true);
+			SaveState(  writer, allocator );
+		}
+
+
+		public static Allocator2D LoadState ( Stream sourceStream )
+		{
+			var reader = new BinaryReader(sourceStream, Encoding.Default, true);
+			return LoadState( reader );
+		}
+
+
 		/// <summary>
 		/// 
 		/// </summary>
 		/// <param name="allocator"></param>
 		/// <returns></returns>
-		public static void SaveState ( Stream targetStream, Allocator2D allocator )
+		public static void SaveState ( BinaryWriter writer, Allocator2D allocator )
 		{		
-			var writer = new BinaryWriter(targetStream, Encoding.Default, true);
-
 			//	write header:
 			writer.WriteFourCC("MLC2");
 			writer.WriteFourCC("1.00");
@@ -214,10 +258,8 @@ namespace Fusion.Build.Mapping {
 
 
 
-		public static Allocator2D LoadState ( Stream sourceStream )
+		public static Allocator2D LoadState ( BinaryReader reader )
 		{
-			var reader = new BinaryReader(sourceStream, Encoding.Default, true);
-
 			//	read header:
 			var fourcc  = reader.ReadFourCC();
 			var version = reader.ReadFourCC();

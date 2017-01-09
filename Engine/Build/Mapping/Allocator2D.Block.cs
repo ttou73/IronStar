@@ -25,6 +25,21 @@ namespace Fusion.Build.Mapping {
 		}
 
 
+		public class BlockInfo {
+
+			public BlockInfo( Int2 address, int size, string tag )
+			{
+				Address	=	address;
+				Size	=	size;
+				Tag		=	tag;
+			}
+
+			public readonly Int2	Address;
+			public readonly int		Size;
+			public readonly string	Tag;
+		}
+
+
 
 		class Block {
 

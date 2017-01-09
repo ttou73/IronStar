@@ -89,29 +89,6 @@ namespace Fusion.Build {
 		/// 
 		/// </summary>
 		/// <returns></returns>
-		public string GetFullVTOutputPath ( AssetSource assetSource )
-		{
-			return Path.Combine( Options.FullOutputDirectory, "VTPages_" + assetSource.Hash );
-		}
-
-
-
-		/// <summary>
-		/// Gets storage associated with given asset.
-		/// </summary>
-		/// <param name="assetSource"></param>
-		/// <returns></returns>
-		public IStorage GetAssetStorage ( AssetSource assetSource )
-		{
-			var path = Path.Combine( Options.FullOutputDirectory, assetSource.Hash + ".storage" );
-			return new DirectoryStorage(path);
-		}
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <returns></returns>
 		public IStorage GetVTStorage ()
 		{
 			var path = Path.Combine( Options.FullOutputDirectory, ".vtstorage" );
@@ -323,7 +300,7 @@ namespace Fusion.Build {
 		/// <returns></returns>
 		public string WriteReport( AssetSource assetFile, string textContent, string subfile = null )
 		{
-			string fileName	=	assetFile.Hash + (subfile??"") + ".html";
+			string fileName		=	assetFile.Hash + (subfile??"") + ".html";
 			string fullPath		=	Path.Combine( Options.FullTempDirectory, fileName );
 			
 			File.WriteAllText( fullPath, textContent );

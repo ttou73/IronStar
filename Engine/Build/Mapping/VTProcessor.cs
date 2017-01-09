@@ -47,6 +47,7 @@ namespace Fusion.Build.Mapping {
 
 			Log.Message("-------- virtual texture: {0} --------", assetFile.KeyPath );
 
+
 			if (assetFile.TargetFileExists) {
 				
 				Log.Message("Removed:");
@@ -61,20 +62,59 @@ namespace Fusion.Build.Mapping {
 			}
 
 
-
 			Log.Message("{0} textures", pageTable.SourceTextures.Count);
 
-			//	packing textures to atlas :
-			Log.Message("Packing textures to atlas...");
-			PackTextureAtlas( pageTable.SourceTextures );
 
+			//
+			//	Process tiles :
+			//
 			using ( var tileStorage = context.GetVTStorage() ) {
 
-				//	generating pages :
+				//
+				//	Get allocator and pack/repack textures :
+				//	
+				Allocator2D allocator = null;
+
+				const string allocFile = ".allocator";
+
+				#warning REPACKING TEMPORARY DISABLED!
+				if (tileStorage.FileExists(".allocator") && assetFile.TargetFileExists && false) {
+
+					Log.Message("Loading VT allocator...");
+
+					using ( var allocStream = tileStorage.OpenRead( allocFile ) ) {
+
+						allocator = Allocator2D.LoadState( allocStream );
+
+						Log.Message("Repacking textures to atlas...");
+						RepackTextureAtlas( pageTable.SourceTextures, assetFile, allocator );
+					}
+				
+				} else {
+				
+					allocator = new Allocator2D(VTConfig.VirtualPageCount);
+
+					Log.Message("Packing textures to atlas...");
+					PackTextureAtlas( pageTable.SourceTextures, allocator );
+
+				}
+
+				Log.Message("Saving VT allocator...");
+
+				using ( var allocStream = tileStorage.OpenWrite( allocFile ) ) {
+					Allocator2D.SaveState( allocStream, allocator );
+				}
+
+				//
+				//	Generate top-level pages :
+				//
 				Log.Message( "Generating pages..." );
 				GenerateMostDetailedPages( pageTable.SourceTextures, context, pageTable, tileStorage );
 
-				//	generating mipmaps :
+
+				//
+				//	Generate map-maps :
+				//
 				Log.Message("Generating mipmaps...");
 				for (int mip=0; mip<VTConfig.MipCount-1; mip++) {
 					Log.Message("Generating mip level {0}/{1}...", mip, VTConfig.MipCount);
@@ -169,10 +209,8 @@ namespace Fusion.Build.Mapping {
 		/// 
 		/// </summary>
 		/// <param name="textures"></param>
-		void PackTextureAtlas ( IEnumerable<VTTexture> textures )
+		void PackTextureAtlas ( IEnumerable<VTTexture> textures, Allocator2D allocator )
 		{
-			var allocator = new Allocator2D( VTConfig.VirtualPageCount );
-
 			foreach ( var tex in textures ) {
 
 				var size = Math.Max(tex.Width/128, tex.Height/128);
@@ -181,7 +219,41 @@ namespace Fusion.Build.Mapping {
 
 				tex.TexelOffsetX	=	addr.X * 128;
 				tex.TexelOffsetY	=	addr.Y * 128;
+				tex.Modified		=	true;
 			}
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="textures"></param>
+		void RepackTextureAtlas ( IEnumerable<VTTexture> textures, AssetSource assetFile, Allocator2D allocator )
+		{
+			var blockInfos	= allocator.GetAllocatedBlockInfo().ToDictionary( block => block.Tag );
+
+			//	get modified and deleted entries :
+			var toRemove	= assetFile.GetChangedDependencies().ToList();
+			toRemove.AddRange( assetFile.GetRemovedDependencies() );
+			toRemove = toRemove.Distinct().ToList();
+
+			//	clear allocated data :
+			foreach ( var name in toRemove ) {
+				Allocator2D.BlockInfo bi;
+				if (!blockInfos.TryGetValue( name, out bi )) {
+					Log.Warning("Bad allocator integrity: {0} does not exist", name);
+				} else {
+					allocator.Free( bi.Address );
+				}
+			}
+			
+
+			//	repack modified textures :
+			var modified = new HashSet<string>( assetFile.GetChangedDependencies() );
+			
+			textures = textures.Where( tex => modified.Contains(tex.KeyPath) );
+
+			PackTextureAtlas( textures, allocator );
 		}
 
 
@@ -196,9 +268,11 @@ namespace Fusion.Build.Mapping {
 			int counter = 0;
 
 			foreach ( var texture in textures ) {
-				Log.Message("...{0}/{1} - {2}", counter, totalCount, texture.KeyPath );
-				texture.SplitIntoPages( context, pageTable, mapStorage );
-				counter++;
+				if (texture.Modified) {
+					Log.Message("...{0}/{1} - {2}", counter, totalCount, texture.KeyPath );
+					texture.SplitIntoPages( context, pageTable, mapStorage );
+					counter++;
+				}
 			}
 		}
 
