@@ -170,6 +170,26 @@ namespace Fusion.Build {
 		/// Return list of key path to changed content file.
 		/// </summary>
 		/// <returns></returns>
+		public IEnumerable<string> GetNewDependencies ( IEnumerable<string> currentDependencies )
+		{
+			if (!TargetFileExists) {
+				throw new InvalidOperationException("Target file does not exist");
+			}
+
+			using ( var assetStream = AssetStream.OpenRead( FullTargetPath ) ) {
+				
+				var hashSet = new HashSet<string>(assetStream.Dependencies);
+
+				return currentDependencies.Where( dep => !hashSet.Contains(dep) );
+			}
+		}
+
+
+
+		/// <summary>
+		/// Return list of key path to changed content file.
+		/// </summary>
+		/// <returns></returns>
 		public IEnumerable<string> GetChangedDependencies ()
 		{
 			var changedDeps = new List<string>();

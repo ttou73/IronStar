@@ -127,6 +127,7 @@
     <Compile Include="Build\Mapping\LRUCache.cs" />
     <Compile Include="Build\Mapping\VTProcessor.cs" />
     <Compile Include="Build\Mapping\VTTexel.cs" />
+    <Compile Include="Build\Mapping\VTTextureContent.cs" />
     <Compile Include="Build\Mapping\VTTexture.cs" />
     <Compile Include="Build\Mapping\TileSamplerCache.cs" />
     <Compile Include="Build\Mapping\VTTextureTable.cs" />
@@ -181,6 +182,7 @@
     <Compile Include="Development\Dashboard.Designer.cs">
       <DependentUpon>Dashboard.cs</DependentUpon>
     </Compile>
+    <Compile Include="Development\FileLocationEditor.cs" />
     <Compile Include="Development\LaunchBox.cs" />
     <Compile Include="Development\NameDialog.cs">
       <SubType>Form</SubType>

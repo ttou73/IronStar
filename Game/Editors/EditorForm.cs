@@ -16,17 +16,19 @@ using Fusion.Development;
 using Fusion.Core.Extensions;
 using IronStar.Editors;
 using IronStar.Core;
+using Fusion.Build.Mapping;
 
 namespace IronStar.Editors {
 	public partial class EditorForm : Form {
 
 		readonly Game game;
 
-		ObjectEditor modelEditor;
-		ObjectEditor entityEditor;
-		ObjectEditor fxEditor;
-		MapEditor	mapEditor;
-		VTEditor	vtEditor;
+		ObjectEditor	modelEditor;
+		ObjectEditor	entityEditor;
+		ObjectEditor	fxEditor;
+		MapEditor		mapEditor;
+		//VTEditor		vtEditor;
+		ObjectEditor	vtEditor;
 
 
 		/// <summary>
@@ -42,7 +44,9 @@ namespace IronStar.Editors {
 			entityEditor	=	new ObjectEditor( game, "entities", typeof(EntityFactory), "Entity" ) { Dock = DockStyle.Fill };
 			fxEditor		=	new ObjectEditor( game, "fx", typeof(FXFactory), "FX" ) { Dock = DockStyle.Fill };
 			mapEditor		=	new MapEditor() { Dock = DockStyle.Fill };
-			vtEditor		=	new VTEditor("megatexture.ini") { Dock = DockStyle.Fill };
+			//vtEditor		=	new VTEditor("megatexture.ini") { Dock = DockStyle.Fill };
+			vtEditor		=	new ObjectEditor( game, "vt", typeof(VTTextureContent), "Megatexture" ) { Dock = DockStyle.Fill };
+			//vtEditor.AddEditAction("QQQQQ", (list) => for
 
 			mainTabs.TabPages["tabModels"].Controls.Add( modelEditor );
 			mainTabs.TabPages["tabEntities"].Controls.Add( entityEditor );
@@ -62,7 +66,7 @@ namespace IronStar.Editors {
 		public void BuildContent ()
 		{
 			mapEditor.SaveMap(false);
-			vtEditor.Save();
+			//vtEditor.Save();
 
 			Log.Message( "Building..." );
 			Builder.SafeBuild();
@@ -99,7 +103,7 @@ namespace IronStar.Editors {
 		private void EditorForm_FormClosing( object sender, FormClosingEventArgs e )
 		{
 			mapEditor.CloseMap();
-			vtEditor.Save();
+			//vtEditor.Save();
 		}
 	}
 }

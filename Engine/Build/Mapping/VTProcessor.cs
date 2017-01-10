@@ -36,7 +36,6 @@ namespace Fusion.Build.Mapping {
 		public override void Process ( AssetSource assetFile, BuildContext context )
 		{
 			var localFileDir	=	Path.GetDirectoryName( assetFile.KeyPath );
-			var dependencies	=	new List<string>();//( assetFile.GetAllDependencies() );
 
 			//
 			//	Parse megatexture file :
@@ -46,21 +45,6 @@ namespace Fusion.Build.Mapping {
 
 
 			Log.Message("-------- virtual texture: {0} --------", assetFile.KeyPath );
-
-
-			if (assetFile.TargetFileExists) {
-				
-				Log.Message("Removed:");
-				foreach ( var rd in assetFile.GetRemovedDependencies()) {
-					Log.Message("...removed: {0}", rd );
-				}
-
-				Log.Message("Changed:");
-				foreach ( var cd in assetFile.GetChangedDependencies()) {
-					Log.Message("...changed: {0}", cd );
-				}
-			}
-
 
 			Log.Message("{0} textures", pageTable.SourceTextures.Count);
 
@@ -130,7 +114,7 @@ namespace Fusion.Build.Mapping {
 			//
 			//	Write asset and report files :
 			//
-			using ( var sw = new BinaryWriter(assetFile.OpenTargetStream(dependencies)) ) {
+			using ( var sw = new BinaryWriter(assetFile.OpenTargetStream()) ) {
 
 				sw.Write( pageTable.SourceTextures.Count );
 

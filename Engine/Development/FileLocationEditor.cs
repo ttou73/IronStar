@@ -10,9 +10,16 @@ using System.IO;
 using Fusion.Core.Content;
 using Fusion.Build;
 
-namespace IronStar.Editors {
+namespace Fusion.Development {
 
 	public class FileLocationEditor : UITypeEditor {
+
+		public static string SpriteDirectory	=	"sprites";
+		public static string SceneDirectory		=	"scenes";
+		public static string SoundDirectory		=	"sound";
+
+		static Dictionary<Type,string> dialogDirs = new Dictionary<Type, string>();
+
 
 		public virtual string Filter {
 			get {
@@ -36,7 +43,14 @@ namespace IronStar.Editors {
 		{
 			using ( OpenFileDialog ofd = new OpenFileDialog() ) {
 
-				ofd.InitialDirectory	= 	Path.Combine(Builder.FullInputDirectory, InitialDirectory??"");
+				string directory;
+
+				if (!dialogDirs.TryGetValue(GetType(), out directory)) {
+					directory =   InitialDirectory??"";
+					dialogDirs.Add( GetType(), directory );
+				}
+
+				ofd.InitialDirectory	= 	directory;
 				ofd.RestoreDirectory	=	true;
 				ofd.Filter				=	Filter;
 
@@ -44,6 +58,8 @@ namespace IronStar.Editors {
 				if ( ofd.ShowDialog() == DialogResult.OK ) {
 
 					var fileName = ofd.FileName;
+
+					dialogDirs[GetType()] = Path.GetDirectoryName(fileName);
 
 					if (Path.IsPathRooted(fileName)) {
 						fileName = ContentUtils.MakeRelativePath( Builder.FullInputDirectory + @"\", fileName );

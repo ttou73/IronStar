@@ -18,10 +18,23 @@ namespace Fusion.Core.Extensions {
 		/// <typeparam name="AttributeType"></typeparam>
 		/// <param name="type"></param>
 		/// <returns></returns>
-		public static bool HasAttribute<T> ( this PropertyInfo type ) where T : Attribute
+		public static bool HasAttribute<T> ( this MemberInfo type ) where T : Attribute
 		{
 			return type.GetCustomAttributes( typeof(T), true ).Any();
 		}	  
+
+
+		/// <summary>
+		/// Gets first attribute if given type
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="type"></param>
+		/// <returns></returns>
+		public static T GetAttribute<T> ( this MemberInfo type ) where T : Attribute
+		{
+			return (T)type.GetCustomAttributes( typeof(T), true ).FirstOrDefault();
+		}
+
 
 
 		/// <summary>

@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -82,6 +83,12 @@ namespace IronStar.Editors {
 			this.objectName	=	objectName;
 			InitializeComponent();
 
+			nameToolStripMenuItem.Text = objectName;
+
+
+			PopulateActions(baseTargetType);
+
+
 			fullSourceFolder = Path.Combine( Builder.FullInputDirectory, sourceFolder );
 
 			if (!Directory.Exists(fullSourceFolder)) {
@@ -95,6 +102,93 @@ namespace IronStar.Editors {
 
 			Log.Message("Object editor initialized");
 		}
+
+
+
+		void PopulateActions (Type type)
+		{
+			MethodInfo[] mia = type.GetMethods(BindingFlags.Public | BindingFlags.Instance );
+
+			actionsToolStripMenuItem.Enabled = false;
+
+			foreach (MethodInfo mi in mia) {
+
+				if (!mi.HasAttribute<BrowsableAttribute>()) {
+					continue;
+				}
+
+				if (!mi.GetAttribute<BrowsableAttribute>().Browsable) {
+					continue;
+				}
+
+				var item    =   new ToolStripMenuItem();
+
+				item.Text   =   mi.GetAttribute<DisplayNameAttribute>()?.DisplayName ?? mi.Name;
+
+				item.Click  +=  ( s, e ) => {
+					foreach ( var obj in objectListBox.SelectedItems.Cast<NamePathTarget>() ) {
+						mi.Invoke( obj.Target, new object[0] );
+						obj.SaveTarget();
+					}
+					this.objectPropertyGrid.Refresh();
+				};
+
+				actionsToolStripMenuItem.Enabled = true;
+				actionsToolStripMenuItem.DropDownItems.Add( item );
+			}
+
+
+			actionsToolStripMenuItem.DropDownItems.Add( new ToolStripSeparator() );
+
+			//-----------------------------
+
+			mia = type.GetMethods( BindingFlags.Public | BindingFlags.Static );
+
+			foreach (MethodInfo mi in mia) {
+
+				if (!mi.HasAttribute<BrowsableAttribute>()) {
+					continue;
+				}
+
+				if (!mi.GetAttribute<BrowsableAttribute>().Browsable) {
+					continue;
+				}
+
+				var item    =   new ToolStripMenuItem();
+
+				item.Text   =   mi.GetAttribute<DisplayNameAttribute>()?.DisplayName ?? mi.Name;
+
+				item.Click  +=  ( s, e ) => {
+					mi.Invoke(null, new object[0]);
+					RefreshFileList();
+					this.objectPropertyGrid.Refresh();
+				};
+
+				actionsToolStripMenuItem.Enabled = true;
+				actionsToolStripMenuItem.DropDownItems.Add( item );
+			}
+		}
+
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="name"></param>
+		/// <param name="action"></param>
+		//public void AddEditAction ( string name, Action<object[]> action )
+		//{
+		//	editToolStripMenuItem.Enabled = true;
+
+		//	var item    =   new ToolStripMenuItem();
+		//	item.Text   =   name;
+		//	item.Click  +=  ( s, e ) => {		
+		//		var list = objectListBox.SelectedItems.Cast<object>().ToArray();
+		//		action?.Invoke(list);
+		//	};
+
+		//	editToolStripMenuItem.DropDownItems.Add( item );
+		//}
 
 
 
@@ -199,6 +293,8 @@ namespace IronStar.Editors {
 					.Cast<NamePathTarget>()
 					.Select( namePathTarget => namePathTarget.Target )
 					.ToArray();
+
+			
 		}
 
 
@@ -209,12 +305,12 @@ namespace IronStar.Editors {
 			}
 		}
 
-		private void addToolStripMenuItem_Click( object sender, EventArgs e )
+		private void newToolStripMenuItem_Click( object sender, EventArgs e )
 		{
 			AddNewObjectUI();
 		}
 
-		private void removeToolStripMenuItem_Click( object sender, EventArgs e )
+		private void deleteToolStripMenuItem_Click( object sender, EventArgs e )
 		{
 			RemoveObjectUI();
 		}
