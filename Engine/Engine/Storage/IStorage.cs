@@ -74,6 +74,13 @@ namespace Fusion.Engine.Storage {
 		/// <returns></returns>
 		string GetFullPath ( string fileName );
 
+		/// <summary>
+		/// Returns the date and time, in coordinated universal time (UTC), 
+		/// that the specified file or directory was last written to.
+		/// </summary>
+		/// <param name="fileName"></param>
+		/// <returns></returns>
+		DateTime GetLastWriteTimeUtc ( string fileName );
 
 		/// <summary>
 		/// Gets files from storage within given directory

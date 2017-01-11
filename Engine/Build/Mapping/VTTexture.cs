@@ -15,22 +15,23 @@ using Fusion.Core.Content;
 
 namespace Fusion.Build.Mapping {
 
-
 	internal class VTTexture {
 
 		readonly BuildContext context;
 
-		public readonly string	KeyPath;
+		public readonly string	Name;
 
 		public readonly string  BaseColor	;
 		public readonly string  NormalMap	;
 		public readonly string  Metallic	;
 		public readonly string  Roughness	;
 		public readonly string	Emission	;
+		public readonly bool	Transparent	;
 
 		public int TexelOffsetX;
 		public int TexelOffsetY;
-		public bool Modified = false;
+
+		public bool TilesDirty;
 
 		public readonly int Width;
 		public readonly int Height;
@@ -38,30 +39,35 @@ namespace Fusion.Build.Mapping {
 		public int AddressX { get { return TexelOffsetX / VTConfig.PageSize; } }
 		public int AddressY { get { return TexelOffsetY / VTConfig.PageSize; } }
 
+		private readonly DateTime sourceLastWriteTime;
+
 
 		/// <summary>
 		/// 
 		/// </summary>
 		/// <param name="fullPath"></param>
-		public VTTexture ( SectionData section, BuildContext context )
+		public VTTexture ( VTTextureContent vtexContent, string name, BuildContext context, DateTime sourceLastWriteTime )
 		{			
-			this.context		=	context;
-			const int pageSize	=	VTConfig.PageSize;
+			this.context				=	context;
+			const int pageSize			=	VTConfig.PageSize;
+			this.sourceLastWriteTime	=	sourceLastWriteTime;
 
-			KeyPath		=	section.SectionName;
-			BaseColor	=   section.Keys["BaseColor"];
-			NormalMap   =   section.Keys["NormalMap"];
-			Metallic    =   section.Keys["Metallic" ];
-			Roughness   =   section.Keys["Roughness"];
-			Emission    =   section.Keys["Emission" ];
+			Name		=	name;
+			BaseColor	=   vtexContent.BaseColor;
+			NormalMap   =   vtexContent.NormalMap;
+			Metallic    =   vtexContent.Metallic;
+			Roughness   =   vtexContent.Roughness;
+			Emission    =   vtexContent.Emission;
+			Transparent	=	vtexContent.Transparent;
+
 
 			if (string.IsNullOrWhiteSpace(BaseColor)) {	
-				throw new BuildException("BaseColor must be specified for material '" + section.SectionName + "'");
+				throw new BuildException("BaseColor must be specified for material '" + vtexContent.KeyPath + "'");
 			}
 			
 			var fullPath	=	context.ResolveContentPath( BaseColor );
 
-			var size = TakeImageSize( KeyPath, fullPath, context );
+			var size = TakeImageSize( Name, fullPath, context );
 
 			if (size.Height%pageSize!=0) {
 				throw new BuildException(string.Format("Width of '{0}' must be multiple of {1}", fullPath, pageSize));
@@ -73,6 +79,49 @@ namespace Fusion.Build.Mapping {
 			Width	=	size.Width;
 			Height	=	size.Height;
 		}
+
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="targetLastWriteTime"></param>
+		/// <param name="sourceLastWriteTime"></param>
+		/// <returns></returns>
+		public bool IsModified ( DateTime targetLastWriteTime )
+		{
+			if ( sourceLastWriteTime > targetLastWriteTime ) {
+				return true;
+			} 
+			return  IsTextureModifiedSince( targetLastWriteTime, BaseColor	)
+				 || IsTextureModifiedSince( targetLastWriteTime, NormalMap	)
+				 || IsTextureModifiedSince( targetLastWriteTime, Metallic	)
+				 || IsTextureModifiedSince( targetLastWriteTime, Roughness	)
+				 || IsTextureModifiedSince( targetLastWriteTime, Emission	)
+				 ;
+		}
+
+
+
+		public static void Write ( VTTexture vtex, BinaryWriter writer )
+		{
+			writer.Write( vtex.Name );
+			writer.Write( vtex.TexelOffsetX );
+			writer.Write( vtex.TexelOffsetY );
+			writer.Write( vtex.Width );
+			writer.Write( vtex.Height );
+		}
+
+
+		/*public static VTTexture Read ( BinaryWriter writer )
+		{
+			writer.Write( vtex.KeyPath );
+			writer.Write( vtex.TexelOffsetX );
+			writer.Write( vtex.TexelOffsetY );
+			writer.Write( vtex.Width );
+			writer.Write( vtex.Height );
+		} */
+
 
 
 		/// <summary>
@@ -180,6 +229,33 @@ namespace Fusion.Build.Mapping {
 		/// <summary>
 		/// 
 		/// </summary>
+		/// <param name="texturePath"></param>
+		/// <returns></returns>
+		bool IsTextureModifiedSince( DateTime targetLastWriteTimeUtc, string texturePath )
+		{
+			if ( string.IsNullOrWhiteSpace(texturePath) ) {
+				return false;
+			}
+
+			if ( !context.ContentFileExists( texturePath ) ) {
+				Log.Warning("{0} does not exist", texturePath);
+				return true;  /// or DateTime.Now???
+			}
+
+			var fullPath    =   context.ResolveContentPath( texturePath );
+
+			if ( targetLastWriteTimeUtc <= File.GetLastWriteTimeUtc(fullPath) ) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+
+
+
+		/// <summary>
+		/// 
+		/// </summary>
 		/// <param name="baseImage"></param>
 		/// <param name="postfix"></param>
 		/// <param name="defaultColor"></param>
@@ -210,7 +286,7 @@ namespace Fusion.Build.Mapping {
 			}
 
 			if ( image.Width!=Width || image.Height!=image.Height ) {
-				Log.Warning( "Size of {0} is not equal to size of {1}. Default image is used.", texturePath, KeyPath );
+				Log.Warning( "Size of {0} is not equal to size of {1}. Default image is used.", texturePath, Name );
 				return new Image( Width, Height, defaultColor );
 			}
 

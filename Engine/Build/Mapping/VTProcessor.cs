@@ -12,11 +12,18 @@ using Fusion.Engine.Graphics;
 using Fusion.Engine.Storage;
 using Fusion.Core.IniParser;
 using Fusion.Core.IniParser.Model;
+using Fusion.Core.Extensions;
+using System.Diagnostics;
+using Fusion.Core.Content;
 
 namespace Fusion.Build.Mapping {
 
 	[AssetProcessor("MegaTexture", "Performs megatexture assembly")]
 	public class VTProcessor : AssetProcessor {
+
+
+		const string targetMegatexture	=	".megatexture";
+		const string targetAllocator	=	".allocator";
 
 
 		/// <summary>
@@ -35,18 +42,14 @@ namespace Fusion.Build.Mapping {
 		/// <param name="buildContext"></param>
 		public override void Process ( AssetSource assetFile, BuildContext context )
 		{
-			var localFileDir	=	Path.GetDirectoryName( assetFile.KeyPath );
+			Log.Message("-------- Virtual Texture --------" );
 
-			//
-			//	Parse megatexture file :
-			//
-			var iniData		=	ParseMegatexIniFile( assetFile );
-			var pageTable	=	CreateVTTextureTable( iniData, context );
+			var stopwatch	=	new Stopwatch();
+			stopwatch.Start();
 
+			var xmlFiles	=	Directory.EnumerateFiles( Path.Combine(Builder.FullInputDirectory, "vt"), "*.xml").ToList();
 
-			Log.Message("-------- virtual texture: {0} --------", assetFile.KeyPath );
-
-			Log.Message("{0} textures", pageTable.SourceTextures.Count);
+			Log.Message("{0} megatexture segments", xmlFiles.Count);
 
 
 			//
@@ -54,38 +57,39 @@ namespace Fusion.Build.Mapping {
 			//
 			using ( var tileStorage = context.GetVTStorage() ) {
 
+				var pageTable	=	CreateVTTextureTable( xmlFiles, context, tileStorage );
+
+
 				//
 				//	Get allocator and pack/repack textures :
 				//	
 				Allocator2D allocator = null;
 
-				const string allocFile = ".allocator";
-
-				#warning REPACKING TEMPORARY DISABLED!
-				if (tileStorage.FileExists(".allocator") && assetFile.TargetFileExists && false) {
+				if (tileStorage.FileExists( targetAllocator ) && tileStorage.FileExists( targetMegatexture ) ) {
 
 					Log.Message("Loading VT allocator...");
 
-					using ( var allocStream = tileStorage.OpenRead( allocFile ) ) {
+					using ( var allocStream = tileStorage.OpenRead( targetAllocator ) ) {
 
-						allocator = Allocator2D.LoadState( allocStream );
+						allocator		=	Allocator2D.LoadState( allocStream );
+						var targetTime	=	tileStorage.GetLastWriteTimeUtc(targetMegatexture);
 
 						Log.Message("Repacking textures to atlas...");
-						RepackTextureAtlas( pageTable.SourceTextures, assetFile, allocator );
+						RepackTextureAtlas( pageTable, allocator, targetTime );
 					}
-				
+			
 				} else {
-				
+			
 					allocator = new Allocator2D(VTConfig.VirtualPageCount);
 
-					Log.Message("Packing textures to atlas...");
+					Log.Message("Packing ALL textures to atlas...");
 					PackTextureAtlas( pageTable.SourceTextures, allocator );
 
 				}
 
 				Log.Message("Saving VT allocator...");
 
-				using ( var allocStream = tileStorage.OpenWrite( allocFile ) ) {
+				using ( var allocStream = tileStorage.OpenWrite( targetAllocator ) ) {
 					Allocator2D.SaveState( allocStream, allocator );
 				}
 
@@ -97,77 +101,39 @@ namespace Fusion.Build.Mapping {
 
 
 				//
-				//	Generate map-maps :
+				//	Generate mip-maps :
 				//
 				Log.Message("Generating mipmaps...");
 				for (int mip=0; mip<VTConfig.MipCount-1; mip++) {
 					Log.Message("Generating mip level {0}/{1}...", mip, VTConfig.MipCount);
 					GenerateMipLevels( context, pageTable, mip, tileStorage );
 				}
-			}
 
-			//	generating fallback image :
-			/*Log.Message( "Generating fallback image..." );
-			GenerateFallbackImage( context, pageTable, VTConfig.MipCount-1, mapStorage );*/
 
-															 
-			//
-			//	Write asset and report files :
-			//
-			using ( var sw = new BinaryWriter(assetFile.OpenTargetStream()) ) {
+				//
+				//	Write asset :
+				//
+				using ( var stream = tileStorage.OpenWrite( targetMegatexture ) ) {
+					using ( var assetStream = AssetStream.OpenWrite( stream, "", new[] {""} ) ) {
+						using ( var sw = new BinaryWriter( assetStream ) ) {
+							sw.Write( pageTable.SourceTextures.Count );
 
-				sw.Write( pageTable.SourceTextures.Count );
-
-				foreach ( var tex in pageTable.SourceTextures ) {
-					sw.Write( tex.KeyPath );
-					sw.Write( tex.TexelOffsetX );
-					sw.Write( tex.TexelOffsetY );
-					sw.Write( tex.Width );
-					sw.Write( tex.Height );
+							foreach ( var tex in pageTable.SourceTextures ) {
+								VTTexture.Write( tex, sw );
+							}
+						}
+					}
 				}
 			}
+
+			stopwatch.Stop();
+			Log.Message("{0}", stopwatch.Elapsed.ToString() );
 
 			Log.Message("----------------" );
 		}
 
 
-
-		/// <summary>
-		/// Reads raw megatex file
-		/// </summary>
-		/// <param name="assetFile"></param>
-		/// <returns></returns>
-		IEnumerable<string> ParseMegatexFile ( AssetSource assetFile )
-		{
-			return	File.ReadAllLines(assetFile.FullSourcePath)
-					.Select( f1 => f1.Trim() )
-					.Where( f2 => !f2.StartsWith("#") && !string.IsNullOrWhiteSpace(f2) )
-					.Select( f3 => f3 )
-					.ToArray();
-		}
-
-
-
-		/// <summary>
-		/// Reads INI-file
-		/// </summary>
-		/// <param name="assetFile"></param>
-		IniData ParseMegatexIniFile ( AssetSource assetFile )
-		{
-			var ip = new StreamIniDataParser();
-			ip.Parser.Configuration.AllowDuplicateSections	=	false;
-			ip.Parser.Configuration.AllowDuplicateKeys		=	true;
-			ip.Parser.Configuration.CommentString			=	"#";
-			ip.Parser.Configuration.OverrideDuplicateKeys	=	true;
-			ip.Parser.Configuration.KeyValueAssigmentChar	=	'=';
-			ip.Parser.Configuration.AllowKeysWithoutValues	=	false;
-
-			using ( var reader = new StreamReader( assetFile.OpenSourceStream() ) ) {
-				return	ip.ReadData( reader );
-			}
-		}
-
-																					 
+																				 
 
 		/// <summary>
 		/// Creates VT tex table from INI-data and base directory
@@ -175,17 +141,27 @@ namespace Fusion.Build.Mapping {
 		/// <param name="iniData"></param>
 		/// <param name="baseDirectory"></param>
 		/// <returns></returns>
-		VTTextureTable CreateVTTextureTable ( IniData iniData, BuildContext context )
+		VTTextureTable CreateVTTextureTable ( IEnumerable<string> xmlFilePaths, BuildContext context, IStorage tileStorage )
 		{
 			var texTable	=	new VTTextureTable();
 
-			foreach ( var section in iniData.Sections ) {
-				var tex = new VTTexture( section, context );
-				texTable.AddTexture( tex );
+			foreach ( var xmlFile in xmlFilePaths ) {
+
+				using ( var stream = File.OpenRead( xmlFile ) ) {
+
+					var name		=	Path.GetFileNameWithoutExtension( xmlFile );
+					var content		=	(VTTextureContent)Misc.LoadObjectFromXml( typeof(VTTextureContent), stream );
+					var writeTime	=	File.GetLastWriteTimeUtc( xmlFile );
+
+					var tex = new VTTexture( content, name, context, writeTime );
+
+					texTable.AddTexture( tex );
+				}
 			}
 
 			return texTable;
 		}
+
 
 
 
@@ -199,11 +175,14 @@ namespace Fusion.Build.Mapping {
 
 				var size = Math.Max(tex.Width/128, tex.Height/128);
 
-				var addr = allocator.Alloc( size, tex.KeyPath );
+				var addr = allocator.Alloc( size, tex.Name );
 
-				tex.TexelOffsetX	=	addr.X * 128;
-				tex.TexelOffsetY	=	addr.Y * 128;
-				tex.Modified		=	true;
+				tex.TexelOffsetX	=	addr.X * VTConfig.PageSize;
+				tex.TexelOffsetY	=	addr.Y * VTConfig.PageSize;
+				tex.TilesDirty		=	true;
+
+				Log.Message("...add: {0} : {1}x{2} : tile[{3},{4}]", tex.Name, tex.Width, tex.Height, addr.X, addr.Y );
+
 			}
 		}
 
@@ -212,32 +191,50 @@ namespace Fusion.Build.Mapping {
 		/// 
 		/// </summary>
 		/// <param name="textures"></param>
-		void RepackTextureAtlas ( IEnumerable<VTTexture> textures, AssetSource assetFile, Allocator2D allocator )
+		void RepackTextureAtlas ( VTTextureTable vtexTable, Allocator2D allocator, DateTime targetWriteTime )
 		{
-			var blockInfos	= allocator.GetAllocatedBlockInfo().ToDictionary( block => block.Tag );
+			//
+			//	remove deleted and changes textures from allocator :
+			//
+			var blockInfo = allocator.GetAllocatedBlockInfo();
 
-			//	get modified and deleted entries :
-			var toRemove	= assetFile.GetChangedDependencies().ToList();
-			toRemove.AddRange( assetFile.GetRemovedDependencies() );
-			toRemove = toRemove.Distinct().ToList();
+			foreach ( var block in blockInfo ) {
 
-			//	clear allocated data :
-			foreach ( var name in toRemove ) {
-				Allocator2D.BlockInfo bi;
-				if (!blockInfos.TryGetValue( name, out bi )) {
-					Log.Warning("Bad allocator integrity: {0} does not exist", name);
+				if (!vtexTable.Contains( block.Tag )) {
+			
+					Log.Message("...removed: {0}", block.Tag);
+					allocator.Free( block.Address );
+
 				} else {
-					allocator.Free( bi.Address );
+					
+					if (vtexTable[ block.Tag ].IsModified(targetWriteTime)) {
+						Log.Message("...changed: {0}", block.Tag );
+						allocator.Free( block.Address );
+					} 
 				}
 			}
-			
 
-			//	repack modified textures :
-			var modified = new HashSet<string>( assetFile.GetChangedDependencies() );
-			
-			textures = textures.Where( tex => modified.Contains(tex.KeyPath) );
 
-			PackTextureAtlas( textures, allocator );
+			//
+			//	add missing textures (note, changed are already removed).
+			//
+			var blockDictionary	=	allocator.GetAllocatedBlockInfo().ToDictionary( bi => bi.Tag );
+			var newTextureList		=	new List<VTTexture>();
+
+			foreach ( var tex in vtexTable.SourceTextures ) {
+				Allocator2D.BlockInfo bi;
+
+				if (blockDictionary.TryGetValue( tex.Name, out bi )) {
+
+					tex.TexelOffsetX = bi.Address.X * VTConfig.PageSize;
+					tex.TexelOffsetY = bi.Address.Y * VTConfig.PageSize;
+
+				} else {
+					newTextureList.Add( tex );
+				}
+			}
+
+			PackTextureAtlas( newTextureList, allocator );
 		}
 
 
@@ -252,8 +249,8 @@ namespace Fusion.Build.Mapping {
 			int counter = 0;
 
 			foreach ( var texture in textures ) {
-				if (texture.Modified) {
-					Log.Message("...{0}/{1} - {2}", counter, totalCount, texture.KeyPath );
+				if (texture.TilesDirty) {
+					Log.Message("...{0}/{1} - {2}", counter, totalCount, texture.Name );
 					texture.SplitIntoPages( context, pageTable, mapStorage );
 					counter++;
 				}

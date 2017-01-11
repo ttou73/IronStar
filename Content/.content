@@ -35,9 +35,6 @@ scenes/*.jpg
 [Sounds]
 *.wav
 
-[MegaTexture]
-megatexture.ini
-
 [Copy]
 *.ini
 *.xml

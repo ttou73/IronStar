@@ -31,10 +31,10 @@ namespace Fusion.Build.Mapping {
 		/// <param name="meshIndex"></param>
 		public void AddTexture ( VTTexture texture )
 		{
-			if ( !textures.ContainsKey( texture.KeyPath ) ) {
-				textures.Add( texture.KeyPath, texture );
+			if ( !textures.ContainsKey( texture.Name ) ) {
+				textures.Add( texture.Name, texture );
 			} else {
-				Log.Warning("Duplicate virtual texture entry: {0}", texture.KeyPath );
+				Log.Warning("Duplicate virtual texture entry: {0}", texture.Name );
 			}
 		}
 
@@ -48,7 +48,7 @@ namespace Fusion.Build.Mapping {
 			get {
 				return textures
 					.Select( pair => pair.Value )
-					.OrderBy( tex => tex.KeyPath )
+					.OrderBy( tex => tex.Name )
 					.ToArray();
 			}
 		}
@@ -64,6 +64,19 @@ namespace Fusion.Build.Mapping {
 		{
 			return textures[ keyPath ];
 		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="name"></param>
+		/// <returns></returns>
+		public VTTexture this [ string name ] {
+			get {
+				return textures[ name ];
+			}
+		}
+
 
 
 		/// <summary>
@@ -87,6 +100,17 @@ namespace Fusion.Build.Mapping {
 		public bool Contains ( VTAddress address )
 		{
 			return pages.Contains(address);
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="address"></param>
+		/// <returns></returns>
+		public bool Contains ( string name )
+		{
+			return textures.ContainsKey(name);
 		}
 
 

@@ -174,6 +174,18 @@ namespace Fusion.Engine.Storage {
 		/// <summary>
 		/// 
 		/// </summary>
+		/// <param name="fileName"></param>
+		/// <returns></returns>
+		public virtual DateTime GetLastWriteTimeUtc ( string fileName )
+		{
+			return File.GetLastWriteTimeUtc( GetFullPath(fileName) );
+		}
+
+
+
+		/// <summary>
+		/// 
+		/// </summary>
 		/// <param name="directory"></param>
 		/// <param name="searchPattern"></param>
 		/// <param name="recursive"></param>

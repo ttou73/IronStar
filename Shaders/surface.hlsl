@@ -217,7 +217,7 @@ GBuffer PSMain( PSInput input )
 	//---------------------------------
 	//	Compute miplevel :
 	//---------------------------------
-	float mip		=	floor( MipLevel( input.TexCoord.xy ) );
+	float mip		=	max(0,floor( MipLevel( input.TexCoord.xy ) ));
 	float scale		=	exp2(mip);
 	float pageX		=	floor( saturate(input.TexCoord.x) * VTVirtualPageCount / scale );
 	float pageY		=	floor( saturate(input.TexCoord.y) * VTVirtualPageCount / scale );

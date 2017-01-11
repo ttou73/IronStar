@@ -13,6 +13,7 @@ using Fusion.Core.Content;
 using Fusion.Core.Extensions;
 using Fusion.Engine.Graphics;
 using System.Net;
+using Fusion.Build.Mapping;
 
 namespace Fusion.Build {
 	public class Builder {
@@ -273,6 +274,13 @@ namespace Fusion.Build {
 				BuildAsset( proc, assetSource.BuildArguments, assetSource, ref result );
 
 			}
+
+
+			//
+			//	Build megatexture
+			//
+			BuildMegatexture( ref result );
+
 
 			return result;
 		}
@@ -541,6 +549,28 @@ namespace Fusion.Build {
 					Log.Error("{0} : {1}", keyValue.KeyName, wex.Message );
 					result.Failed++;
 				}
+			}
+		}
+
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="buildResult"></param>
+		void BuildMegatexture ( ref BuildResult buildResult )
+		{
+			try {
+
+				var vtProc = new VTProcessor();
+
+				vtProc.Process( null, context );
+
+				buildResult.Succeded ++;
+
+			} catch ( Exception e ) {
+				Log.Error( "{0} : {1}", "megatexture", e.Message );
+				buildResult.Failed ++;
 			}
 		}
 

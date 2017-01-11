@@ -40,9 +40,23 @@ namespace Fusion.Core.Content {
 		/// </summary>
 		/// <param name="path"></param>
 		/// <returns></returns>
+		public static AssetStream OpenWrite ( Stream targetStream, string buildParameters, string[] dependencies )
+		{
+			return new AssetStream( targetStream, buildParameters, dependencies );
+		}
+
+
+		/// <summary>
+		/// Opens asset file for writing.
+		/// </summary>
+		/// <param name="fullTargetPath"></param>
+		/// <param name="buildParameters"></param>
+		/// <param name="dependencies"></param>
+		/// <returns></returns>
 		public static AssetStream OpenWrite ( string fullTargetPath, string buildParameters, string[] dependencies )
 		{
-			return new AssetStream( fullTargetPath, buildParameters, dependencies );
+			var targetStream = File.Open( fullTargetPath, FileMode.Create, FileAccess.Write );
+			return new AssetStream( targetStream, buildParameters, dependencies );
 		}
 
 
@@ -118,12 +132,12 @@ namespace Fusion.Core.Content {
 		/// <param name="path"></param>
 		/// <param name="buildParameters"></param>
 		/// <param name="dependencies"></param>
-		private AssetStream ( string fullTargetPath, string buildParameters, string[] dependencies )
+		private AssetStream ( Stream fileStream, string buildParameters, string[] dependencies )
 		{
 			mode	=	Mode.Write;
 			
-			if (fullTargetPath==null) {
-				throw new ArgumentNullException("fullTargetPath");
+			if (fileStream==null) {
+				throw new ArgumentNullException("fileStream");
 			}
 			if (buildParameters==null) {
 				throw new ArgumentNullException("buildParameters");
@@ -146,7 +160,7 @@ namespace Fusion.Core.Content {
 								.ToArray();
 
 
-			fileStream	=	File.Open( fullTargetPath, FileMode.Create, FileAccess.Write );
+			this.fileStream	=	fileStream;
 
 			using (var writer = new BinaryWriter(fileStream, Encoding.UTF8, true) ) {
 				writer.Write( ContentUtils.MakeFourCC( AssetSignature ) );
@@ -161,6 +175,7 @@ namespace Fusion.Core.Content {
 
 			zipStream	=	new DeflateStream( fileStream, CompressionLevel.Optimal, true );
 		}
+
 
 
 		/// <summary>

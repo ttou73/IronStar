@@ -10,6 +10,7 @@ using Fusion.Core.Mathematics;
 using Fusion.Core.Content;
 using Fusion.Engine.Common;
 using Fusion.Engine.Storage;
+using Fusion.Engine.Graphics;
 
 
 namespace Fusion.Core.Content {
@@ -115,6 +116,11 @@ namespace Fusion.Core.Content {
 		/// <returns></returns>
 		string GetRealAssetFileName ( string assetPath )
 		{
+			//	special case for megatexture :
+			if (assetPath=="*megatexture") {	
+				return Path.Combine(contentDirectory, @".vtstorage\.megatexture");
+			}
+
 			if ( string.IsNullOrWhiteSpace(assetPath) ) {
 				throw new ArgumentException("Asset path can not be null, empty or whitespace.");
 			}
@@ -139,6 +145,7 @@ namespace Fusion.Core.Content {
 				.Select( path => Path.GetFileNameWithoutExtension(path) )
 				.ToArray();
 		}
+
 
 
 		/// <summary>

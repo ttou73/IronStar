@@ -131,7 +131,7 @@ namespace IronStar {
 
 			var rw = Game.RenderSystem.RenderWorld;
 
-			rw.VirtualTexture = Content.Load<VirtualTexture>( "megatexture" );
+			rw.VirtualTexture = Content.Load<VirtualTexture>( "*megatexture" );
 
 			rw.HdrSettings.BloomAmount  = 0.1f;
 			rw.HdrSettings.DirtAmount   = 0.0f;
