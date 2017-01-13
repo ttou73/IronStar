@@ -30,14 +30,16 @@ namespace Fusion.Engine.Graphics {
 		Texture2D		defaultEmission	;
 
 
+		[StructLayout(LayoutKind.Explicit, Size=320)]
 		struct CBMeshInstanceData {
-			public Matrix	Projection;
-			public Matrix	View;
-			public Matrix	World;
-			public Vector4	ViewPos			;
-			public Vector4	BiasSlopeFar	;
-			public Color4	Color;
-			public Vector4	ViewBounds;
+			[FieldOffset(  0)] public Matrix	Projection;
+			[FieldOffset( 64)] public Matrix	View;
+			[FieldOffset(128)] public Matrix	World;
+			[FieldOffset(192)] public Vector4	ViewPos			;
+			[FieldOffset(208)] public Vector4	BiasSlopeFar	;
+			[FieldOffset(224)] public Color4	Color;
+			[FieldOffset(240)] public Vector4	ViewBounds;
+			[FieldOffset(256)] public float		VTPageScaleRCP;
 		}
 
 
@@ -211,12 +213,13 @@ namespace Fusion.Engine.Graphics {
 						continue;
 					}
 
-					cbData.View			=	view;
-					cbData.Projection	=	projection;
-					cbData.World		=	instance.World;
-					cbData.ViewPos		=	viewPosition;
-					cbData.Color		=	instance.Color;
-					cbData.ViewBounds	=	new Vector4( hdr.Width, hdr.Height, hdr.Width, hdr.Height );
+					cbData.View				=	view;
+					cbData.Projection		=	projection;
+					cbData.World			=	instance.World;
+					cbData.ViewPos			=	viewPosition;
+					cbData.Color			=	instance.Color;
+					cbData.ViewBounds		=	new Vector4( hdr.Width, hdr.Height, hdr.Width, hdr.Height );
+					cbData.VTPageScaleRCP	=	rs.VirtualTexture.PageScaleRCP;
 
 					constBuffer.SetData( cbData );
 

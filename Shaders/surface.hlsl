@@ -1,3 +1,11 @@
+
+
+static const float 	VTVirtualPageCount	= 1024;
+//static const float 	VTPhysicalPageCount	= 7;
+static const int 	VTPageSize			= 128;
+static const int 	VTMaxMip	  		= 6;
+//static const float	VTPageScale			= 1024/VTPageSize;
+
 struct BATCH {
 	float4x4	Projection		;
 	float4x4	View			;
@@ -6,6 +14,7 @@ struct BATCH {
 	float4		BiasSlopeFar	;
 	float4		Color;
 	float4		ViewBounds		;
+	float		VTPageScaleRCP	;
 };
 
 
@@ -170,12 +179,6 @@ PSInput VSMain( VSInput input )
 
 float MipLevel( float2 uv );
 
-static const float 	VTVirtualPageCount	= 1024;
-static const float 	VTPhysicalPageCount	= 15;
-static const int 	VTPageSize			= 128;
-static const int 	VTMaxMip	  		= 6;
-static const float	VTPageScale			= 2048/VTPageSize;
-
 //	https://www.opengl.org/discussion_boards/showthread.php/171485-Texture-LOD-calculation-(useful-for-atlasing)
 float MipLevel( float2 uv )
 {
@@ -238,7 +241,7 @@ GBuffer PSMain( PSInput input )
 	if (physPageTC.w>0) {
 		float2 	withinPageTC	=	vtexTC * VTVirtualPageCount / exp2( physPageTC.z );
 				withinPageTC	=	frac( withinPageTC );
-				withinPageTC	=	withinPageTC / VTPageScale;
+				withinPageTC	=	withinPageTC * Batch.VTPageScaleRCP;
 		
 		float2	finalTC			=	physPageTC.xy + withinPageTC;
 		

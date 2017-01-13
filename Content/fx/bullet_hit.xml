@@ -16,7 +16,7 @@
     <Color0 Red="500" Green="500" Blue="500" Alpha="1" />
     <Color1 Red="500" Green="500" Blue="500" Alpha="1" />
     <Lifetime Distribution="Gauss" Average="0.3" Deviation="0.1" />
-    <Shape Size0="0.1" Size1="0" EnableRotation="false" InitialAngle="0" MinAngularVelocity="0" MaxAngularVelocity="0" />
+    <Shape Size0="0.1" Size1="0" EnableRotation="true" InitialAngle="360" MinAngularVelocity="0" MaxAngularVelocity="0" />
     <Position OffsetDirection="None" OffsetFactor="0" Distribution="UniformRadial" AverageSize="0" SizeDeviation="0" />
     <Velocity Direction="LocalForward" LinearDistribution="Gauss" LinearAverage="4" LinearDeviation="3" RadialDistribution="GaussRadial" RadialAverage="0" RadialDeviation="0.7" Advection="0" />
     <Acceleration GravityFactor="1" Damping="0" DragForce="0" Turbulence="0" />

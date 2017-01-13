@@ -53,6 +53,26 @@ namespace Fusion.Engine.Graphics {
 		[Config]
 		public bool RandomColor { get; set; }
 
+		[Config]
+		public int PhysicalSize {
+			get {
+				return physicalSize;
+			}
+			set {
+				if (physicalSize!=value) {
+					physicalSize = value;
+					physicalSizeDirty = true;
+				}
+			}
+		}
+		int physicalSize = 1024;
+		bool physicalSizeDirty = true;
+
+
+		public float PageScaleRCP {
+			get; private set;
+		}
+
 
 		public Texture2D		PhysicalPages0;
 		public Texture2D		PhysicalPages1;
@@ -103,17 +123,7 @@ namespace Fusion.Engine.Graphics {
 		/// </summary>
 		public override void Initialize ()
 		{
-			int physSize	=	VTConfig.PhysicalTextureSize;
-			int tableSize	=	VTConfig.VirtualPageCount;
-			int maxTiles	=	VTConfig.PhysicalPageCount * VTConfig.PhysicalPageCount;
-
-			PhysicalPages0	=	new Texture2D( rs.Device, physSize, physSize, ColorFormat.Rgba8_sRGB, false, true );
-			PhysicalPages1	=	new Texture2D( rs.Device, physSize, physSize, ColorFormat.Rgba8,	  false, false );
-			PhysicalPages2	=	new Texture2D( rs.Device, physSize, physSize, ColorFormat.Rgba8,	  false, false );
-			//PageTable		=	new Texture2D( rs.Device, tableSize, tableSize, ColorFormat.Rgba32F, VTConfig.MipCount, false );
-			PageTable		=	new RenderTarget2D( rs.Device, ColorFormat.Rgba32F, tableSize, tableSize, true, true );
-			PageData		=	new StructuredBuffer( rs.Device, typeof(PageGpu), maxTiles, StructuredBufferFlags.None );
-			Params			=	new ConstantBuffer( rs.Device, 16 );
+			ApplyVTState();
 
 			var rand = new Random();
 			//PageTable.SetData( Enumerable.Range(0,tableSize*tableSize).Select( i => rand.NextColor4() ).ToArray() );
@@ -124,10 +134,51 @@ namespace Fusion.Engine.Graphics {
 		}
 
 
+		/// <summary>
+		/// 
+		/// </summary>
 		void LoadContent ()
 		{
 			shader	=	Game.RenderSystem.Shaders.Load("vtcache");
 			factory	=	shader.CreateFactory( typeof(Flags), Primitive.TriangleList, VertexInputElement.Empty );
+		}
+
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		void ApplyVTState ()
+		{
+			if (physicalSizeDirty) {
+
+				Log.Message("VT state changes: new size {0}", physicalSize);
+
+				SafeDispose( ref PhysicalPages0	);
+				SafeDispose( ref PhysicalPages1	);
+				SafeDispose( ref PhysicalPages2	);
+				SafeDispose( ref PageTable		);
+				SafeDispose( ref PageData		);
+				SafeDispose( ref Params			);
+
+				int tableSize	=	VTConfig.VirtualPageCount;
+				int physSize	=	physicalSize;
+				int physPages	=	physicalSize / VTConfig.PageSizeBordered;
+				int maxTiles	=	physPages * physPages;
+
+				PhysicalPages0	=	new Texture2D( rs.Device, physSize, physSize, ColorFormat.Rgba8_sRGB, false, true );
+				PhysicalPages1	=	new Texture2D( rs.Device, physSize, physSize, ColorFormat.Rgba8,	  false, false );
+				PhysicalPages2	=	new Texture2D( rs.Device, physSize, physSize, ColorFormat.Rgba8,	  false, false );
+				PageTable		=	new RenderTarget2D( rs.Device, ColorFormat.Rgba32F, tableSize, tableSize, true, true );
+				PageData		=	new StructuredBuffer( rs.Device, typeof(PageGpu), maxTiles, StructuredBufferFlags.None );
+				Params			=	new ConstantBuffer( rs.Device, 16 );
+
+				tileCache		=	new VTTileCache( physPages, physicalSize );
+
+				PageScaleRCP	=	VTConfig.PageSize / (float)physSize;
+				
+				physicalSizeDirty	=	false;
+			}
 		}
 
 
@@ -143,13 +194,13 @@ namespace Fusion.Engine.Graphics {
 				if (tileLoader!=null) {
 					tileLoader.Stop();
 				}
-
-				SafeDispose( ref PhysicalPages0 );
-				SafeDispose( ref PhysicalPages1 );
-				SafeDispose( ref PhysicalPages2 );
-				SafeDispose( ref PageTable );
-				SafeDispose( ref PageData );
-
+				
+				SafeDispose( ref PhysicalPages0	);
+				SafeDispose( ref PhysicalPages1	);
+				SafeDispose( ref PhysicalPages2	);
+				SafeDispose( ref PageTable		);
+				SafeDispose( ref PageData		);
+				SafeDispose( ref Params			);
 			}
 			base.Dispose( disposing );
 		}
@@ -165,7 +216,6 @@ namespace Fusion.Engine.Graphics {
 			var storage			=	vt.TileStorage;
 
 			tileLoader			=	new VTTileLoader( this, storage );
-			tileCache			=	new VTTileCache( VTConfig.PhysicalPageCount );
 			tileStamper			=	new VTStamper();
 
 			fontImage			=	Imaging.Image.LoadTga( new MemoryStream( Fusion.Properties.Resources.conchars ) );
@@ -181,6 +231,7 @@ namespace Fusion.Engine.Graphics {
 		public void Stop ()
 		{
 			tileLoader.Stop();
+			tileCache.Purge();
 		}
 
 
@@ -235,6 +286,8 @@ namespace Fusion.Engine.Graphics {
 		{
 			var feedback = data.Distinct().Where( p => p.Dummy!=0 ).ToArray();
 
+			ApplyVTState();
+
 			List<VTAddress> feedbackTree = new List<VTAddress>();
 
 			//	
@@ -267,7 +320,7 @@ namespace Fusion.Engine.Graphics {
 			//	Detect thrashing and prevention
 			//	Get highest mip, remove them, repeat until no thrashing occur.
 			//
-			while (feedbackTree.Count >= VTConfig.TotalPhysicalPageCount/2 ) {
+			while (feedbackTree.Count >= tileCache.Capacity/2 ) {
 				int minMip = feedbackTree.Min( va => va.MipLevel );
 				feedbackTree.RemoveAll( va => va.MipLevel == minMip );
 			}
@@ -284,7 +337,7 @@ namespace Fusion.Engine.Graphics {
 			//
 			//	Put into cache :
 			//
-			if (tileCache!=null) {
+			if (tileCache!=null && tileLoader!=null) {
 				foreach ( var addr in feedbackTree ) {
 				
 					int physAddr;

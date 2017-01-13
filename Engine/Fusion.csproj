@@ -212,6 +212,7 @@
     <Compile Include="Engine\Client\IGameLoader.cs" />
     <Compile Include="Engine\Client\IClientInstance.cs" />
     <Compile Include="Engine\Common\Commands\ShowAtoms.cs" />
+    <Compile Include="Engine\Graphics\Commands\VTRestart.cs" />
     <Compile Include="Engine\Graphics\Effects\FogSettings.cs" />
     <Compile Include="Engine\Graphics\RenderComponent.cs" />
     <Compile Include="Engine\Graphics\RequireShaderAttribute.cs" />

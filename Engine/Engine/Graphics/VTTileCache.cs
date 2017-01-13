@@ -41,12 +41,12 @@ namespace Fusion.Engine.Graphics {
 
 		class Page {
 			
-			public Page ( VTAddress va, int pa, int physPageCount )
+			public Page ( VTAddress va, int pa, int physPageCount, int physicalTexSize )
 			{
 				this.VA			=	va;
 				this.Address	=	pa;
 
-				var physTexSize	=	(float)VTConfig.PhysicalTextureSize;
+				var physTexSize	=	(float)physicalTexSize;
 				var border		=	VTConfig.PageBorderWidth;
 				var pageSize	=	VTConfig.PageSizeBordered;
 
@@ -70,26 +70,25 @@ namespace Fusion.Engine.Graphics {
 
 		readonly int pageCount;
 		readonly int capacity;
+		readonly int physTexSize;
 		LRUCache<VTAddress,Page> cache;
+
+		public int Capacity {
+			get { return capacity; }
+		}
 
 
 		/// <summary>
 		/// 
 		/// </summary>
 		/// <param name="size">Physical page count</param>
-		public VTTileCache ( int physPageCount )
+		public VTTileCache ( int physPageCount, int physTexSize )
 		{
-			this.pageCount	=	physPageCount;
-			this.capacity	=	physPageCount * physPageCount;
+			this.pageCount		=	physPageCount;
+			this.capacity		=	physPageCount * physPageCount;
+			this.physTexSize	=	physTexSize;
 
-			cache	=	new LRUCache<VTAddress,Page>( capacity );
-
-			//	fill cache with dummy pages :
-			for (int i=0; i<capacity; i++) {
-				var va		= VTAddress.CreateBadAddress(i);
-				var page	= new Page( va, i, pageCount );
-				cache.Add( va, page );
-			}
+			Purge();
 		}
 
 
@@ -99,7 +98,14 @@ namespace Fusion.Engine.Graphics {
 		/// </summary>
 		public void Purge ()
 		{
-			cache.Clear();
+			cache	=	new LRUCache<VTAddress,Page>( capacity );
+
+			//	fill cache with dummy pages :
+			for (int i=0; i<capacity; i++) {
+				var va		= VTAddress.CreateBadAddress(i);
+				var page	= new Page( va, i, pageCount, physTexSize );
+				cache.Add( va, page );
+			}
 		}
 
 
@@ -117,7 +123,7 @@ namespace Fusion.Engine.Graphics {
 			if (cache.TryGetValue(address, out page)) {
 
 				var pa		=	page.Address;
-				var ppc		=	VTConfig.PhysicalPageCount;
+				var ppc		=	pageCount;
 				var size	=	VTConfig.PageSizeBordered;
 				int x		=	(pa % ppc) * size;
 				int y		=	(pa / ppc) * size;
@@ -186,7 +192,7 @@ namespace Fusion.Engine.Graphics {
 
 				cache.Discard( out page );
 
-				var newPage	=	new Page( virtualAddress, page.Address, pageCount );
+				var newPage	=	new Page( virtualAddress, page.Address, pageCount, physTexSize );
 
 				cache.Add( virtualAddress, newPage ); 
 
