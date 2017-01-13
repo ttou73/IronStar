@@ -231,15 +231,18 @@ GBuffer PSMain( PSInput input )
 	//---------------------------------
 	//	Virtual texturing stuff :
 	//---------------------------------
-	float2 vtexTC		=	input.TexCoord;
-	float2 atiHack		=	float2(-0.25f/131072, -0.25f/131072) * scale; // <-- float2(0,0) for NVIdia
-	//float2 atiHack		=	float2(0,0); // <-- float2(0,0) for NVIdia
+	float2 vtexTC		=	saturate(input.TexCoord);
+	//float2 atiHack		=	float2(-0.25f/131072, -0.25f/131072) * scale; // <-- float2(0,0) for NVIdia
+	float2 atiHack		=	float2(0,0); // <-- float2(0,0) for NVIdia
 	
 	float4 fallback		=	float4( 0.5f, 0.5, 0.5f, 1.0f );
 	float4 physPageTC	=	Textures[1].SampleLevel( SamplerPoint, input.TexCoord + atiHack, (int)(mip) ).xyzw;
+
+	int2 indexXY 		=	(int2)floor((input.TexCoord + atiHack) * VTVirtualPageCount / scale);
+	//float4 physPageTC	=	Textures[1].Load( int3(indexXY, (int)(mip)) ).xyzw;
 	
 	if (physPageTC.w>0) {
-		float2 	withinPageTC	=	vtexTC * VTVirtualPageCount / exp2( physPageTC.z );
+		float2 	withinPageTC	=	vtexTC * VTVirtualPageCount / exp2(physPageTC.z);
 				withinPageTC	=	frac( withinPageTC );
 				withinPageTC	=	withinPageTC * Batch.VTPageScaleRCP;
 		

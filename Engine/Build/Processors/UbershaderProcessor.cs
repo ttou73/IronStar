@@ -373,7 +373,7 @@ namespace Fusion.Build.Processors {
 		{
 			Log.Debug("{0} {1} {2} {3}", sourceFile, profile, entryPoint, defines );
 
-			var	flags	=	FX.ShaderFlags.None;
+			var	flags	=	FX.ShaderFlags.Debug;
 
 			if ( DisableOptimization)	flags |= FX.ShaderFlags.OptimizationLevel0;
 			// (!DisableOptimization)	flags |= FX.ShaderFlags.OptimizationLevel3;
