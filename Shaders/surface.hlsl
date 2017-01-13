@@ -236,10 +236,10 @@ GBuffer PSMain( PSInput input )
 	float2 atiHack		=	float2(0,0); // <-- float2(0,0) for NVIdia
 	
 	float4 fallback		=	float4( 0.5f, 0.5, 0.5f, 1.0f );
-	float4 physPageTC	=	Textures[1].SampleLevel( SamplerPoint, input.TexCoord + atiHack, (int)(mip) ).xyzw;
+	//float4 physPageTC	=	Textures[1].SampleLevel( SamplerPoint, input.TexCoord + atiHack, (int)(mip) ).xyzw;
 
 	int2 indexXY 		=	(int2)floor((input.TexCoord + atiHack) * VTVirtualPageCount / scale);
-	//float4 physPageTC	=	Textures[1].Load( int3(indexXY, (int)(mip)) ).xyzw;
+	float4 physPageTC	=	Textures[1].Load( int3(indexXY, (int)(mip)) ).xyzw;
 	
 	if (physPageTC.w>0) {
 		float2 	withinPageTC	=	vtexTC * VTVirtualPageCount / exp2(physPageTC.z);
@@ -253,6 +253,11 @@ GBuffer PSMain( PSInput input )
 		roughness	=	Textures[4].Sample( SamplerLinear, finalTC ).r;
 		metallic	=	Textures[4].Sample( SamplerLinear, finalTC ).g;
 		emission	=	Textures[4].Sample( SamplerLinear, finalTC ).b;
+		/*baseColor	=	Textures[2].Sample( SamplerPoint, finalTC ).rgb;
+		localNormal	=	Textures[3].Sample( SamplerPoint, finalTC ).rgb * 2 - 1;
+		roughness	=	Textures[4].Sample( SamplerPoint, finalTC ).r;
+		metallic	=	Textures[4].Sample( SamplerPoint, finalTC ).g;
+		emission	=	Textures[4].Sample( SamplerPoint, finalTC ).b;//*/
 	}
 
 	if ( Subset.Rectangle.z==Subset.Rectangle.w && Subset.Rectangle.z==0 ) {

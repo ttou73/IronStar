@@ -418,7 +418,7 @@ namespace Fusion.Engine.Graphics {
 			}
 
 			if (rs.VirtualTexture.ShowPhysicalTextures) {
-				rs.Filter.StretchRect( targetSurface, rs.VirtualTexture.PhysicalPages1 );
+				rs.Filter.StretchRect( targetSurface, rs.VirtualTexture.PhysicalPages0 );
 				return;
 			}
 			if (rs.VirtualTexture.ShowPageTexture) {
