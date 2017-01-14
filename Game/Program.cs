@@ -31,11 +31,6 @@ namespace IronStar {
 				return new GameWorld( game.GameClient, clientGuid );
 			}
 
-			public IGameLoader CreateLoader( Game game, string serverInfo )
-			{
-				throw new NotImplementedException();
-			}
-
 			public IServerInstance CreateServer( Game game )
 			{
 				return new GameWorld( game.GameServer );

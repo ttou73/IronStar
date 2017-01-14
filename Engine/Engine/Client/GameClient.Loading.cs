@@ -20,14 +20,14 @@ namespace Fusion.Engine.Client {
 			/// </summary>
 			string disconnectReason = null;
 			readonly ClientContext context;
+			readonly string serverInfo;
 			
 
 			public Loading ( ClientContext context, string serverInfo ) : base(context.GameClient, ClientState.Loading)
 			{
 				Message			=	serverInfo;
+				this.serverInfo	=	serverInfo;
 				this.context	=	context;
-
-				context.Instance.Initialize( serverInfo );
 			}
 
 
@@ -47,11 +47,12 @@ namespace Fusion.Engine.Client {
 			{
 				DispatchIM( context.NetClient );
 
+				//	
 				//	TODO : update loader/precache
+				//	........
+				//
 
-				//	sleep a while to get 
-				//	other threads more time.
-				Thread.Sleep(1);
+				context.Instance.Initialize( serverInfo );
 
 				if (true) {
 					if (disconnectReason!=null) {

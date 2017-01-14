@@ -24,14 +24,12 @@ namespace IronStar.Core {
 	/// </summary>
 	public partial class GameWorld : IServerInstance, IClientInstance {
 
-		public class Loader : IGameLoader {
+		public class Loader : IGamePreloader {
 
-			public IClientInstance Load ( string serverInfo )
+			void IGamePreloader.LoadContent()
 			{
-				return null;//return new GameWorld( 
+				throw new NotImplementedException();
 			}
-
-			
 		}
 
 	}

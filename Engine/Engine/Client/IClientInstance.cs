@@ -22,7 +22,7 @@ namespace Fusion.Engine.Client {
 		/// </summary>
 		/// <param name="serverInfo"></param>
 		/// <returns></returns>
-		IClientLoader CreateLoader ( string serverInfo )
+		IGamePreloader CreateLoader ( string serverInfo );
 
 		/// <summary>
 		/// Called when the game has determined that client-side logic needs to be processed.

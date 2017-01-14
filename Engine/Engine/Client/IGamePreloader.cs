@@ -7,7 +7,7 @@ using Fusion.Engine.Common;
 using Fusion.Core.Content;
 
 namespace Fusion.Engine.Client {
-	public interface IClientLoader {
+	public interface IGamePreloader {
 
 		/// <summary>
 		/// Loads content in separate thread

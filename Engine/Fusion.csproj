@@ -210,7 +210,7 @@
       <DependentUpon>UserMessage.cs</DependentUpon>
     </Compile>
     <Compile Include="Engine\Client\ClientContext.cs" />
-    <Compile Include="Engine\Client\IGameLoader.cs" />
+    <Compile Include="Engine\Client\IGamePreloader.cs" />
     <Compile Include="Engine\Client\IClientInstance.cs" />
     <Compile Include="Engine\Common\Commands\ShowAtoms.cs" />
     <Compile Include="Engine\Common\IGameFactory.cs" />

@@ -72,6 +72,13 @@ namespace IronStar.Core {
 		}
 
 
+
+		public IGamePreloader CreateLoader( string serverInfo )
+		{
+			return new Loader();
+		}
+
+
 		void IClientInstance.Initialize( string serverInfo )
 		{
 			map     =   Content.Load<Map>( @"maps\" + serverInfo );
