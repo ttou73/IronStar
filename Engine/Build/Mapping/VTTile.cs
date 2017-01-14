@@ -151,6 +151,13 @@ namespace Fusion.Build.Mapping {
 				writer.Write( specularData.RawImageData );
 			}
 		}
+
+
+
+		public void WriteDebug ( Stream stream )
+		{
+			Image.SaveTga( colorData, stream );
+		}
 		
 
 

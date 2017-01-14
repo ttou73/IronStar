@@ -216,8 +216,6 @@ namespace Fusion.Build.Mapping {
 					}
 
 					var address	=	new VTAddress( (short)(x + AddressX), (short)(y + AddressY), 0 );
-					pageTable.Add( address );
-
 					var tile	=	new VTTile( address, pageC, pageN, pageS );
 					pageTable.SaveTile( address, storage, tile );
 				}

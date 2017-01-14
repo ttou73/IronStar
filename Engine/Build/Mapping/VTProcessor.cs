@@ -153,6 +153,10 @@ namespace Fusion.Build.Mapping {
 					var content		=	(VTTextureContent)Misc.LoadObjectFromXml( typeof(VTTextureContent), stream );
 					var writeTime	=	File.GetLastWriteTimeUtc( xmlFile );
 
+					if (content.SkipProcessing) {
+						continue;
+					}
+
 					var tex = new VTTexture( content, name, context, writeTime );
 
 					texTable.AddTexture( tex );
@@ -258,6 +262,17 @@ namespace Fusion.Build.Mapping {
 		}
 
 
+		int RoundUp2( int value, int mip )
+		{
+			return MathUtil.IntDivUp( (value >> mip), 2 ) * 2;
+		}
+
+
+		int RoundDown2( int value, int mip )
+		{
+			return (value >> mip) & 0x7FFFFFFE;
+		}
+
 
 		/// <summary>
 		/// Generates mip levels for all tiles.
@@ -266,60 +281,74 @@ namespace Fusion.Build.Mapping {
 		/// <param name="pageTable"></param>
 		/// <param name="sourceMipLevel"></param>
 		/// <param name="mapStorage"></param>
-		void GenerateMipLevels ( BuildContext buildContext, VTTextureTable pageTable, int sourceMipLevel, IStorage mapStorage )
+		void GenerateMipLevels( BuildContext buildContext, VTTextureTable pageTable, int sourceMipLevel, IStorage mapStorage )
 		{
-			if (sourceMipLevel>=VTConfig.MipCount) {
-				throw new ArgumentOutOfRangeException("mipLevel");
+			if ( sourceMipLevel>=VTConfig.MipCount ) {
+				throw new ArgumentOutOfRangeException( "mipLevel" );
 			}
 
-			int count	= VTConfig.VirtualPageCount >> sourceMipLevel;
-			int sizeB	= VTConfig.PageSizeBordered;
-			var cache	= new TileSamplerCache( mapStorage, pageTable ); 
+			//int count   = VTConfig.VirtualPageCount >> sourceMipLevel;
+			int sizeB   = VTConfig.PageSizeBordered;
+			var cache   = new TileSamplerCache( mapStorage );
 
-			for ( int pageX = 0; pageX < count; pageX+=2 ) {
-				for ( int pageY = 0; pageY < count; pageY+=2 ) {
+			foreach ( var vttex in pageTable.SourceTextures ) {
 
-					var address00 = new VTAddress( pageX + 0, pageY + 0, sourceMipLevel );
-					var address01 = new VTAddress( pageX + 0, pageY + 1, sourceMipLevel );
-					var address10 = new VTAddress( pageX + 1, pageY + 0, sourceMipLevel );
-					var address11 = new VTAddress( pageX + 1, pageY + 1, sourceMipLevel );
-					
-					//	there are no images touching target mip-level.
-					//	NOTE: we can skip images that are touched by border.
-					if ( !pageTable.IsAnyExists( address00, address01, address10, address11 ) ) {
-						continue;
-					}
+				if (!vttex.TilesDirty) {
+					continue;
+				}
 
-					var address =	new VTAddress( pageX/2, pageY/2, sourceMipLevel+1 );
+				int startX	= RoundDown2( vttex.AddressX, sourceMipLevel );
+				int startY	= RoundDown2( vttex.AddressY, sourceMipLevel );
 
-					var tile	=	new VTTile(address);
+				int wTiles  = (vttex.Width / VTConfig.PageSize);
+				int hTiles  = (vttex.Width / VTConfig.PageSize);
 
-					var offsetX	=	(pageX) * VTConfig.PageSize;
-					var offsetY	=	(pageY) * VTConfig.PageSize;
-					var border	=	VTConfig.PageBorderWidth;
+				int endExX	= RoundUp2( vttex.AddressX + wTiles, sourceMipLevel );
+				int endExY	= RoundUp2( vttex.AddressY + hTiles, sourceMipLevel );
 
-					var colorValue	=	Color.Zero;
-					var normalValue	=	Color.Zero;
-					var specularValue	=	Color.Zero;
+				for ( int pageX = startX; pageX < endExX; pageX+=2 ) {
+					for ( int pageY = startY; pageY < endExY; pageY+=2 ) {
 
-					for ( int x=0; x<sizeB; x++) {
-						for ( int y=0; y<sizeB; y++) {
+						var address00 = new VTAddress( pageX + 0, pageY + 0, sourceMipLevel );
+						var address01 = new VTAddress( pageX + 0, pageY + 1, sourceMipLevel );
+						var address10 = new VTAddress( pageX + 1, pageY + 0, sourceMipLevel );
+						var address11 = new VTAddress( pageX + 1, pageY + 1, sourceMipLevel );
 
-							int srcX	=	offsetX + x*2 - border * 2;
-							int srcY	=	offsetY + y*2 - border * 2;
+						//	there are no images touching target mip-level.
+						//	NOTE: we can skip images that are touched by border.
+						//if ( !pageTable.IsAnyExists( address00, address01, address10, address11 ) ) {
+						//	continue;
+						//}
 
-							SampleMegatextureQ4( cache, srcX, srcY, sourceMipLevel, ref colorValue, ref normalValue, ref specularValue );
-							
-							tile.SetValues( x, y, ref colorValue, ref normalValue, ref specularValue );
+						var address =   new VTAddress( pageX/2, pageY/2, sourceMipLevel+1 );
 
+						var tile    =   new VTTile(address);
+
+						var offsetX =   (pageX) * VTConfig.PageSize;
+						var offsetY =   (pageY) * VTConfig.PageSize;
+						var border  =   VTConfig.PageBorderWidth;
+
+						var colorValue  =   Color.Zero;
+						var normalValue =   Color.Zero;
+						var specularValue   =   Color.Zero;
+
+						for ( int x = 0; x<sizeB; x++ ) {
+							for ( int y = 0; y<sizeB; y++ ) {
+
+								int srcX    =   offsetX + x*2 - border * 2;
+								int srcY    =   offsetY + y*2 - border * 2;
+
+								SampleMegatextureQ4( cache, srcX, srcY, sourceMipLevel, ref colorValue, ref normalValue, ref specularValue );
+
+								tile.SetValues( x, y, ref colorValue, ref normalValue, ref specularValue );
+
+							}
 						}
-					}
 
-					pageTable.Add( address );
-					pageTable.SaveTile( address, mapStorage, tile );
+						pageTable.SaveTile( address, mapStorage, tile );
+					}
 				}
 			}
-
 		}
 
 

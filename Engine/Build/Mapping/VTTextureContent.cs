@@ -22,9 +22,12 @@ namespace Fusion.Build.Mapping {
 
 	public class VTTextureContent {
 
-		[Category("General")]
-		[ReadOnly(true)]
-		public string  KeyPath { get;set; }
+		[Category( "General" )]
+		[ReadOnly( true )]
+		public string KeyPath { get; set; }
+
+		[Category( "General" )]
+		public bool SkipProcessing { get; set; }
 
 		[Category( "Textures" )]
 		[Editor( typeof(ImageFileLocationEditor), typeof( UITypeEditor ) )]

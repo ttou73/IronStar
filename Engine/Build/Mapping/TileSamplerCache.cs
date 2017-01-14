@@ -18,13 +18,11 @@ namespace Fusion.Build.Mapping {
 		LRUCache<VTAddress, VTTile> cache;
 
 		readonly IStorage storage;
-		readonly VTTextureTable pageTable;
 			
-		public TileSamplerCache ( IStorage mapStorage, VTTextureTable pageTable )
+		public TileSamplerCache ( IStorage mapStorage )
 		{
 			this.storage	=	mapStorage;
 			this.cache		=	new LRUCache<VTAddress,VTTile>(128);
-			this.pageTable	= pageTable;
 		}
 
 
@@ -41,7 +39,7 @@ namespace Fusion.Build.Mapping {
 				
 				var path	=	address.GetFileNameWithoutExtension(".tile");
 
-				if (pageTable.Contains(address)) {
+				if (storage.FileExists(path)) {
 					tile	=	new VTTile(address);
 					tile.Read( storage.OpenFile(path, FileMode.Open, FileAccess.Read) );
 				} else {

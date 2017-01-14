@@ -79,28 +79,28 @@ namespace Fusion.Build.Mapping {
 
 
 
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="address"></param>
-		public void Add ( VTAddress address )
-		{
-			if (pages.Contains(address)) {
-				Log.Warning("Address {0:X} is already added", address);
-			}
-			pages.Add( address );
-		}
+		///// <summary>
+		///// 
+		///// </summary>
+		///// <param name="address"></param>
+		//public void Add ( VTAddress address )
+		//{
+		//	if (pages.Contains(address)) {
+		//		Log.Warning("Address {0:X} is already added", address);
+		//	}
+		//	pages.Add( address );
+		//}
 
 
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="address"></param>
-		/// <returns></returns>
-		public bool Contains ( VTAddress address )
-		{
-			return pages.Contains(address);
-		}
+		///// <summary>
+		///// 
+		///// </summary>
+		///// <param name="address"></param>
+		///// <returns></returns>
+		//public bool Contains ( VTAddress address )
+		//{
+		//	return pages.Contains(address);
+		//}
 
 
 		/// <summary>
@@ -164,7 +164,8 @@ namespace Fusion.Build.Mapping {
 			var name	=	address.GetFileNameWithoutExtension("") + ".tile";
 
 			tile.Write( storage.OpenWrite(name) );
-		}
+			//tile.WriteDebug( storage.OpenWrite(name + ".tga") );
+		}			  
 
 
 		/// <summary>

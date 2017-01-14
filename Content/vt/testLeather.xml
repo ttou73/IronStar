@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-16"?>
 <VTTextureContent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <SkipProcessing>false</SkipProcessing>
   <BaseColor>scenes\test\testLeather_BaseColor.png</BaseColor>
   <NormalMap>scenes\test\testLeather_NormalMap.png</NormalMap>
   <Metallic>scenes\test\testLeather_Metallic.png</Metallic>
