@@ -36,9 +36,9 @@ namespace IronStar {
 				throw new NotImplementedException();
 			}
 
-			public IServerInstance CreateServer( Game game, string map )
+			public IServerInstance CreateServer( Game game )
 			{
-				return new GameWorld( game.GameServer, map );
+				return new GameWorld( game.GameServer );
 			}
 
 			public IUserInterface CreateUI( Game game )

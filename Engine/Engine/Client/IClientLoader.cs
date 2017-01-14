@@ -7,12 +7,11 @@ using Fusion.Engine.Common;
 using Fusion.Core.Content;
 
 namespace Fusion.Engine.Client {
-	public interface IGameLoader {
+	public interface IClientLoader {
 
 		/// <summary>
-		/// Loads client instance 
+		/// Loads content in separate thread
 		/// </summary>
-		/// <returns></returns>
-		IClientInstance Load ( string serverInfo );
+		void LoadContent ();
 	}
 }

@@ -19,20 +19,6 @@ namespace Fusion.Engine.Server {
 	/// </summary>
 	public partial class GameServer : GameComponent {
 
-		/// <summary>
-		/// Initializes a new instance of this class.
-		/// </summary>
-		/// <param name="Game"></param>
-		public GameServer ( Game game ) : base(game)
-		{
-		}
-
-
-		public override void Initialize()
-		{
-			
-		}
-
 
 		/// <summary>
 		/// <summary>
@@ -52,6 +38,27 @@ namespace Fusion.Engine.Server {
 		float targetFrameRate = 60;
 
 
+
+		/// <summary>
+		/// Initializes a new instance of this class.
+		/// </summary>
+		/// <param name="Game"></param>
+		public GameServer ( Game game ) : base(game)
+		{
+		}
+
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public override void Initialize()
+		{
+			
+		}
+
+
+
 		/// <summary>
 		/// Releases all resources used by the GameServer class.
 		/// </summary>
@@ -62,6 +69,7 @@ namespace Fusion.Engine.Server {
 			}
 			base.Dispose( disposing );
 		}
+
 
 
 		/// <summary>

@@ -32,7 +32,7 @@ namespace IronStar.Views {
 		public GameCamera ( GameWorld world ) : base( world )
 		{
 			if (world.IsClientSide) {
-				currentFov	=	120;//(world.GameClient as ShooterClient).Fov;
+				currentFov	=	90;//(world.GameClient as ShooterClient).Fov;
 			}
 		}
 
@@ -101,7 +101,7 @@ namespace IronStar.Views {
 			var up	=	m.Up;
 
 
-			var targetFov	=	MathUtil.Clamp( uc.CtrlFlags.HasFlag( UserCtrlFlags.Zoom ) ? 30 : 120, 10, 140 );
+			var targetFov	=	MathUtil.Clamp( uc.CtrlFlags.HasFlag( UserCtrlFlags.Zoom ) ? 30 : 90, 10, 140 );
 
 			currentFov		=	MathUtil.Drift( currentFov, targetFov, 360*elapsedTime, 360*elapsedTime );
 

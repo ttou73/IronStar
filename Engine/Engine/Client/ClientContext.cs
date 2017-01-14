@@ -69,8 +69,7 @@ namespace Fusion.Engine.Client {
 		{
 			if ( !disposedValue ) {
 				if ( disposing ) {
-					NetClient.Disconnect("Disconnect");
-					NetClient.Shutdown("Disconnect");
+					NetClient.Shutdown("Shutdown");
 					Instance?.Dispose();
 				}
 

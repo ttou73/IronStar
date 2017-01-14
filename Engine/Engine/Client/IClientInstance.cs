@@ -18,6 +18,13 @@ namespace Fusion.Engine.Client {
 		void Initialize ( string serverInfo );
 
 		/// <summary>
+		/// Creates async loader for client
+		/// </summary>
+		/// <param name="serverInfo"></param>
+		/// <returns></returns>
+		IClientLoader CreateLoader ( string serverInfo )
+
+		/// <summary>
 		/// Called when the game has determined that client-side logic needs to be processed.
 		/// </summary>
 		/// <param name="gameTime">Cliemt-side game time.</param>

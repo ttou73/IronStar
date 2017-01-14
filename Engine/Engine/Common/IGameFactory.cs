@@ -9,7 +9,7 @@ using Fusion.Engine.Server;
 namespace Fusion.Engine.Common {
 	public interface IGameFactory {
 		IClientInstance	CreateClient ( Game game, Guid clientGuid );
-		IServerInstance CreateServer ( Game game, string map );
+		IServerInstance CreateServer ( Game game );
 		IUserInterface	CreateUI ( Game game );
 	}
 }

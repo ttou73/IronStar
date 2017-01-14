@@ -756,9 +756,9 @@ namespace Fusion.Engine.Common {
 			//	Disconnect!
 
 			if (dedicated) {
-				GameServer.StartInternal( map, null );
+				GameServer.Start( map, null );
 			} else {
-				GameServer.StartInternal( map, null );
+				GameServer.Start( map, null );
 				GameClient.Connect( "127.0.0.1", Network.Port );
 			}
 		}
@@ -766,7 +766,7 @@ namespace Fusion.Engine.Common {
 
 		public void KillServer ()
 		{
-			GameServer.KillInternal();
+			GameServer.Kill();
 		}
 
 

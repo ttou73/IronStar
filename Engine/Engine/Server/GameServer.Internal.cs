@@ -49,7 +49,7 @@ namespace Fusion.Engine.Server {
 				}
 
 				killToken	=	new CancellationTokenSource();
-				serverTask	=	new Task( () => ServerTaskFunc(map, ()=>Game.GameFactory.CreateServer(Game,map), killToken.Token ) );
+				serverTask	=	new Task( () => ServerTaskFunc(map, killToken.Token ) );
 				serverTask.Start();
 			}
 		}
@@ -98,14 +98,14 @@ namespace Fusion.Engine.Server {
 		/// 
 		/// </summary>
 		/// <param name="map"></param>
-		void ServerTaskFunc ( string map, Func<IServerInstance> createServer, CancellationToken killToken )
+		void ServerTaskFunc ( string map, CancellationToken killToken )
 		{
 			try {
 				Log.Message("Server starting: {0}", map);
 
-				using ( var serverInstance = createServer() ) {
+				using ( var serverInstance = Game.GameFactory.CreateServer(Game) ) {
 
-					serverInstance.Initialize();
+					serverInstance.Initialize(map);
 
 					using ( var context = new ServerContext( Game, Game.GameID, Game.Network.Port, serverInstance ) ) {
 

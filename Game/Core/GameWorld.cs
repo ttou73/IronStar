@@ -24,7 +24,7 @@ namespace IronStar.Core {
 	/// </summary>
 	public partial class GameWorld : IServerInstance, IClientInstance {
 
-		readonly string mapName;
+		string mapName;
 
 		Map map;
 
@@ -108,63 +108,6 @@ namespace IronStar.Core {
 			}
 		}
 
-
-		/// <summary>
-		/// Initializes server-side world.
-		/// </summary>
-		/// <param name="maxPlayers"></param>
-		/// <param name="maxEntities"></param>
-		public GameWorld ( GameServer server, string mapName )
-		{
-			Atoms	=	new AtomCollection();
-
-			Log.Verbose( "world: server" );
-			this.serverSide =   true;
-			this.Game       =   server.Game;
-			this.UserGuid   =   new Guid();
-			Content         =   new ContentManager( Game );
-			entities        =   new EntityCollection(Atoms);
-
-			entityControllerTypes	=	Misc.GetAllSubclassesOf( typeof(EntityController) )
-										.ToDictionary( type => type.Name );
-
-			AddAtoms();
-
-			//------------------------
-
-			this.mapName	=	mapName;
-
-			map     =   Content.Load<Map>( @"maps\" + mapName );
-
-			map.ActivateMap( this );
-
-
-			#region TEMP STUFF
-			Random	r = new Random();
-			for (int i=0; i<10; i++) {
-				Spawn("box", 0, Vector3.Up * 400 + r.GaussRadialDistribution(20,2), 0 );
-			}// */
-			#endregion
-
-
-			EntityKilled += MPWorld_EntityKilled;
-		}
-
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		void AddAtoms ()
-		{
-			var atoms = new List<string>();
-
-			atoms.AddRange( Content.EnumerateAssets( "fx" ) );
-			atoms.AddRange( Content.EnumerateAssets( "entities" ) );
-			atoms.AddRange( Content.EnumerateAssets( "models" ) );
-
-			Atoms.AddRange( atoms );
-		}
 
 
 
