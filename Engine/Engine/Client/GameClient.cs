@@ -8,39 +8,26 @@ using System.Threading;
 using System.IO;
 using Fusion.Engine.Common;
 using Fusion.Core.Content;
-
+using Fusion.Engine.Common.Commands;
+using Fusion.Core.Shell;
 
 namespace Fusion.Engine.Client {
 
 	/// <summary>
 	/// Provides basic client-server interaction and client-side game logic.
 	/// </summary>
-	public abstract partial class GameClient : GameComponent {
+	public partial class GameClient : GameComponent {
 
-		public readonly Guid Guid;
+		State state;
+		float ping;
 
-		
-		/// <summary>
-		/// Gets Client's instance of content manager.
-		/// </summary>
-		public ContentManager Content { get { return content; }	}
-		ContentManager content;
 
-		/// <summary>
-		/// Gets atoms collection.
-		/// </summary>
-		public AtomCollection Atoms { 
-			get { 
-				if (atoms==null) {
-					throw new NullReferenceException("Atoms are ready to use after snapshot received.");
-				}
-				return atoms; 
-			} 
-			internal set { 
-				atoms = value; 
-			}	
+		public class ClientEventArgs : EventArgs {	
+			public ClientState ClientState;
+			public string Message;
 		}
-		AtomCollection atoms = null;
+
+		public event EventHandler<ClientEventArgs> ClientStateChanged;
 
 
 		/// <summary>
@@ -55,13 +42,17 @@ namespace Fusion.Engine.Client {
 		/// <param name="Game"></param>
 		public GameClient ( Game game ) : base(game) 
 		{
-			ClientStateChanged += (s,e)=>{};
-
-			Guid	=	Guid.NewGuid();
-			content	=	new ContentManager(game);
-			InitInternal();
+			SetState( new StandBy(this) );
 		}
 
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public override void Initialize()
+		{
+		}
 
 
 		/// <summary>
@@ -71,65 +62,99 @@ namespace Fusion.Engine.Client {
 		protected override void Dispose ( bool disposing )
 		{
 			if (disposing) {
-				SafeDispose( ref content );
 			}
 			base.Dispose( disposing );
 		}
 
+		
 
 		/// <summary>
-		/// Called when connection request accepted by server.
-		/// Method returns GameLoader that could load all content according server info.
+		/// Sets state
 		/// </summary>
-		/// <param name="serverInfo"></param>
-		public abstract GameLoader LoadContent ( string serverInfo );
+		/// <param name="newState"></param>
+		void SetState ( State newState )
+		{						
+			this.state = newState;
+			Log.Message("CL: State: {0} {1}", newState.GetType().Name, newState.Message );
+
+			ClientStateChanged?.Invoke( this, new ClientEventArgs(){ ClientState = newState.ClientState, Message = newState.Message } );
+		}
+							
+
 
 		/// <summary>
-		/// Called when GameLoader finished loading.
-		/// This method lets client to complete loading process in main thread.
-		/// Add mesh instances, sounds, setup sky, hdr etc in this method.
+		/// Wait for client completion.
 		/// </summary>
-		/// <param name="serverInfo"></param>
-		public abstract void FinalizeLoad ( GameLoader loader );
+		internal void Wait ()
+		{	
+			if ( !(state is StandBy) && !(state is Disconnected) ) {
+				Disconnect("quit");
+			}
+
+
+			while ( !(state is StandBy) ) {
+				Thread.Sleep(50);
+				Update( new GameTime() );
+			}
+		}
+
+
 
 		/// <summary>
-		///	Called when client disconnected, dropped, kicked or timeouted.
-		///	Client must purge all level-associated content.
-		///	In most cases you need just to call Content.Unload().
+		/// Request connection. Result depends on current client state.
 		/// </summary>
-		public abstract void UnloadContent ();
+		/// <param name="host"></param>
+		/// <param name="port"></param>
+		internal void Connect ( string host, int port )
+		{
+			ping	=	float.MaxValue;
+			state.UserConnect( host, port );
+		}
+
+
 
 		/// <summary>
-		/// Called when the game has determined that client-side logic needs to be processed.
+		/// Request diconnect. Result depends on current client state.
 		/// </summary>
-		/// <param name="gameTime">Cliemt-side game time.</param>
-		/// <param name="sentCommandID">Command's ID that are going to be sent.</param>
-		/// <returns>User command bytes</returns>
-		public abstract byte[] Update ( GameTime gameTime, uint sentCommandID );
+		/// <param name="host"></param>
+		/// <param name="port"></param>
+		internal void Disconnect (string message)
+		{
+			state.UserDisconnect(message);
+		}
+
+
 
 		/// <summary>
-		/// Feed server snapshot to client.
-		/// Called when fresh snapshot arrived.
-		/// <remarks>Not all snapshot could reach client.</remarks>
+		/// Updates client.
 		/// </summary>
-		/// <param name="serverTime">Server time includes number of server frames, total server time and elapsed time since last server frame. 
-		/// <param name="snapshotStream">Snapshot data stream.</param>
-		/// <param name="ackCommandID">Acknoledged (e.g. received and responsed) command ID. Zero value means first snapshot.</param>
-		public abstract void FeedSnapshot ( GameTime serverTime, byte[] snapshot, uint ackCommandID );
+		/// <param name="gameTime"></param>
+		internal void Update ( GameTime gameTime )
+		{
+			//
+			//	Update client-side game :
+			//
+			state.Update( gameTime );
 
-		/// <summary>
-		/// Feed notification from server.
-		/// </summary>
-		/// <param name="message">Message from server</param>
-		public abstract void FeedNotification ( string message );
+			//
+			//	Crash test :
+			//
+			CrashClient.CrashTest();
+			FreezeClient.FreezeTest();
 
-		/// <summary>
-		/// Gets user information. 
-		/// Called when client-server game logic has determined that server needs user information.
-		/// </summary>
-		/// <returns>User information</returns>
-		public abstract string UserInfo ();
+			//
+			//	Execute command :
+			//	Should command be executed in Active state only?
+			//	
+			try {
+				Game.Invoker.ExecuteQueue( gameTime, CommandAffinity.Client );
+			} catch ( Exception e ) {
+				Log.Error( e.Message );
+			}
+		}
 
+
+	
 		/// <summary>
 		/// Sends server string message.
 		/// This method may be used for chat 
@@ -138,8 +163,11 @@ namespace Fusion.Engine.Client {
 		/// <param name="message"></param>
 		public void NotifyServer ( string message )
 		{
-			NotifyInternal(message);
+			var active = state as Active;
+			active?.NotifyServer( message );
 		}
+
+
 
 		/// <summary>
 		/// Gets ping between client and server in seconds.

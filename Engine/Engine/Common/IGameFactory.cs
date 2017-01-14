@@ -8,8 +8,7 @@ using Fusion.Engine.Server;
 
 namespace Fusion.Engine.Common {
 	public interface IGameFactory {
-		IGameLoader		CreateLoader ( Game game, string serverInfo );
-		IClientInstance CreateClient ( Game game, string serverInfo );
+		IClientInstance	CreateClient ( Game game, Guid clientGuid );
 		IServerInstance CreateServer ( Game game, string map );
 		IUserInterface	CreateUI ( Game game );
 	}

@@ -13,7 +13,7 @@ using System.Diagnostics;
 
 
 namespace Fusion.Engine.Client {
-	public abstract partial class GameClient {
+	public partial class GameClient {
 
 		class Active : State {
 
@@ -30,6 +30,8 @@ namespace Fusion.Engine.Client {
 			long			lastServerTicks;
 			uint			lastSnapshotID;
 
+			readonly ClientContext context;
+
 
 			/// <summary>
 			/// Creates instance of Active client state.
@@ -37,8 +39,10 @@ namespace Fusion.Engine.Client {
 			/// <param name="gameClient"></param>
 			/// <param name="snapshotId"></param>
 			/// <param name="initialSnapshot"></param>
-			public Active ( GameClient gameClient, uint snapshotId, byte[] initialSnapshot, long svTicks ) : base(gameClient, ClientState.Active)
+			public Active ( ClientContext context, uint snapshotId, byte[] initialSnapshot, long svTicks ) : base(context.GameClient, ClientState.Active)
 			{
+				this.context	=	context;
+
 				queue	=	new SnapshotQueue(32);
 				queue.Push( new Snapshot( new TimeSpan(0), snapshotId, initialSnapshot) );
 
@@ -59,7 +63,7 @@ namespace Fusion.Engine.Client {
 				clientTicks	=	stopwatch.Elapsed.Ticks;
 
 
-				gameClient.FeedSnapshot( new GameTime(0,svTicks,0L), initialSnapshot, 0 );
+				context.Instance.FeedSnapshot( new GameTime(0,svTicks,0L), initialSnapshot, 0 );
 			}
 
 
@@ -82,7 +86,7 @@ namespace Fusion.Engine.Client {
 			/// <param name="reason"></param>
 			public override void UserDisconnect ( string reason )
 			{
-				client.Disconnect( reason );
+				context.NetClient.Disconnect( reason );
 			}
 
 
@@ -93,6 +97,8 @@ namespace Fusion.Engine.Client {
 			/// <param name="gameTime"></param>
 			public override void Update ( GameTime gameTime )
 			{
+				DispatchIM( context.NetClient );
+
 				//
 				//	Update timing and frame counting :
 				//
@@ -119,7 +125,7 @@ namespace Fusion.Engine.Client {
 				//
 				//	Update client state and get user command:
 				//
-				var userCmd  = gameClient.Update( clientTime, commandCounter);
+				var userCmd  = context.Instance.Update( clientTime, commandCounter);
 
 
 				//	show user commands :
@@ -132,7 +138,7 @@ namespace Fusion.Engine.Client {
 				//
 				//	Send user command :
 				//
-				gameClient.SendUserCommand( client, lastSnapshotFrame, commandCounter, userCmd );
+				gameClient.SendUserCommand( context.NetClient, lastSnapshotFrame, commandCounter, userCmd );
 
 				//	increase command counter:
 				commandCounter++;
@@ -149,10 +155,25 @@ namespace Fusion.Engine.Client {
 			public override void StatusChanged(NetConnectionStatus status, string message, NetConnection connection)
 			{
  				if (status==NetConnectionStatus.Disconnected) {
-					gameClient.SetState( new Disconnected(gameClient, message) );
+					gameClient.SetState( new Disconnected(context, message) );
 				}
 			}
 
+
+
+			/// <summary>
+			/// 
+			/// </summary>
+			/// <param name="message"></param>
+			public void NotifyServer ( string message )
+			{
+				var msg = context.NetClient.CreateMessage( message.Length + 1 );
+
+				msg.Write( (byte)NetCommand.Notification );
+				msg.Write( message );
+
+				context.NetClient.SendMessage( msg, NetDeliveryMethod.ReliableSequenced );
+			}
 
 
 			/// <summary>
@@ -183,7 +204,7 @@ namespace Fusion.Engine.Client {
 				#if USE_DEJITTER
 				jitter.Push( snapshot, ackCmdID, svTicks, stopwatch.Elapsed.Ticks );
 				#else
-				gameClient.FeedSnapshot( new GameTime(svFrame, svTicks,timeDelta), snapshot, ackCmdID );
+				context.Instance.FeedSnapshot( new GameTime(svFrame, svTicks,timeDelta), snapshot, ackCmdID );
 				#endif
 			}
 
@@ -221,7 +242,7 @@ namespace Fusion.Engine.Client {
 				}
 
 				if (command==NetCommand.Notification) {
-					gameClient.FeedNotification( msg.ReadString() );
+					context.Instance.FeedNotification( msg.ReadString() );
 				}
 			}
 		}

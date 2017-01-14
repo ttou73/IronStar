@@ -11,7 +11,7 @@ using Fusion.Engine.Server;
 
 
 namespace Fusion.Engine.Client {
-	public abstract partial class GameClient {
+	public partial class GameClient {
 
 		class Loading : State {
 
@@ -19,18 +19,15 @@ namespace Fusion.Engine.Client {
 			/// if null - no reason to disconnect.
 			/// </summary>
 			string disconnectReason = null;
-			GameLoader loader;
+			readonly ClientContext context;
 			
 
-			public Loading ( GameClient gameClient, string serverInfo ) : base(gameClient, ClientState.Loading)
+			public Loading ( ClientContext context, string serverInfo ) : base(context.GameClient, ClientState.Loading)
 			{
-				Message	=	serverInfo;
+				Message			=	serverInfo;
+				this.context	=	context;
 
-				loader	=	gameClient.LoadContent( serverInfo );
-
-				if (loader==null) {
-					throw new InvalidOperationException("Null GameLoader");
-				}
+				context.Instance.Initialize( serverInfo );
 			}
 
 
@@ -42,24 +39,25 @@ namespace Fusion.Engine.Client {
 
 			public override void UserDisconnect ( string reason )
 			{
-				client.Disconnect( reason );
+				context.NetClient.Disconnect( reason );
 			}
 
 
 			public override void Update ( GameTime gameTime )
 			{
-				loader.Update(gameTime);
+				DispatchIM( context.NetClient );
+
+				//	TODO : update loader/precache
 
 				//	sleep a while to get 
 				//	other threads more time.
 				Thread.Sleep(1);
 
-				if (loader.IsCompleted) {
+				if (true) {
 					if (disconnectReason!=null) {
-						gameClient.SetState( new Disconnected(gameClient, disconnectReason) );
+						gameClient.SetState( new Disconnected(context, disconnectReason) );
 					} else {
-						gameClient.FinalizeLoad( loader );
-						gameClient.SetState( new Awaiting(gameClient) );
+						gameClient.SetState( new Awaiting(context) );
 					}
 				}
 			}

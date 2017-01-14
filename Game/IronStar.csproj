@@ -61,6 +61,9 @@
     <Compile Include="Commands\ShowWorldState.cs" />
     <Compile Include="Core\EntityFactory.cs" />
     <Compile Include="Core\EntityCollection.cs" />
+    <Compile Include="Core\GameWorld.Loader.cs" />
+    <Compile Include="Core\GameWorld.Server.cs" />
+    <Compile Include="Core\GameWorld.Client.cs" />
     <Compile Include="Core\GameWorld.Query.cs" />
     <Compile Include="Core\Old\Filter.cs" />
     <Compile Include="Core\Old\Oscillator.cs" />
@@ -123,14 +126,11 @@
     <Compile Include="SFX\FXInstance.ParticleStage.cs" />
     <Compile Include="SFX\FXInstance.cs" />
     <Compile Include="Core\EntityEventArgs.cs" />
-    <Compile Include="ShooterClient.Config.cs" />
     <Compile Include="Entities\RigidBody.cs" />
     <Compile Include="Core\GameWorld.Players.cs" />
     <Compile Include="Core\Entity.cs" />
     <Compile Include="Core\GameWorld.cs" />
     <Compile Include="MathConverter.cs" />
-    <Compile Include="ShooterLoader.cs" />
-    <Compile Include="ShooterClient.cs" />
     <Compile Include="ShooterInterface.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

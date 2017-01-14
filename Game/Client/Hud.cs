@@ -57,7 +57,7 @@ namespace IronStar.Views {
 		/// <param name="gameTime"></param>
 		public override void Update ( float elapsedTime, float lerpFactor )
 		{
-			var hudLayer	=	((ShooterClient)World.GameClient).HudLayer;
+			var hudLayer	=	World.HudLayer;
 			hudLayer.Clear();
 
 			var rw	= Game.RenderSystem.RenderWorld;

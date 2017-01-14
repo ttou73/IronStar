@@ -12,7 +12,7 @@ using System.Net;
 
 
 namespace Fusion.Engine.Client {
-	public abstract partial class GameClient {
+	public partial class GameClient {
 
 		class StandBy : State {
 

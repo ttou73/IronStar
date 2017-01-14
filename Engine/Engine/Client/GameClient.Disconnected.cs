@@ -12,18 +12,15 @@ using System.Net;
 
 
 namespace Fusion.Engine.Client {
-	public abstract partial class GameClient {
+	public partial class GameClient {
 
 		class Disconnected : State {
 
-			public Disconnected ( GameClient gameClient, string reason ) : base(gameClient, ClientState.Disconnected)
+			public Disconnected ( ClientContext context, string reason ) : base(context.GameClient, ClientState.Disconnected)
 			{
 				Message	=	reason;
 
-				//	Notify client that game ended?
-				gameClient.UnloadContent();
-
-				client.Shutdown( reason );
+				context?.Dispose();
 			}
 
 

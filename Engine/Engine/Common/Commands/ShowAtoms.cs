@@ -19,11 +19,12 @@ namespace Fusion.Engine.Common.Commands {
 
 		public override void Execute ()
 		{
-			var atoms = Invoker.Game.GameClient.Atoms.ToArray();
+			throw new NotImplementedException();
+			//var atoms = Invoker.Game.GameClient.Atoms.ToArray();
 
-			for (int i=1; i<atoms.Length; i++) {
-				Log.Message("{0} : {1}", i, atoms[i] );
-			}
+			//for (int i=1; i<atoms.Length; i++) {
+			//	Log.Message("{0} : {1}", i, atoms[i] );
+			//}
 		}
 	}
 }

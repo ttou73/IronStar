@@ -12,21 +12,24 @@ using System.Net;
 
 
 namespace Fusion.Engine.Client {
-	public abstract partial class GameClient {
+	public partial class GameClient {
 
 		class Connecting : State {
 
+			public readonly ClientContext context;
+
 			public Connecting ( GameClient gameClient, IPEndPoint endPoint ) : base(gameClient, ClientState.Connecting)
 			{
-				client.Start();
+				context	=	new ClientContext( gameClient.Game );
 
-				Message		=	endPoint.ToString();
+				Message	=	endPoint.ToString();
 
-				var hail	=	client.CreateMessage();
-				hail.Write( gameClient.Guid.ToByteArray() );
-				hail.Write( Encoding.UTF8.GetBytes(gameClient.UserInfo()) );
+				//	connect
+				var hail	=	context.NetClient.CreateMessage();
+				hail.Write( context.Guid.ToByteArray() );
+				hail.Write( Encoding.UTF8.GetBytes(context.Instance.UserInfo()) );
 
-				client.Connect( endPoint, hail );
+				context.NetClient.Connect( endPoint, hail );
 			}
 
 
@@ -40,13 +43,14 @@ namespace Fusion.Engine.Client {
 
 			public override void UserDisconnect ( string reason )
 			{
-				client.Disconnect( reason );
+				context.NetClient.Disconnect( reason );
 			}
 
 
 
 			public override void Update ( GameTime gameTime )
 			{
+				DispatchIM( context.NetClient );
 			}
 
 
@@ -54,11 +58,11 @@ namespace Fusion.Engine.Client {
 			public override void StatusChanged(NetConnectionStatus status, string message, NetConnection connection)
 			{
  				if (status==NetConnectionStatus.Connected) {
-					string serverInfo = connection.RemoteHailMessage.PeekString();
-					gameClient.SetState( new Loading( gameClient, connection.RemoteHailMessage.PeekString() ) );
+					var serverInfo		=	connection.RemoteHailMessage.PeekString();
+					gameClient.SetState( new Loading( context, serverInfo ) );
 				}
  				if (status==NetConnectionStatus.Disconnected) {
-					gameClient.SetState( new Disconnected( gameClient, message ) );
+					gameClient.SetState( new Disconnected( context, message ) );
 				}
 			}
 

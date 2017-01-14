@@ -38,7 +38,7 @@ namespace IronStar.Core {
 			Entity e;
 
 			if ( entities.TryGetValue( id, out e ) ) {
-				return e.UserGuid == GameClient.Guid;
+				return e.UserGuid == clientGuid;
 			} else {
 				return false;
 			}

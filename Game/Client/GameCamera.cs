@@ -32,7 +32,7 @@ namespace IronStar.Views {
 		public GameCamera ( GameWorld world ) : base( world )
 		{
 			if (world.IsClientSide) {
-				currentFov	=	(world.GameClient as ShooterClient).Fov;
+				currentFov	=	120;//(world.GameClient as ShooterClient).Fov;
 			}
 		}
 
@@ -45,8 +45,7 @@ namespace IronStar.Views {
 		/// </summary>
 		public float Sensitivity {
 			get {
-				var cl = ((ShooterClient)World.GameClient);
-				return currentFov / cl.Fov * cl.Sensitivity;
+				return 5;
 			}
 		}
 
@@ -60,7 +59,6 @@ namespace IronStar.Views {
 			var rw	= Game.RenderSystem.RenderWorld;
 			var sw	= Game.SoundSystem.SoundWorld;
 			var vp	= Game.RenderSystem.DisplayBounds;
-			var cl	= ((ShooterClient)World.GameClient);
 
 			var aspect	=	(vp.Width) / (float)vp.Height;
 		
@@ -86,7 +84,7 @@ namespace IronStar.Views {
 			playerID	=	player.ID;
 			CalcBobbing( player, elapsedTime );
 
-			var uc	=	(World.GameClient as ShooterClient).UserCommand;
+			var uc	=	World.UserCommand;
 
 			var m	= 	Matrix.RotationYawPitchRoll(	
 							uc.Yaw	 + MathUtil.Rad( bobYaw.Offset), 
@@ -96,14 +94,14 @@ namespace IronStar.Views {
 
 			var ppos	=	player.LerpPosition(lerpFactor);
 
-			float backoffset = ((ShooterClient)World.GameClient).ThirdPerson ? 2 : 0;
+			float backoffset = false ? 2 : 0;
 			var pos		=	ppos + Vector3.Up * 1.0f + m.Backward * backoffset;
 
 			var fwd	=	pos + m.Forward;
 			var up	=	m.Up;
 
 
-			var targetFov	=	MathUtil.Clamp( uc.CtrlFlags.HasFlag( UserCtrlFlags.Zoom ) ? cl.ZoomFov : cl.Fov, 10, 140 );
+			var targetFov	=	MathUtil.Clamp( uc.CtrlFlags.HasFlag( UserCtrlFlags.Zoom ) ? 30 : 120, 10, 140 );
 
 			currentFov		=	MathUtil.Drift( currentFov, targetFov, 360*elapsedTime, 360*elapsedTime );
 

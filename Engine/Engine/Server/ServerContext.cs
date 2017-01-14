@@ -16,7 +16,7 @@ using Fusion.Core.Content;
 namespace Fusion.Engine.Server {
 	
 
-	class GameServerContext : IDisposable {
+	class ServerContext : IDisposable {
 		
 		readonly Game game;
 		readonly Queue<string> notifications = null;
@@ -31,7 +31,7 @@ namespace Fusion.Engine.Server {
 		/// </summary>
 		/// <param name="server"></param>
 		/// <param name="serverInstance"></param>
-		public GameServerContext ( Game game, string gameId, int port, IServerInstance serverInstance )
+		public ServerContext ( Game game, string gameId, int port, IServerInstance serverInstance )
 		{
 			this.game			=	game;
 			this.serverInstance	=	serverInstance;

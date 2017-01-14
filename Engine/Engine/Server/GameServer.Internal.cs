@@ -40,7 +40,7 @@ namespace Fusion.Engine.Server {
 		/// </summary>
 		/// <param name="map"></param>
 		/// <param name="postCommand"></param>
-		internal void StartInternal ( string map, string postCommand )
+		public void Start ( string map, string postCommand )
 		{
 			lock (lockObj) {
 				if (IsAlive) {
@@ -60,7 +60,7 @@ namespace Fusion.Engine.Server {
 		/// Kills server thread.
 		/// </summary>
 		/// <param name="wait"></param>
-		internal void KillInternal ()
+		public void Kill ()
 		{
 			lock (lockObj) {
 				if (!IsAlive) {
@@ -107,7 +107,7 @@ namespace Fusion.Engine.Server {
 
 					serverInstance.Initialize();
 
-					using ( var context = new GameServerContext( Game, Game.GameID, Game.Network.Port, serverInstance ) ) {
+					using ( var context = new ServerContext( Game, Game.GameID, Game.Network.Port, serverInstance ) ) {
 
 						//	Timer and fixed timestep stuff :
 						//	http://gafferongames.com/game-physics/fix-your-timestep/

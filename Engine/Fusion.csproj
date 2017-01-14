@@ -209,6 +209,7 @@
     <Compile Include="Development\UserMessage.Designer.cs">
       <DependentUpon>UserMessage.cs</DependentUpon>
     </Compile>
+    <Compile Include="Engine\Client\ClientContext.cs" />
     <Compile Include="Engine\Client\IGameLoader.cs" />
     <Compile Include="Engine\Client\IClientInstance.cs" />
     <Compile Include="Engine\Common\Commands\ShowAtoms.cs" />
@@ -449,14 +450,13 @@
     <Compile Include="Engine\Input\KeyBind.cs" />
     <Compile Include="Engine\Input\Touch.cs" />
     <Compile Include="Engine\Input\Unbind.cs" />
-    <Compile Include="Engine\Client\GameClient.Internal.cs" />
     <Compile Include="Engine\Media\MediaState.cs" />
     <Compile Include="Engine\Media\Video.cs" />
     <Compile Include="Engine\Media\VideoPlayer.cs" />
     <Compile Include="Engine\Media\VideoSampleGrabber.cs" />
     <Compile Include="Engine\Common\Network.cs" />
     <Compile Include="Engine\Server\GameServer.Internal.cs" />
-    <Compile Include="Engine\Server\GameServerContext.cs" />
+    <Compile Include="Engine\Server\ServerContext.cs" />
     <Compile Include="Engine\Common\Game.cs" />
     <Compile Include="Drivers\Graphics\GraphicsParameters.cs">
       <SubType>Code</SubType>

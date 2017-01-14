@@ -26,9 +26,9 @@ namespace IronStar {
 
 		class GameFactory : IGameFactory {
 
-			public IClientInstance CreateClient( Game game, string serverInfo )
+			public IClientInstance CreateClient( Game game, Guid clientGuid )
 			{
-				throw new NotImplementedException();
+				return new GameWorld( game.GameClient, clientGuid );
 			}
 
 			public IGameLoader CreateLoader( Game game, string serverInfo )
@@ -83,7 +83,7 @@ namespace IronStar {
 
 				//	create SV, CL and UI instances :
 				game.GameServer = new GameServer( game );
-				game.GameClient = new ShooterClient( game );
+				game.GameClient = new GameClient( game );
 				game.UserInterface = new ShooterInterface( game );
 
 				//	load configuration.

@@ -24,17 +24,15 @@ namespace IronStar.SFX {
 		LinkedList<ModelInstance> models;
 
 		readonly Game			game;
-		public readonly ShooterClient	client;
 		public readonly RenderSystem rs;
 		public readonly RenderWorld	rw;
 		public readonly SoundWorld	sw;
 		public readonly GameWorld world;
 
-		public ModelManager ( ShooterClient client, GameWorld world )
+		public ModelManager ( GameWorld world )
 		{
 			this.world	=	world;
-			this.client	=	client;
-			this.game	=	client.Game;
+			this.game	=	world.Game;
 			this.rs		=	game.RenderSystem;
 			this.rw		=	game.RenderSystem.RenderWorld;
 			this.sw		=	game.SoundSystem.SoundWorld;
@@ -77,11 +75,11 @@ namespace IronStar.SFX {
 		/// <returns></returns>
 		public ModelInstance AddModel ( short modelAtom, Entity entity )
 		{
-			var modelName	=	client.Atoms[modelAtom];
+			var modelName	=	world.Atoms[modelAtom];
 
-			var modelDesc	=	client.Content.Load<ModelDescriptor>( @"models\" + modelName );
+			var modelDesc	=	world.Content.Load<ModelDescriptor>( @"models\" + modelName );
 
-			var scene		=	client.Content.Load<Scene>( modelDesc.ScenePath );
+			var scene		=	world.Content.Load<Scene>( modelDesc.ScenePath );
 
 			var model		=	new ModelInstance( this, modelDesc, scene, entity );
 

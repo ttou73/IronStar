@@ -24,7 +24,6 @@ namespace IronStar.SFX {
 		TextureAtlas spriteSheet;
 
 		readonly Game			game;
-		public readonly ShooterClient	client;
 		public readonly RenderWorld	rw;
 		public readonly SoundWorld	sw;
 		public readonly GameWorld world;
@@ -38,11 +37,10 @@ namespace IronStar.SFX {
 		/// 
 		/// </summary>
 		/// <param name="game"></param>
-		public FXPlayback ( ShooterClient client, GameWorld world )
+		public FXPlayback ( GameWorld world )
 		{
 			this.world	=	world;
-			this.client	=	client;
-			this.game	=	client.Game;
+			this.game	=	world.Game;
 			this.rw		=	game.RenderSystem.RenderWorld;
 			this.sw		=	game.SoundSystem.SoundWorld;
 
@@ -70,7 +68,7 @@ namespace IronStar.SFX {
 		/// <param name="e"></param>
 		void Game_Reloading ( object sender, EventArgs e )
 		{
-			spriteSheet	=  client.Content.Load<TextureAtlas>(@"sprites\particles|srgb");
+			spriteSheet	=  world.Content.Load<TextureAtlas>(@"sprites\particles|srgb");
 
 			rw.ParticleSystem.Images	=	spriteSheet;	
 		}
@@ -87,7 +85,7 @@ namespace IronStar.SFX {
 			if (string.IsNullOrWhiteSpace(path)) {
 				return null;
 			}
-			return client.Content.Load<SoundEffect>( path, (SoundEffect)null );
+			return world.Content.Load<SoundEffect>( path, (SoundEffect)null );
 		}
 
 
@@ -162,7 +160,7 @@ namespace IronStar.SFX {
 				return null;
 			}
 
-			var className = client.Atoms[ fxAtomID ];
+			var className = world.Atoms[ fxAtomID ];
 
 			if (className==null) {
 				Log.Warning("RunFX: bad atom ID");
@@ -170,7 +168,7 @@ namespace IronStar.SFX {
 			}
 
 
-			var factory		=	client.Content.Load<FXFactory>( Path.Combine("fx", className), (FXFactory)null );
+			var factory		=	world.Content.Load<FXFactory>( Path.Combine("fx", className), (FXFactory)null );
 
 			if (factory==null) {
 				return null;

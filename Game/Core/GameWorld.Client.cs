@@ -5,120 +5,83 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using Fusion;
-using Fusion.Core;
 using Fusion.Core.Mathematics;
-using Fusion.Core.Extensions;
-using Fusion.Core.Configuration;
 using Fusion.Engine.Common;
-using Fusion.Engine.Input;
-using Fusion.Engine.Client;
+using Fusion.Core.Content;
 using Fusion.Engine.Server;
-using Fusion.Engine.Graphics;
-using IronStar.Core;
+using Fusion.Engine.Client;
+using Fusion.Core.Extensions;
+using IronStar.SFX;
+using Fusion.Core.IniParser.Model;
 using IronStar.Views;
+using Fusion.Engine.Graphics;
+using IronStar.Mapping;
 using IronStar.Client;
 
+namespace IronStar.Core {
 
-namespace IronStar {
-	public partial class ShooterClient : Fusion.Engine.Client.GameClient {
-
-		GameWorld gameWorld;
-		GameInput gameInput;
-
-		public GameWorld World {
-			get { return gameWorld; }
-		}
-
-
+	/// <summary>
+	/// World represents entire game state.
+	/// </summary>
+	public partial class GameWorld : IServerInstance, IClientInstance {
 
 		SpriteLayer	hudLayer;
+		GameInput gameInput;
 
 		public SpriteLayer HudLayer {
 			get { return hudLayer; }
 		}
 
 
+		readonly Guid clientGuid = new Guid();
+
+
 		/// <summary>
-		/// Ctor
+		/// Initializes client-side world.
 		/// </summary>
-		/// <param name="engine"></param>
-		public ShooterClient ( Game game )
-			: base( game )
+		/// <param name="client"></param>
+		public GameWorld ( GameClient client, Guid clientGuid )
 		{
-			gameInput	=	new GameInput(this.Game);
+			this.clientGuid	=	clientGuid;
+
+			gameInput	=	new GameInput(client.Game);
+
+			Log.Verbose("world: client");
+			this.serverSide	=	false;
+			this.Game		=	client.Game;
+			this.UserGuid	=	clientGuid;
+			Content			=	new ContentManager(Game);
+			entities		=	new EntityCollection(null);
+			fxPlayback		=	new SFX.FXPlayback(this);
+			modelManager	=	new ModelManager(this);
+
+			hudLayer		=	new SpriteLayer( Game.RenderSystem, 1024);
+
+			AddView( new Hud( this ) );
+			AddView( new GameCamera( this ) );
+
+			//------------------------
+
+			Game.Reloading += (s,e) => ForEachEntity( ent => ent.MakeRenderStateDirty() );
 		}
 
 
-
-		/// <summary>
-		/// Initializes game
-		/// </summary>
-		public override void Initialize ()
+		public void FeedAtoms( AtomCollection atoms )
 		{
+			this.Atoms = atoms;
+		}
+
+
+		void IClientInstance.Initialize( string serverInfo )
+		{
+			map     =   Content.Load<Map>( @"maps\" + serverInfo );
+			map.ActivateMap( this );
+
 			hudLayer	=	new SpriteLayer( Game.RenderSystem, 1024 );
 			Game.RenderSystem.SpriteLayers.Add( hudLayer );
 
-			InitializeComponent( gameInput );
-
-			Game.RenderSystem.DisplayBoundsChanged += RenderSystem_DisplayBoundsChanged;
-		}
-
-
-
-		void RenderSystem_DisplayBoundsChanged ( object sender, EventArgs e )
-		{
-			var	vp = Game.RenderSystem.DisplayBounds;
-			Game.RenderSystem.RenderWorld.Resize( vp.Width, vp.Height );
-		}
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="disposing"></param>
-		protected override void Dispose ( bool disposing )
-		{
-			if (disposing) {
-				DisposeComponents();
-				SafeDispose( ref hudLayer );
-			}
-			base.Dispose( disposing );
-		}
-
-
-
-		/// <summary>
-		/// Called when connection request accepted by server.
-		/// Client could start loading models, textures, models etc.
-		/// </summary>
-		/// <param name="map"></param>
-		public override GameLoader LoadContent ( string serverInfo )
-		{
-			latestSnapshot	=	null;
-
-			Log.Message("");
-			Log.Message("---- Loading game: {0} ----", serverInfo );
-
-			return new ShooterLoader( this, serverInfo );
-		}
-
-
-
-		/// <summary>
-		/// Called when loader finished loading.
-		/// This method lets client to complete loading process in main thread.
-		/// </summary>
-		/// <param name="loader"></param>
-		public override void FinalizeLoad ( GameLoader loader )
-		{
-			var shooterLoader = (ShooterLoader)loader;
-
-			gameWorld = shooterLoader.World;
-
-			gameWorld.FinalizeLoad();
-
-			gameWorld.ReplicaSpawned += ( s, e ) => {
-					if ( e.Entity.UserGuid==Guid) {
+			ReplicaSpawned += ( s, e ) => {
+					if ( e.Entity.UserGuid==clientGuid) {
 					UserCommand.Yaw			=	0;
 					UserCommand.Pitch		=	0;
 					UserCommand.Roll		=	0;
@@ -182,26 +145,6 @@ namespace IronStar {
 		}
 
 
-
-		/// <summary>
-		///	Called when client disconnected, dropped, kicked or timeouted.
-		///	Client must purge all level-associated content.
-		///	Reason???
-		/// </summary>
-		public override void UnloadContent ()
-		{
-			latestSnapshot	=	null;
-
-			World?.Shutdown();
-
-			Game.RenderSystem.RenderWorld.ClearWorld();
-
-			Content.Unload();
-			(Game.UserInterface as ShooterInterface).ShowMenu = true;
-		}
-
-
-
 		public UserCommand	UserCommand;
 
 		byte[] latestSnapshot = null;
@@ -212,12 +155,8 @@ namespace IronStar {
 		}
 
 
-		/// <summary>
-		/// Runs one step of client-side simulation and renders world state.
-		/// Do not close the stream.
-		/// </summary>
-		/// <param name="gameTime"></param>
-		public override byte[] Update ( GameTime gameTime, uint sentCommandID )
+
+		public byte[] Update( GameTime gameTime, uint sentCommandID )
 		{
 			// update user input :
 			gameInput.Update( gameTime, ref UserCommand );
@@ -231,9 +170,25 @@ namespace IronStar {
 			//gameWorld.SimulateWorld( gameTime.ElapsedSec );
 
 			//	render world :
-			gameWorld.PresentWorld( gameTime.ElapsedSec, entityLerpFactor );
+			PresentWorld( gameTime.ElapsedSec, entityLerpFactor );
 
 			return cmdBytes;
+		}
+
+		public void FeedSnapshot( GameTime serverTime, byte[] snapshot, uint ackCommandID )
+		{
+			this.serverTime		=	serverTime;
+			this.latestSnapshot	=	snapshot;
+		}
+
+		public void FeedNotification( string message )
+		{
+			Log.Message( "NOTIFICATION : {0}", message );
+		}
+
+		public string UserInfo()
+		{
+			return "Bob" + System.Diagnostics.Process.GetCurrentProcess().Id.ToString();
 		}
 
 
@@ -282,7 +237,7 @@ namespace IronStar {
 
 				//	read snapshot :
 				using ( var ms = new MemoryStream(latestSnapshot) ) {
-					gameWorld.ReadFromSnapshot( ms, entityLerpFactor );
+					ReadFromSnapshot( ms, entityLerpFactor );
 					entityLerpFactor = 0;
 				}
 
@@ -296,48 +251,5 @@ namespace IronStar {
 		}
 
 
-
-		/// <summary>
-		/// Feed server snapshot to client.
-		/// Called when fresh snapshot arrived.
-		/// </summary>
-		/// <param name="snapshot"></param>
-		public override void FeedSnapshot ( GameTime serverTime, byte[] snapshot, uint ackCommandID )
-		{
-			this.serverTime		=	serverTime;
-			this.latestSnapshot	=	snapshot;
-		}
-
-
-
-		/// <summary>
-		/// Feed server notification to client.
-		/// </summary>
-		/// <param name="snapshot"></param>
-		public override void FeedNotification ( string message )
-		{
-			Log.Message( "NOTIFICATION : {0}", message );
-		}
-
-
-
-		/// <summary>
-		/// Returns user informations.
-		/// </summary>
-		/// <returns></returns>
-		public override string UserInfo ()
-		{
-			return "Bob" + System.Diagnostics.Process.GetCurrentProcess().Id.ToString();
-		}
-
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public void PrintState ()
-		{
-			
-		}
 	}
 }

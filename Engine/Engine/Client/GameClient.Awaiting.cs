@@ -11,15 +11,21 @@ using Fusion.Engine.Server;
 
 
 namespace Fusion.Engine.Client {
-	public abstract partial class GameClient {
+	public partial class GameClient {
 
 		class Awaiting : State {
 
-			public Awaiting ( GameClient gameClient ) : base(gameClient, ClientState.Awaiting)
+			readonly ClientContext context;
+
+
+
+			public Awaiting ( ClientContext context ) : base(context.GameClient, ClientState.Awaiting)
 			{
+				this.context	=	context;
+
 				//	send user command to draw server attention:
 				//	snapshotID and commandID are zero, because we dont have valid snapshot yet.
-				gameClient.SendUserCommand( client, 0, 0, new byte[0] );
+				gameClient.SendUserCommand( context.NetClient, 0, 0, new byte[0] );
 			}
 
 
@@ -33,13 +39,14 @@ namespace Fusion.Engine.Client {
 
 			public override void UserDisconnect ( string reason )
 			{
-				client.Disconnect( reason );
+				context.NetClient.Disconnect( reason );
 			}
 
 
 
 			public override void Update ( GameTime gameTime )
 			{
+				DispatchIM( context.NetClient );
 			}
 
 
@@ -47,7 +54,7 @@ namespace Fusion.Engine.Client {
 			public override void StatusChanged(NetConnectionStatus status, string message, NetConnection connection)
 			{
  				if (status==NetConnectionStatus.Disconnected) {
-					gameClient.SetState( new Disconnected(gameClient, message) );
+					gameClient.SetState( new Disconnected(context, message ) );
 				}
 			}
 
@@ -77,14 +84,14 @@ namespace Fusion.Engine.Client {
 					var snapshot	=	NetDeflate.Decompress( msg.ReadBytes(size) );
 
 					//	initial snapshot contains atom table :
-					gameClient.Atoms	=	new AtomCollection( msg );
+					context.Instance.FeedAtoms( new AtomCollection( msg ) );
 
 
-					gameClient.SetState( new Active( gameClient, frame, snapshot, serverTicks ) );
+					gameClient.SetState( new Active( context, frame, snapshot, serverTicks ) );
 				}
 
 				if (command==NetCommand.Notification) {
-					gameClient.FeedNotification( msg.ReadString() );
+					context.Instance.FeedNotification( msg.ReadString() );
 				}
 			}
 		}

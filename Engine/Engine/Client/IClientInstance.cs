@@ -15,7 +15,7 @@ namespace Fusion.Engine.Client {
 		/// <param name="gameTime">Cliemt-side game time.</param>
 		/// <param name="sentCommandID">Command's ID that are going to be sent.</param>
 		/// <returns>User command bytes</returns>
-		void Initialize ();
+		void Initialize ( string serverInfo );
 
 		/// <summary>
 		/// Called when the game has determined that client-side logic needs to be processed.
@@ -24,6 +24,12 @@ namespace Fusion.Engine.Client {
 		/// <param name="sentCommandID">Command's ID that are going to be sent.</param>
 		/// <returns>User command bytes</returns>
 		byte[] Update ( GameTime gameTime, uint sentCommandID );
+
+		/// <summary>
+		/// Feed server atoms to client
+		/// </summary>
+		/// <param name="atoms"></param>
+		void FeedAtoms ( AtomCollection atoms );
 
 		/// <summary>
 		/// Feed server snapshot to client.

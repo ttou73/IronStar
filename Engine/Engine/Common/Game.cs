@@ -533,11 +533,9 @@ namespace Fusion.Engine.Common {
 			//	if it is still running :
 			cl.Wait();
 			sv.Wait();
-			
+
 			//	call exit event :
-			if (Exiting!=null) {
-				Exiting(this, EventArgs.Empty);
-			}
+			Exiting?.Invoke( this, EventArgs.Empty );
 
 			if (disposing) {
 
@@ -628,9 +626,9 @@ namespace Fusion.Engine.Common {
 			if (isActive!=isActiveLastFrame) {
 				isActiveLastFrame = isActive;
 				if (isActive) {
-					if (Activated!=null) { Activated(this, EventArgs.Empty); } 
+					Activated?.Invoke( this, EventArgs.Empty );
 				} else {
-					if (Deactivated!=null) { Deactivated(this, EventArgs.Empty); } 
+					Deactivated?.Invoke( this, EventArgs.Empty );
 				}
 			}
 
@@ -642,9 +640,7 @@ namespace Fusion.Engine.Common {
 				}
 
 				if (requestReload) {
-					if (Reloading!=null) {
-						Reloading(this, EventArgs.Empty);
-					}
+					Reloading?.Invoke( this, EventArgs.Empty );
 					requestReload = false;
 				}
 
@@ -746,7 +742,7 @@ namespace Fusion.Engine.Common {
 		/// <param name="gameTime"></param>
 		void UpdateClientServerGame ( GameTime gameTime )
 		{
-			cl.UpdateInternal( gameTime );
+			cl.Update( gameTime );
 
 			gi.UpdateInternal( gameTime );
 		}
@@ -763,7 +759,7 @@ namespace Fusion.Engine.Common {
 				GameServer.StartInternal( map, null );
 			} else {
 				GameServer.StartInternal( map, null );
-				GameClient.ConnectInternal( "127.0.0.1", Network.Port );
+				GameClient.Connect( "127.0.0.1", Network.Port );
 			}
 		}
 
@@ -777,14 +773,14 @@ namespace Fusion.Engine.Common {
 
 		public void Connect ( string host, int port )
 		{
-			GameClient.ConnectInternal(host, port);
+			GameClient.Connect(host, port);
 			//	Kill server!
 		}
 
 
 		public void Disconnect ( string message )
 		{
-			GameClient.DisconnectInternal(message);
+			GameClient.Disconnect(message);
 			//	Kill server!
 		}
 	}

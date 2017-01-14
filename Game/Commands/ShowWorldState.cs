@@ -25,7 +25,7 @@ namespace IronStar.Commands {
 		/// </summary>
 		public override void Execute ()
 		{
-			(Invoker.Game.GameClient as ShooterClient).World.PrintState();
+			//(Invoker.Game.GameClient as ShooterClient).World.PrintState();
 		}
 	}
 
