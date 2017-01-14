@@ -22,7 +22,7 @@ namespace IronStar.Core {
 	/// <summary>
 	/// World represents entire game state.
 	/// </summary>
-	public partial class GameWorld : IServerInstance {
+	public partial class GameWorld : IServerInstance, IClientInstance {
 
 		readonly string mapName;
 
@@ -30,18 +30,8 @@ namespace IronStar.Core {
 
 		public readonly Guid UserGuid;
 
-		AtomCollection atoms = null;
 		public AtomCollection Atoms { 
-			get {
-				if (IsClientSide) {
-					return GameClient.Atoms;
-				} else {
-					return atoms;
-				}
-			}
-			set {
-				atoms = value;
-			}
+			get; set;
 		}
 
 		SnapshotWriter snapshotWriter = new SnapshotWriter();
@@ -179,38 +169,10 @@ namespace IronStar.Core {
 
 
 		/// <summary>
-		/// Initializes client-side world.
-		/// </summary>
-		/// <param name="client"></param>
-		public GameWorld ( GameClient client, string serverInfo )
-		{
-			Log.Verbose("world: client");
-			this.serverSide	=	false;
-			this.Game		=	client.Game;
-			this.UserGuid	=	client.Guid;
-			Content			=	client.Content;
-			entities		=	new EntityCollection(null);
-			fxPlayback		=	new SFX.FXPlayback((ShooterClient)client, this);
-			modelManager	=	new ModelManager((ShooterClient)client, this);
-
-			AddView( new Hud( this ) );
-			AddView( new GameCamera( this ) );
-
-			//------------------------
-
-			map     =   Content.Load<Map>( @"maps\" + serverInfo );
-
-			Game.Reloading += (s,e) => ForEachEntity( ent => ent.MakeRenderStateDirty() );
-		}
-
-
-
-		/// <summary>
 		/// This method called in main thread to complete non-thread safe operations.
 		/// </summary>
 		public void FinalizeLoad()
 		{
-			map.ActivateMap( this );
 			//foreach ( var mi in map.MeshInstance ) {
 			//	Game.RenderSystem.RenderWorld.Instances.Add( mi );
 			//}
@@ -662,82 +624,5 @@ namespace IronStar.Core {
 
 
 
-
-		public void Initialize()
-		{
-			Log.Message("Initialize");
-		}
-
-		public byte[] Update( GameTime gameTime )
-		{
-			SimulateWorld( gameTime.ElapsedSec );
-
-			//	write world to stream :
-			using ( var ms = new MemoryStream() ) {
-				WriteToSnapshot( ms );
-				return ms.GetBuffer();
-			}
-		}
-
-		public void FeedCommand( Guid clientGuid, byte[] userCommand, uint commandID, float lag )
-		{
-			if ( !userCommand.Any() ) {
-				return;
-			}
-
-			PlayerCommand( clientGuid, userCommand, lag );
-		}
-
-		public void FeedNotification( Guid clientGuid, string message )
-		{
-			Log.Message( "NOTIFICATION {0}: {1}", clientGuid, message );
-		}
-
-		public void ClientConnected( Guid clientGuid, string userInfo )
-		{
-			PlayerConnected( clientGuid, userInfo );
-		}
-
-		public void ClientActivated( Guid clientGuid )
-		{
-			PlayerEntered( clientGuid );
-		}
-
-		public void ClientDeactivated( Guid clientGuid )
-		{
-			PlayerLeft( clientGuid );
-		}
-
-		public void ClientDisconnected( Guid clientGuid )
-		{
-			PlayerDisconnected( clientGuid );
-		}
-
-		public bool ApproveClient( Guid clientGuid, string userInfo, out string reason )
-		{
-			reason = "";
-			return true;
-			throw new NotImplementedException();
-		}
-
-		#region IDisposable Support
-		private bool disposedValue = false; // To detect redundant calls
-
-		protected virtual void Dispose( bool disposing )
-		{
-			if ( !disposedValue ) {
-				if ( disposing ) {
-					Shutdown();
-				}
-
-				disposedValue = true;
-			}
-		}
-
-		public void Dispose()
-		{
-			Dispose( true );
-		}
-		#endregion
 	}
 }
