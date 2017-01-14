@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Fusion.Engine.Common;
 
 namespace Fusion.Engine.Server {
-	public interface IServerInstance {
+	public interface IServerInstance : IDisposable {
 
 		/// <summary>
 		/// Completes initialization of server instance.

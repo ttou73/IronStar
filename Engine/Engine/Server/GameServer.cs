@@ -17,7 +17,7 @@ namespace Fusion.Engine.Server {
 	/// <summary>
 	/// Provides basic client-server interaction and server-side game logic.
 	/// </summary>
-	public abstract partial class GameServer : GameComponent {
+	public partial class GameServer : GameComponent {
 
 		/// <summary>
 		/// Initializes a new instance of this class.
@@ -25,38 +25,16 @@ namespace Fusion.Engine.Server {
 		/// <param name="Game"></param>
 		public GameServer ( Game game ) : base(game)
 		{
-			content = new ContentManager(game);
-			atoms	= new AtomCollection();
+		}
+
+
+		public override void Initialize()
+		{
+			
 		}
 
 
 		/// <summary>
-		/// Gets server's instance of content manager.
-		/// </summary>
-		public ContentManager Content {
-			get {
-				return content;
-			}
-		}
-
-		ContentManager content;
-
-
-		/// <summary>
-		/// Gets atom collections.
-		/// </summary>
-		public AtomCollection Atoms {
-			get {
-				if (atoms==null) {
-					throw new NullReferenceException("Atoms are ready to use at LoadContent");
-				}
-				return atoms;
-			}
-		}
-
-		AtomCollection atoms;
-
-
 		/// <summary>
 		/// Gets and sets target server frame rate.
 		/// Value must be within range 1..240.
@@ -81,12 +59,11 @@ namespace Fusion.Engine.Server {
 		protected override void Dispose ( bool disposing )
 		{
 			if (disposing) {
-				SafeDispose( ref content );
 			}
 			base.Dispose( disposing );
 		}
 
-
+		#if false
 		/// <summary>
 		/// Method is invoked when server started.
 		/// </summary>
@@ -168,6 +145,7 @@ namespace Fusion.Engine.Server {
 		/// <param name="reason">If method returns false this output parameters contains the reason of denial</param>
 		/// <returns></returns>
 		public abstract bool ApproveClient ( Guid guid, string userInfo, out string reason );
+		#endif
 
 		/// <summary>
 		/// Sends text message to all clients.
@@ -175,7 +153,7 @@ namespace Fusion.Engine.Server {
 		/// <param name="message"></param>
 		public void NotifyClients ( string format, params object[] args )
 		{
-			NotifyClientsInternal( string.Format(format, args) );
+			throw new NotImplementedException();
 		}
 
 
@@ -186,7 +164,7 @@ namespace Fusion.Engine.Server {
 		/// <returns></returns>
 		public float GetPing ( Guid clientGuid )
 		{
-			return GetPingInternal( clientGuid );
+			throw new NotImplementedException();
 		}
 
 

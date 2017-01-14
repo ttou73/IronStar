@@ -13,6 +13,6 @@ namespace Fusion.Engine.Client {
 		/// Loads client instance 
 		/// </summary>
 		/// <returns></returns>
-		IClientInstance Load ();
+		IClientInstance Load ( string serverInfo );
 	}
 }

@@ -17,10 +17,39 @@ using IronStar.Core;
 using IronStar.Mapping;
 using Fusion.Core.Extensions;
 using Fusion.Build.Mapping;
+using Fusion.Engine.Client;
+using Fusion.Engine.Server;
 
 namespace IronStar {
 
 	class Program {
+
+		class GameFactory : IGameFactory {
+
+			public IClientInstance CreateClient( Game game, string serverInfo )
+			{
+				throw new NotImplementedException();
+			}
+
+			public IGameLoader CreateLoader( Game game, string serverInfo )
+			{
+				throw new NotImplementedException();
+			}
+
+			public IServerInstance CreateServer( Game game, string map )
+			{
+				return new GameWorld( game.GameServer, map );
+			}
+
+			public IUserInterface CreateUI( Game game )
+			{
+				throw new NotImplementedException();
+			}
+		}
+
+
+
+
 		[STAThread]
 		static int Main ( string[] args )
 		{
@@ -50,10 +79,10 @@ namespace IronStar {
 			//
 			//	Run game :
 			//
-			using (var game = new Game( "IronStar" )) {
+			using (var game = new Game( "IronStar", new GameFactory() )) {
 
 				//	create SV, CL and UI instances :
-				game.GameServer = new ShooterServer( game );
+				game.GameServer = new GameServer( game );
 				game.GameClient = new ShooterClient( game );
 				game.UserInterface = new ShooterInterface( game );
 

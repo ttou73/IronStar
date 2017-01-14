@@ -16,14 +16,12 @@ using Fusion.Core.Content;
 namespace Fusion.Engine.Server {
 	
 
-	public abstract partial class GameServer : GameComponent {
+	public partial class GameServer : GameComponent {
 
 		Task serverTask;
 		CancellationTokenSource killToken;
 
 		object lockObj = new object();
-
-		Queue<string> notifications = null;
 
 
 		/// <summary>
@@ -51,7 +49,7 @@ namespace Fusion.Engine.Server {
 				}
 
 				killToken	=	new CancellationTokenSource();
-				serverTask	=	new Task( () => ServerTaskFunc(map, postCommand), killToken.Token );
+				serverTask	=	new Task( () => ServerTaskFunc(map, ()=>Game.GameFactory.CreateServer(Game,map), killToken.Token ) );
 				serverTask.Start();
 			}
 		}
@@ -100,452 +98,72 @@ namespace Fusion.Engine.Server {
 		/// 
 		/// </summary>
 		/// <param name="map"></param>
-		void ServerTaskFunc ( string map, string postCommand )
+		void ServerTaskFunc ( string map, Func<IServerInstance> createServer, CancellationToken killToken )
 		{
-			var netConfig		=	new NetPeerConfiguration(Game.GameID);
-			netConfig.Port		=	Game.Network.Port;
-			netConfig.MaximumConnections	=	32;
-			netConfig.UnreliableSizeBehaviour = NetUnreliableSizeBehaviour.NormalFragmentation;
-			
-			if (Debugger.IsAttached) {
-				netConfig.ConnectionTimeout		=	float.MaxValue;	
-				Log.Message("SV: Debugger is attached: ConnectionTimeout = {0} sec", netConfig.ConnectionTimeout);
-			}
-
-			netConfig.EnableMessageType( NetIncomingMessageType.ConnectionApproval );
-			netConfig.EnableMessageType( NetIncomingMessageType.DiscoveryRequest );
-			netConfig.EnableMessageType( NetIncomingMessageType.DiscoveryResponse );
-			netConfig.EnableMessageType( NetIncomingMessageType.ConnectionLatencyUpdated );
-
-			var server		=	new NetServer( netConfig );
-			notifications	=	new Queue<string>();
-
-			Log.Message("SV: Start: {0} {1}", map, postCommand);
-
-			var snapshotQueue	=	new SnapshotQueue(32);
-			var serverFrames	=	0L;
-
-			//var accumulatedElapsedTime = TimeSpan.FromTicks(0);
-			//var maxElapsedTime = TimeSpan.FromMilliseconds(1000);
-			//var previousTicks = (long)0;
-
-			//
-			//	configure & start server :
-			//
 			try {
+				Log.Message("Server starting: {0}", map);
 
-				server.Start();
+				using ( var serverInstance = createServer() ) {
 
-				//
-				//	start game specific stuff :
-				//
-				atoms	=	new AtomCollection();
-				LoadContent( map );
-				atoms.Lock();
+					serverInstance.Initialize();
 
-				//
-				//	invoke post-start command :
-				//
-				if (postCommand!=null) {
-					Game.Invoker.Push( postCommand );
-				}
+					using ( var context = new GameServerContext( Game, Game.GameID, Game.Network.Port, serverInstance ) ) {
 
+						//	Timer and fixed timestep stuff :
+						//	http://gafferongames.com/game-physics/fix-your-timestep/
+						var serverFrames    =   0L;
+						var accumulator		=	TimeSpan.Zero;
+						var stopwatch		=	new Stopwatch();
+						stopwatch.Start();
 
-				//	Timer and fixed timestep stuff :
-				//	http://gafferongames.com/game-physics/fix-your-timestep/
-				var accumulator	=	TimeSpan.Zero;
-				var stopwatch	=	new Stopwatch();
-				stopwatch.Start();
-				var currentTime	=	stopwatch.Elapsed;
-				var time		=	stopwatch.Elapsed;
-
-				//
-				//	server loop :
-				//	
-				while ( !killToken.IsCancellationRequested ) {
-
-				_retryTick:
-					var targetDelta	=	TimeSpan.FromTicks( (long)(10000000 / TargetFrameRate) );
-					var newTime		=	stopwatch.Elapsed;
-					var frameTime	=	newTime - currentTime;
-					currentTime		=	newTime;
-
-					accumulator +=	 frameTime;
-
-					if ( accumulator < targetDelta ) {
-						Thread.Sleep(1);
-						goto _retryTick;
-					}
-
-					while ( accumulator > targetDelta ) {
-
-						//var svTime = new GameTime( time, targetDelta );
-						var svTime = new GameTime( serverFrames, time, targetDelta );
-						serverFrames++;
+						var currentTime		=	stopwatch.Elapsed;
+						var time			=	stopwatch.Elapsed;
 
 						//
-						//	Do actual server stuff :
+						//	server loop :
 						//	
-						UpdateNetworkAndLogic( svTime, server, snapshotQueue );
+						while ( !killToken.IsCancellationRequested ) {
 
-						accumulator	-= targetDelta;
-						time		+= targetDelta;
+						_retryTick:
+							var targetDelta	=	TimeSpan.FromTicks( (long)(10000000 / TargetFrameRate) );
+							var newTime		=	stopwatch.Elapsed;
+							var frameTime	=	newTime - currentTime;
+							currentTime		=	newTime;
+
+							accumulator +=	 frameTime;
+
+							if ( accumulator < targetDelta ) {
+								Thread.Sleep(1);
+								goto _retryTick;
+							}
+
+							while ( accumulator > targetDelta ) {
+
+								//var svTime = new GameTime( time, targetDelta );
+								var svTime = new GameTime( serverFrames, time, targetDelta );
+
+								//
+								//	Do actual server stuff :
+								//	
+								context.UpdateNetworkAndLogic( svTime );
+
+								accumulator	-= targetDelta;
+								time		+= targetDelta;
+							}
+						}
+
+						Log.Message("Server shut down");
 					}
 				}
-
-				foreach ( var conn in server.Connections ) {
-					conn.Disconnect("Server disconnected");
-				}
-
-			} catch ( Exception e ) {
-				Log.PrintException( e, "Server error: {0}", e.Message );
-
-				foreach ( var conn in server.Connections ) {
-					conn.Disconnect(string.Format("Server error: {0}", e.Message));
-				}
-
-			} finally {
-
-				//
-				//	kill game specific stuff :
-				//	try...catch???
-				//
-				UnloadContent();
-
-				//
-				//	shutdown connection :
-				//
-				server.Shutdown("Server shutdown");
-				Log.Message("SV: Shutdown");
-
-				notifications	=	null;
-
-				killToken	=	null;
-				serverTask	=	null;
-				server		=	null;
-				pings		=	null;
-			}
-		}
-
-
-
-		/// <summary>
-		/// Updates everything related to network and game logic.
-		/// </summary>
-		void UpdateNetworkAndLogic ( GameTime svTime, NetServer server, SnapshotQueue snapshotQueue )
-		{
-			#if DEBUG
-			server.Configuration.SimulatedLoss				=	Game.Network.SimulatePacketsLoss;
-			server.Configuration.SimulatedMinimumLatency	=	Game.Network.SimulateMinLatency;
-			server.Configuration.SimulatedRandomLatency		=	Game.Network.SimulateRandomLatency;
-			#endif
-
-			//	read input messages :
-			DispatchIM( svTime, snapshotQueue, server );
-
-			//	update pings :
-			UpdatePings( server );
-
-			//	update frame and get snapshot :
-			var snapshot = Update( svTime );
-
-			//	push snapshot to queue :
-			snapshotQueue.Push( svTime.Total, snapshot );
-
-			//	send snapshot to clients :
-			SendSnapshot( server, snapshotQueue, svTime.Total.Ticks );
-
-			//	send notifications to clients :
-			SendNotifications( server );
-
-			//	execute server's command queue :
-			Game.Invoker.ExecuteQueue( svTime, CommandAffinity.Server );
-
-			//	crash test for server :
-			CrashServer.CrashTest();
-			FreezeServer.FreezeTest();
-			SlowdownServer.SlowTest();
-		}
-
-
-		/*-----------------------------------------------------------------------------------------
-		 * 
-		 *	Client-server stuff :
-		 * 
-		-----------------------------------------------------------------------------------------*/
-
-		Dictionary<Guid,float> pings = null;
-
-		void UpdatePings ( NetServer server )
-		{
-			pings	=	server.Connections.ToDictionary( conn => conn.GetHailGuid(), conn => conn.AverageRoundtripTime );
-		}
-		
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="message"></param>
-		void DispatchIM ( GameTime gameTime, SnapshotQueue queue, NetServer server )
-		{
-			NetIncomingMessage msg;
-			while ((msg = server.ReadMessage()) != null)
+			} catch ( Exception e )
 			{
-				switch (msg.MessageType)
-				{
-					case NetIncomingMessageType.VerboseDebugMessage:Log.Debug	("SV Net: " + msg.ReadString()); break;
-					case NetIncomingMessageType.DebugMessage:		Log.Verbose	("SV Net: " + msg.ReadString()); break;
-					case NetIncomingMessageType.WarningMessage:		Log.Warning	("SV Net: " + msg.ReadString()); break;
-					case NetIncomingMessageType.ErrorMessage:		Log.Error	("SV Net: " + msg.ReadString()); break;
+				Log.Error("");
+				Log.Error("-------- Server crashed --------");
 
-					case NetIncomingMessageType.ConnectionLatencyUpdated:
-						if (Game.Network.ShowLatency) {
-							float latency = msg.ReadFloat();
-							Log.Verbose("...SV ping - {0} {1,6:0.00} ms", msg.SenderEndPoint, (latency*1000) );
-						}
+				Log.Error("{0}", e.ToString());
 
-						break;
-
-					case NetIncomingMessageType.DiscoveryRequest:
-						Log.Message("Discovery request from {0}", msg.SenderEndPoint.ToString() );
-						var response = server.CreateMessage( ServerInfo() );
-						server.SendDiscoveryResponse( response, msg.SenderEndPoint );
-
-						break;
-
-					case NetIncomingMessageType.ConnectionApproval:
-						
-						var userGuid	=	msg.SenderConnection.GetHailGuid();
-						var userInfo	=	msg.SenderConnection.GetHailUserInfo();
-						var reason		=	"";
-						var approve		=	ApproveClient( userGuid, userInfo, out reason );
-
-						if (approve) {	
-							msg.SenderConnection.Approve( server.CreateMessage( ServerInfo() ) );
-						} else {
-							msg.SenderConnection.Deny( reason );
-						}
-
-						break;
-
-					case NetIncomingMessageType.StatusChanged:		
-						DispatchStatusChange( msg );
-						break;
-					
-					case NetIncomingMessageType.Data:
-						DispatchDataIM( gameTime, queue, msg );
-						break;
-					
-					default:
-						Log.Warning("SV: Unhandled type: " + msg.MessageType);
-						break;
-				}
-				server.Recycle(msg);
-			}		
-		}
-
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="msg"></param>
-		void DispatchStatusChange ( NetIncomingMessage msg )
-		{
-			var connStatus	=	(NetConnectionStatus)msg.ReadByte();
-			var senderEP	=	msg.SenderEndPoint;
-			var text		=	msg.ReadString();
-
-			Log.Message	("SV: {0}: {1}: {2}", connStatus, senderEP.ToString(), text);
-			
-			switch (connStatus) {
-				case NetConnectionStatus.Connected :
-					msg.SenderConnection.InitClientState(); 
-					ClientConnected( msg.SenderConnection.GetHailGuid(), msg.SenderConnection.GetHailUserInfo() );
-					break;
-
-				case NetConnectionStatus.Disconnected :
-					ClientDeactivated( msg.SenderConnection.GetHailGuid() );
-					ClientDisconnected( msg.SenderConnection.GetHailGuid() );
-					break;
-
-				default:
-					break;
-			}
-		}
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="server"></param>
-		void SendSnapshot ( NetServer server, SnapshotQueue queue, long serverTicks )
-		{
-			//	snapshot request is stored in connection's tag.s
-			var debug	=	Game.Network.ShowSnapshots;
-			var conns	=	server.Connections.Where ( c => c.IsSnapshotRequested() );
-
-			var sw		=	new Stopwatch();
-
-			foreach ( var conn in conns ) {
-
-				sw.Reset();
-				sw.Start();
-					
-				var frame		=	queue.LastFrame;
-				var prevFrame	=	conn.GetRequestedSnapshotID();
-				int size		=	0;
-				var commandID	=	conn.GetLastCommandID();
-				var snapshot	=	queue.Compress( ref prevFrame, out size);
-
-				//	reset snapshot request :
-				conn.ResetRequestSnapshot();
-
-				var msg = server.CreateMessage( snapshot.Length + 4 * 4 + 8 + 1 );
-			
-				msg.Write( (byte)NetCommand.Snapshot );
-				msg.Write( frame );
-				msg.Write( prevFrame );
-				msg.Write( commandID );
-				msg.Write( serverTicks );
-				msg.Write( snapshot.Length );
-				msg.Write( snapshot ); 
-
-				//	append atom table to first snapshot :
-				if (commandID==0) {
-					atoms.Write( msg );
-				}
-
-				//	Zero snapshot frame index means that client is waiting for first snapshot.
-				//	and snapshot should reach the client.
-				var delivery	=	prevFrame == 0 ? NetDeliveryMethod.ReliableOrdered : NetDeliveryMethod.UnreliableSequenced;
-
-				if (prevFrame==0) {
-					Log.Message("SV: Sending initial snapshot to {0}", conn.GetHailGuid().ToString() );
-				}
-
-				sw.Stop();
-
-				server.SendMessage( msg, conn, delivery, 0 );
-
-				if (debug) {
-					Log.Message("Snapshot: #{0} - #{1} : {2} / {3} to {4} at {5} msec", 
-						frame, prevFrame, snapshot.Length, size, conn.RemoteEndPoint.ToString(), sw.Elapsed.TotalMilliseconds );
-				}
-			}
-		}
-
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="server"></param>
-		void SendNotifications ( NetServer server )
-		{
-			List<string> messages;
-			lock (notifications) {
-				messages = notifications.ToList();
-				notifications.Clear();
-			}
-
-			var conns = server.Connections;
-
-			if (!conns.Any()) {
-				return;
-			}
-
-			foreach ( var message in messages ) {
-				var msg = server.CreateMessage( message.Length + 1 );
-				msg.Write( (byte)NetCommand.Notification );
-				msg.Write( message );
-				server.SendMessage( msg, conns, NetDeliveryMethod.ReliableSequenced, 0 );
-			}
-		}
-
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="msg"></param>
-		void DispatchDataIM ( GameTime gameTime, SnapshotQueue queue, NetIncomingMessage msg )
-		{
-			var netCmd = (NetCommand)msg.ReadByte();
-
-			switch (netCmd) {
-				case NetCommand.UserCommand : 
-					DispatchUserCommand( gameTime, queue, msg );
-					break;
-
-				case NetCommand.Notification :
-					FeedNotification( msg.SenderConnection.GetHailGuid(), msg.ReadString() );
-					break;
-			}
-		}
-
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="msg"></param>
-		void DispatchUserCommand ( GameTime gameTime, SnapshotQueue queue, NetIncomingMessage msg )
-		{	
-			var snapshotID	=	msg.ReadUInt32();
-			var commandID	=	msg.ReadUInt32();
-			var size		=	msg.ReadInt32();
-
-			var data		=	msg.ReadBytes( size );
-
-			//	we got user command and (command count=1)
-			//	this means that client receives snapshot:
-			if (msg.SenderConnection.GetCommandCount()==1) {
-				ClientActivated( msg.SenderConnection.GetHailGuid() );
-			}
-
-			//	do not feed server with empty command.
-			if (data.Length>0) {
-				FeedCommand( msg.SenderConnection.GetHailGuid(), data, commandID, queue.GetLag(snapshotID, gameTime) );
-			}
-
-			//	set snapshot request when command get.
-			msg.SenderConnection.SetRequestSnapshot( snapshotID, commandID );
-		}
-
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="message"></param>
-		void NotifyClientsInternal ( string message )
-		{
-			if (notifications!=null) {
-				lock (notifications) {
-					notifications.Enqueue(message);
-				}
-			}
-		}
-
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <returns></returns>
-		float GetPingInternal ( Guid clientGuid )
-		{
-			if (pings==null) {
-				return float.MaxValue;
-			}
-
-			float ping;
-
-			if (pings.TryGetValue( clientGuid, out ping )) {
-				return ping;
-			} else {
-				return float.MaxValue;
+				Log.Error("----------------");
+				Log.Error("");
 			}
 		}
 	}

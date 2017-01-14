@@ -49,7 +49,7 @@ namespace IronStar.Commands {
 		/// </summary>
 		public override void Execute ()
 		{
-			(Invoker.Game.GameServer as ShooterServer).World.PrintState();
+			//(Invoker.Game.GameServer as ShooterServer).World.PrintState();
 		}
 	}
 }

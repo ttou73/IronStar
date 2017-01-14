@@ -22,7 +22,7 @@ namespace IronStar.Core {
 	/// <summary>
 	/// World represents entire game state.
 	/// </summary>
-	public partial class GameWorld {
+	public partial class GameWorld : IServerInstance {
 
 		readonly string mapName;
 
@@ -30,13 +30,17 @@ namespace IronStar.Core {
 
 		public readonly Guid UserGuid;
 
+		AtomCollection atoms = null;
 		public AtomCollection Atoms { 
-			get {																		   
-				if (serverSide) {
-					return GameServer.Atoms;
-				} else {
+			get {
+				if (IsClientSide) {
 					return GameClient.Atoms;
+				} else {
+					return atoms;
 				}
+			}
+			set {
+				atoms = value;
 			}
 		}
 
@@ -122,12 +126,14 @@ namespace IronStar.Core {
 		/// <param name="maxEntities"></param>
 		public GameWorld ( GameServer server, string mapName )
 		{
+			Atoms	=	new AtomCollection();
+
 			Log.Verbose( "world: server" );
 			this.serverSide =   true;
 			this.Game       =   server.Game;
 			this.UserGuid   =   new Guid();
-			Content         =   server.Content;
-			entities        =   new EntityCollection(server.Atoms);
+			Content         =   new ContentManager( Game );
+			entities        =   new EntityCollection(Atoms);
 
 			entityControllerTypes	=	Misc.GetAllSubclassesOf( typeof(EntityController) )
 										.ToDictionary( type => type.Name );
@@ -478,7 +484,7 @@ namespace IronStar.Core {
 		public void SpawnFX ( string fxName, uint parentID, Vector3 origin, Vector3 velocity, Quaternion rotation )
 		{
 			LogTrace("fx : {0}", fxName);
-			var fxID = GameServer.Atoms[ fxName ];
+			var fxID = Atoms[ fxName ];
 
 			if (fxID<0) {
 				Log.Warning("SpawnFX: bad atom {0}", fxName);
@@ -653,5 +659,85 @@ namespace IronStar.Core {
 			Log.Message("----------------" );
 			Log.Message("");
 		}
+
+
+
+
+		public void Initialize()
+		{
+			Log.Message("Initialize");
+		}
+
+		public byte[] Update( GameTime gameTime )
+		{
+			SimulateWorld( gameTime.ElapsedSec );
+
+			//	write world to stream :
+			using ( var ms = new MemoryStream() ) {
+				WriteToSnapshot( ms );
+				return ms.GetBuffer();
+			}
+		}
+
+		public void FeedCommand( Guid clientGuid, byte[] userCommand, uint commandID, float lag )
+		{
+			if ( !userCommand.Any() ) {
+				return;
+			}
+
+			PlayerCommand( clientGuid, userCommand, lag );
+		}
+
+		public void FeedNotification( Guid clientGuid, string message )
+		{
+			Log.Message( "NOTIFICATION {0}: {1}", clientGuid, message );
+		}
+
+		public void ClientConnected( Guid clientGuid, string userInfo )
+		{
+			PlayerConnected( clientGuid, userInfo );
+		}
+
+		public void ClientActivated( Guid clientGuid )
+		{
+			PlayerEntered( clientGuid );
+		}
+
+		public void ClientDeactivated( Guid clientGuid )
+		{
+			PlayerLeft( clientGuid );
+		}
+
+		public void ClientDisconnected( Guid clientGuid )
+		{
+			PlayerDisconnected( clientGuid );
+		}
+
+		public bool ApproveClient( Guid clientGuid, string userInfo, out string reason )
+		{
+			reason = "";
+			return true;
+			throw new NotImplementedException();
+		}
+
+		#region IDisposable Support
+		private bool disposedValue = false; // To detect redundant calls
+
+		protected virtual void Dispose( bool disposing )
+		{
+			if ( !disposedValue ) {
+				if ( disposing ) {
+					Shutdown();
+				}
+
+				disposedValue = true;
+			}
+		}
+
+		public void Dispose()
+		{
+			Dispose( true );
+		}
+		#endregion
 	}
 }

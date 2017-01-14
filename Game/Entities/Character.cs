@@ -224,9 +224,9 @@ namespace IronStar.Entities {
 			bool newTraction = controller.SupportFinder.HasTraction;
 			
 			if (oldTraction!=newTraction && newTraction) {
-				if (((ShooterServer)World.GameServer).ShowFallings) {
-					Log.Verbose("{0} falls : {1}", e.ID, oldVelocity.Y );
-				}
+				//if (((ShooterServer)World.GameServer).ShowFallings) {
+				//	Log.Verbose("{0} falls : {1}", e.ID, oldVelocity.Y );
+				//}
 
 				if (oldVelocity.Y<-10) {
 					//	medium landing :

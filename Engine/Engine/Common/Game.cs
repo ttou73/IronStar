@@ -332,15 +332,19 @@ namespace Fusion.Engine.Common {
 		}
 		readonly string gameId;
 
+		public readonly IGameFactory GameFactory;
+
 
 		/// <summary>
 		/// Initializes a new instance of this class, which provides 
 		/// basic graphics device initialization, game logic, rendering code, and a game loop.
 		/// </summary>
-		public Game ( string gameId )
+		public Game ( string gameId, IGameFactory gameFactory )
 		{
 			this.gameId	=	gameId;
 			Enabled	=	true;
+
+			this.GameFactory = gameFactory;
 
 			AppDomain currentDomain = AppDomain.CurrentDomain;
 			currentDomain.UnhandledException += currentDomain_UnhandledException;

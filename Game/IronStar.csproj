@@ -94,12 +94,6 @@
     <Compile Include="Editors\SceneImportDialog.Designer.cs">
       <DependentUpon>SceneImportDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Editors\VTEditor.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Editors\VTEditor.Designer.cs">
-      <DependentUpon>VTEditor.cs</DependentUpon>
-    </Compile>
     <Compile Include="Entities\Character.Weaponry.cs" />
     <Compile Include="Entities\Character.cs" />
     <Compile Include="Entities\CharacterFactory.cs" />
@@ -128,7 +122,6 @@
     <Compile Include="SFX\FXInstance.LightStage.cs" />
     <Compile Include="SFX\FXInstance.ParticleStage.cs" />
     <Compile Include="SFX\FXInstance.cs" />
-    <Compile Include="ShooterServer.Config.cs" />
     <Compile Include="Core\EntityEventArgs.cs" />
     <Compile Include="ShooterClient.Config.cs" />
     <Compile Include="Entities\RigidBody.cs" />
@@ -138,7 +131,6 @@
     <Compile Include="MathConverter.cs" />
     <Compile Include="ShooterLoader.cs" />
     <Compile Include="ShooterClient.cs" />
-    <Compile Include="ShooterServer.cs" />
     <Compile Include="ShooterInterface.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -178,9 +170,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Editors\SceneImportDialog.resx">
       <DependentUpon>SceneImportDialog.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Editors\VTEditor.resx">
-      <DependentUpon>VTEditor.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

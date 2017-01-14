@@ -212,6 +212,8 @@
     <Compile Include="Engine\Client\IGameLoader.cs" />
     <Compile Include="Engine\Client\IClientInstance.cs" />
     <Compile Include="Engine\Common\Commands\ShowAtoms.cs" />
+    <Compile Include="Engine\Common\IGameFactory.cs" />
+    <Compile Include="Engine\Common\IUserInterface.cs" />
     <Compile Include="Engine\Graphics\Commands\VTRestart.cs" />
     <Compile Include="Engine\Graphics\Effects\FogSettings.cs" />
     <Compile Include="Engine\Graphics\RenderComponent.cs" />
@@ -454,6 +456,7 @@
     <Compile Include="Engine\Media\VideoSampleGrabber.cs" />
     <Compile Include="Engine\Common\Network.cs" />
     <Compile Include="Engine\Server\GameServer.Internal.cs" />
+    <Compile Include="Engine\Server\GameServerContext.cs" />
     <Compile Include="Engine\Common\Game.cs" />
     <Compile Include="Drivers\Graphics\GraphicsParameters.cs">
       <SubType>Code</SubType>

@@ -7,7 +7,7 @@ using Fusion.Engine.Common;
 using Fusion.Core.Content;
 
 namespace Fusion.Engine.Client {
-	public interface IClientInstance {
+	public interface IClientInstance : IDisposable {
 
 		/// <summary>
 		/// Called when the game has determined that client-side need to be initialized.
