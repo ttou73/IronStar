@@ -18,7 +18,7 @@ using Fusion.Core.Mathematics;
 using Fusion;
 
 namespace IronStar.Mapping {
-	public class Map {
+	public class Map : IPrecachable {
 
 		/// <summary>
 		/// Base scene path
@@ -110,6 +110,14 @@ namespace IronStar.Mapping {
 
 
 
+
+		public void Precache( ContentManager content )
+		{
+			content.Precache<Scene>( ScenePath );
+		}
+
+
+
 		/// <summary>
 		/// 
 		/// </summary>
@@ -174,7 +182,6 @@ namespace IronStar.Mapping {
 				}
 			}
 		}
-
 	}
 
 

@@ -19,13 +19,16 @@ namespace Fusion.Engine.Client {
 
 
 
-			public Awaiting ( ClientContext context ) : base(context.GameClient, ClientState.Awaiting)
+			public Awaiting ( ClientContext context, string serverInfo ) : base(context.GameClient, ClientState.Awaiting)
 			{
 				this.context	=	context;
 
-				//	send user command to draw server attention:
+				//	send user command to draw server attention :
 				//	snapshotID and commandID are zero, because we dont have valid snapshot yet.
 				gameClient.SendUserCommand( context.NetClient, 0, 0, new byte[0] );
+
+				//	initialize client :
+				context.Instance.Initialize( serverInfo );
 			}
 
 

@@ -18,10 +18,18 @@ using System.Xml.Serialization;
 using Fusion.Engine.Graphics;
 using IronStar.Editors;
 using System.Drawing.Design;
+using Fusion.Engine.Audio;
+using Fusion.Core.Content;
 
 namespace IronStar.SFX {
 
 	public partial class FXFactory {
+
+		public void Precache ( ContentManager content )
+		{
+			content.Precache<SoundEffect>( SoundStage.Sound );
+		}
+
 
 		public static Vector3 GetPosition( FXDirection dir, float factor, FXEvent fxEvent )
 		{

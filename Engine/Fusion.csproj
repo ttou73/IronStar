@@ -147,6 +147,7 @@
     <Compile Include="Build\Processors\UbershaderProcessor.Parser.cs" />
     <Compile Include="Build\ToolException.cs" />
     <Compile Include="Core\Content\IniLoader.cs" />
+    <Compile Include="Core\Content\IPrecachable.cs" />
     <Compile Include="Core\Extensions\KeyDataCollectionExtension.cs" />
     <Compile Include="Core\Extensions\LinkedListExtensions.cs" />
     <Compile Include="Core\Shell\TestCommand.cs" />
@@ -210,7 +211,7 @@
       <DependentUpon>UserMessage.cs</DependentUpon>
     </Compile>
     <Compile Include="Engine\Client\ClientContext.cs" />
-    <Compile Include="Engine\Client\IGamePreloader.cs" />
+    <Compile Include="Engine\Client\IContentPrecacher.cs" />
     <Compile Include="Engine\Client\IClientInstance.cs" />
     <Compile Include="Engine\Common\Commands\ShowAtoms.cs" />
     <Compile Include="Engine\Common\IGameFactory.cs" />

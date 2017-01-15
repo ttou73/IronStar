@@ -22,13 +22,21 @@ namespace Fusion.Engine.Client {
 			readonly ClientContext context;
 			readonly string serverInfo;
 			
+			Task loadingTask;
+
 
 			public Loading ( ClientContext context, string serverInfo ) : base(context.GameClient, ClientState.Loading)
 			{
 				Message			=	serverInfo;
 				this.serverInfo	=	serverInfo;
 				this.context	=	context;
+
+				var precacher	=	context.Instance.CreatePrecacher(serverInfo);
+
+				loadingTask		=	new Task( ()=> precacher.LoadContent() );
+				loadingTask.Start();
 			}
+
 
 
 			public override void UserConnect ( string host, int port )
@@ -47,18 +55,21 @@ namespace Fusion.Engine.Client {
 			{
 				DispatchIM( context.NetClient );
 
-				//	
-				//	TODO : update loader/precache
-				//	........
-				//
 
-				context.Instance.Initialize( serverInfo );
+				if (loadingTask.IsCompleted) {
 
-				if (true) {
+					if (loadingTask.IsFaulted) {
+						Log.Error("-------- Precache error --------");
+						Log.Error("{0}", loadingTask.Exception);
+						Log.Error("----------------");
+
+						gameClient.SetState( new Disconnected(context, "Precaching failed") );
+					}
+
 					if (disconnectReason!=null) {
 						gameClient.SetState( new Disconnected(context, disconnectReason) );
 					} else {
-						gameClient.SetState( new Awaiting(context) );
+						gameClient.SetState( new Awaiting(context, serverInfo) );
 					}
 				}
 			}

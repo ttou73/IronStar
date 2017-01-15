@@ -149,6 +149,32 @@ namespace Fusion.Core.Content {
 
 
 		/// <summary>
+		/// Precache asset.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="assetPath"></param>
+		/// <returns>Indicate whether precaching was successful</returns>
+		public bool Precache<T>( string assetPath )
+		{
+			if (string.IsNullOrWhiteSpace(assetPath)) {
+				return false;
+			}
+
+			if (!Exists(assetPath)) {
+				return false;
+			}
+
+			var asset = Load<T>( assetPath );
+
+			(asset as IPrecachable)?.Precache(this);
+
+			return true;
+		}
+
+
+
+
+		/// <summary>
 		/// Opens a stream for reading the specified asset.
 		/// </summary>
 		/// <param name="path"></param>

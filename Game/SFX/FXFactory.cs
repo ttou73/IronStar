@@ -24,7 +24,7 @@ using Fusion.Engine.Storage;
 
 namespace IronStar.SFX {
 
-	public partial class FXFactory {
+	public partial class FXFactory : IPrecachable {
 
 		[Category("General")]
 		public float Period { get; set; } = 1;

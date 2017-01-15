@@ -73,9 +73,9 @@ namespace IronStar.Core {
 
 
 
-		public IGamePreloader CreateLoader( string serverInfo )
+		public IContentPrecacher CreatePrecacher( string serverInfo )
 		{
-			return new Loader();
+			return new Precacher( Content, serverInfo );
 		}
 
 

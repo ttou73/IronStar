@@ -24,11 +24,42 @@ namespace IronStar.Core {
 	/// </summary>
 	public partial class GameWorld : IServerInstance, IClientInstance {
 
-		public class Loader : IGamePreloader {
+		public class Precacher : IContentPrecacher {
 
-			void IGamePreloader.LoadContent()
+			readonly ContentManager content;
+			readonly string serverInfo;
+
+			/// <summary>
+			/// 
+			/// </summary>
+			/// <param name="content"></param>
+			/// <param name="serverInfo"></param>
+			public Precacher ( ContentManager content, string serverInfo )
 			{
-				throw new NotImplementedException();
+				this.content	=	content;
+				this.serverInfo	=	serverInfo;
+			}
+
+
+			/// <summary>
+			/// 
+			/// </summary>
+			void IContentPrecacher.LoadContent()
+			{
+				content	.EnumerateAssets("fx")
+						.Select( name => content.Precache<FXFactory>(@"fx\"+name) )
+						.ToArray();
+
+
+				content	.EnumerateAssets("models")
+						.Select( name => content.Precache<ModelDescriptor>(@"models\"+name) )
+						.ToArray();
+
+				content	.EnumerateAssets("entities")
+						.Select( name => content.Load<EntityFactory>(@"entities\"+name) )
+						.ToArray();
+
+				var map = content.Precache<Map>(@"maps\" + serverInfo );
 			}
 		}
 

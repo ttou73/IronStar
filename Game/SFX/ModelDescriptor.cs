@@ -15,22 +15,23 @@ using IronStar.Editors;
 using Fusion.Core.Content;
 using Fusion.Engine.Storage;
 using System.IO;
+using Fusion.Engine.Graphics;
 
 namespace IronStar.SFX {
-	public class ModelDescriptor {
+	public class ModelDescriptor : IPrecachable {
 
 		[Category( "Appearance" )]
-		[Description("Path to FBX scene")]
-		[Editor(typeof(FbxFileLocationEditor), typeof(UITypeEditor))]
+		[Description( "Path to FBX scene" )]
+		[Editor( typeof( FbxFileLocationEditor ), typeof( UITypeEditor ) )]
 		public string ScenePath { get; set; } = "";
 
 		[Category( "Appearance" )]
-		[Description("Entire model scale")]
+		[Description( "Entire model scale" )]
 		public float Scale { get; set; } = 1;
 
 		[Category( "Appearance" )]
-		[Description("Model glow color multiplier")]
-		public Color4 Color { get; set; } = new Color4(10,10,10,1);
+		[Description( "Model glow color multiplier" )]
+		public Color4 Color { get; set; } = new Color4( 10, 10, 10, 1 );
 
 
 
@@ -38,13 +39,13 @@ namespace IronStar.SFX {
 		/// 
 		/// </summary>
 		/// <returns></returns>
-		public Matrix ComputePreTransformMatrix ()
+		public Matrix ComputePreTransformMatrix()
 		{
 			return Matrix.Scaling( Scale );
 		}
 
 
-		public static string SaveToXml ( ModelDescriptor descriptor )
+		public static string SaveToXml( ModelDescriptor descriptor )
 		{
 			return Misc.SaveObjectToXml( descriptor, descriptor.GetType() );
 		}
@@ -52,7 +53,13 @@ namespace IronStar.SFX {
 
 		public static ModelDescriptor LoadFromXml( string xmlText )
 		{
-			return (ModelDescriptor)Misc.LoadObjectFromXml( typeof(ModelDescriptor), xmlText );
+			return (ModelDescriptor)Misc.LoadObjectFromXml( typeof( ModelDescriptor ), xmlText );
+		}
+
+
+		public void Precache( ContentManager content )
+		{
+			content.Precache<Scene>(ScenePath);
 		}
 	}
 
