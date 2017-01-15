@@ -24,7 +24,7 @@ namespace IronStar.Core {
 	/// </summary>
 	public partial class GameWorld : IServerInstance, IClientInstance {
 
-		string mapName;
+		readonly string mapName;
 
 		Map map;
 
@@ -43,7 +43,6 @@ namespace IronStar.Core {
 
 		public delegate void EntityEventHandler ( object sender, EntityEventArgs e );
 
-		Dictionary<string,Type> entityControllerTypes;
 		List<uint> entityToKill = new List<uint>();
 
 		public EntityCollection entities;

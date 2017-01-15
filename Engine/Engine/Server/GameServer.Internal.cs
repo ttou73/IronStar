@@ -18,20 +18,10 @@ namespace Fusion.Engine.Server {
 
 	public partial class GameServer : GameComponent {
 
-		Task serverTask;
-		CancellationTokenSource killToken;
+		Task serverTask = null;
+		CancellationTokenSource killToken = null;
 
 		object lockObj = new object();
-
-
-		/// <summary>
-		/// Gets whether server is still alive.
-		/// </summary>
-		internal bool IsAlive {
-			get {
-				return serverTask != null; 
-			}
-		}
 
 
 
@@ -43,9 +33,12 @@ namespace Fusion.Engine.Server {
 		public void Start ( string map, string postCommand )
 		{
 			lock (lockObj) {
-				if (IsAlive) {
-					Log.Warning("Can not start server, it is already running");
-					return;
+				
+				if (serverTask!=null) {
+					if (!serverTask.IsCompleted) {
+						Log.Warning("Server is still running.");
+						return;
+					}
 				}
 
 				killToken	=	new CancellationTokenSource();
@@ -63,13 +56,7 @@ namespace Fusion.Engine.Server {
 		public void Kill ()
 		{
 			lock (lockObj) {
-				if (!IsAlive) {
-					Log.Warning("Server is not running");
-				}
-
-				if (killToken!=null) {
-					killToken.Cancel();
-				}
+				killToken?.Cancel();
 			}
 		}
 
@@ -81,14 +68,10 @@ namespace Fusion.Engine.Server {
 		internal void Wait ()
 		{
 			lock (lockObj) {
-				if (killToken!=null) {
-					killToken.Cancel();
-				}
-
-				if (serverTask!=null) {
-					Log.Message("Waiting for server task...");
-					serverTask.Wait();
-				}
+				
+				killToken?.Cancel();
+				Log.Message("Waiting for server task...");
+				serverTask?.Wait();
 			}
 		}
 
@@ -103,11 +86,11 @@ namespace Fusion.Engine.Server {
 			try {
 				Log.Message("Server starting: {0}", map);
 
-				using ( var serverInstance = Game.GameFactory.CreateServer(Game) ) {
-
-					serverInstance.Initialize(map);
+				using ( var serverInstance = Game.GameFactory.CreateServer(Game, map) ) {
 
 					using ( var context = new ServerContext( Game, Game.GameID, Game.Network.Port, serverInstance ) ) {
+
+						serverInstance.Initialize();
 
 						//	Timer and fixed timestep stuff :
 						//	http://gafferongames.com/game-physics/fix-your-timestep/
@@ -123,6 +106,8 @@ namespace Fusion.Engine.Server {
 						//	server loop :
 						//	
 						while ( !killToken.IsCancellationRequested ) {
+
+							Log.Message("-");
 
 						_retryTick:
 							var targetDelta	=	TimeSpan.FromTicks( (long)(10000000 / TargetFrameRate) );

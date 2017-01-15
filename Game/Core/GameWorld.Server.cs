@@ -29,8 +29,10 @@ namespace IronStar.Core {
 		/// </summary>
 		/// <param name="maxPlayers"></param>
 		/// <param name="maxEntities"></param>
-		public GameWorld ( GameServer server )
+		public GameWorld ( GameServer server, string map )
 		{
+			this.mapName	=	map;
+			
 			Atoms	=	new AtomCollection();
 
 			Log.Verbose( "world: server" );
@@ -40,13 +42,7 @@ namespace IronStar.Core {
 			Content         =   new ContentManager( Game );
 			entities        =   new EntityCollection(Atoms);
 
-			entityControllerTypes	=	Misc.GetAllSubclassesOf( typeof(EntityController) )
-										.ToDictionary( type => type.Name );
-
 			AddAtoms();
-
-			//------------------------
-
 		}
 
 
@@ -66,9 +62,8 @@ namespace IronStar.Core {
 		}
 
 
-		void IServerInstance.Initialize( string map )
+		void IServerInstance.Initialize()
 		{
-			this.mapName	=	map;
 			this.map		=   Content.Load<Map>( @"maps\" + mapName );
 			this.map.ActivateMap( this );
 

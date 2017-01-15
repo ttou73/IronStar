@@ -11,7 +11,7 @@ namespace Fusion.Engine.Server {
 		/// <summary>
 		/// Completes initialization of server instance.
 		/// </summary>
-		void Initialize ( string map );
+		void Initialize ();
 
 		/// <summary>
 		/// Runs one step of server-side world simulation.

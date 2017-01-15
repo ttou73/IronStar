@@ -52,7 +52,6 @@ namespace IronStar.Core {
 			this.UserGuid	=	clientGuid;
 			Content			=	new ContentManager(Game);
 			entities		=	new EntityCollection(null);
-			fxPlayback		=	new SFX.FXPlayback(this);
 			modelManager	=	new ModelManager(this);
 
 			hudLayer		=	new SpriteLayer( Game.RenderSystem, 1024);
@@ -81,6 +80,8 @@ namespace IronStar.Core {
 
 		void IClientInstance.Initialize( string serverInfo )
 		{
+			fxPlayback		=	new SFX.FXPlayback(this);
+
 			map     =   Content.Load<Map>( @"maps\" + serverInfo );
 			map.ActivateMap( this );
 

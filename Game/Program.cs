@@ -31,9 +31,9 @@ namespace IronStar {
 				return new GameWorld( game.GameClient, clientGuid );
 			}
 
-			public IServerInstance CreateServer( Game game )
+			public IServerInstance CreateServer( Game game, string map )
 			{
-				return new GameWorld( game.GameServer );
+				return new GameWorld( game.GameServer, map );
 			}
 
 			public IUserInterface CreateUI( Game game )
