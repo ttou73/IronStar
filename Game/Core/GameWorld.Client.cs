@@ -146,7 +146,7 @@ namespace IronStar.Core {
 			Log.Message("Capturing radiance...");
 			rw.RenderRadiance();
 
-			(Game.UserInterface as ShooterInterface).ShowMenu = false;
+			(Game.UserInterface.Instance as ShooterInterface).ShowMenu = false;
 
 			Log.Message("---- Loading game completed ----");
 			Log.Message("");

@@ -16,7 +16,9 @@ using Fusion.Engine.Server;
 
 namespace IronStar {
 
-	class ShooterInterface : Fusion.Engine.Common.UserInterface {
+	class ShooterInterface : IUserInterface {
+
+		readonly Game Game;
 
 		DiscTexture	background;
 		SpriteLayer uiLayer;
@@ -30,8 +32,8 @@ namespace IronStar {
 		/// </summary>
 		/// <param name="engine"></param>
 		public ShooterInterface ( Game game )
-			: base( game )
 		{
+			this.Game	=	game;
 			ShowMenu	=	true;
 		}
 
@@ -40,7 +42,7 @@ namespace IronStar {
 		/// <summary>
 		/// Called after the ShooterDemoUserInterface is created,
 		/// </summary>
-		public override void Initialize ()
+		public void Initialize ()
 		{
 			uiLayer	=	new SpriteLayer(Game.RenderSystem, 1024);
 
@@ -76,12 +78,17 @@ namespace IronStar {
 		/// <summary>
 		/// Overloaded. Immediately releases the unmanaged resources used by this object. 
 		/// </summary>
-		protected override void Dispose ( bool disposing )
+		protected virtual void Dispose ( bool disposing )
 		{
 			if (disposing) {
-				SafeDispose( ref uiLayer );
+				uiLayer?.Dispose();
 			}
-			base.Dispose( disposing );
+		}
+
+
+		public void Dispose()
+		{
+			Dispose(true);
 		}
 
 
@@ -93,7 +100,7 @@ namespace IronStar {
 		/// Called when the game has determined that UI logic needs to be processed.
 		/// </summary>
 		/// <param name="gameTime"></param>
-		public override void Update ( GameTime gameTime )
+		public void Update ( GameTime gameTime )
 		{
 			//	update console :
 			Game.Console.Update( gameTime );
@@ -199,7 +206,7 @@ namespace IronStar {
 		/// <summary>
 		/// Called when user closes game window using Close button or Alt+F4.
 		/// </summary>
-		public override void RequestToExit ()
+		public void RequestToExit ()
 		{
 			Game.Exit();
 		}
@@ -211,7 +218,7 @@ namespace IronStar {
 		/// </summary>
 		/// <param name="endPoint"></param>
 		/// <param name="serverInfo"></param>
-		public override void DiscoveryResponse ( System.Net.IPEndPoint endPoint, string serverInfo )
+		public void DiscoveryResponse ( System.Net.IPEndPoint endPoint, string serverInfo )
 		{
 			Log.Message( "DISCOVERY : {0} - {1}", endPoint.ToString(), serverInfo );
 		}

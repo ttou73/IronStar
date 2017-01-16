@@ -17,7 +17,7 @@ namespace Fusion.Engine.Server {
 	/// <summary>
 	/// Provides basic client-server interaction and server-side game logic.
 	/// </summary>
-	public partial class GameServer : GameComponent {
+	public sealed partial class GameServer : GameComponent {
 
 
 		/// <summary>

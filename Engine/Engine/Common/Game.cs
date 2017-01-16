@@ -744,7 +744,7 @@ namespace Fusion.Engine.Common {
 		{
 			cl.Update( gameTime );
 
-			gi.UpdateInternal( gameTime );
+			gi.Update( gameTime );
 		}
 
 

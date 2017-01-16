@@ -38,7 +38,7 @@ namespace IronStar {
 
 			public IUserInterface CreateUI( Game game )
 			{
-				throw new NotImplementedException();
+				return new ShooterInterface( game );
 			}
 		}
 
@@ -79,7 +79,7 @@ namespace IronStar {
 				//	create SV, CL and UI instances :
 				game.GameServer = new GameServer( game );
 				game.GameClient = new GameClient( game );
-				game.UserInterface = new ShooterInterface( game );
+				game.UserInterface = new UserInterface( game );
 
 				//	load configuration.
 				//	first run will cause warning, 

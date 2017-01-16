@@ -196,7 +196,7 @@ namespace IronStar.Client {
 			//	http://eliteownage.com/mousesensitivity.html 
 			//	Q3A: 16200 dot per 360 turn:
 			var vp		=	Game.RenderSystem.DisplayBounds;
-			var ui		=	Game.UserInterface as ShooterInterface;
+			var ui		=	Game.UserInterface.Instance as ShooterInterface;
 			//var cam		=	World.GetView<CameraView>();
 
 			if (!Game.Console.IsShown) {

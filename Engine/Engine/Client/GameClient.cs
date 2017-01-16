@@ -16,7 +16,7 @@ namespace Fusion.Engine.Client {
 	/// <summary>
 	/// Provides basic client-server interaction and client-side game logic.
 	/// </summary>
-	public partial class GameClient : GameComponent {
+	public sealed partial class GameClient : GameComponent {
 
 		State state;
 		float ping;

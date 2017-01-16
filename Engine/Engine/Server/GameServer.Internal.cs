@@ -107,8 +107,6 @@ namespace Fusion.Engine.Server {
 						//	
 						while ( !killToken.IsCancellationRequested ) {
 
-							Log.Message("-");
-
 						_retryTick:
 							var targetDelta	=	TimeSpan.FromTicks( (long)(10000000 / TargetFrameRate) );
 							var newTime		=	stopwatch.Elapsed;
