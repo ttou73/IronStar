@@ -30,20 +30,21 @@ namespace Fusion.Engine.Server {
 		/// </summary>
 		/// <param name="map"></param>
 		/// <param name="postCommand"></param>
-		public void Start ( string map, string postCommand )
+		public bool Start ( string map, string postCommand )
 		{
 			lock (lockObj) {
 				
 				if (serverTask!=null) {
 					if (!serverTask.IsCompleted) {
 						Log.Warning("Server is still running.");
-						return;
+						return false;
 					}
 				}
 
 				killToken	=	new CancellationTokenSource();
 				serverTask	=	new Task( () => ServerTaskFunc(map, killToken.Token ) );
 				serverTask.Start();
+				return true;
 			}
 		}
 
@@ -53,10 +54,15 @@ namespace Fusion.Engine.Server {
 		/// Kills server thread.
 		/// </summary>
 		/// <param name="wait"></param>
-		public void Kill ()
+		public bool Kill ()
 		{
 			lock (lockObj) {
+				if (serverTask==null || serverTask.IsCompleted) {
+					Log.Warning("Server is not running");
+					return false;
+				}
 				killToken?.Cancel();
+				return true;
 			}
 		}
 
@@ -73,6 +79,17 @@ namespace Fusion.Engine.Server {
 				Log.Message("Waiting for server task...");
 				serverTask?.Wait();
 			}
+		}
+
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="clientGuid"></param>
+		public void Drop ( Guid clientGuid )
+		{
+			throw new NotImplementedException();
 		}
 
 
@@ -123,13 +140,14 @@ namespace Fusion.Engine.Server {
 							while ( accumulator > targetDelta ) {
 
 								//var svTime = new GameTime( time, targetDelta );
-								var svTime = new GameTime( serverFrames, time, targetDelta );
-
+								var svTime	= new GameTime( serverFrames, time, targetDelta );
+								
 								//
 								//	Do actual server stuff :
 								//	
 								context.UpdateNetworkAndLogic( svTime );
 
+								serverFrames++;
 								accumulator	-= targetDelta;
 								time		+= targetDelta;
 							}

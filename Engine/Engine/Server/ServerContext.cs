@@ -67,7 +67,8 @@ namespace Fusion.Engine.Server {
 		{
 			if ( !disposedValue ) {
 				if ( disposing ) {
-					netServer.Shutdown("Server shut down");
+					
+					netServer.Shutdown("Server shutdown");
 					serverInstance.Dispose();
 				}
 

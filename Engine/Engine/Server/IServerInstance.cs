@@ -65,13 +65,15 @@ namespace Fusion.Engine.Server {
 		void ClientActivated ( Guid clientGuid );
 
 		/// <summary>
-		/// Called when before disconnect.
+		/// Called when client deactivated.
+		/// This mehtod would not be called when server shuts down.
 		/// </summary>
 		/// <param name="clientGuid">Client GUID.</param>
 		void ClientDeactivated ( Guid clientGuid );
 
 		/// <summary>
 		/// Called when client disconnected.
+		/// This mehtod would not be called when server shuts down.
 		/// </summary>
 		/// <param name="clientGuid">Client IP in format 123.45.67.89:PORT. Could be used as client identifier.</param>
 		void ClientDisconnected ( Guid clientGuid );
