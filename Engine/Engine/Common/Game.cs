@@ -749,8 +749,9 @@ namespace Fusion.Engine.Common {
 			if (dedicated) {
 				GameServer.Start( map, null );
 			} else {
-				GameServer.Start( map, null );
-				GameClient.Connect( "127.0.0.1", Network.Port );
+				if (GameServer.Start( map, null )) {
+					GameClient.Connect( "127.0.0.1", Network.Port );
+				}
 			}
 		}
 

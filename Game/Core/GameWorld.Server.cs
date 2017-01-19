@@ -108,21 +108,25 @@ namespace IronStar.Core {
 
 		public void ClientConnected( Guid clientGuid, string userInfo )
 		{
+			Log.Message("Client Connected: {0} {1}", clientGuid, userInfo );
 			PlayerConnected( clientGuid, userInfo );
 		}
 
 		public void ClientActivated( Guid clientGuid )
 		{
+			Log.Message("Client Activated: {0}", clientGuid );
 			PlayerEntered( clientGuid );
 		}
 
 		public void ClientDeactivated( Guid clientGuid )
 		{
+			Log.Message("Client Deactivated: {0}", clientGuid );
 			PlayerLeft( clientGuid );
 		}
 
 		public void ClientDisconnected( Guid clientGuid )
 		{
+			Log.Message("Client Disconnected: {0}", clientGuid );
 			PlayerDisconnected( clientGuid );
 		}
 
