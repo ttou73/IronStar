@@ -31,7 +31,7 @@ namespace IronStar {
 				return new GameWorld( game.GameClient, clientGuid );
 			}
 
-			public IServerInstance CreateServer( Game game, string map )
+			public IServerInstance CreateServer( Game game, string map, string options )
 			{
 				return new GameWorld( game.GameServer, map );
 			}
@@ -39,6 +39,11 @@ namespace IronStar {
 			public IUserInterface CreateUI( Game game )
 			{
 				return new ShooterInterface( game );
+			}
+
+			public IEditorInstance CreateEditor( Game game, string map )
+			{
+				return new GameWorld( game.GameEditor, map );
 			}
 		}
 
@@ -75,11 +80,6 @@ namespace IronStar {
 			//	Run game :
 			//
 			using (var game = new Game( "IronStar", new GameFactory() )) {
-
-				//	create SV, CL and UI instances :
-				game.GameServer = new GameServer( game );
-				game.GameClient = new GameClient( game );
-				game.UserInterface = new UserInterface( game );
 
 				//	load configuration.
 				//	first run will cause warning, 

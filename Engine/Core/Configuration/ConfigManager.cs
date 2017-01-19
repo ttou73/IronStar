@@ -57,7 +57,7 @@ namespace Fusion.Core.Configuration {
 		/// 
 		/// </summary>
 		/// <param name="?"></param>
-		public void ExposeProperties ( object targetObject, string niceName, string shortName )
+		public void ExposeConfig ( object targetObject, string niceName, string shortName )
 		{
 			if (game.IsInitialized) {	
 				throw new InvalidOperationException("Could not expose target object properties after game initialized");
@@ -84,6 +84,22 @@ namespace Fusion.Core.Configuration {
 					Log.Warning("Can not expose property {0}. Skipped.", key);
 				}
 
+			}
+		}
+
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <returns></returns>
+		public T GetConfig<T>()
+		{
+			try {
+				return (T)(targetObjects.FirstOrDefault( t=>t.Value is T ).Value);
+			} catch ( Exception e ) {
+				throw new ArgumentException(string.Format("Config of type '{0}' was not exposed", typeof(T)), e);
 			}
 		}
 

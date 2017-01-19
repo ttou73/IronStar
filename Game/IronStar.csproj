@@ -62,6 +62,7 @@
     <Compile Include="Core\EntityFactory.cs" />
     <Compile Include="Core\EntityCollection.cs" />
     <Compile Include="Core\GameWorld.Loader.cs" />
+    <Compile Include="Core\GameWorld.Editor.cs" />
     <Compile Include="Core\GameWorld.Server.cs" />
     <Compile Include="Core\GameWorld.Client.cs" />
     <Compile Include="Core\GameWorld.Query.cs" />
@@ -110,6 +111,7 @@
     <Compile Include="Entities\WorldspawnFactory.cs" />
     <Compile Include="Entities\StaticModelFactory.cs" />
     <Compile Include="Mapping\Map.cs" />
+    <Compile Include="Mapping\Map2.cs" />
     <Compile Include="Mapping\MapFactory.cs" />
     <Compile Include="SFX\FXFactory.Utils.cs" />
     <Compile Include="SFX\FXFactory.cs" />

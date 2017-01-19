@@ -322,6 +322,23 @@ namespace Fusion.Core.Extensions {
 
 
 		/// <summary>
+		/// Saves object to Xml file 
+		/// </summary>
+		/// <param name="obj"></param>
+		/// <param name="type"></param>
+		/// <param name="fileName"></param>
+		static public void SaveObjectToXml ( object obj, Type type, Stream stream, Type[] extraTypes = null ) 
+		{
+			XmlSerializer serializer = new XmlSerializer( type, extraTypes ?? new Type[0] );
+
+			using ( var textWriter = new StreamWriter(stream) ) {
+				serializer.Serialize( textWriter, obj );
+			}
+		}
+
+
+
+		/// <summary>
 		/// Loads object from Xml file
 		/// </summary>
 		/// <param name="type"></param>

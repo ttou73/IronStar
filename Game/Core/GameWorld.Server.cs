@@ -141,6 +141,7 @@ namespace IronStar.Core {
 			if ( !disposedValue ) {
 				if ( disposing ) {
 					Shutdown();
+					SaveMap();
 				}
 
 				disposedValue = true;

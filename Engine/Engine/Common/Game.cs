@@ -234,7 +234,8 @@ namespace Fusion.Engine.Common {
 
 		GameServer	sv;
 		GameClient cl;
-		UserInterface gi;
+		UserInterface ui;
+		GameEditor	ed;
 
 
 		/// <summary>
@@ -242,16 +243,6 @@ namespace Fusion.Engine.Common {
 		/// </summary>
 		public GameServer GameServer { 
 			get { return sv; } 
-			set { 
-				if (IsInitialized) {
-					throw new InvalidOperationException("Can not set server after initialization");
-				}
-				if (sv!=null) {
-					throw new InvalidOperationException("Game server is already set");
-				}
-				sv = value; 
-				Config.ExposeProperties( sv, "GameServer", "sv" );
-			} 
 		}
 		
 		/// <summary>
@@ -259,33 +250,20 @@ namespace Fusion.Engine.Common {
 		/// </summary>
 		public GameClient GameClient {
 			get { return cl; } 
-			set { 
-				if (IsInitialized) {
-					throw new InvalidOperationException("Can not set client after initialization");
-				}
-				if (cl!=null) {
-					throw new InvalidOperationException("Game client is already set");
-				}
-				cl = value; 
-				Config.ExposeProperties( cl, "GameClient", "cl" );
-			} 
 		}
 
 		/// <summary>
 		/// Current game interface.
 		/// </summary>
 		public UserInterface UserInterface {
-			get { return gi; } 
-			set { 
-				if (IsInitialized) {
-					throw new InvalidOperationException("Can not set user interface after initialization");
-				}
-				if (gi!=null) {
-					throw new InvalidOperationException("User interface is already set");
-				}
-				gi = value; 
-				Config.ExposeProperties( gi, "UserInterface", "ui" );
-			} 
+			get { return ui; } 
+		}
+
+		/// <summary>
+		/// Current game interface.
+		/// </summary>
+		public GameEditor GameEditor {
+			get { return ed; } 
 		}
 
 
@@ -391,15 +369,28 @@ namespace Fusion.Engine.Common {
 
 			userStorage			=	new UserStorage(this);
 
-			config.ExposeProperties( SoundSystem,	"SoundSystem",		"snd"	);
-			config.ExposeProperties( RenderSystem,	"RenderSystem",		"rs"	);
-			config.ExposeProperties( Frames,		"Frames",			"frames");
-			config.ExposeProperties( Console,		"Console",			"con"	);
-			config.ExposeProperties( Network,		"Network",			"net"	);
 
-			config.ExposeProperties( Keyboard,		"Keyboard",			"kb"	);
-			config.ExposeProperties( Touch,			"Touch",			"touch"	);
-			config.ExposeProperties( Mouse,			"Mouse",			"mouse"	);
+			//	create SV, CL and UI instances :
+			sv = new GameServer( this );
+			cl = new GameClient( this );
+			ui = new UserInterface( this );
+			ed = new GameEditor( this );
+
+
+			config.ExposeConfig( SoundSystem,	"SoundSystem",		"snd"	);
+			config.ExposeConfig( RenderSystem,	"RenderSystem",		"rs"	);
+			config.ExposeConfig( Frames,		"Frames",			"frames");
+			config.ExposeConfig( Console,		"Console",			"con"	);
+			config.ExposeConfig( Network,		"Network",			"net"	);
+
+			config.ExposeConfig( Keyboard,		"Keyboard",			"kb"	);
+			config.ExposeConfig( Touch,			"Touch",			"touch"	);
+			config.ExposeConfig( Mouse,			"Mouse",			"mouse"	);
+
+			config.ExposeConfig( sv,			"GameServer",		"sv" );
+			config.ExposeConfig( cl,			"GameClient",		"cl" );
+			config.ExposeConfig( ui,			"UserInterface",	"ui" );
+			config.ExposeConfig( ed,			"GameEditor",		"ed" );
 		}
 
 
@@ -744,15 +735,15 @@ namespace Fusion.Engine.Common {
 		{
 			cl.Update( gameTime );
 
-			gi.Update( gameTime );
+			ui.Update( gameTime );
+
+			ed.Update( gameTime );
 		}
 
 
 
 		public void StartServer ( string map, bool dedicated )
 		{
-			var postCmd = string.Format("connect 127.0.0.1 {0}", Network.Port );
-
 			//	Disconnect!
 
 			if (dedicated) {

@@ -16,6 +16,9 @@ namespace Fusion.Engine.Common.Commands {
 
 		[CommandLineParser.Name("dedicated")]
 		public bool Dedicated { get; set; }
+
+		[CommandLineParser.Name("edit")]
+		public bool Edit { get; set; }
 			
 		public MapCommand ( Invoker invoker ) : base(invoker) 
 		{
@@ -23,7 +26,11 @@ namespace Fusion.Engine.Common.Commands {
 
 		public override void Execute ()
 		{
-			Invoker.Game.StartServer( MapName, Dedicated );
+			if (Edit) {
+				Invoker.Game.GameEditor.Start( MapName );
+			} else {
+				Invoker.Game.StartServer( MapName, Dedicated );
+			}
 		}
 	}
 }

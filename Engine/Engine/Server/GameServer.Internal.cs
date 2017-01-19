@@ -30,7 +30,7 @@ namespace Fusion.Engine.Server {
 		/// </summary>
 		/// <param name="map"></param>
 		/// <param name="postCommand"></param>
-		public void Start ( string map, string postCommand )
+		public void Start ( string map, string options )
 		{
 			lock (lockObj) {
 				
@@ -42,7 +42,7 @@ namespace Fusion.Engine.Server {
 				}
 
 				killToken	=	new CancellationTokenSource();
-				serverTask	=	new Task( () => ServerTaskFunc(map, killToken.Token ) );
+				serverTask	=	new Task( () => ServerTaskFunc(map, options, killToken.Token ) );
 				serverTask.Start();
 			}
 		}
@@ -81,12 +81,12 @@ namespace Fusion.Engine.Server {
 		/// 
 		/// </summary>
 		/// <param name="map"></param>
-		void ServerTaskFunc ( string map, CancellationToken killToken )
+		void ServerTaskFunc ( string map, string options, CancellationToken killToken )
 		{
 			try {
-				Log.Message("Server starting: {0}", map);
+				Log.Message("Server starting: {0} [{1}]", map, options);
 
-				using ( var serverInstance = Game.GameFactory.CreateServer(Game, map) ) {
+				using ( var serverInstance = Game.GameFactory.CreateServer(Game, map, options) ) {
 
 					using ( var context = new ServerContext( Game, Game.GameID, Game.Network.Port, serverInstance ) ) {
 

@@ -123,9 +123,9 @@ namespace Fusion.Engine.Graphics {
 			bitonicSort		=	new BitonicSort( this );
 			virtualTexture	=	new VTSystem( this );
 
-			Game.Config.ExposeProperties( lightRenderer,  "LightRenderer"	, "light" );
-			Game.Config.ExposeProperties( ssaoFilter,     "SSAO"			, "ssao"  );
-			Game.Config.ExposeProperties( virtualTexture, "VirtualTexture"	, "vt"	  );
+			Game.Config.ExposeConfig( lightRenderer,  "LightRenderer"	, "light" );
+			Game.Config.ExposeConfig( ssaoFilter,     "SSAO"			, "ssao"  );
+			Game.Config.ExposeConfig( virtualTexture, "VirtualTexture"	, "vt"	  );
 
 			Device.DisplayBoundsChanged += (s,e) => {
 				var handler = DisplayBoundsChanged;

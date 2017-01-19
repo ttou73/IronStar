@@ -107,6 +107,11 @@ namespace IronStar {
 
 			uiLayer.Clear();
 
+
+			if (Game.GameEditor.Instance!=null) {
+				return;
+			}
+
 			var clientState	=	Game.GameClient.ClientState;
 
 			dofFactor	=	MathUtil.Lerp( (float)dofFactor, Game.Keyboard.IsKeyDown(Keys.Q) ? 1.0f : 0.0f, 0.1f );

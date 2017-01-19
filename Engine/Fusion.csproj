@@ -213,7 +213,10 @@
     <Compile Include="Engine\Client\ClientContext.cs" />
     <Compile Include="Engine\Client\IContentPrecacher.cs" />
     <Compile Include="Engine\Client\IClientInstance.cs" />
+    <Compile Include="Engine\Common\Commands\EdClose.cs" />
     <Compile Include="Engine\Common\Commands\ShowAtoms.cs" />
+    <Compile Include="Engine\Common\GameEditor.cs" />
+    <Compile Include="Engine\Common\IEditorInstance.cs" />
     <Compile Include="Engine\Common\IGameFactory.cs" />
     <Compile Include="Engine\Common\IUserInterface.cs" />
     <Compile Include="Engine\Graphics\Commands\VTRestart.cs" />
