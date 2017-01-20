@@ -19,6 +19,7 @@ using Fusion.Core.Extensions;
 using Fusion.Build.Mapping;
 using Fusion.Engine.Client;
 using Fusion.Engine.Server;
+using IronStar.Editor2;
 
 namespace IronStar {
 
@@ -43,7 +44,7 @@ namespace IronStar {
 
 			public IEditorInstance CreateEditor( Game game, string map )
 			{
-				return new GameWorld( game.GameEditor, map );
+				return new Editor2.MapEditor( game.GameEditor, map );
 			}
 		}
 

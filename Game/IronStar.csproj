@@ -59,10 +59,13 @@
   <ItemGroup>
     <Compile Include="Client\GameInput.cs" />
     <Compile Include="Commands\ShowWorldState.cs" />
+    <Compile Include="Editor2\EdCamera.cs" />
     <Compile Include="Core\EntityFactory.cs" />
     <Compile Include="Core\EntityCollection.cs" />
     <Compile Include="Core\GameWorld.Loader.cs" />
-    <Compile Include="Core\GameWorld.Editor.cs" />
+    <Compile Include="Editor2\Enums.cs" />
+    <Compile Include="Editor2\MapEditor.UI.cs" />
+    <Compile Include="Editor2\MapEditor.cs" />
     <Compile Include="Core\GameWorld.Server.cs" />
     <Compile Include="Core\GameWorld.Client.cs" />
     <Compile Include="Core\GameWorld.Query.cs" />
@@ -180,6 +183,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- Import Project="$(registry:HKEY_CURRENT_USER\Software\FusionEngine@BuildDir)\FusionProject.targets" / -->
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

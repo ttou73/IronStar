@@ -128,10 +128,7 @@ namespace Fusion.Engine.Graphics {
 			Game.Config.ExposeConfig( virtualTexture, "VirtualTexture"	, "vt"	  );
 
 			Device.DisplayBoundsChanged += (s,e) => {
-				var handler = DisplayBoundsChanged;
-				if (handler!=null) {
-					handler(s,e);
-				}
+				DisplayBoundsChanged?.Invoke( s, e );
 			};
 		}
 
@@ -191,6 +188,8 @@ namespace Fusion.Engine.Graphics {
 
 			//	add default render world :
 			renderWorld		=	new RenderWorld(Game, Width, Height);
+
+			DisplayBoundsChanged += (s,e) => renderWorld.Resize( DisplayBounds.Width, DisplayBounds.Height );
 		}
 
 

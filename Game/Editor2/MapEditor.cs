@@ -17,39 +17,40 @@ using IronStar.Views;
 using Fusion.Engine.Graphics;
 using IronStar.Mapping;
 
-namespace IronStar.Core {
+namespace IronStar.Editor2 {
 
 	/// <summary>
 	/// World represents entire game state.
 	/// </summary>
-	public partial class GameWorld : IServerInstance, IClientInstance, IEditorInstance {
+	public partial class MapEditor : IEditorInstance {
 
-		readonly bool isEditor = false;
+		readonly string mapName;
+		
+		public Game Game { get; private set; }
+		public ContentManager Content { get; private set; }
+		readonly RenderSystem rs;
 
-		RenderSystem rs;
+		EdCamera	edCamera;
 
 		/// <summary>
 		/// Initializes server-side world.
 		/// </summary>
 		/// <param name="maxPlayers"></param>
 		/// <param name="maxEntities"></param>
-		public GameWorld ( GameEditor editor, string map )
+		public MapEditor ( GameEditor editor, string map )
 		{
 			this.mapName	=	map;
 
-			isEditor	=	true;
-			
-			Atoms	=	new AtomCollection();
-
-			Log.Verbose( "world: editor" );
-			this.serverSide =   false;
+			Log.Verbose( "game editor" );
 			this.Game       =   editor.Game;
-			this.UserGuid   =   new Guid();
 			this.rs			=	Game.RenderSystem;
 			Content         =   new ContentManager( Game );
-			entities        =   new EntityCollection(Atoms);
 
-			AddAtoms();
+			edCamera	=	new EdCamera( Game.RenderSystem );
+
+			SetupUI();
+
+			Game.Keyboard.ScanKeyboard =	true;
 		}
 
 
@@ -59,25 +60,56 @@ namespace IronStar.Core {
 		/// </summary>
 		public void SaveMap ()
 		{
-			if (isEditor) {
-
-			}
 		}
 
 
 
+		/// <summary>
+		/// 
+		/// </summary>
 		void IEditorInstance.Initialize()
 		{
 		}
 
 
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="disposing"></param>
+		protected virtual void Dispose( bool disposing )
+		{
+			if ( !disposedValue ) {
+				if ( disposing ) {
+				}
+
+				disposedValue = true;
+			}
+		}
+
+		private bool disposedValue = false;
+
+		public void Dispose()
+		{
+			Dispose( true );
+		}
+
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="gameTime"></param>
 		void IEditorInstance.Update( GameTime gameTime )
 		{
+			edCamera.Update( gameTime );
+
+			rs.RenderWorld.Debug.DrawGrid( 10 );
 			//rs.
 			//SimulateWorld( gameTime.ElapsedSec );
 
 			//modelManager.Update( gameTime.ElapsedSec, 1 );
 		}
+
 	}
 }
