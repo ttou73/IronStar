@@ -10,10 +10,6 @@ using IronStar.Core;
 namespace IronStar.Mapping {
 	public class MapEntity : MapNode {
 
-		[Category( "Entity" )]
-		[Description( "Model transformation" )]
-		public MapTransform Transform { get; set; } = new MapTransform();
-
 		/// <summary>
 		/// 
 		/// </summary>
@@ -33,7 +29,6 @@ namespace IronStar.Mapping {
 		public MapEntity ()
 		{
 		}
-
 
 
 		public override string ToString()

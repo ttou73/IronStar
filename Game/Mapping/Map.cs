@@ -30,7 +30,7 @@ namespace IronStar.Mapping {
 		/// <summary>
 		/// List of nodes
 		/// </summary>
-		public List<MapFactory> Factories { get; set; }
+		public List<MapNode> Factories { get; set; }
 
 	
 		List<MeshInstance> instances;
@@ -110,10 +110,38 @@ namespace IronStar.Mapping {
 
 
 
-
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="content"></param>
 		public void Precache( ContentManager content )
 		{
-			content.Precache<Scene>( ScenePath );
+			//content.Precache<Scene>( ScenePath );
+		}
+
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="stream"></param>
+		/// <returns></returns>
+		public static Map LoadFromXml ( Stream stream )
+		{
+			var	extraTypes = Misc.GetAllSubclassesOf( typeof( EntityFactory ) );
+			return (Map)Misc.LoadObjectFromXml( typeof( Map ), stream, extraTypes );
+		}
+
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="stream"></param>
+		public static void SaveToXml ( Map map, Stream stream )
+		{
+			var	extraTypes = Misc.GetAllSubclassesOf( typeof( EntityFactory ) );
+			Misc.SaveObjectToXml( map, typeof( Map ), stream, extraTypes );
 		}
 
 
@@ -123,6 +151,7 @@ namespace IronStar.Mapping {
 		/// </summary>
 		public void ActivateMap ( GameWorld gameWorld )
 		{
+			#if false
 			var content	=	gameWorld.Content;
 			scene		=	content.Load<Scene>( ScenePath );
 
@@ -181,6 +210,7 @@ namespace IronStar.Mapping {
 					Log.Warning("Missing referenced node : {0}", factory.NodePath );
 				}
 			}
+			#endif
 		}
 	}
 

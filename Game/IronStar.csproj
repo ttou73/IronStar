@@ -83,12 +83,6 @@
     <Compile Include="Editors\EditorForm.Designer.cs">
       <DependentUpon>EditorForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Editors\MapEditor.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Editors\MapEditor.Designer.cs">
-      <DependentUpon>MapEditor.cs</DependentUpon>
-    </Compile>
     <Compile Include="Editors\ObjectEditor.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -113,9 +107,15 @@
     <Compile Include="Entities\StartPoint.cs" />
     <Compile Include="Entities\WorldspawnFactory.cs" />
     <Compile Include="Entities\StaticModelFactory.cs" />
+    <Compile Include="Mapping\MapEntity.cs" />
+    <Compile Include="Mapping\MapFX.cs" />
+    <Compile Include="Mapping\MapSound.cs" />
+    <Compile Include="Mapping\MapSpotLight.cs" />
+    <Compile Include="Mapping\MapOmniLight.cs" />
+    <Compile Include="Mapping\MapModel.cs" />
+    <Compile Include="Mapping\MapNode.cs" />
     <Compile Include="Mapping\Map.cs" />
-    <Compile Include="Mapping\Map2.cs" />
-    <Compile Include="Mapping\MapFactory.cs" />
+    <Compile Include="Mapping\MapWorldspawn.cs" />
     <Compile Include="SFX\FXFactory.Utils.cs" />
     <Compile Include="SFX\FXFactory.cs" />
     <Compile Include="SFX\ModelInstance.cs" />
@@ -165,9 +165,6 @@
   <ItemGroup>
     <EmbeddedResource Include="Editors\EditorForm.resx">
       <DependentUpon>EditorForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Editors\MapEditor.resx">
-      <DependentUpon>MapEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Editors\ObjectEditor.resx">
       <DependentUpon>ObjectEditor.cs</DependentUpon>

@@ -9,9 +9,9 @@ using Fusion.Core.Mathematics;
 
 namespace IronStar.Mapping {
 
-	public class MapEnvironment : MapNode {
+	public class MapWorldspawn : MapNode {
 
-		[Category("Physics")]
+		[Category( "Physics" )]
 		public float Gravity { get; set; } = 16;
 
 		[Category( "Sky" )]
@@ -37,7 +37,7 @@ namespace IronStar.Mapping {
 
 		public override string ToString()
 		{
-			return "(Environment)";
+			return "(Worldspawn)";
 		}
 	}
 }
