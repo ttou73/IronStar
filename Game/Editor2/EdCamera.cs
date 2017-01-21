@@ -16,9 +16,9 @@ namespace IronStar.Editor2 {
 
 
 		public Vector3	Target		=	Vector3.Zero;
-		public float	Distance	=	7.5f;
+		public float	Distance	=	30;
 		public float	Yaw			=	45;
-		public float	Pitch		=	45;
+		public float	Pitch		=	-30;
 		public float	Fov			=	60;
 
 		Manipulation	manipulation	=	Manipulation.None;
@@ -27,6 +27,12 @@ namespace IronStar.Editor2 {
 		float			addPitch;
 		float			addZoom = 1;
 
+
+		public Manipulation Manipulation {
+			get {
+				return manipulation;
+			}
+		}
 
 
 		/// <summary>
@@ -60,6 +66,30 @@ namespace IronStar.Editor2 {
 			var aspect	=	vp.Width / (float)vp.Height;
 
 			rs.RenderWorld.Camera.SetupCameraFov( view, fovr, 0.125f, 4096, 1, 0, aspect );
+		}
+
+
+
+		public Ray PointToRay ( int x, int y )
+		{
+			var vp	=	rs.DisplayBounds;
+			float fx = (x) / (float)(vp.Width);
+			float fy = (y) / (float)(vp.Height);
+
+			Log.Message("{0} {1}", fx, fy );
+
+			//var ray = new 
+			var c = rs.RenderWorld.Camera.Frustum.GetCorners();
+
+			var n0	=	Vector3.Lerp( c[1], c[0], fy );
+			var n1	=	Vector3.Lerp( c[2], c[3], fy );
+			var n	=	Vector3.Lerp( n1, n0, fx );
+
+			var f0	=	Vector3.Lerp( c[5], c[4], fy );
+			var f1	=	Vector3.Lerp( c[6], c[7], fy );
+			var f	=	Vector3.Lerp( f1, f0, fx );
+
+			return new Ray( n, (f - n ).Normalized() );
 		}
 
 

@@ -59,6 +59,7 @@
   <ItemGroup>
     <Compile Include="Client\GameInput.cs" />
     <Compile Include="Commands\ShowWorldState.cs" />
+    <Compile Include="Editor2\EdManipulator.cs" />
     <Compile Include="Editor2\EdCamera.cs" />
     <Compile Include="Core\EntityFactory.cs" />
     <Compile Include="Core\EntityCollection.cs" />
@@ -84,17 +85,17 @@
     <Compile Include="Editors\EditorForm.Designer.cs">
       <DependentUpon>EditorForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Editors\MapEditor.cs">
+    <Compile Include="Editors\MapEditorControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Editors\MapEditor.Designer.cs">
-      <DependentUpon>MapEditor.cs</DependentUpon>
+    <Compile Include="Editors\MapEditorControl.Designer.cs">
+      <DependentUpon>MapEditorControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Editors\ObjectEditor.cs">
+    <Compile Include="Editors\ObjectEditorControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Editors\ObjectEditor.Designer.cs">
-      <DependentUpon>ObjectEditor.cs</DependentUpon>
+    <Compile Include="Editors\ObjectEditorControl.Designer.cs">
+      <DependentUpon>ObjectEditorControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Editors\SceneImportDialog.cs">
       <SubType>Form</SubType>
@@ -167,11 +168,11 @@
     <EmbeddedResource Include="Editors\EditorForm.resx">
       <DependentUpon>EditorForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Editors\MapEditor.resx">
-      <DependentUpon>MapEditor.cs</DependentUpon>
+    <EmbeddedResource Include="Editors\MapEditorControl.resx">
+      <DependentUpon>MapEditorControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Editors\ObjectEditor.resx">
-      <DependentUpon>ObjectEditor.cs</DependentUpon>
+    <EmbeddedResource Include="Editors\ObjectEditorControl.resx">
+      <DependentUpon>ObjectEditorControl.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Editors\SceneImportDialog.resx">

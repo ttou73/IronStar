@@ -17,6 +17,7 @@ using IronStar.Views;
 using Fusion.Engine.Graphics;
 using IronStar.Mapping;
 using Fusion.Build;
+using BEPUphysics;
 
 namespace IronStar.Editor2 {
 
@@ -32,7 +33,10 @@ namespace IronStar.Editor2 {
 		public ContentManager Content { get; private set; }
 		readonly RenderSystem rs;
 
-		EdCamera	edCamera;
+		EdCamera		edCamera;
+		EdManipulator	edManipulator;
+
+		Space physSpace;
 
 		Map	map = null;
 
@@ -49,6 +53,7 @@ namespace IronStar.Editor2 {
 		}
 
 
+
 		/// <summary>
 		/// Initializes server-side world.
 		/// </summary>
@@ -63,13 +68,17 @@ namespace IronStar.Editor2 {
 			this.rs			=	Game.RenderSystem;
 			Content         =   new ContentManager( Game );
 
-			edCamera	=	new EdCamera( Game.RenderSystem );
+			edCamera		=	new EdCamera( Game.RenderSystem );
+			edManipulator	=	new EdManipulator( Game.RenderSystem );
+			edManipulator.Mode	=	ManipulatorMode.TranslationGlobal;
 
 			SetupUI();
 
 			Game.Keyboard.ScanKeyboard =	true;
 
 			fullPath	=	Builder.GetFullPath(@"maps\" + map + ".map");
+
+			physSpace	=	new Space();
 		}
 
 
@@ -86,6 +95,18 @@ namespace IronStar.Editor2 {
 				Log.Message("Creating new map: {0}", fullPath);
 				this.map = new Map();
 			}
+		}
+
+
+
+		public void Refresh ()
+		{
+			var form = Editors.Editor.GetMapEditor();
+			if (form==null) {
+				return;
+			}
+
+			form.SetSelection( GetSelection() );
 		}
 
 
@@ -135,10 +156,108 @@ namespace IronStar.Editor2 {
 			edCamera.Update( gameTime );
 
 			rs.RenderWorld.Debug.DrawGrid( 10 );
+
+			//
+			//	Draw unselected :
+			//
+			foreach ( var item in map.Factories ) {
+
+				if (item.Selected) {
+					continue;
+				}
+
+				var color = Color.DimGray;
+
+				rs.RenderWorld.Debug.DrawBasis( item.Transform.World, 0.125f );
+				rs.RenderWorld.Debug.DrawBox( item.Factory.BoundingBox, item.Transform.World, color);
+			}
+
+			//
+			//	Draw selected :
+			//
+			foreach ( var item in map.Factories ) {
+
+				if (!item.Selected) {
+					continue;
+				}
+
+				var color = new Color(67,255,163);
+
+				rs.RenderWorld.Debug.DrawBasis( item.Transform.World, 0.125f );
+				rs.RenderWorld.Debug.DrawBox( item.Factory.BoundingBox, item.Transform.World, color);
+
+				rs.RenderWorld.Debug.DrawRing( Matrix.Identity, 1, Color.Blue, 1, 16 );
+			}
+
+
+			edManipulator.Update( gameTime );
 			//rs.
 			//SimulateWorld( gameTime.ElapsedSec );
 
 			//modelManager.Update( gameTime.ElapsedSec, 1 );
+		}
+
+
+		Ray TransformRay ( Matrix m, Ray r )
+		{
+			return new Ray( Vector3.TransformCoordinate( r.Position, m ), Vector3.TransformNormal( r.Direction, m ).Normalized() );
+		}
+
+
+		void Focus ()
+		{
+			var	selected = map.Factories.Where( f1 => f1.Selected ).ToArray();
+
+			if (!selected.Any()) {
+				selected = map.Factories.ToArray();
+			}
+
+			//BoundingBox.Merge(
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="x"></param>
+		/// <param name="y"></param>
+		void Select( int x, int y, bool add )
+		{
+			var ray = edCamera.PointToRay( x, y );
+
+			var minDistance		=	float.MaxValue;
+			var selectedItem	=	(MapFactory)null;
+
+
+			foreach ( var item in map.Factories ) {
+				var bbox	=	item.Factory.BoundingBox;
+				var iw		=	Matrix.Invert( item.Transform.World );
+				float distance;
+
+				var rayT	=	TransformRay( iw, ray );
+
+				if (rayT.Intersects(ref bbox, out distance)) {
+					if (minDistance > distance) {
+						minDistance = distance;
+						selectedItem = item;
+					}
+				}
+			}
+
+			if (add) {
+				if (selectedItem!=null) {
+					selectedItem.Selected = !selectedItem.Selected;
+				}
+			} else {
+				foreach ( var item in map.Factories ) {
+					item.Selected = false;
+				}
+				if (selectedItem!=null) {
+					selectedItem.Selected = true;
+				}
+			}
+
+			edManipulator.Target = selectedItem;
 		}
 
 	}

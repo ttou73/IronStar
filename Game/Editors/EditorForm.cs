@@ -23,12 +23,12 @@ namespace IronStar.Editors {
 
 		readonly Game game;
 
-		ObjectEditor	modelEditor;
-		ObjectEditor	entityEditor;
-		ObjectEditor	fxEditor;
-		MapEditor		mapEditor;
+		ObjectEditorControl	modelEditor;
+		ObjectEditorControl	entityEditor;
+		ObjectEditorControl	fxEditor;
+		MapEditorControl		mapEditor;
 		//VTEditor		vtEditor;
-		ObjectEditor	vtEditor;
+		ObjectEditorControl	vtEditor;
 
 
 		/// <summary>
@@ -40,12 +40,12 @@ namespace IronStar.Editors {
 			
 			InitializeComponent();
 
-			modelEditor		=	new ObjectEditor( game, "models", typeof(ModelDescriptor), "Model"  ) { Dock = DockStyle.Fill };
-			entityEditor	=	new ObjectEditor( game, "entities", typeof(EntityFactory), "Entity" ) { Dock = DockStyle.Fill };
-			fxEditor		=	new ObjectEditor( game, "fx", typeof(FXFactory), "FX" ) { Dock = DockStyle.Fill };
-			mapEditor		=	new MapEditor() { Dock = DockStyle.Fill };
+			modelEditor		=	new ObjectEditorControl( game, "models", typeof(ModelDescriptor), "Model"  ) { Dock = DockStyle.Fill };
+			entityEditor	=	new ObjectEditorControl( game, "entities", typeof(EntityFactory), "Entity" ) { Dock = DockStyle.Fill };
+			fxEditor		=	new ObjectEditorControl( game, "fx", typeof(FXFactory), "FX" ) { Dock = DockStyle.Fill };
+			mapEditor		=	new MapEditorControl( game ) { Dock = DockStyle.Fill };
 			//vtEditor		=	new VTEditor("megatexture.ini") { Dock = DockStyle.Fill };
-			vtEditor		=	new ObjectEditor( game, "vt", typeof(VTTextureContent), "Megatexture" ) { Dock = DockStyle.Fill };
+			vtEditor		=	new ObjectEditorControl( game, "vt", typeof(VTTextureContent), "Megatexture" ) { Dock = DockStyle.Fill };
 			//vtEditor.AddEditAction("QQQQQ", (list) => for
 
 			mainTabs.TabPages["tabModels"].Controls.Add( modelEditor );
@@ -57,6 +57,13 @@ namespace IronStar.Editors {
 			Log.Message("Editor initialized");
 		}
 
+
+
+		public MapEditorControl MapEditor {
+			get {
+				return mapEditor;
+			}
+		}
 
 
 

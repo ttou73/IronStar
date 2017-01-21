@@ -257,11 +257,11 @@ namespace Fusion.Engine.Frames {
 				heldFrameRBM	=	false;
 			}
 
-			//	call MouseUp :
-			CallMouseUp( mousePosition, heldFrame, key );
-
 			//	button are still pressed, no extra action :
 			if ( heldFrameLBM || heldFrameRBM ) {
+				//	call MouseUp :
+				CallMouseUp( mousePosition, heldFrame, key );
+				//	and return
 				return;
 			}
 
@@ -306,6 +306,7 @@ namespace Fusion.Engine.Frames {
 				//	handle click :
 				CallStatusChanged	( mousePosition, heldFrame, FrameStatus.Hovered );
 				CallClick			( mousePosition, heldFrame, key, doubleClick );
+				CallMouseUp			( mousePosition, heldFrame, key );
 			}
 
 			heldFrame	=	null;

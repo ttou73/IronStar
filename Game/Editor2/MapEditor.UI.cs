@@ -37,6 +37,27 @@ namespace IronStar.Editor2 {
 			rootFrame.MouseDown += RootFrame_MouseDown;
 			rootFrame.MouseMove	+= RootFrame_MouseMove;
 			rootFrame.MouseUp	+= RootFrame_MouseUp;
+
+			rootFrame.Click      +=RootFrame_Click;
+
+			Game.Keyboard.KeyDown +=Keyboard_KeyDown;
+
+		}
+
+		private void Keyboard_KeyDown( object sender, KeyEventArgs e )
+		{
+			if (e.Key==Keys.F) {
+				Focus();
+			}
+		}
+
+
+		private void RootFrame_Click( object sender, Frame.MouseEventArgs e )
+		{
+			if (edCamera.Manipulation==Manipulation.None) {
+				var shift =	Game.Keyboard.IsKeyDown(Keys.LeftShift) || Game.Keyboard.IsKeyDown(Keys.RightShift);
+				Select( e.X, e.Y, shift );
+			}
 		}
 
 		private void RootFrame_MouseDown( object sender,  Frame.MouseEventArgs e )
@@ -53,6 +74,8 @@ namespace IronStar.Editor2 {
 				} else {
 					edCamera.StartManipulation( e.X, e.Y, Manipulation.None );
 				}
+			} else {
+
 			}
 		}
 

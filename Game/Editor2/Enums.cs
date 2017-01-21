@@ -12,4 +12,14 @@ namespace IronStar.Editor2 {
 		Rotating, 
 		Zooming,
 	}
+
+
+	public enum ManipulatorMode {
+		None,
+		TranslationLocal,
+		TranslationGlobal,
+		RotationLocal,
+		RotationGlobal,
+		Scaling,
+	}
 }

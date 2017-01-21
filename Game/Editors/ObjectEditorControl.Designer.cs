@@ -1,5 +1,5 @@
 ﻿namespace IronStar.Editors {
-	partial class ObjectEditor {
+	partial class ObjectEditorControl {
 		/// <summary> 
 		/// Required designer variable.
 		/// </summary>

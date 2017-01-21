@@ -37,7 +37,7 @@ namespace Fusion.Drivers.Graphics {
 			CullMode			=	CullMode.CullNone;
 			DepthBias			=	0;
 			SlopeDepthBias		=	0;
-			MsaaEnabled			=	true;
+			MsaaEnabled			=	false;
 			FillMode			=	FillMode.Solid;
 			DepthClipEnabled	=	true;
 			ScissorEnabled		=	false;
@@ -68,7 +68,7 @@ namespace Fusion.Drivers.Graphics {
 			rs.CullMode			=	cullMode;
 			rs.DepthBias		=	depthBias;
 			rs.SlopeDepthBias	=	slopeDepthBias;
-			rs.MsaaEnabled		=	true;
+			rs.MsaaEnabled		=	false;
 			rs.FillMode			=	fillMode;
 			rs.DepthClipEnabled	=	true;
 			rs.ScissorEnabled	=	false;

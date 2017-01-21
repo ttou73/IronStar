@@ -64,6 +64,7 @@ namespace IronStar.Editor2 {
 		public string FactoryType { get; set; }
 
 		MapFactory factory;
+		MapFactory[] oldSelection;
 
 		public EdCreate ( Invoker invoker ) : base( invoker )
 		{
@@ -72,6 +73,7 @@ namespace IronStar.Editor2 {
 		public override void Execute()
 		{
 			var factType		=	EntityFactory.GetFactoryTypes().FirstOrDefault( ft => ft.Name == FactoryType );
+			oldSelection		=	editor.GetSelection();
 
 			if (factType==null) {
 				throw new Exception(string.Format("Entity factory type {0} not found", FactoryType));
@@ -81,14 +83,25 @@ namespace IronStar.Editor2 {
 			factory.Factory	=	(EntityFactory)Activator.CreateInstance( factType );
 			factory.Guid	=	Guid.NewGuid();
 
+			foreach ( var item in oldSelection) {
+				item.Selected = false;
+			}
+			factory.Selected	=	true;
+
 			editor.Map.Factories.Add( factory );
 
 			Log.Message("Map factory created: {0}", factory.ToString() );
+
+			editor.Refresh();
 		}
 
 		public override void Rollback()
 		{
+			foreach ( var item in oldSelection) {
+				item.Selected = true;
+			}
 			(Game.GameEditor.Instance as MapEditor).Map.Factories.Remove( factory );
+			editor.Refresh();
 		}
 	}
 

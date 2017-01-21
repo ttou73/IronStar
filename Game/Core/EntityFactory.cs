@@ -15,6 +15,7 @@ using Fusion.Core.Content;
 using Fusion.Engine.Common;
 using Fusion.Engine.Storage;
 using System.ComponentModel;
+using System.Xml.Serialization;
 
 namespace IronStar.Core {
 
@@ -24,9 +25,18 @@ namespace IronStar.Core {
 
 
 		[Category("Common")]
+		[Description("Target name of object created by this factory. Used within maps. For entity templates this value make no sense.")]
 		public string Targetname { get; set; }
 
 		public abstract EntityController Spawn (Entity entity, GameWorld world);
+
+		[XmlIgnore]
+		[Browsable(false)]
+		public virtual BoundingBox BoundingBox {
+			get {
+				return new BoundingBox( Vector3.One * (-0.25f), Vector3.One * 0.25f );
+			}
+		}
 
 		public override string ToString()
 		{

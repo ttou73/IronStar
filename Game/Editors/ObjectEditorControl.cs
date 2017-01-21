@@ -17,7 +17,7 @@ using Fusion.Development;
 using Fusion.Core.Extensions;
 
 namespace IronStar.Editors {
-	public partial class ObjectEditor : UserControl {
+	public partial class ObjectEditorControl : UserControl {
 		
 	
 		class NamePathTarget {
@@ -75,7 +75,7 @@ namespace IronStar.Editors {
 		/// <summary>
 		/// 
 		/// </summary>
-		public ObjectEditor( Game game, string sourceFolder, Type baseTargetType, string objectName )
+		public ObjectEditorControl( Game game, string sourceFolder, Type baseTargetType, string objectName )
 		{
 			this.baseType	=	baseTargetType;
 			this.extraTypes	=	Misc.GetAllSubclassesOf( baseTargetType, false );
