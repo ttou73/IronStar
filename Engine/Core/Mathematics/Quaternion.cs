@@ -46,7 +46,7 @@ using System;
 using System.Globalization;
 using System.Runtime.InteropServices;
 using System.ComponentModel;
-
+using System.Xml.Serialization;
 
 namespace Fusion.Core.Mathematics
 {
@@ -81,21 +81,25 @@ namespace Fusion.Core.Mathematics
         /// <summary>
         /// The X component of the quaternion.
         /// </summary>
+		[XmlAttribute]
         public float X;
 
         /// <summary>
         /// The Y component of the quaternion.
         /// </summary>
+		[XmlAttribute]
         public float Y;
 
         /// <summary>
         /// The Z component of the quaternion.
         /// </summary>
+		[XmlAttribute]
         public float Z;
 
         /// <summary>
         /// The W component of the quaternion.
         /// </summary>
+		[XmlAttribute]
         public float W;
 
         /// <summary>

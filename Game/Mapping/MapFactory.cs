@@ -7,14 +7,39 @@ using System.Threading.Tasks;
 using System.Xml.Serialization;
 using Fusion.Core.Mathematics;
 using IronStar.Core;
+using Fusion.Engine.Graphics;
 
 namespace IronStar.Mapping {
 	public class MapFactory {
 
 		/// <summary>
-		/// Node path
+		/// 
 		/// </summary>
-		public string NodePath { get; set; }
+		public MapFactory ()
+		{
+			Transform	=	new MapTransform();
+			Factory		=	null;
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public Guid Guid { get; set; }
+
+
+		/// <summary>
+		/// Indicates that given factory is selected
+		/// </summary>
+		[XmlIgnore]
+		public bool Selected { get; set; }
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		[TypeConverter(typeof(ExpandableObjectConverter))]		
+		public MapTransform Transform { get; set; }
 
 		/// <summary>
 		/// Entity factory
@@ -23,10 +48,23 @@ namespace IronStar.Mapping {
 		public EntityFactory Factory { get; set; }
 
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="dr"></param>
+		public void Draw ( DebugRender dr )
+		{
+			dr.DrawBasis( Transform.World, 1 );
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
 		public override string ToString()
 		{
-			var nodePath = string.IsNullOrEmpty(NodePath) ? "(root)" : NodePath;
-			return "[" + Factory.ToString() + "] " + nodePath;
+			return "[" + Factory.ToString() + "] ";
 		}
 	}
 }

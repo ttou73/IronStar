@@ -36,6 +36,7 @@ namespace Fusion.Core {
 			if (type==typeof( Half2		) )	{ stringValue = ToString( ( Half2	)value ); return true; }
 			if (type==typeof( Half3		) )	{ stringValue = ToString( ( Half3	)value ); return true; }
 			if (type==typeof( Half4		) )	{ stringValue = ToString( ( Half4	)value ); return true; }
+			if (type==typeof( Guid		) )	{ stringValue = ToString( ( Guid	)value ); return true; }
 
 			return false;
 		}
@@ -64,6 +65,7 @@ namespace Fusion.Core {
 			if (type==typeof(Half2)  )	{ value = ToHalf2	( stringValue );	return true; }
 			if (type==typeof(Half3)  )	{ value = ToHalf3	( stringValue );	return true; }
 			if (type==typeof(Half4)  )	{ value = ToHalf4	( stringValue );	return true; }
+			if (type==typeof(Guid)  )	{ value = ToGuid	( stringValue );	return true; }
 
 			return false;
 		}
@@ -191,6 +193,11 @@ namespace Fusion.Core {
 		public static string ToString ( Half4 value )
 		{
 			return string.Format(CultureInfo.InvariantCulture, "{0}, {1}, {2}, {3}", value.X, value.Y, value.Z, value.W );
+		}
+
+		public static string ToString ( Guid value )
+		{
+			return value.ToString();
 		}
 
 		
@@ -324,6 +331,11 @@ namespace Fusion.Core {
 			}
 			var cult = CultureInfo.InvariantCulture;
 			return new Half2( float.Parse(args[0], cult), float.Parse(args[1], cult) );
+		}
+
+		public static Guid ToGuid ( string value )
+		{
+			return Guid.Parse( value );
 		}
 
 	}

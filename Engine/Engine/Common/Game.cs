@@ -471,6 +471,7 @@ namespace Fusion.Engine.Common {
 			Initialize( UserInterface );
 			Initialize( GameClient );
 			Initialize( GameServer );
+			Initialize( GameEditor );
 
 			//	init game :
 			Log.Message("");

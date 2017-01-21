@@ -1,8 +1,15 @@
-<?xml version="1.0" encoding="utf-16"?>
-<Map xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ScenePath="scenes\mtrlTest.fbx">
+<?xml version="1.0" encoding="utf-8"?>
+<Map xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" />
   <Factories>
     <MapFactory>
-      <NodePath />
+      <Guid>00000000-0000-0000-0000-000000000000</Guid>
+      <Transform>
+        <Translation X="0" Y="0" Z="0" />
+        
+        <Scaling>1</Scaling>
+        <Visible>false</Visible>
+        <Frozen>false</Frozen>
+      </Transform>
       <Factory xsi:type="WorldspawnFactory">
         <Gravity>16</Gravity>
         <SkyTrubidity>2</SkyTrubidity>
@@ -12,530 +19,1231 @@
       </Factory>
     </MapFactory>
     <MapFactory>
-      <NodePath>|entity_startPoint</NodePath>
+      <Guid>00000000-0000-0000-0000-000000000000</Guid>
+      <Transform>
+        <Translation X="0" Y="0" Z="0" />
+        
+        <Scaling>1</Scaling>
+        <Visible>false</Visible>
+        <Frozen>false</Frozen>
+      </Transform>
       <Factory xsi:type="StartPointFactory">
         <StartPointType>SinglePlayer</StartPointType>
       </Factory>
     </MapFactory>
     <MapFactory>
-      <NodePath>|entity_camera</NodePath>
+      <Guid>00000000-0000-0000-0000-000000000000</Guid>
+      <Transform>
+        <Translation X="0" Y="0" Z="0" />
+        
+        <Scaling>1</Scaling>
+        <Visible>false</Visible>
+        <Frozen>false</Frozen>
+      </Transform>
       <Factory xsi:type="StartPointFactory">
         <StartPointType>IntermissionCamera</StartPointType>
       </Factory>
     </MapFactory>
     <MapFactory>
-      <NodePath>|pPlane1</NodePath>
+      <Guid>00000000-0000-0000-0000-000000000000</Guid>
+      <Transform>
+        <Translation X="0" Y="0" Z="0" />
+        
+        <Scaling>1</Scaling>
+        <Visible>false</Visible>
+        <Frozen>false</Frozen>
+      </Transform>
       <Factory xsi:type="StaticModelFactory">
         <Visible>true</Visible>
         <Collidable>true</Collidable>
       </Factory>
     </MapFactory>
     <MapFactory>
-      <NodePath>|pCube1</NodePath>
+      <Guid>00000000-0000-0000-0000-000000000000</Guid>
+      <Transform>
+        <Translation X="0" Y="0" Z="0" />
+        
+        <Scaling>1</Scaling>
+        <Visible>false</Visible>
+        <Frozen>false</Frozen>
+      </Transform>
       <Factory xsi:type="StaticModelFactory">
         <Visible>true</Visible>
         <Collidable>true</Collidable>
       </Factory>
     </MapFactory>
     <MapFactory>
-      <NodePath>|pCube2</NodePath>
+      <Guid>00000000-0000-0000-0000-000000000000</Guid>
+      <Transform>
+        <Translation X="0" Y="0" Z="0" />
+        
+        <Scaling>1</Scaling>
+        <Visible>false</Visible>
+        <Frozen>false</Frozen>
+      </Transform>
       <Factory xsi:type="StaticModelFactory">
         <Visible>true</Visible>
         <Collidable>true</Collidable>
       </Factory>
     </MapFactory>
     <MapFactory>
-      <NodePath>|pCube3</NodePath>
+      <Guid>00000000-0000-0000-0000-000000000000</Guid>
+      <Transform>
+        <Translation X="0" Y="0" Z="0" />
+        
+        <Scaling>1</Scaling>
+        <Visible>false</Visible>
+        <Frozen>false</Frozen>
+      </Transform>
       <Factory xsi:type="StaticModelFactory">
         <Visible>true</Visible>
         <Collidable>true</Collidable>
       </Factory>
     </MapFactory>
     <MapFactory>
-      <NodePath>|pCube4</NodePath>
+      <Guid>00000000-0000-0000-0000-000000000000</Guid>
+      <Transform>
+        <Translation X="0" Y="0" Z="0" />
+        <Scaling>1</Scaling>
+        <Visible>false</Visible>
+        <Frozen>false</Frozen>
+      </Transform>
       <Factory xsi:type="StaticModelFactory">
         <Visible>true</Visible>
         <Collidable>true</Collidable>
       </Factory>
     </MapFactory>
     <MapFactory>
-      <NodePath>|pCube5</NodePath>
+      <Guid>00000000-0000-0000-0000-000000000000</Guid>
+      <Transform>
+        <Translation X="0" Y="0" Z="0" />
+        <Scaling>1</Scaling>
+        <Visible>false</Visible>
+        <Frozen>false</Frozen>
+      </Transform>
       <Factory xsi:type="StaticModelFactory">
         <Visible>true</Visible>
         <Collidable>true</Collidable>
       </Factory>
     </MapFactory>
     <MapFactory>
-      <NodePath>|pCube6</NodePath>
+      <Guid>00000000-0000-0000-0000-000000000000</Guid>
+      <Transform>
+        <Translation X="0" Y="0" Z="0" />
+        
+        <Scaling>1</Scaling>
+        <Visible>false</Visible>
+        <Frozen>false</Frozen>
+      </Transform>
       <Factory xsi:type="StaticModelFactory">
         <Visible>true</Visible>
         <Collidable>true</Collidable>
       </Factory>
     </MapFactory>
     <MapFactory>
-      <NodePath>|pCube7</NodePath>
+      <Guid>00000000-0000-0000-0000-000000000000</Guid>
+      <Transform>
+        <Translation X="0" Y="0" Z="0" />
+        
+        <Scaling>1</Scaling>
+        <Visible>false</Visible>
+        <Frozen>false</Frozen>
+      </Transform>
       <Factory xsi:type="StaticModelFactory">
         <Visible>true</Visible>
         <Collidable>true</Collidable>
       </Factory>
     </MapFactory>
     <MapFactory>
-      <NodePath>|pCube8</NodePath>
+      <Guid>00000000-0000-0000-0000-000000000000</Guid>
+      <Transform>
+        <Translation X="0" Y="0" Z="0" />
+        
+        <Scaling>1</Scaling>
+        <Visible>false</Visible>
+        <Frozen>false</Frozen>
+      </Transform>
       <Factory xsi:type="StaticModelFactory">
         <Visible>true</Visible>
         <Collidable>true</Collidable>
       </Factory>
     </MapFactory>
     <MapFactory>
-      <NodePath>|pCube9</NodePath>
+      <Guid>00000000-0000-0000-0000-000000000000</Guid>
+      <Transform>
+        <Translation X="0" Y="0" Z="0" />
+        
+        <Scaling>1</Scaling>
+        <Visible>false</Visible>
+        <Frozen>false</Frozen>
+      </Transform>
       <Factory xsi:type="StaticModelFactory">
         <Visible>true</Visible>
         <Collidable>true</Collidable>
       </Factory>
     </MapFactory>
     <MapFactory>
-      <NodePath>|pCube10</NodePath>
+      <Guid>00000000-0000-0000-0000-000000000000</Guid>
+      <Transform>
+        <Translation X="0" Y="0" Z="0" />
+        
+        <Scaling>1</Scaling>
+        <Visible>false</Visible>
+        <Frozen>false</Frozen>
+      </Transform>
       <Factory xsi:type="StaticModelFactory">
         <Visible>true</Visible>
         <Collidable>true</Collidable>
       </Factory>
     </MapFactory>
     <MapFactory>
-      <NodePath>|pCube11</NodePath>
+      <Guid>00000000-0000-0000-0000-000000000000</Guid>
+      <Transform>
+        <Translation X="0" Y="0" Z="0" />
+        
+        <Scaling>1</Scaling>
+        <Visible>false</Visible>
+        <Frozen>false</Frozen>
+      </Transform>
       <Factory xsi:type="StaticModelFactory">
         <Visible>true</Visible>
         <Collidable>true</Collidable>
       </Factory>
     </MapFactory>
     <MapFactory>
-      <NodePath>|pCube12</NodePath>
+      <Guid>00000000-0000-0000-0000-000000000000</Guid>
+      <Transform>
+        <Translation X="0" Y="0" Z="0" />
+        
+        <Scaling>1</Scaling>
+        <Visible>false</Visible>
+        <Frozen>false</Frozen>
+      </Transform>
       <Factory xsi:type="StaticModelFactory">
         <Visible>true</Visible>
         <Collidable>true</Collidable>
       </Factory>
     </MapFactory>
     <MapFactory>
-      <NodePath>|pCube13</NodePath>
+      <Guid>00000000-0000-0000-0000-000000000000</Guid>
+      <Transform>
+        <Translation X="0" Y="0" Z="0" />
+        
+        <Scaling>1</Scaling>
+        <Visible>false</Visible>
+        <Frozen>false</Frozen>
+      </Transform>
       <Factory xsi:type="StaticModelFactory">
         <Visible>true</Visible>
         <Collidable>true</Collidable>
       </Factory>
     </MapFactory>
     <MapFactory>
-      <NodePath>|pCube14</NodePath>
+      <Guid>00000000-0000-0000-0000-000000000000</Guid>
+      <Transform>
+        <Translation X="0" Y="0" Z="0" />
+        
+        <Scaling>1</Scaling>
+        <Visible>false</Visible>
+        <Frozen>false</Frozen>
+      </Transform>
       <Factory xsi:type="StaticModelFactory">
         <Visible>true</Visible>
         <Collidable>true</Collidable>
       </Factory>
     </MapFactory>
     <MapFactory>
-      <NodePath>|pCube15</NodePath>
+      <Guid>00000000-0000-0000-0000-000000000000</Guid>
+      <Transform>
+        <Translation X="0" Y="0" Z="0" />
+        
+        <Scaling>1</Scaling>
+        <Visible>false</Visible>
+        <Frozen>false</Frozen>
+      </Transform>
       <Factory xsi:type="StaticModelFactory">
         <Visible>true</Visible>
         <Collidable>true</Collidable>
       </Factory>
     </MapFactory>
     <MapFactory>
-      <NodePath>|pCube16</NodePath>
+      <Guid>00000000-0000-0000-0000-000000000000</Guid>
+      <Transform>
+        <Translation X="0" Y="0" Z="0" />
+        
+        <Scaling>1</Scaling>
+        <Visible>false</Visible>
+        <Frozen>false</Frozen>
+      </Transform>
       <Factory xsi:type="StaticModelFactory">
         <Visible>true</Visible>
         <Collidable>true</Collidable>
       </Factory>
     </MapFactory>
     <MapFactory>
-      <NodePath>|pCube17</NodePath>
+      <Guid>00000000-0000-0000-0000-000000000000</Guid>
+      <Transform>
+        <Translation X="0" Y="0" Z="0" />
+        
+        <Scaling>1</Scaling>
+        <Visible>false</Visible>
+        <Frozen>false</Frozen>
+      </Transform>
       <Factory xsi:type="StaticModelFactory">
         <Visible>true</Visible>
         <Collidable>true</Collidable>
       </Factory>
     </MapFactory>
     <MapFactory>
-      <NodePath>|pCube18</NodePath>
+      <Guid>00000000-0000-0000-0000-000000000000</Guid>
+      <Transform>
+        <Translation X="0" Y="0" Z="0" />
+        
+        <Scaling>1</Scaling>
+        <Visible>false</Visible>
+        <Frozen>false</Frozen>
+      </Transform>
       <Factory xsi:type="StaticModelFactory">
         <Visible>true</Visible>
         <Collidable>true</Collidable>
       </Factory>
     </MapFactory>
     <MapFactory>
-      <NodePath>|pCube19</NodePath>
+      <Guid>00000000-0000-0000-0000-000000000000</Guid>
+      <Transform>
+        <Translation X="0" Y="0" Z="0" />
+        
+        <Scaling>1</Scaling>
+        <Visible>false</Visible>
+        <Frozen>false</Frozen>
+      </Transform>
       <Factory xsi:type="StaticModelFactory">
         <Visible>true</Visible>
         <Collidable>true</Collidable>
       </Factory>
     </MapFactory>
     <MapFactory>
-      <NodePath>|pCube20</NodePath>
+      <Guid>00000000-0000-0000-0000-000000000000</Guid>
+      <Transform>
+        <Translation X="0" Y="0" Z="0" />
+        
+        <Scaling>1</Scaling>
+        <Visible>false</Visible>
+        <Frozen>false</Frozen>
+      </Transform>
       <Factory xsi:type="StaticModelFactory">
         <Visible>true</Visible>
         <Collidable>true</Collidable>
       </Factory>
     </MapFactory>
     <MapFactory>
-      <NodePath>|pCube21</NodePath>
+      <Guid>00000000-0000-0000-0000-000000000000</Guid>
+      <Transform>
+        <Translation X="0" Y="0" Z="0" />
+        
+        <Scaling>1</Scaling>
+        <Visible>false</Visible>
+        <Frozen>false</Frozen>
+      </Transform>
       <Factory xsi:type="StaticModelFactory">
         <Visible>true</Visible>
         <Collidable>true</Collidable>
       </Factory>
     </MapFactory>
     <MapFactory>
-      <NodePath>|pCube22</NodePath>
+      <Guid>00000000-0000-0000-0000-000000000000</Guid>
+      <Transform>
+        <Translation X="0" Y="0" Z="0" />
+        
+        <Scaling>1</Scaling>
+        <Visible>false</Visible>
+        <Frozen>false</Frozen>
+      </Transform>
       <Factory xsi:type="StaticModelFactory">
         <Visible>true</Visible>
         <Collidable>true</Collidable>
       </Factory>
     </MapFactory>
     <MapFactory>
-      <NodePath>|pCube23</NodePath>
+      <Guid>00000000-0000-0000-0000-000000000000</Guid>
+      <Transform>
+        <Translation X="0" Y="0" Z="0" />
+        
+        <Scaling>1</Scaling>
+        <Visible>false</Visible>
+        <Frozen>false</Frozen>
+      </Transform>
       <Factory xsi:type="StaticModelFactory">
         <Visible>true</Visible>
         <Collidable>true</Collidable>
       </Factory>
     </MapFactory>
     <MapFactory>
-      <NodePath>|pCube24</NodePath>
+      <Guid>00000000-0000-0000-0000-000000000000</Guid>
+      <Transform>
+        <Translation X="0" Y="0" Z="0" />
+        
+        <Scaling>1</Scaling>
+        <Visible>false</Visible>
+        <Frozen>false</Frozen>
+      </Transform>
       <Factory xsi:type="StaticModelFactory">
         <Visible>true</Visible>
         <Collidable>true</Collidable>
       </Factory>
     </MapFactory>
     <MapFactory>
-      <NodePath>|pCube25</NodePath>
+      <Guid>00000000-0000-0000-0000-000000000000</Guid>
+      <Transform>
+        <Translation X="0" Y="0" Z="0" />
+        
+        <Scaling>1</Scaling>
+        <Visible>false</Visible>
+        <Frozen>false</Frozen>
+      </Transform>
       <Factory xsi:type="StaticModelFactory">
         <Visible>true</Visible>
         <Collidable>true</Collidable>
       </Factory>
     </MapFactory>
     <MapFactory>
-      <NodePath>|pCube26</NodePath>
+      <Guid>00000000-0000-0000-0000-000000000000</Guid>
+      <Transform>
+        <Translation X="0" Y="0" Z="0" />
+        
+        <Scaling>1</Scaling>
+        <Visible>false</Visible>
+        <Frozen>false</Frozen>
+      </Transform>
       <Factory xsi:type="StaticModelFactory">
         <Visible>true</Visible>
         <Collidable>true</Collidable>
       </Factory>
     </MapFactory>
     <MapFactory>
-      <NodePath>|pCube27</NodePath>
+      <Guid>00000000-0000-0000-0000-000000000000</Guid>
+      <Transform>
+        <Translation X="0" Y="0" Z="0" />
+        
+        <Scaling>1</Scaling>
+        <Visible>false</Visible>
+        <Frozen>false</Frozen>
+      </Transform>
       <Factory xsi:type="StaticModelFactory">
         <Visible>true</Visible>
         <Collidable>true</Collidable>
       </Factory>
     </MapFactory>
     <MapFactory>
-      <NodePath>|pCube28</NodePath>
+      <Guid>00000000-0000-0000-0000-000000000000</Guid>
+      <Transform>
+        <Translation X="0" Y="0" Z="0" />
+        
+        <Scaling>1</Scaling>
+        <Visible>false</Visible>
+        <Frozen>false</Frozen>
+      </Transform>
       <Factory xsi:type="StaticModelFactory">
         <Visible>true</Visible>
         <Collidable>true</Collidable>
       </Factory>
     </MapFactory>
     <MapFactory>
-      <NodePath>|pCube29</NodePath>
+      <Guid>00000000-0000-0000-0000-000000000000</Guid>
+      <Transform>
+        <Translation X="0" Y="0" Z="0" />
+        
+        <Scaling>1</Scaling>
+        <Visible>false</Visible>
+        <Frozen>false</Frozen>
+      </Transform>
       <Factory xsi:type="StaticModelFactory">
         <Visible>true</Visible>
         <Collidable>true</Collidable>
       </Factory>
     </MapFactory>
     <MapFactory>
-      <NodePath>|pCube30</NodePath>
+      <Guid>00000000-0000-0000-0000-000000000000</Guid>
+      <Transform>
+        <Translation X="0" Y="0" Z="0" />
+        
+        <Scaling>1</Scaling>
+        <Visible>false</Visible>
+        <Frozen>false</Frozen>
+      </Transform>
       <Factory xsi:type="StaticModelFactory">
         <Visible>true</Visible>
         <Collidable>true</Collidable>
       </Factory>
     </MapFactory>
     <MapFactory>
-      <NodePath>|pCube31</NodePath>
+      <Guid>00000000-0000-0000-0000-000000000000</Guid>
+      <Transform>
+        <Translation X="0" Y="0" Z="0" />
+        
+        <Scaling>1</Scaling>
+        <Visible>false</Visible>
+        <Frozen>false</Frozen>
+      </Transform>
       <Factory xsi:type="StaticModelFactory">
         <Visible>true</Visible>
         <Collidable>true</Collidable>
       </Factory>
     </MapFactory>
     <MapFactory>
-      <NodePath>|cubes</NodePath>
+      <Guid>00000000-0000-0000-0000-000000000000</Guid>
+      <Transform>
+        <Translation X="0" Y="0" Z="0" />
+        
+        <Scaling>1</Scaling>
+        <Visible>false</Visible>
+        <Frozen>false</Frozen>
+      </Transform>
       <Factory xsi:type="StaticModelFactory">
         <Visible>true</Visible>
         <Collidable>true</Collidable>
       </Factory>
     </MapFactory>
     <MapFactory>
-      <NodePath>|pCube33</NodePath>
+      <Guid>00000000-0000-0000-0000-000000000000</Guid>
+      <Transform>
+        <Translation X="0" Y="0" Z="0" />
+        
+        <Scaling>1</Scaling>
+        <Visible>false</Visible>
+        <Frozen>false</Frozen>
+      </Transform>
       <Factory xsi:type="StaticModelFactory">
         <Visible>true</Visible>
         <Collidable>true</Collidable>
       </Factory>
     </MapFactory>
     <MapFactory>
-      <NodePath>|pCube34</NodePath>
+      <Guid>00000000-0000-0000-0000-000000000000</Guid>
+      <Transform>
+        <Translation X="0" Y="0" Z="0" />
+        
+        <Scaling>1</Scaling>
+        <Visible>false</Visible>
+        <Frozen>false</Frozen>
+      </Transform>
       <Factory xsi:type="StaticModelFactory">
         <Visible>true</Visible>
         <Collidable>true</Collidable>
       </Factory>
     </MapFactory>
     <MapFactory>
-      <NodePath>|cubes1</NodePath>
+      <Guid>00000000-0000-0000-0000-000000000000</Guid>
+      <Transform>
+        <Translation X="0" Y="0" Z="0" />
+        
+        <Scaling>1</Scaling>
+        <Visible>false</Visible>
+        <Frozen>false</Frozen>
+      </Transform>
       <Factory xsi:type="StaticModelFactory">
         <Visible>true</Visible>
         <Collidable>true</Collidable>
       </Factory>
     </MapFactory>
     <MapFactory>
-      <NodePath>|pCube36</NodePath>
+      <Guid>00000000-0000-0000-0000-000000000000</Guid>
+      <Transform>
+        <Translation X="0" Y="0" Z="0" />
+        
+        <Scaling>1</Scaling>
+        <Visible>false</Visible>
+        <Frozen>false</Frozen>
+      </Transform>
       <Factory xsi:type="StaticModelFactory">
         <Visible>true</Visible>
         <Collidable>true</Collidable>
       </Factory>
     </MapFactory>
     <MapFactory>
-      <NodePath>|pCube37</NodePath>
+      <Guid>00000000-0000-0000-0000-000000000000</Guid>
+      <Transform>
+        <Translation X="0" Y="0" Z="0" />
+        
+        <Scaling>1</Scaling>
+        <Visible>false</Visible>
+        <Frozen>false</Frozen>
+      </Transform>
       <Factory xsi:type="StaticModelFactory">
         <Visible>true</Visible>
         <Collidable>true</Collidable>
       </Factory>
     </MapFactory>
     <MapFactory>
-      <NodePath>|pCube38</NodePath>
+      <Guid>00000000-0000-0000-0000-000000000000</Guid>
+      <Transform>
+        <Translation X="0" Y="0" Z="0" />
+        
+        <Scaling>1</Scaling>
+        <Visible>false</Visible>
+        <Frozen>false</Frozen>
+      </Transform>
       <Factory xsi:type="StaticModelFactory">
         <Visible>true</Visible>
         <Collidable>true</Collidable>
       </Factory>
     </MapFactory>
     <MapFactory>
-      <NodePath>|pCube39</NodePath>
+      <Guid>00000000-0000-0000-0000-000000000000</Guid>
+      <Transform>
+        <Translation X="0" Y="0" Z="0" />
+        
+        <Scaling>1</Scaling>
+        <Visible>false</Visible>
+        <Frozen>false</Frozen>
+      </Transform>
       <Factory xsi:type="StaticModelFactory">
         <Visible>true</Visible>
         <Collidable>true</Collidable>
       </Factory>
     </MapFactory>
     <MapFactory>
-      <NodePath>|pCube40</NodePath>
+      <Guid>00000000-0000-0000-0000-000000000000</Guid>
+      <Transform>
+        <Translation X="0" Y="0" Z="0" />
+        
+        <Scaling>1</Scaling>
+        <Visible>false</Visible>
+        <Frozen>false</Frozen>
+      </Transform>
       <Factory xsi:type="StaticModelFactory">
         <Visible>true</Visible>
         <Collidable>true</Collidable>
       </Factory>
     </MapFactory>
     <MapFactory>
-      <NodePath>|pCube41</NodePath>
+      <Guid>00000000-0000-0000-0000-000000000000</Guid>
+      <Transform>
+        <Translation X="0" Y="0" Z="0" />
+        
+        <Scaling>1</Scaling>
+        <Visible>false</Visible>
+        <Frozen>false</Frozen>
+      </Transform>
       <Factory xsi:type="StaticModelFactory">
         <Visible>true</Visible>
         <Collidable>true</Collidable>
       </Factory>
     </MapFactory>
     <MapFactory>
-      <NodePath>|pCube42</NodePath>
+      <Guid>00000000-0000-0000-0000-000000000000</Guid>
+      <Transform>
+        <Translation X="0" Y="0" Z="0" />
+        
+        <Scaling>1</Scaling>
+        <Visible>false</Visible>
+        <Frozen>false</Frozen>
+      </Transform>
       <Factory xsi:type="StaticModelFactory">
         <Visible>true</Visible>
         <Collidable>true</Collidable>
       </Factory>
     </MapFactory>
     <MapFactory>
-      <NodePath>|pCube43</NodePath>
+      <Guid>00000000-0000-0000-0000-000000000000</Guid>
+      <Transform>
+        <Translation X="0" Y="0" Z="0" />
+        
+        <Scaling>1</Scaling>
+        <Visible>false</Visible>
+        <Frozen>false</Frozen>
+      </Transform>
       <Factory xsi:type="StaticModelFactory">
         <Visible>true</Visible>
         <Collidable>true</Collidable>
       </Factory>
     </MapFactory>
     <MapFactory>
-      <NodePath>|cubes2</NodePath>
+      <Guid>00000000-0000-0000-0000-000000000000</Guid>
+      <Transform>
+        <Translation X="0" Y="0" Z="0" />
+        
+        <Scaling>1</Scaling>
+        <Visible>false</Visible>
+        <Frozen>false</Frozen>
+      </Transform>
       <Factory xsi:type="StaticModelFactory">
         <Visible>true</Visible>
         <Collidable>true</Collidable>
       </Factory>
     </MapFactory>
     <MapFactory>
-      <NodePath>|pCube45</NodePath>
+      <Guid>00000000-0000-0000-0000-000000000000</Guid>
+      <Transform>
+        <Translation X="0" Y="0" Z="0" />
+        
+        <Scaling>1</Scaling>
+        <Visible>false</Visible>
+        <Frozen>false</Frozen>
+      </Transform>
       <Factory xsi:type="StaticModelFactory">
         <Visible>true</Visible>
         <Collidable>true</Collidable>
       </Factory>
     </MapFactory>
     <MapFactory>
-      <NodePath>|pCube46</NodePath>
+      <Guid>00000000-0000-0000-0000-000000000000</Guid>
+      <Transform>
+        <Translation X="0" Y="0" Z="0" />
+        
+        <Scaling>1</Scaling>
+        <Visible>false</Visible>
+        <Frozen>false</Frozen>
+      </Transform>
       <Factory xsi:type="StaticModelFactory">
         <Visible>true</Visible>
         <Collidable>true</Collidable>
       </Factory>
     </MapFactory>
     <MapFactory>
-      <NodePath>|cubes3</NodePath>
+      <Guid>00000000-0000-0000-0000-000000000000</Guid>
+      <Transform>
+        <Translation X="0" Y="0" Z="0" />
+        
+        <Scaling>1</Scaling>
+        <Visible>false</Visible>
+        <Frozen>false</Frozen>
+      </Transform>
       <Factory xsi:type="StaticModelFactory">
         <Visible>true</Visible>
         <Collidable>true</Collidable>
       </Factory>
     </MapFactory>
     <MapFactory>
-      <NodePath>|pCube48</NodePath>
+      <Guid>00000000-0000-0000-0000-000000000000</Guid>
+      <Transform>
+        <Translation X="0" Y="0" Z="0" />
+        
+        <Scaling>1</Scaling>
+        <Visible>false</Visible>
+        <Frozen>false</Frozen>
+      </Transform>
       <Factory xsi:type="StaticModelFactory">
         <Visible>true</Visible>
         <Collidable>true</Collidable>
       </Factory>
     </MapFactory>
     <MapFactory>
-      <NodePath>|pPipe1</NodePath>
+      <Guid>00000000-0000-0000-0000-000000000000</Guid>
+      <Transform>
+        <Translation X="0" Y="0" Z="0" />
+        
+        <Scaling>1</Scaling>
+        <Visible>false</Visible>
+        <Frozen>false</Frozen>
+      </Transform>
       <Factory xsi:type="StaticModelFactory">
         <Visible>true</Visible>
         <Collidable>true</Collidable>
       </Factory>
     </MapFactory>
     <MapFactory>
-      <NodePath>|pPipe2</NodePath>
+      <Guid>00000000-0000-0000-0000-000000000000</Guid>
+      <Transform>
+        <Translation X="0" Y="0" Z="0" />
+        
+        <Scaling>1</Scaling>
+        <Visible>false</Visible>
+        <Frozen>false</Frozen>
+      </Transform>
       <Factory xsi:type="StaticModelFactory">
         <Visible>true</Visible>
         <Collidable>true</Collidable>
       </Factory>
     </MapFactory>
     <MapFactory>
-      <NodePath>|pPipe3</NodePath>
+      <Guid>00000000-0000-0000-0000-000000000000</Guid>
+      <Transform>
+        <Translation X="0" Y="0" Z="0" />
+        
+        <Scaling>1</Scaling>
+        <Visible>false</Visible>
+        <Frozen>false</Frozen>
+      </Transform>
       <Factory xsi:type="StaticModelFactory">
         <Visible>true</Visible>
         <Collidable>true</Collidable>
       </Factory>
     </MapFactory>
     <MapFactory>
-      <NodePath>|pPipe4</NodePath>
+      <Guid>00000000-0000-0000-0000-000000000000</Guid>
+      <Transform>
+        <Translation X="0" Y="0" Z="0" />
+        
+        <Scaling>1</Scaling>
+        <Visible>false</Visible>
+        <Frozen>false</Frozen>
+      </Transform>
       <Factory xsi:type="StaticModelFactory">
         <Visible>true</Visible>
         <Collidable>true</Collidable>
       </Factory>
     </MapFactory>
     <MapFactory>
-      <NodePath>|pPipe5</NodePath>
+      <Guid>00000000-0000-0000-0000-000000000000</Guid>
+      <Transform>
+        <Translation X="0" Y="0" Z="0" />
+        
+        <Scaling>1</Scaling>
+        <Visible>false</Visible>
+        <Frozen>false</Frozen>
+      </Transform>
       <Factory xsi:type="StaticModelFactory">
         <Visible>true</Visible>
         <Collidable>true</Collidable>
       </Factory>
     </MapFactory>
     <MapFactory>
-      <NodePath>|pPipe6</NodePath>
+      <Guid>00000000-0000-0000-0000-000000000000</Guid>
+      <Transform>
+        <Translation X="0" Y="0" Z="0" />
+        
+        <Scaling>1</Scaling>
+        <Visible>false</Visible>
+        <Frozen>false</Frozen>
+      </Transform>
       <Factory xsi:type="StaticModelFactory">
         <Visible>true</Visible>
         <Collidable>true</Collidable>
       </Factory>
     </MapFactory>
     <MapFactory>
-      <NodePath>|pPipe7</NodePath>
+      <Guid>00000000-0000-0000-0000-000000000000</Guid>
+      <Transform>
+        <Translation X="0" Y="0" Z="0" />
+        
+        <Scaling>1</Scaling>
+        <Visible>false</Visible>
+        <Frozen>false</Frozen>
+      </Transform>
       <Factory xsi:type="StaticModelFactory">
         <Visible>true</Visible>
         <Collidable>true</Collidable>
       </Factory>
     </MapFactory>
     <MapFactory>
-      <NodePath>|pPipe8</NodePath>
+      <Guid>00000000-0000-0000-0000-000000000000</Guid>
+      <Transform>
+        <Translation X="0" Y="0" Z="0" />
+        
+        <Scaling>1</Scaling>
+        <Visible>false</Visible>
+        <Frozen>false</Frozen>
+      </Transform>
       <Factory xsi:type="StaticModelFactory">
         <Visible>true</Visible>
         <Collidable>true</Collidable>
       </Factory>
     </MapFactory>
     <MapFactory>
-      <NodePath>|pPipe9</NodePath>
+      <Guid>00000000-0000-0000-0000-000000000000</Guid>
+      <Transform>
+        <Translation X="0" Y="0" Z="0" />
+        
+        <Scaling>1</Scaling>
+        <Visible>false</Visible>
+        <Frozen>false</Frozen>
+      </Transform>
       <Factory xsi:type="StaticModelFactory">
         <Visible>true</Visible>
         <Collidable>true</Collidable>
       </Factory>
     </MapFactory>
     <MapFactory>
-      <NodePath>|pSphere1</NodePath>
+      <Guid>00000000-0000-0000-0000-000000000000</Guid>
+      <Transform>
+        <Translation X="0" Y="0" Z="0" />
+        
+        <Scaling>1</Scaling>
+        <Visible>false</Visible>
+        <Frozen>false</Frozen>
+      </Transform>
       <Factory xsi:type="StaticModelFactory">
         <Visible>true</Visible>
         <Collidable>true</Collidable>
       </Factory>
     </MapFactory>
     <MapFactory>
-      <NodePath>|pSphere2</NodePath>
+      <Guid>00000000-0000-0000-0000-000000000000</Guid>
+      <Transform>
+        <Translation X="0" Y="0" Z="0" />
+        
+        <Scaling>1</Scaling>
+        <Visible>false</Visible>
+        <Frozen>false</Frozen>
+      </Transform>
       <Factory xsi:type="StaticModelFactory">
         <Visible>true</Visible>
         <Collidable>true</Collidable>
       </Factory>
     </MapFactory>
     <MapFactory>
-      <NodePath>|pSphere3</NodePath>
+      <Guid>00000000-0000-0000-0000-000000000000</Guid>
+      <Transform>
+        <Translation X="0" Y="0" Z="0" />
+        
+        <Scaling>1</Scaling>
+        <Visible>false</Visible>
+        <Frozen>false</Frozen>
+      </Transform>
       <Factory xsi:type="StaticModelFactory">
         <Visible>true</Visible>
         <Collidable>true</Collidable>
       </Factory>
     </MapFactory>
     <MapFactory>
-      <NodePath>|pSphere4</NodePath>
+      <Guid>00000000-0000-0000-0000-000000000000</Guid>
+      <Transform>
+        <Translation X="0" Y="0" Z="0" />
+        
+        <Scaling>1</Scaling>
+        <Visible>false</Visible>
+        <Frozen>false</Frozen>
+      </Transform>
       <Factory xsi:type="StaticModelFactory">
         <Visible>true</Visible>
         <Collidable>true</Collidable>
       </Factory>
     </MapFactory>
     <MapFactory>
-      <NodePath>|pSphere5</NodePath>
+      <Guid>00000000-0000-0000-0000-000000000000</Guid>
+      <Transform>
+        <Translation X="0" Y="0" Z="0" />
+        
+        <Scaling>1</Scaling>
+        <Visible>false</Visible>
+        <Frozen>false</Frozen>
+      </Transform>
       <Factory xsi:type="StaticModelFactory">
         <Visible>true</Visible>
         <Collidable>true</Collidable>
       </Factory>
     </MapFactory>
     <MapFactory>
-      <NodePath>|pSphere6</NodePath>
+      <Guid>00000000-0000-0000-0000-000000000000</Guid>
+      <Transform>
+        <Translation X="0" Y="0" Z="0" />
+        
+        <Scaling>1</Scaling>
+        <Visible>false</Visible>
+        <Frozen>false</Frozen>
+      </Transform>
       <Factory xsi:type="StaticModelFactory">
         <Visible>true</Visible>
         <Collidable>true</Collidable>
       </Factory>
     </MapFactory>
     <MapFactory>
-      <NodePath>|pSphere7</NodePath>
+      <Guid>00000000-0000-0000-0000-000000000000</Guid>
+      <Transform>
+        <Translation X="0" Y="0" Z="0" />
+        
+        <Scaling>1</Scaling>
+        <Visible>false</Visible>
+        <Frozen>false</Frozen>
+      </Transform>
       <Factory xsi:type="StaticModelFactory">
         <Visible>true</Visible>
         <Collidable>true</Collidable>
       </Factory>
     </MapFactory>
     <MapFactory>
-      <NodePath>|pSphere8</NodePath>
+      <Guid>00000000-0000-0000-0000-000000000000</Guid>
+      <Transform>
+        <Translation X="0" Y="0" Z="0" />
+        
+        <Scaling>1</Scaling>
+        <Visible>false</Visible>
+        <Frozen>false</Frozen>
+      </Transform>
       <Factory xsi:type="StaticModelFactory">
         <Visible>true</Visible>
         <Collidable>true</Collidable>
       </Factory>
     </MapFactory>
     <MapFactory>
-      <NodePath>|pSphere9</NodePath>
+      <Guid>00000000-0000-0000-0000-000000000000</Guid>
+      <Transform>
+        <Translation X="0" Y="0" Z="0" />
+        
+        <Scaling>1</Scaling>
+        <Visible>false</Visible>
+        <Frozen>false</Frozen>
+      </Transform>
       <Factory xsi:type="StaticModelFactory">
         <Visible>true</Visible>
         <Collidable>true</Collidable>
       </Factory>
     </MapFactory>
     <MapFactory>
-      <NodePath>|pSphere10</NodePath>
+      <Guid>00000000-0000-0000-0000-000000000000</Guid>
+      <Transform>
+        <Translation X="0" Y="0" Z="0" />
+        
+        <Scaling>1</Scaling>
+        <Visible>false</Visible>
+        <Frozen>false</Frozen>
+      </Transform>
       <Factory xsi:type="StaticModelFactory">
         <Visible>true</Visible>
         <Collidable>true</Collidable>
       </Factory>
     </MapFactory>
     <MapFactory>
-      <NodePath>|pSphere11</NodePath>
+      <Guid>00000000-0000-0000-0000-000000000000</Guid>
+      <Transform>
+        <Translation X="0" Y="0" Z="0" />
+        
+        <Scaling>1</Scaling>
+        <Visible>false</Visible>
+        <Frozen>false</Frozen>
+      </Transform>
       <Factory xsi:type="StaticModelFactory">
         <Visible>true</Visible>
         <Collidable>true</Collidable>
       </Factory>
     </MapFactory>
     <MapFactory>
-      <NodePath>|pSphere12</NodePath>
+      <Guid>00000000-0000-0000-0000-000000000000</Guid>
+      <Transform>
+        <Translation X="0" Y="0" Z="0" />
+        
+        <Scaling>1</Scaling>
+        <Visible>false</Visible>
+        <Frozen>false</Frozen>
+      </Transform>
       <Factory xsi:type="StaticModelFactory">
         <Visible>true</Visible>
         <Collidable>true</Collidable>
       </Factory>
     </MapFactory>
     <MapFactory>
-      <NodePath>|pSphere13</NodePath>
+      <Guid>00000000-0000-0000-0000-000000000000</Guid>
+      <Transform>
+        <Translation X="0" Y="0" Z="0" />
+        
+        <Scaling>1</Scaling>
+        <Visible>false</Visible>
+        <Frozen>false</Frozen>
+      </Transform>
       <Factory xsi:type="StaticModelFactory">
         <Visible>true</Visible>
         <Collidable>true</Collidable>
       </Factory>
     </MapFactory>
     <MapFactory>
-      <NodePath>|pSphere14</NodePath>
+      <Guid>00000000-0000-0000-0000-000000000000</Guid>
+      <Transform>
+        <Translation X="0" Y="0" Z="0" />
+        
+        <Scaling>1</Scaling>
+        <Visible>false</Visible>
+        <Frozen>false</Frozen>
+      </Transform>
       <Factory xsi:type="StaticModelFactory">
         <Visible>true</Visible>
         <Collidable>true</Collidable>
       </Factory>
     </MapFactory>
     <MapFactory>
-      <NodePath>|pSphere15</NodePath>
+      <Guid>00000000-0000-0000-0000-000000000000</Guid>
+      <Transform>
+        <Translation X="0" Y="0" Z="0" />
+        
+        <Scaling>1</Scaling>
+        <Visible>false</Visible>
+        <Frozen>false</Frozen>
+      </Transform>
       <Factory xsi:type="StaticModelFactory">
         <Visible>true</Visible>
         <Collidable>true</Collidable>
       </Factory>
     </MapFactory>
     <MapFactory>
-      <NodePath>|pRocks</NodePath>
+      <Guid>00000000-0000-0000-0000-000000000000</Guid>
+      <Transform>
+        <Translation X="0" Y="0" Z="0" />
+        
+        <Scaling>1</Scaling>
+        <Visible>false</Visible>
+        <Frozen>false</Frozen>
+      </Transform>
+      <Factory xsi:type="StaticModelFactory">
+        <Visible>true</Visible>
+        <Collidable>true</Collidable>
+      </Factory>
+    </MapFactory>
+  </Factories>
+</Map>ransform>
+        <Translation X="0" Y="0" Z="0" />
+        <Rotation>
+          <X>0</X>
+          <Y>0</Y>
+          <Z>0</Z>
+          <W>0</W>
+        </Rotation>
+        <Scaling>1</Scaling>
+        <Visible>0</Visible>
+        <Frozen>0</Frozen>
+      </Transform>
+      <Factory xsi:type="StaticModelFactory">
+        <Visible>true</Visible>
+        <Collidable>true</Collidable>
+      </Factory>
+    </MapFactory>
+    <MapFactory>
+      <Guid>00000000-0000-0000-0000-000000000000</Guid>
+      <Transform>
+        <Translation X="0" Y="0" Z="0" />
+        <Rotation>
+          <X>0</X>
+          <Y>0</Y>
+          <Z>0</Z>
+          <W>0</W>
+        </Rotation>
+        <Scaling>1</Scaling>
+        <Visible>0</Visible>
+        <Frozen>0</Frozen>
+      </Transform>
+      <Factory xsi:type="StaticModelFactory">
+        <Visible>true</Visible>
+        <Collidable>true</Collidable>
+      </Factory>
+    </MapFactory>
+    <MapFactory>
+      <Guid>00000000-0000-0000-0000-000000000000</Guid>
+      <Transform>
+        <Translation X="0" Y="0" Z="0" />
+        <Rotation>
+          <X>0</X>
+          <Y>0</Y>
+          <Z>0</Z>
+          <W>0</W>
+        </Rotation>
+        <Scaling>1</Scaling>
+        <Visible>0</Visible>
+        <Frozen>0</Frozen>
+      </Transform>
+      <Factory xsi:type="StaticModelFactory">
+        <Visible>true</Visible>
+        <Collidable>true</Collidable>
+      </Factory>
+    </MapFactory>
+    <MapFactory>
+      <Guid>00000000-0000-0000-0000-000000000000</Guid>
+      <Transform>
+        <Translation X="0" Y="0" Z="0" />
+        <Rotation>
+          <X>0</X>
+          <Y>0</Y>
+          <Z>0</Z>
+          <W>0</W>
+        </Rotation>
+        <Scaling>1</Scaling>
+        <Visible>0</Visible>
+        <Frozen>0</Frozen>
+      </Transform>
+      <Factory xsi:type="StaticModelFactory">
+        <Visible>true</Visible>
+        <Collidable>true</Collidable>
+      </Factory>
+    </MapFactory>
+    <MapFactory>
+      <Guid>00000000-0000-0000-0000-000000000000</Guid>
+      <Transform>
+        <Translation X="0" Y="0" Z="0" />
+        <Rotation>
+          <X>0</X>
+          <Y>0</Y>
+          <Z>0</Z>
+          <W>0</W>
+        </Rotation>
+        <Scaling>1</Scaling>
+        <Visible>0</Visible>
+        <Frozen>0</Frozen>
+      </Transform>
+      <Factory xsi:type="StaticModelFactory">
+        <Visible>true</Visible>
+        <Collidable>true</Collidable>
+      </Factory>
+    </MapFactory>
+    <MapFactory>
+      <Guid>00000000-0000-0000-0000-000000000000</Guid>
+      <Transform>
+        <Translation X="0" Y="0" Z="0" />
+        <Rotation>
+          <X>0</X>
+          <Y>0</Y>
+          <Z>0</Z>
+          <W>0</W>
+        </Rotation>
+        <Scaling>1</Scaling>
+        <Visible>0</Visible>
+        <Frozen>0</Frozen>
+      </Transform>
+      <Factory xsi:type="StaticModelFactory">
+        <Visible>true</Visible>
+        <Collidable>true</Collidable>
+      </Factory>
+    </MapFactory>
+    <MapFactory>
+      <Guid>00000000-0000-0000-0000-000000000000</Guid>
+      <Transform>
+        <Translation X="0" Y="0" Z="0" />
+        <Rotation>
+          <X>0</X>
+          <Y>0</Y>
+          <Z>0</Z>
+          <W>0</W>
+        </Rotation>
+        <Scaling>1</Scaling>
+        <Visible>0</Visible>
+        <Frozen>0</Frozen>
+      </Transform>
+      <Factory xsi:type="StaticModelFactory">
+        <Visible>true</Visible>
+        <Collidable>true</Collidable>
+      </Factory>
+    </MapFactory>
+    <MapFactory>
+      <Guid>00000000-0000-0000-0000-000000000000</Guid>
+      <Transform>
+        <Translation X="0" Y="0" Z="0" />
+        <Scaling>1</Scaling>
+        <Visible>0</Visible>
+        <Frozen>0</Frozen>
+      </Transform>
+      <Factory xsi:type="StaticModelFactory">
+        <Visible>true</Visible>
+        <Collidable>true</Collidable>
+      </Factory>
+    </MapFactory>
+    <MapFactory>
+      <Guid>00000000-0000-0000-0000-000000000000</Guid>
+      <Transform>
+        <Translation X="0" Y="0" Z="0" />
+        <Scaling>1</Scaling>
+        <Visible>0</Visible>
+        <Frozen>0</Frozen>
+      </Transform>
+      <Factory xsi:type="StaticModelFactory">
+        <Visible>true</Visible>
+        <Collidable>true</Collidable>
+      </Factory>
+    </MapFactory>
+    <MapFactory>
+      <Guid>00000000-0000-0000-0000-000000000000</Guid>
+      <Transform>
+        <Translation X="0" Y="0" Z="0" />
+        <Scaling>1</Scaling>
+        <Visible>0</Visible>
+        <Frozen>0</Frozen>
+      </Transform>
       <Factory xsi:type="StaticModelFactory">
         <Visible>true</Visible>
         <Collidable>true</Collidable>

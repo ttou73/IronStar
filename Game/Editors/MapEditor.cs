@@ -171,7 +171,6 @@ namespace IronStar.Editors {
 
 				MapFile =   new MapFileState() { Map = new Map(), Path = null };
 				MapFile.Map.ScenePath = Builder.GetRelativePath( fullPath );
-				ImportSceneNodes();
 
 				UpdateMapList();
 			}
@@ -247,60 +246,6 @@ namespace IronStar.Editors {
 
 
 
-		public void ImportSceneNodes ()
-		{
-			var map = MapFile.Map;
-			var loader = new FbxLoader();
-			var options = new Options();
-			var scene = loader.LoadScene( Builder.GetFullPath( map.ScenePath ), new Options() );
-
-			var hashset = new HashSet<string>( scene.Nodes.Select( n => scene.GetFullNodePath(n) ) );
-
-			if ( map.Factories==null ) {
-				map.Factories = new List<MapFactory>();
-			}
-
-			//	detect non-existing nodes :
-			var nonexisting = map.Factories
-						.Where( n => hashset.Contains( n.NodePath ) )
-						.ToArray();
-
-
-			var newNodes = new List<string>();
-
-
-			//	add new nodes :
-			hashset = new HashSet<string>( map.Factories.Select( n => n.NodePath ) );
-
-			foreach ( var node in scene.Nodes ) {
-
-
-				var nodePath    =   scene.GetFullNodePath(node);
-
-				Core.EntityFactory factory = null;
-				
-				factory     =   new Entities.StaticModelFactory();
-
-				if ( node.ParentIndex<0 ) {
-					factory		=	new Entities.WorldspawnFactory();
-				}
-
-				if ( hashset.Contains( nodePath ) ) {
-					continue;
-				}
-
-				newNodes.Add( nodePath );
-
-				map.Factories.Add( new MapFactory() { NodePath = nodePath, Factory = factory } );
-			}
-
-			Log.Message( "Scene hierarchy import completed:" );
-			Log.Message( "  {0} missing links", nonexisting.Length );
-			Log.Message( "  {0} new nodes", newNodes.Count );
-		}
-
-
-
 		public void AddNode ( MapFactory node )
 		{
 			throw new NotImplementedException();
@@ -366,13 +311,12 @@ namespace IronStar.Editors {
 
 		private void updateNodesFromSceneToolStripMenuItem_Click( object sender, EventArgs e )
 		{
-			ImportSceneNodes();
 			UpdateMapList();
 		}
 
 		private void removeToolStripMenuItem_Click( object sender, EventArgs e )
 		{
-			var names = string.Join("\r\n\t", mapListBox.SelectedItems.Cast<MapFactory>().Select( n => n.NodePath ) );
+			/*var names = string.Join("\r\n\t", mapListBox.SelectedItems.Cast<MapFactory>().Select( n => n.NodePath ) );
 
 			var r = MessageBox.Show(this, "Are you sure to remove the selected nodes:\r\n\t" + names, "Remove Nodes", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning );
 
@@ -386,7 +330,7 @@ namespace IronStar.Editors {
 				MapFile.Map.Factories.Remove( mapNode );
 				MapFile.Modified = true;
 			}
-			UpdateMapList();
+			UpdateMapList();*/
 		}
 	}
 }

@@ -16,6 +16,7 @@ using Fusion.Core.IniParser.Model;
 using IronStar.Views;
 using Fusion.Engine.Graphics;
 using IronStar.Mapping;
+using Fusion.Build;
 
 namespace IronStar.Editor2 {
 
@@ -25,12 +26,28 @@ namespace IronStar.Editor2 {
 	public partial class MapEditor : IEditorInstance {
 
 		readonly string mapName;
+		readonly string fullPath;
 		
 		public Game Game { get; private set; }
 		public ContentManager Content { get; private set; }
 		readonly RenderSystem rs;
 
 		EdCamera	edCamera;
+
+		Map	map = null;
+
+		public Map Map {
+			get {
+				return map;
+			}
+		}
+
+
+		public MapFactory[] GetSelection() 
+		{
+			return map.Factories.Where( f => f.Selected ).ToArray();
+		}
+
 
 		/// <summary>
 		/// Initializes server-side world.
@@ -51,15 +68,8 @@ namespace IronStar.Editor2 {
 			SetupUI();
 
 			Game.Keyboard.ScanKeyboard =	true;
-		}
 
-
-
-		/// <summary>
-		/// Saved at dispose
-		/// </summary>
-		public void SaveMap ()
-		{
+			fullPath	=	Builder.GetFullPath(@"maps\" + map + ".map");
 		}
 
 
@@ -69,6 +79,24 @@ namespace IronStar.Editor2 {
 		/// </summary>
 		void IEditorInstance.Initialize()
 		{
+			if (File.Exists(fullPath)) {
+				Log.Message("Opening existing map: {0}", fullPath);
+				this.map = Map.LoadFromXml( File.OpenRead( fullPath ) );
+			} else {
+				Log.Message("Creating new map: {0}", fullPath);
+				this.map = new Map();
+			}
+		}
+
+
+
+		/// <summary>
+		/// Saved at dispose
+		/// </summary>
+		public void SaveMap ()
+		{
+			File.Delete( fullPath );
+			Map.SaveToXml( map, File.OpenWrite( fullPath ) );
 		}
 
 
@@ -80,7 +108,9 @@ namespace IronStar.Editor2 {
 		protected virtual void Dispose( bool disposing )
 		{
 			if ( !disposedValue ) {
+				Log.Message("Saving map: {0}", fullPath);
 				if ( disposing ) {
+					SaveMap();
 				}
 
 				disposedValue = true;

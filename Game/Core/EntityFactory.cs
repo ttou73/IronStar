@@ -19,6 +19,9 @@ using System.ComponentModel;
 namespace IronStar.Core {
 
 	public abstract class EntityFactory {
+		
+		static Type[] factories = null;
+
 
 		[Category("Common")]
 		public string Targetname { get; set; }
@@ -28,6 +31,15 @@ namespace IronStar.Core {
 		public override string ToString()
 		{
 			return GetType().Name;
+		}
+
+
+		public static Type[] GetFactoryTypes ()
+		{
+			if (factories==null) {
+				factories = Misc.GetAllSubclassesOf( typeof(EntityFactory) );
+			}
+			return factories;
 		}
 	}
 
