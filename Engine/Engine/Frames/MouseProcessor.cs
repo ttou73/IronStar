@@ -275,6 +275,8 @@ namespace Fusion.Engine.Frames {
 				CallMouseIn			( mousePosition, currentHovered );
 				CallStatusChanged	( mousePosition, currentHovered, FrameStatus.Hovered );
 
+				CallMouseUp( mousePosition, heldFrame, key );
+
 			} else {
 
 				//	track activation/deactivation on click :
