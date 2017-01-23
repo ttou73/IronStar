@@ -451,7 +451,7 @@ namespace Fusion.Engine.Graphics {
 			} 
 
 			//	draw debug lines :
-			Debug.Render( targetSurface, Camera );
+			Debug.Render( targetSurface, viewHdrFrame.DepthBuffer.Surface, Camera );
 		}
 
 
