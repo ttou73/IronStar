@@ -14,6 +14,7 @@ namespace IronStar.Editor2 {
 
 		readonly RenderSystem rs;
 		readonly Game game;
+		readonly MapEditor editor;
 
 
 		public ManipulatorMode Mode { get; set; }
@@ -24,10 +25,11 @@ namespace IronStar.Editor2 {
 		/// <summary>
 		/// 
 		/// </summary>
-		public EdManipulator ( RenderSystem rs )
+		public EdManipulator ( RenderSystem rs, MapEditor editor )
 		{
 			this.rs		=	rs;
 			this.game	=	rs.Game;
+			this.editor	=	editor;
 		}
 
 
@@ -44,18 +46,24 @@ namespace IronStar.Editor2 {
 				return;
 			}
 
+			var scale = editor.edCamera.ManipulatorScaling;
+
 			if (Mode==ManipulatorMode.TranslationGlobal) {
-				DrawArrow( dr, Vector3.UnitX, Color.Red );
-				DrawArrow( dr, Vector3.UnitY, Color.Lime );
-				DrawArrow( dr, Vector3.UnitZ, Color.Blue );
+				DrawArrow( dr, Vector3.UnitX, Color.Red , scale );
+				DrawArrow( dr, Vector3.UnitY, Color.Lime, scale );
+				DrawArrow( dr, Vector3.UnitZ, Color.Blue, scale );
 			}
 		}
 
 
 
-		void DrawArrow ( DebugRender dr, Vector3 dir, Color color )
+		void DrawArrow ( DebugRender dr, Vector3 dir, Color color, float scale )
 		{
-			dr.DrawVector( Target.Transform.Translation, dir, color, 3 );
+			var p0 = Target.Transform.Translation;
+			var p1 = p0 + dir * scale;
+
+			dr.DrawLine(p0,p1, color, color, 5,5 );
+			dr.DrawLine(p1,p1+dir, color, color, 15,0 );
 		}
 
 

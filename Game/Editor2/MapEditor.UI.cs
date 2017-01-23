@@ -67,6 +67,7 @@ namespace IronStar.Editor2 {
 					edCamera.StartManipulation( e.X, e.Y, Manipulation.Rotating );
 				} else
 				if (e.Key==Keys.RightButton) {
+					Log.Message("Zooming Start");
 					edCamera.StartManipulation( e.X, e.Y, Manipulation.Zooming );
 				} else 
 				if (e.Key==Keys.MiddleButton) {
@@ -86,6 +87,7 @@ namespace IronStar.Editor2 {
 
 		private void RootFrame_MouseUp( object sender, Frame.MouseEventArgs e )
 		{
+			Log.Message("Stop");
 			edCamera.StopManipulation( e.X, e.Y );
 		}
 	}

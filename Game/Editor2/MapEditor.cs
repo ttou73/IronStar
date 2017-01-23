@@ -33,8 +33,8 @@ namespace IronStar.Editor2 {
 		public ContentManager Content { get; private set; }
 		readonly RenderSystem rs;
 
-		EdCamera		edCamera;
-		EdManipulator	edManipulator;
+		public EdCamera			edCamera;
+		public EdManipulator	edManipulator;
 
 		Space physSpace;
 
@@ -68,8 +68,8 @@ namespace IronStar.Editor2 {
 			this.rs			=	Game.RenderSystem;
 			Content         =   new ContentManager( Game );
 
-			edCamera		=	new EdCamera( Game.RenderSystem );
-			edManipulator	=	new EdManipulator( Game.RenderSystem );
+			edCamera		=	new EdCamera( Game.RenderSystem, this );
+			edManipulator	=	new EdManipulator( Game.RenderSystem, this );
 			edManipulator.Mode	=	ManipulatorMode.TranslationGlobal;
 
 			SetupUI();

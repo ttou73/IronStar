@@ -13,6 +13,7 @@ namespace IronStar.Editor2 {
 
 		readonly RenderSystem rs;
 		readonly Game game;
+		readonly MapEditor editor;
 
 
 		public Vector3	Target		=	Vector3.Zero;
@@ -38,10 +39,19 @@ namespace IronStar.Editor2 {
 		/// <summary>
 		/// 
 		/// </summary>
-		public EdCamera ( RenderSystem rs )
+		public EdCamera ( RenderSystem rs, MapEditor editor )
 		{
 			this.rs		=	rs;
 			this.game	=	rs.Game;
+			this.editor	=	editor;
+		}
+
+
+
+		public float ManipulatorScaling {
+			get {
+				return Distance * addZoom / 30.0f;
+			}
 		}
 
 
