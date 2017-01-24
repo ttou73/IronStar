@@ -59,6 +59,7 @@
   <ItemGroup>
     <Compile Include="Client\GameInput.cs" />
     <Compile Include="Commands\ShowWorldState.cs" />
+    <Compile Include="Editor2\EditorHud.cs" />
     <Compile Include="Editor2\EdManipulator.cs" />
     <Compile Include="Editor2\EdCamera.cs" />
     <Compile Include="Core\EntityFactory.cs" />

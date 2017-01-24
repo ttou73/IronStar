@@ -7,6 +7,7 @@ using Fusion.Core.Mathematics;
 using Fusion.Core;
 using Fusion.Drivers.Graphics;
 using Fusion.Engine.Common;
+using System.IO;
 
 namespace Fusion.Engine.Graphics {
 	public class SpriteLayer : DisposableBase {
@@ -61,6 +62,7 @@ namespace Fusion.Engine.Graphics {
 
 
 		DynamicTexture defaultTexture;
+		UserTexture		fontTexture;
 
 
 		/// <summary>
@@ -100,6 +102,10 @@ namespace Fusion.Engine.Graphics {
 			defaultTexture	=	new DynamicTexture( rs, 16,16, typeof(Color), false, false );
 			defaultTexture.SetData( Enumerable.Range(0,16*16).Select( i => Color.White ).ToArray() );
 
+			using ( var ms = new MemoryStream( Properties.Resources.conchars ) ) {
+				fontTexture = UserTexture.CreateFromTga( rs, ms, false );
+			}
+
 			ReallocGpuBuffers( capacity );
 
 			framesBuffer	=	new ConstantBuffer( rs.Device, typeof(SpriteFrame), MaxSpriteFrames );
@@ -115,6 +121,7 @@ namespace Fusion.Engine.Graphics {
 		{
 			if (disposing) {
 				SafeDispose( ref defaultTexture );
+				SafeDispose( ref fontTexture );
 				SafeDispose( ref vertexBuffer );
 				SafeDispose( ref framesBuffer );
 			}
@@ -516,7 +523,7 @@ namespace Fusion.Engine.Graphics {
 		/// <param name="color"></param>
 		/// <param name="scale"></param>
 		/// <param name="clipRectIndex"></param>
-		public void DrawDebugString(Texture fontTexture, float x, float y, string text, Color color, int clipRectIndex=0 )
+		public void DrawDebugString( float x, float y, string text, Color color, int clipRectIndex=0 )
 		{
 			int len = text.Length;
 			var duv = 1.0f / 16.0f;
@@ -547,7 +554,7 @@ namespace Fusion.Engine.Graphics {
 		/// <param name="color"></param>
 		/// <param name="scale"></param>
 		/// <param name="clipRectIndex"></param>
-		public void DrawDebugString(Texture fontTexture, float x, float y, string text, Color color, float scale, int clipRectIndex )
+		public void DrawDebugString( float x, float y, string text, Color color, float scale, int clipRectIndex )
 		{
 			int len = text.Length;
 			var duv = 1.0f / 16.0f;

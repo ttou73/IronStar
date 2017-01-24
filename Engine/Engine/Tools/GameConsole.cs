@@ -198,7 +198,7 @@ namespace Fusion.Engine.Tools {
 			#if USE_PROFONT
 			consoleFont.DrawString( layer, text, x,y + consoleFont.BaseLine, color );
 			#else
-			layer.DrawDebugString( consoleFont, x, y, text, color );
+			layer.DrawDebugString( x, y, text, color );
 			#endif
 		}
 

@@ -35,6 +35,7 @@ namespace IronStar.Editor2 {
 
 		public EdCamera			edCamera;
 		public EdManipulator	edManipulator;
+		public EditorHud		hud;
 
 		Space physSpace;
 
@@ -71,6 +72,7 @@ namespace IronStar.Editor2 {
 			edCamera		=	new EdCamera( Game.RenderSystem, this );
 			edManipulator	=	new EdManipulator( Game.RenderSystem, this );
 			edManipulator.Mode	=	ManipulatorMode.TranslationGlobal;
+			hud				=	new EditorHud( Game.RenderSystem, this );
 
 			SetupUI();
 
@@ -116,6 +118,7 @@ namespace IronStar.Editor2 {
 		/// </summary>
 		public void SaveMap ()
 		{
+			Log.Message("Saving map: {0}", fullPath);
 			File.Delete( fullPath );
 			Map.SaveToXml( map, File.OpenWrite( fullPath ) );
 		}
@@ -129,8 +132,9 @@ namespace IronStar.Editor2 {
 		protected virtual void Dispose( bool disposing )
 		{
 			if ( !disposedValue ) {
-				Log.Message("Saving map: {0}", fullPath);
 				if ( disposing ) {
+					hud?.Dispose();
+					hud = null;
 					SaveMap();
 				}
 
@@ -156,6 +160,8 @@ namespace IronStar.Editor2 {
 			edCamera.Update( gameTime );
 
 			rs.RenderWorld.Debug.DrawGrid( 10 );
+
+			hud.Update(gameTime);
 
 			//
 			//	Draw unselected :
