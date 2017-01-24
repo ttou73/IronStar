@@ -54,7 +54,7 @@ namespace IronStar.Editor2 {
 
 		private void RootFrame_Click( object sender, Frame.MouseEventArgs e )
 		{
-			if (edCamera.Manipulation==Manipulation.None) {
+			if (edCamera.Manipulation==Manipulation.None && !edManipulator.IsManipulating) {
 				var shift =	Game.Keyboard.IsKeyDown(Keys.LeftShift) || Game.Keyboard.IsKeyDown(Keys.RightShift);
 				Select( e.X, e.Y, shift );
 			}
@@ -67,7 +67,6 @@ namespace IronStar.Editor2 {
 					edCamera.StartManipulation( e.X, e.Y, Manipulation.Rotating );
 				} else
 				if (e.Key==Keys.RightButton) {
-					Log.Message("Zooming Start");
 					edCamera.StartManipulation( e.X, e.Y, Manipulation.Zooming );
 				} else 
 				if (e.Key==Keys.MiddleButton) {
@@ -76,19 +75,20 @@ namespace IronStar.Editor2 {
 					edCamera.StartManipulation( e.X, e.Y, Manipulation.None );
 				}
 			} else {
-
+				edManipulator.StartManipulation( e.X, e.Y );
 			}
 		}
 
 		private void RootFrame_MouseMove( object sender, Frame.MouseEventArgs e )
 		{
 			edCamera.UpdateManipulation( e.X, e.Y );
+			edManipulator.UpdateManipulation( e.X, e.Y );
 		}
 
 		private void RootFrame_MouseUp( object sender, Frame.MouseEventArgs e )
 		{
-			Log.Message("Stop");
 			edCamera.StopManipulation( e.X, e.Y );
+			edManipulator.StopManipulation( e.X, e.Y );
 		}
 	}
 }

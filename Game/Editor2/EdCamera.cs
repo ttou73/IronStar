@@ -86,7 +86,7 @@ namespace IronStar.Editor2 {
 			float fx = (x) / (float)(vp.Width);
 			float fy = (y) / (float)(vp.Height);
 
-			Log.Message("{0} {1}", fx, fy );
+			//Log.Message("{0} {1}", fx, fy );
 
 			//var ray = new 
 			var c = rs.RenderWorld.Camera.Frustum.GetCorners();
