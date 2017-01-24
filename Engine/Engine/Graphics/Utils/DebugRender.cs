@@ -31,7 +31,7 @@ namespace Fusion.Engine.Graphics {
 		[StructLayout(LayoutKind.Explicit)]
 		struct ConstData {
 			[FieldOffset(  0)] public Matrix  View;
-			[FieldOffset( 64)] public Matrix  ViewProjection;
+			[FieldOffset( 64)] public Matrix  Projection;
 			[FieldOffset(128)] public Vector4 ViewPosition;
 			[FieldOffset(144)] public Vector4 PixelSize;
 		}
@@ -200,10 +200,10 @@ namespace Fusion.Engine.Graphics {
 			var w = (float)colorBuffer.Width;
 			var h = (float)colorBuffer.Height;
 
-			constData.View				=	camera.GetViewMatrix(StereoEye.Mono);
-			constData.ViewProjection	=	camera.GetViewMatrix(StereoEye.Mono) * camera.GetProjectionMatrix(StereoEye.Mono);
-			constData.ViewPosition		=	camera.GetCameraPosition4(StereoEye.Mono);
-			constData.PixelSize			=	new Vector4( 1/w/a, 1/b/h, 1/w, 1/h );
+			constData.View			=	camera.GetViewMatrix(StereoEye.Mono);
+			constData.Projection	=	camera.GetProjectionMatrix(StereoEye.Mono);
+			constData.ViewPosition	=	camera.GetCameraPosition4(StereoEye.Mono);
+			constData.PixelSize		=	new Vector4( 1/w/a, 1/b/h, 1/w, 1/h );
 			constBuffer.SetData(constData);
 
 			dev.SetupVertexInput( vertexBuffer, null );

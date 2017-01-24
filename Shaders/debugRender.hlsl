@@ -8,7 +8,7 @@ $ubershader SOLID|GHOST
 
 struct BATCH {
 	float4x4	View;
-	float4x4	ViewProjection;
+	float4x4	Projection;
 	float4		ViewPosition;
 	float4		PixelSize;
 };
@@ -44,65 +44,61 @@ GS_IN VSMain( VS_IN input )
 }
 
 
+void ClipLine ( float znear, inout float3 a, inout float3 b ) 
+{
+	if ( a.z <= znear && b.z <= znear ) {
+		return;
+	}
+	if ( a.z >= znear && b.z >= znear ) {
+		return;
+	}
+
+	float	factor	=	( znear - a.z ) / ( b.z - a.z );
+	float3 	cpoint	=	lerp( a, b, factor );
+	
+	if ( a.z > znear ) a = cpoint;
+	if ( b.z > znear ) b = cpoint;
+}
+
+
 [maxvertexcount(6)]
 void GSMain( line GS_IN inputPoint[2], inout TriangleStream<PS_IN> outputStream )
 {
 	PS_IN p0, p1, p2, p3;
 
-	float3 position	=	inputPoint[0].pos.xyz;
-	float3 tailpos	=	inputPoint[1].pos.xyz;
+	float4 color0	=	inputPoint[0].col;
+	float4 color1	=	inputPoint[1].col;
+	
+	float4 vpos0	=	mul( float4(inputPoint[0].pos.xyz,1), Batch.View );
+	float4 vpos1	=	mul( float4(inputPoint[1].pos.xyz,1), Batch.View );
+	
+	if (vpos1.z * vpos0.z < 0) {
+		ClipLine( 0, vpos0.xyz, vpos1.xyz );
+	}
 
-	float4 vpos0  = mul( float4(inputPoint[0].pos.xyz,1), Batch.View );
-	float4 vpos1  = mul( float4(inputPoint[1].pos.xyz,1), Batch.View );
-	
-	#if 0
-		float z0	=	abs(vpos0.z / vpos0.w);
-		float z1	=	abs(vpos1.z / vpos1.w);
-		
-		float sz0 = max(inputPoint[0].wth/2, 0) * z0 / 1000.0f;
-		float sz1 = max(inputPoint[1].wth/2, 0) * z1 / 1000.0f;
-		
-		sz0 = max( sz0, max( Batch.PixelSize.x * z0, Batch.PixelSize.y * z0 ));
-		sz1 = max( sz1, max( Batch.PixelSize.x * z1, Batch.PixelSize.y * z1 ));
+	float4 ppos0  	=	mul( vpos0, Batch.Projection );
+	float4 ppos1  	=	mul( vpos1, Batch.Projection );
 
-		float3 dir	=	normalize( position - tailpos );
-		float3 eye	=	normalize( Batch.ViewPosition.xyz - tailpos );
-		float3 side	=	normalize( cross( eye, dir ) );
-		float4 pos0	=	mul( float4( tailpos  - side * sz1, 1 ), Batch.ViewProjection );
-		float4 pos1	=	mul( float4( position - side * sz0, 1 ), Batch.ViewProjection );
-		float4 pos2	=	mul( float4( position + side * sz0, 1 ), Batch.ViewProjection );
-		float4 pos3	=	mul( float4( tailpos  + side * sz1, 1 ), Batch.ViewProjection );
-	#else
+	float3 	nppos0	=	ppos0.xyz / ppos0.w;
+	float3 	nppos1	=	ppos1.xyz / ppos1.w;
 	
-		float4 color0	=	inputPoint[0].col;
-		float4 color1	=	inputPoint[1].col;
+	float2 	dir		=	normalize( (nppos1.xy - nppos0.xy) * Batch.PixelSize.wz );
 	
-		float4 ppos0  = mul( float4(inputPoint[0].pos.xyz,1), Batch.ViewProjection );
-		float4 ppos1  = mul( float4(inputPoint[1].pos.xyz,1), Batch.ViewProjection );
+	if (abs(dir.x)>abs(dir.y)) {
+		dir = float2(1,0);
+	} else {
+		dir = float2(0,1);
+	}
 	
-		float3 	nppos0	=	ppos0.xyz / ppos0.w;
-		float3 	nppos1	=	ppos1.xyz / ppos1.w;
-		
-		float2 	dir		=	normalize( (nppos1.xy - nppos0.xy) * Batch.PixelSize.wz );
-		
-		if (abs(dir.x)>abs(dir.y)) {
-			dir = float2(1,0);
-			//color1 = color0 = float4(1,0,0,1);
-		} else {
-			dir = float2(0,1);
-			//color1 = color0 = float4(0,0,1,1);
-		}
-		
-		float4	side	=	float4( dir.y, dir.x, 0, 0 ) * Batch.PixelSize.zwxx;
-	
-		float 	sz0		=	max(1,inputPoint[0].wth);
-		float 	sz1		=	max(1,inputPoint[1].wth);
-	
-		float4 	pos0	=	ppos1 - ( side * ppos1.w * sz1 );
-		float4 	pos1	=	ppos0 - ( side * ppos0.w * sz0 );
-		float4 	pos2	=	ppos0 + ( side * ppos0.w * sz0 );
-		float4 	pos3	=	ppos1 + ( side * ppos1.w * sz1 );
-	#endif
+	float4	side	=	float4( dir.y, dir.x, 0, 0 ) * Batch.PixelSize.zwxx;
+
+	float 	sz0		=	max(1,inputPoint[0].wth);
+	float 	sz1		=	max(1,inputPoint[1].wth);
+
+	float4 	pos0	=	ppos1 - ( side * ppos1.w * sz1 );
+	float4 	pos1	=	ppos0 - ( side * ppos0.w * sz0 );
+	float4 	pos2	=	ppos0 + ( side * ppos0.w * sz0 );
+	float4 	pos3	=	ppos1 + ( side * ppos1.w * sz1 );
 	
 	
 	p0.pos = pos0;
@@ -133,13 +129,14 @@ void GSMain( line GS_IN inputPoint[2], inout TriangleStream<PS_IN> outputStream 
 
 
 
-float4 PSMain( PS_IN input ) : SV_Target
+float4 PSMain( PS_IN input, float4 vpos : SV_Position ) : SV_Target
 {
 	#ifdef SOLID
 	return float4(input.col.rgb,1);
 	#endif
 	#ifdef GHOST
-	return float4(input.col.rgb,0.33f);
+		clip((vpos.x+vpos.y)%2-1);
+		return float4(input.col.rgb,1);
 	#endif
 }
 
