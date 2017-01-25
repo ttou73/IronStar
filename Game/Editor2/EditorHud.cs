@@ -24,10 +24,10 @@ namespace IronStar.Editor2 {
 		/// </summary>
 		/// <param name="rs"></param>
 		/// <param name="editor"></param>
-		public EditorHud ( RenderSystem rs, MapEditor editor )
+		public EditorHud ( MapEditor editor )
 		{
-			this.rs		=	rs;
-			this.game	=	rs.Game;
+			this.rs		=	editor.Game.RenderSystem;
+			this.game	=	editor.Game;
 			this.editor	=	editor;
 
 			spriteLayer	=	new SpriteLayer( rs, 2048 );
