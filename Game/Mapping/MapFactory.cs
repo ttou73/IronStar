@@ -29,13 +29,6 @@ namespace IronStar.Mapping {
 
 
 		/// <summary>
-		/// Indicates that given factory is selected
-		/// </summary>
-		[XmlIgnore]
-		public bool Selected { get; set; }
-
-
-		/// <summary>
 		/// 
 		/// </summary>
 		[TypeConverter(typeof(ExpandableObjectConverter))]		

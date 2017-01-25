@@ -49,12 +49,26 @@ namespace IronStar.Editor2 {
 			if (e.Key==Keys.F) {
 				Focus();
 			}
+			if (!manipulator.IsManipulating) {
+				if (e.Key==Keys.Q) {
+					manipulator = new NullTool(this);
+				}
+				if (e.Key==Keys.W) {
+					manipulator = new TranslationTool(this);
+				}
+				if (e.Key==Keys.E) {
+					manipulator = new TranslationTool(this);
+				}
+				if (e.Key==Keys.R) {
+					manipulator = new TranslationTool(this);
+				}
+			}
 		}
 
 
 		private void RootFrame_Click( object sender, Frame.MouseEventArgs e )
 		{
-			if (edCamera.Manipulation==Manipulation.None && !edManipulator.IsManipulating) {
+			if (camera.Manipulation==Manipulation.None && !manipulator.IsManipulating) {
 				var shift =	Game.Keyboard.IsKeyDown(Keys.LeftShift) || Game.Keyboard.IsKeyDown(Keys.RightShift);
 				Select( e.X, e.Y, shift );
 			}
@@ -64,31 +78,31 @@ namespace IronStar.Editor2 {
 		{
 			if (Game.Keyboard.IsKeyDown(Keys.LeftAlt)) {
 				if (e.Key==Keys.LeftButton) {
-					edCamera.StartManipulation( e.X, e.Y, Manipulation.Rotating );
+					camera.StartManipulation( e.X, e.Y, Manipulation.Rotating );
 				} else
 				if (e.Key==Keys.RightButton) {
-					edCamera.StartManipulation( e.X, e.Y, Manipulation.Zooming );
+					camera.StartManipulation( e.X, e.Y, Manipulation.Zooming );
 				} else 
 				if (e.Key==Keys.MiddleButton) {
-					edCamera.StartManipulation( e.X, e.Y, Manipulation.Translating );
+					camera.StartManipulation( e.X, e.Y, Manipulation.Translating );
 				} else {
-					edCamera.StartManipulation( e.X, e.Y, Manipulation.None );
+					camera.StartManipulation( e.X, e.Y, Manipulation.None );
 				}
 			} else {
-				edManipulator.StartManipulation( e.X, e.Y );
+				manipulator?.StartManipulation( e.X, e.Y );
 			}
 		}
 
 		private void RootFrame_MouseMove( object sender, Frame.MouseEventArgs e )
 		{
-			edCamera.UpdateManipulation( e.X, e.Y );
-			edManipulator.UpdateManipulation( e.X, e.Y );
+			camera.UpdateManipulation( e.X, e.Y );
+			manipulator?.UpdateManipulation( e.X, e.Y );
 		}
 
 		private void RootFrame_MouseUp( object sender, Frame.MouseEventArgs e )
 		{
-			edCamera.StopManipulation( e.X, e.Y );
-			edManipulator.StopManipulation( e.X, e.Y );
+			camera.StopManipulation( e.X, e.Y );
+			manipulator?.StopManipulation( e.X, e.Y );
 		}
 	}
 }

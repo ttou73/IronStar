@@ -294,7 +294,7 @@ namespace Fusion.Engine.Graphics {
 			int gridsz = wireCount;
 			for (int x = -gridsz; x <= gridsz; x += 1)
 			{
-				float w = (x==0) ? 3 : 1;
+				float w = (x==0) ? 2 : 1;
 				DrawLine(new Vector3(x, 0, gridsz), new Vector3(x, 0, -gridsz), color, color, w, w);
 				DrawLine(new Vector3(gridsz, 0, x), new Vector3(-gridsz, 0, x), color, color, w, w);
 			}

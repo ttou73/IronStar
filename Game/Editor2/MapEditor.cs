@@ -33,9 +33,12 @@ namespace IronStar.Editor2 {
 		public ContentManager Content { get; private set; }
 		readonly RenderSystem rs;
 
-		public EdCamera			edCamera;
-		public EdManipulator	edManipulator;
-		public EditorHud		hud;
+		public EditorCamera	camera;
+		public Manipulator	manipulator;
+		public EditorHud	hud;
+
+		readonly Stack<MapFactory[]> selectionStack = new Stack<MapFactory[]>();
+		readonly List<MapFactory> selection = new List<MapFactory>();
 
 		Space physSpace;
 
@@ -45,12 +48,6 @@ namespace IronStar.Editor2 {
 			get {
 				return map;
 			}
-		}
-
-
-		public MapFactory[] GetSelection() 
-		{
-			return map.Factories.Where( f => f.Selected ).ToArray();
 		}
 
 
@@ -69,10 +66,9 @@ namespace IronStar.Editor2 {
 			this.rs			=	Game.RenderSystem;
 			Content         =   new ContentManager( Game );
 
-			edCamera		=	new EdCamera( Game.RenderSystem, this );
-			edManipulator	=	new EdManipulator( Game.RenderSystem, this );
-			edManipulator.Mode	=	ManipulatorMode.TranslationGlobal;
-			hud				=	new EditorHud( Game.RenderSystem, this );
+			camera			=	new EditorCamera( this );
+			hud				=	new EditorHud( this );
+			manipulator		=	new NullTool( this );
 
 			SetupUI();
 
@@ -150,6 +146,46 @@ namespace IronStar.Editor2 {
 		}
 
 
+		/*-----------------------------------------------------------------------------------------
+		 * 
+		 *	Selection :
+		 * 
+		-----------------------------------------------------------------------------------------*/
+
+		public IEnumerable<MapFactory> Selection {
+			get { return selection; }
+		}
+
+		public MapFactory[] GetSelection() 
+		{
+			return selection.ToArray();
+		}
+
+
+		public void PushSelection ()
+		{
+			selectionStack.Push( selection.ToArray() );
+		}
+
+
+		public void PopSelection ()
+		{
+			selection.Clear();
+			selection.AddRange( selectionStack.Pop() );
+		}
+
+		public void ClearSelection ()
+		{
+			selection.Clear();
+		}
+
+
+
+		/*-----------------------------------------------------------------------------------------
+		 * 
+		 *	Selection :
+		 * 
+		-----------------------------------------------------------------------------------------*/
 
 		/// <summary>
 		/// 
@@ -157,7 +193,7 @@ namespace IronStar.Editor2 {
 		/// <param name="gameTime"></param>
 		void IEditorInstance.Update( GameTime gameTime )
 		{
-			edCamera.Update( gameTime );
+			camera.Update( gameTime );
 
 			rs.RenderWorld.Debug.DrawGrid( 10 );
 
@@ -168,11 +204,7 @@ namespace IronStar.Editor2 {
 			//
 			foreach ( var item in map.Factories ) {
 
-				if (item.Selected) {
-					continue;
-				}
-
-				var color = Color.DimGray;
+				var color = new Color(0,4,96);
 
 				rs.RenderWorld.Debug.DrawBasis( item.Transform.World, 0.125f );
 				rs.RenderWorld.Debug.DrawBox( item.Factory.BoundingBox, item.Transform.World, color);
@@ -181,13 +213,13 @@ namespace IronStar.Editor2 {
 			//
 			//	Draw selected :
 			//
-			foreach ( var item in map.Factories ) {
-
-				if (!item.Selected) {
-					continue;
-				}
+			foreach ( var item in selection ) {
 
 				var color = new Color(67,255,163);
+
+				if (selection.Last()!=item) {
+					color = Color.White;
+				}
 
 				rs.RenderWorld.Debug.DrawBasis( item.Transform.World, 0.125f );
 				rs.RenderWorld.Debug.DrawBox( item.Factory.BoundingBox, item.Transform.World, color);
@@ -195,12 +227,9 @@ namespace IronStar.Editor2 {
 				rs.RenderWorld.Debug.DrawRing( Matrix.Identity, 1, Color.Blue, 1, 16 );
 			}
 
+			var mp = Game.Mouse.Position;
 
-			edManipulator.Update( gameTime );
-			//rs.
-			//SimulateWorld( gameTime.ElapsedSec );
-
-			//modelManager.Update( gameTime.ElapsedSec, 1 );
+			manipulator?.Update( gameTime, mp.X, mp.Y );
 		}
 
 
@@ -212,13 +241,24 @@ namespace IronStar.Editor2 {
 
 		void Focus ()
 		{
-			var	selected = map.Factories.Where( f1 => f1.Selected ).ToArray();
+			var targets = selection.Any() ? selection.ToArray() : map.Factories.ToArray();
 
-			if (!selected.Any()) {
-				selected = map.Factories.ToArray();
+			BoundingBox bbox;
+
+			if (!targets.Any()) {
+				bbox = new BoundingBox( new Vector3(-10,-10,-10), new Vector3(10,10,10) );
+			} else {
+
+				bbox = BoundingBox.FromPoints( targets.Select( t => t.Transform.Translation ).ToArray() );
+
 			}
 
-			//BoundingBox.Merge(
+
+			var size	= Vector3.Distance( bbox.Minimum, bbox.Maximum ) + 1;
+			var center	= bbox.Center();
+
+			camera.Target	= center;
+			camera.Distance = size;
 		}
 
 
@@ -229,10 +269,10 @@ namespace IronStar.Editor2 {
 		/// <param name="y"></param>
 		void Select( int x, int y, bool add )
 		{
-			var ray = edCamera.PointToRay( x, y );
+			var ray = camera.PointToRay( x, y );
 
-			var minDistance		=	float.MaxValue;
-			var selectedItem	=	(MapFactory)null;
+			var minDistance	=	float.MaxValue;
+			var pickedItem	=	(MapFactory)null;
 
 
 			foreach ( var item in map.Factories ) {
@@ -245,25 +285,33 @@ namespace IronStar.Editor2 {
 				if (rayT.Intersects(ref bbox, out distance)) {
 					if (minDistance > distance) {
 						minDistance = distance;
-						selectedItem = item;
+						pickedItem = item;
 					}
 				}
 			}
 
 			if (add) {
-				if (selectedItem!=null) {
-					selectedItem.Selected = !selectedItem.Selected;
+
+				if (pickedItem==null) {
+					return;
 				}
+
+				if (selection.Contains(pickedItem)) {
+					selection.Remove(pickedItem);
+				} else {
+					selection.Add(pickedItem);
+				}
+
 			} else {
-				foreach ( var item in map.Factories ) {
-					item.Selected = false;
-				}
-				if (selectedItem!=null) {
-					selectedItem.Selected = true;
+
+				ClearSelection();
+
+				if (pickedItem!=null) {
+					selection.Add(pickedItem);
 				}
 			}
 
-			edManipulator.Target = selectedItem;
+			//PushSelection();
 		}
 
 	}

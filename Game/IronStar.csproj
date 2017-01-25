@@ -60,12 +60,13 @@
     <Compile Include="Client\GameInput.cs" />
     <Compile Include="Commands\ShowWorldState.cs" />
     <Compile Include="Editor2\EditorHud.cs" />
-    <Compile Include="Editor2\EdManipulator.cs" />
-    <Compile Include="Editor2\EdCamera.cs" />
+    <Compile Include="Editor2\NullTool.cs" />
+    <Compile Include="Editor2\TranslationTool.cs" />
+    <Compile Include="Editor2\Manipulator.cs" />
+    <Compile Include="Editor2\EditorCamera.cs" />
     <Compile Include="Core\EntityFactory.cs" />
     <Compile Include="Core\EntityCollection.cs" />
     <Compile Include="Core\GameWorld.Loader.cs" />
-    <Compile Include="Editor2\EdCommands.cs" />
     <Compile Include="Editor2\Enums.cs" />
     <Compile Include="Editor2\MapEditor.UI.cs" />
     <Compile Include="Editor2\MapEditor.cs" />
@@ -78,6 +79,7 @@
     <Compile Include="Core\GameWorld.Physics.cs" />
     <Compile Include="Core\SnapshotReader.cs" />
     <Compile Include="Core\SnapshotWriter.cs" />
+    <Compile Include="Editor2\Selection.cs" />
     <Compile Include="Editor2\Utils.cs" />
     <Compile Include="Editors\Editor.cs" />
     <Compile Include="Editors\EntityListConverter.cs" />

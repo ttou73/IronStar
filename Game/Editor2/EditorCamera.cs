@@ -9,7 +9,7 @@ using Fusion.Engine.Common;
 using Fusion;
 
 namespace IronStar.Editor2 {
-	public class EdCamera {
+	public class EditorCamera {
 
 		readonly RenderSystem rs;
 		readonly Game game;
@@ -39,10 +39,10 @@ namespace IronStar.Editor2 {
 		/// <summary>
 		/// 
 		/// </summary>
-		public EdCamera ( RenderSystem rs, MapEditor editor )
+		public EditorCamera ( MapEditor editor )
 		{
-			this.rs		=	rs;
-			this.game	=	rs.Game;
+			this.rs		=	editor.Game.RenderSystem;
+			this.game	=	editor.Game;
 			this.editor	=	editor;
 		}
 
