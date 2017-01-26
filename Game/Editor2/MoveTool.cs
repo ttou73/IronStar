@@ -63,6 +63,13 @@ namespace IronStar.Editor2 {
 		}
 
 
+		public override string ManipulationText {
+			get {
+				return Vector3.Distance( initialPoint, currentPoint ).ToString();
+			}
+		}
+
+
 		bool	manipulating;
 		Vector3 direction;
 		Vector3 initialPoint;

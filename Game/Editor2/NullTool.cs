@@ -38,6 +38,12 @@ namespace IronStar.Editor2 {
 		}
 
 
+		public override string ManipulationText {
+			get {
+				return "";
+			}
+		}
+
 		public override bool StartManipulation ( int x, int y )
 		{
 			return false;

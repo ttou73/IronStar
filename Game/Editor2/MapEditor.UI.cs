@@ -57,7 +57,7 @@ namespace IronStar.Editor2 {
 					manipulator = new MoveTool(this);
 				}
 				if (e.Key==Keys.E) {
-					manipulator = new MoveTool(this);
+					manipulator = new RotateTool(this);
 				}
 				if (e.Key==Keys.R) {
 					manipulator = new MoveTool(this);
@@ -89,20 +89,24 @@ namespace IronStar.Editor2 {
 					camera.StartManipulation( e.X, e.Y, Manipulation.None );
 				}
 			} else {
-				manipulator?.StartManipulation( e.X, e.Y );
+				if (!manipulator.StartManipulation( e.X, e.Y )) {
+					StartMarqueeSelection( e.X, e.Y );
+				}
 			}
 		}
 
 		private void RootFrame_MouseMove( object sender, Frame.MouseEventArgs e )
 		{
 			camera.UpdateManipulation( e.X, e.Y );
-			manipulator?.UpdateManipulation( e.X, e.Y );
+			manipulator.UpdateManipulation( e.X, e.Y );
+			UpdateMarqueeSelection( e.X, e.Y );
 		}
 
 		private void RootFrame_MouseUp( object sender, Frame.MouseEventArgs e )
 		{
 			camera.StopManipulation( e.X, e.Y );
-			manipulator?.StopManipulation( e.X, e.Y );
+			manipulator.StopManipulation( e.X, e.Y );
+			StopMarqueeSelection( e.X, e.Y );
 		}
 	}
 }

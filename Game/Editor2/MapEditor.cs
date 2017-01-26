@@ -317,5 +317,63 @@ namespace IronStar.Editor2 {
 			//PushSelection();
 		}
 
+
+
+
+		bool marqueeSelecting = false;
+		public Rectangle SelectionMarquee {
+			get { 
+				if (!marqueeSelecting) {
+					return new Rectangle(0,0,0,0);
+				} else {
+					return new Rectangle( 
+						Math.Min( selectingMarqueeStart.X, selectingMarqueeEnd.X ),
+						Math.Min( selectingMarqueeStart.Y, selectingMarqueeEnd.Y ),
+						Math.Abs( selectingMarqueeStart.X - selectingMarqueeEnd.X ),
+						Math.Abs( selectingMarqueeStart.Y - selectingMarqueeEnd.Y )
+					);
+				}
+			}
+		}
+
+		Point selectingMarqueeStart;
+		Point selectingMarqueeEnd;
+
+		public void StartMarqueeSelection ( int x, int y )
+		{
+			marqueeSelecting = true;
+			selectingMarqueeStart = new Point(x,y);
+			selectingMarqueeEnd	  = selectingMarqueeStart;
+		}
+
+		public void UpdateMarqueeSelection ( int x, int y )
+		{
+			if (marqueeSelecting) {
+				selectingMarqueeEnd	  = new Point(x,y);
+			}
+		}
+
+		public void StopMarqueeSelection ( int x, int y )
+		{
+			if (marqueeSelecting) {
+
+
+				if (selectingMarqueeStart==selectingMarqueeEnd) {
+					marqueeSelecting = false;
+					return;
+				}
+
+				ClearSelection();
+
+				foreach ( var item in map.Factories ) {
+					if (camera.IsInRectangle( item.Transform.Translation, SelectionMarquee )) {
+						selection.Add( item );
+					}
+				}
+
+				marqueeSelecting = false;
+			}
+		}
+
 	}
 }

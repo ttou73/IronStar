@@ -7,6 +7,7 @@ using Fusion.Engine.Graphics;
 using Fusion.Core.Mathematics;
 using Fusion.Engine.Common;
 using Fusion;
+using Fusion.Drivers.Graphics;
 
 namespace IronStar.Editor2 {
 	public class EditorCamera {
@@ -74,6 +75,36 @@ namespace IronStar.Editor2 {
 			var view	=	Matrix.LookAtRH( Target + offset.Backward * Distance * addZoom, Target, Vector3.Up );
 
 			return view;
+		}
+
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="point"></param>
+		/// <param name="rect"></param>
+		/// <returns></returns>
+		public bool IsInRectangle ( Vector3 point, Rectangle rect )
+		{
+			var vp		=	rs.DisplayBounds;
+			var view	=	rs.RenderWorld.Camera.GetViewMatrix(StereoEye.Mono);
+			var proj	=	rs.RenderWorld.Camera.GetProjectionMatrix(StereoEye.Mono);
+			var vPoint	=	Vector3.TransformCoordinate( point, GetViewMatrix() );
+
+			if (vPoint.Z>0) {
+				return false;
+			}
+
+			var pPoint	=	Vector4.Transform( new Vector4( vPoint, 1 ), proj );
+
+			pPoint.X /= pPoint.W;
+			pPoint.Y /= pPoint.W;
+
+			var x	=	(int)((pPoint.X * ( 0.5f) + 0.5) * vp.Width);
+			var y	=	(int)((pPoint.Y * (-0.5f) + 0.5) * vp.Height);
+
+			return rect.Contains( x, y );
 		}
 
 

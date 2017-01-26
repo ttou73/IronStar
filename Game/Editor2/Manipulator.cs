@@ -23,16 +23,16 @@ namespace IronStar.Editor2 {
 
 
 		protected class IntersectResult {
-			public IntersectResult ( bool hit, float fraction, float distance, Vector3 hitPoint ) 
+			public IntersectResult ( bool hit, float pickDistance, float distance, Vector3 hitPoint ) 
 			{
 				Hit = hit; 
-				Fraction = fraction; 
-				Distance = distance;
-				HitPoint = hitPoint;
+				PickDistance = pickDistance; 
+				Distance	= distance;
+				HitPoint	= hitPoint;
 			}
 			public readonly bool Hit;
 			public readonly Vector3 HitPoint;
-			public readonly float Fraction;
+			public readonly float PickDistance;
 			public readonly float Distance;
 		}
 
@@ -52,6 +52,7 @@ namespace IronStar.Editor2 {
 		public abstract void UpdateManipulation ( int x, int y );
 		public abstract void StopManipulation ( int x, int y );
 		public abstract void Update ( GameTime gameTime, int x, int y );
+		public abstract string ManipulationText { get; }
 
 
 
@@ -83,6 +84,47 @@ namespace IronStar.Editor2 {
 			dr.DrawLine(p1,p2, color, color, 9,1 );
 		}
 
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="dr"></param>
+		/// <param name="pickRay"></param>
+		/// <param name="origin"></param>
+		/// <param name="axisA"></param>
+		/// <param name="axisB"></param>
+		/// <param name="color"></param>
+		protected void DrawRing ( DebugRender dr, Ray pickRay, Vector3 origin, Vector3 axis, Color color )
+		{
+				axis	=	Vector3.Normalize( axis );
+			var axisA	=	Vector3.Cross( axis, Vector3.Up );	
+
+			if (axisA.LengthSquared()<0.001f) {
+				axisA	=	Vector3.Cross( axis, Vector3.Right );
+			}
+
+			var axisB	=	Vector3.Cross( axisA, axis );
+
+			int N = 64;
+			Vector3[] points = new Vector3[N + 1];
+
+			var radius = editor.camera.PixelToWorldSize(origin, 90);
+
+			for (int i = 0; i <= N; i++)
+			{
+				var p = origin;
+				p += axisA * radius * (float)Math.Cos(Math.PI * 2 * i / N);
+				p += axisB * radius * (float)Math.Sin(Math.PI * 2 * i / N);
+				points[i] = p;
+			}
+
+			for (int i = 0; i < N; i++)
+			{
+				dr.DrawLine(points[i], points[i + 1], color, color, 2, 2);
+			}
+		}
+
 		
 
 		/// <summary>
@@ -105,11 +147,49 @@ namespace IronStar.Editor2 {
 
 			var dist = Utils.RayIntersectsRay(ref pickRay, ref arrowRay, out temp, out hitPoint, out t1, out t2 );
 
+			var pickDistance = Vector3.Distance( hitPoint, pickRay.Position );
+
 			if ( (dist < tolerance) && (t2 > 0) && (t2 < 1) && (t1 > 0)) {
-				return new IntersectResult( true, t1, dist, hitPoint );
+				return new IntersectResult( true, pickDistance, dist, hitPoint );
 			} else {
-				return new IntersectResult( false, t1, dist, hitPoint );
+				return new IntersectResult( false, pickDistance, dist, hitPoint );
 			}
+		}
+
+
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="origin"></param>
+		/// <param name="dir"></param>
+		/// <param name="pickPoint"></param>
+		/// <param name="hitPoint"></param>
+		/// <returns></returns>
+		protected IntersectResult IntersectRing ( Vector3 origin, Vector3 axis, Point pickPoint )
+		{
+			var radius		=	editor.camera.PixelToWorldSize(origin, 90);
+			var tolerance	=	editor.camera.PixelToWorldSize(origin, 7);
+			var pickRay		=	editor.camera.PointToRay( pickPoint.X, pickPoint.Y );
+
+			var plane		=	new Plane( origin, axis );
+
+			Vector3 hitPoint;
+
+			if ( plane.Intersects( ref pickRay, out hitPoint ) ) {
+
+				var originHitPointDistance	=	Vector3.Distance( origin, hitPoint );
+				var pickDistance			=	Vector3.Distance( hitPoint, pickRay.Position );
+
+				var hitRing	=	(originHitPointDistance > radius - tolerance) && (originHitPointDistance < radius + tolerance);
+
+				return new IntersectResult( hitRing, pickDistance, 0, hitPoint );
+				
+			} else {
+				return new IntersectResult( false, float.PositiveInfinity, float.PositiveInfinity, Vector3.Zero );
+			}
+
 		}
 
 
@@ -134,7 +214,7 @@ namespace IronStar.Editor2 {
 						index  = i;
 						result = intersection;
 					} else {
-						if (intersection.Fraction<result.Fraction) {
+						if (intersection.PickDistance < result.PickDistance) {
 							result = intersection;
 							index = i;
 						}

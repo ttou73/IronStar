@@ -45,7 +45,7 @@ namespace IronStar.Editors {
 
 			configPropertyGrid.PropertySort = PropertySort.Categorized;
 
-			Log.Message("Object editor initialized");
+			Log.Message("Config editor initialized");
 		}
 
 

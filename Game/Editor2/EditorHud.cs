@@ -70,6 +70,19 @@ namespace IronStar.Editor2 {
 			LText( 1, Color.LightGray, "[F2] - Save Map      [W] - Move     ");
 			LText( 2, Color.LightGray, "[F5] - Build Content [E] - Rotate   ");
 			LText( 3, Color.LightGray, "                     [R] - Scale    ");
+
+
+			var mp = game.Mouse.Position;
+
+			if (editor.manipulator.IsManipulating) {
+				var text = editor.manipulator.ManipulationText;
+				var len  = Math.Max(16,text.Length);
+				spriteLayer.Draw( null, mp.X, mp.Y - 16 + 48, len*8+16, 16, new Color(0,0,0,128) );
+				spriteLayer.DrawDebugString( mp.X+4, mp.Y - 12 + 48, editor.manipulator.ManipulationText, Color.Yellow );
+			}
+
+			//spriteLayer.Draw( null, editor.SelectionMarquee, new Color(51,153,255,128) );
+			spriteLayer.Draw( null, editor.SelectionMarquee, new Color(82,133,166,128) );
 		}
 
 
