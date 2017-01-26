@@ -10,13 +10,13 @@ using Fusion;
 using IronStar.Mapping;
 
 namespace IronStar.Editor2 {
-	public class TranslationTool : Manipulator {
+	public class MoveTool : Manipulator {
 
 
 		/// <summary>
 		/// 
 		/// </summary>
-		public TranslationTool ( MapEditor editor ) : base(editor)
+		public MoveTool ( MapEditor editor ) : base(editor)
 		{
 		}
 
@@ -35,18 +35,18 @@ namespace IronStar.Editor2 {
 				return;
 			}
 
-			var target = editor.Selection.Last();
-			var origin = target.Transform.Translation;
+			var target		= editor.Selection.Last();
+			var origin		= target.Transform.Translation;
 
-			var scale = editor.camera.ManipulatorScaling;
+			var linerSize	= editor.camera.PixelToWorldSize( origin, 5 );
 
 			var ray = editor.camera.PointToRay( x, y );
 
 			if (manipulating) {
 				DrawArrow( dr, ray, origin, direction, SelectColor  );
 
-				dr.DrawPoint(initialPoint, Scaling * 0.25f, GridColor);
-				dr.DrawPoint(currentPoint, Scaling * 0.25f, GridColor);
+				dr.DrawPoint(initialPoint, linerSize, GridColor);
+				dr.DrawPoint(currentPoint, linerSize, GridColor);
 				dr.DrawLine(initialPoint, currentPoint, GridColor);
 			} else {
 				DrawArrow( dr, ray, origin, Vector3.UnitX, Color.Red  );
@@ -68,6 +68,9 @@ namespace IronStar.Editor2 {
 		Vector3 initialPoint;
 		Vector3 currentPoint;
 
+		SnapMode	snapMode;
+		float		snapValue;
+
 		MapFactory[] targets = null;
 		Vector3[] initPos = null;
 
@@ -77,6 +80,9 @@ namespace IronStar.Editor2 {
 			if (!editor.Selection.Any()) {
 				return false;
 			}
+
+			snapMode	=	editor.Config.MoveToolSnapMode;
+			snapValue	=	editor.Config.MoveToolSnapValue;
 
 			targets	=	editor.GetSelection();
 			initPos	=	targets.Select( t => t.Transform.Translation ).ToArray();
@@ -138,7 +144,11 @@ namespace IronStar.Editor2 {
 					var target	= targets[i];
 					var pos		= initPos[i];
 
-					target.Transform.Translation = pos + (currentPoint - initialPoint);
+					if (snapMode==SnapMode.Absolute) {
+						target.Transform.Translation = Snap( pos + (currentPoint - initialPoint), snapValue );
+					} else {
+						target.Transform.Translation = pos + (currentPoint - initialPoint);
+					}
 				}
 			}
 		}

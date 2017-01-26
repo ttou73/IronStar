@@ -19,12 +19,6 @@ namespace IronStar.Editor2 {
 		readonly protected Color SelectColor	=	new Color(255,211,149);
 		readonly protected Color GridColor		=	new Color(64,64,64);
 
-		protected const float ArrowSize = 5;
-
-		protected float Scaling {
-			get { return editor.camera.ManipulatorScaling; }
-		}
-
 		public abstract bool IsManipulating { get; }
 
 
@@ -62,7 +56,7 @@ namespace IronStar.Editor2 {
 
 
 		/// <summary>
-		/// 
+		/// Draw standard arrow.
 		/// </summary>
 		/// <param name="dr"></param>
 		/// <param name="dir"></param>
@@ -72,8 +66,8 @@ namespace IronStar.Editor2 {
 		protected void DrawArrow ( DebugRender dr, Ray pickRay, Vector3 origin, Vector3 dir, Color color )
 		{
 			var p0 = origin;
-			var p1 = p0 + dir * Scaling * (ArrowSize - 0.75f);
-			var p2 = p1 + dir * Scaling * (0.75f);
+			var p1 = p0 + dir * editor.camera.PixelToWorldSize( origin, 90 );
+			var p2 = p1 + dir * editor.camera.PixelToWorldSize( origin, 20 );
 
 			var mp = game.Mouse.Position;
 
@@ -81,7 +75,8 @@ namespace IronStar.Editor2 {
 
 			if ( r.Hit ) {
 				color = SelectColor;
-				dr.DrawPoint( r.HitPoint, Scaling, color );
+				var sz = editor.camera.PixelToWorldSize( origin, 10 );
+				dr.DrawPoint( r.HitPoint, sz, color );
 			} 
 
 			dr.DrawLine(p0,p1, color, color, 2,2 );
@@ -100,7 +95,9 @@ namespace IronStar.Editor2 {
 		/// <returns></returns>
 		protected IntersectResult IntersectArrow ( Vector3 origin, Vector3 dir, Point pickPoint )
 		{
-			var arrowRay	=	new Ray( origin, dir * ArrowSize);
+			var length		=	editor.camera.PixelToWorldSize(origin, 110);
+			var tolerance	=	editor.camera.PixelToWorldSize(origin, 7);
+			var arrowRay	=	new Ray( origin, dir * length);
 			var pickRay		=	editor.camera.PointToRay( pickPoint.X, pickPoint.Y );
 
 			Vector3 temp, hitPoint;
@@ -108,7 +105,7 @@ namespace IronStar.Editor2 {
 
 			var dist = Utils.RayIntersectsRay(ref pickRay, ref arrowRay, out temp, out hitPoint, out t1, out t2 );
 
-			if ( (dist < 0.3f * Scaling) && (t2 > 0) && (t2 < 1) && (t1 > 0)) {
+			if ( (dist < tolerance) && (t2 > 0) && (t2 < 1) && (t1 > 0)) {
 				return new IntersectResult( true, t1, dist, hitPoint );
 			} else {
 				return new IntersectResult( false, t1, dist, hitPoint );
@@ -117,6 +114,11 @@ namespace IronStar.Editor2 {
 
 
 
+		/// <summary>
+		/// Gets index of closest intersection.
+		/// </summary>
+		/// <param name="intersectionResults"></param>
+		/// <returns></returns>
 		protected int PollIntersections ( params IntersectResult[] intersectionResults )
 		{
 			int index = -1;
@@ -141,6 +143,19 @@ namespace IronStar.Editor2 {
 			}
 
 			return index;
+		}
+
+
+
+		public float Snap ( float value, float snapValue )
+		{
+			return (float)(Math.Round( value / snapValue ) * snapValue);
+		}
+
+
+		public Vector3 Snap ( Vector3 value, float snapValue )
+		{
+			return new Vector3( Snap( value.X, snapValue ), Snap( value.Y, snapValue ), Snap( value.Z, snapValue ) );
 		}
 	}
 }

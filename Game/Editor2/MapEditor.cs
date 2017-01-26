@@ -50,6 +50,7 @@ namespace IronStar.Editor2 {
 			}
 		}
 
+		public readonly EditorConfig Config;
 
 
 		/// <summary>
@@ -65,6 +66,8 @@ namespace IronStar.Editor2 {
 			this.Game       =   editor.Game;
 			this.rs			=	Game.RenderSystem;
 			Content         =   new ContentManager( Game );
+
+			Config			=	Game.Config.GetConfig<EditorConfig>();
 
 			camera			=	new EditorCamera( this );
 			hud				=	new EditorHud( this );

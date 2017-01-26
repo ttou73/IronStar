@@ -54,13 +54,13 @@ namespace IronStar.Editor2 {
 					manipulator = new NullTool(this);
 				}
 				if (e.Key==Keys.W) {
-					manipulator = new TranslationTool(this);
+					manipulator = new MoveTool(this);
 				}
 				if (e.Key==Keys.E) {
-					manipulator = new TranslationTool(this);
+					manipulator = new MoveTool(this);
 				}
 				if (e.Key==Keys.R) {
-					manipulator = new TranslationTool(this);
+					manipulator = new MoveTool(this);
 				}
 			}
 		}

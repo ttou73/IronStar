@@ -48,12 +48,33 @@ namespace IronStar.Editor2 {
 
 
 
-		public float ManipulatorScaling {
-			get {
-				return Distance * addZoom / 30.0f;
-			}
+		public float PixelToWorldSize ( Vector3 point, float pixelSize )
+		{
+			var view	=	GetViewMatrix();
+			var tpoint	=	Vector3.TransformCoordinate( point, view );
+			var fovTan	=	(float)Math.Tan(MathUtil.DegreesToRadians(Fov/2));
+			var vp		=	rs.DisplayBounds;
+
+			return 2 * pixelSize / vp.Height * fovTan * Math.Abs(tpoint.Z);
 		}
 
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
+		Matrix GetViewMatrix ()
+		{
+			var yaw		=	MathUtil.DegreesToRadians( Yaw + addYaw );
+			var pitch	=	MathUtil.DegreesToRadians( MathUtil.Clamp(Pitch + addPitch, -85, 85) );
+
+			var offset	=	Matrix.RotationYawPitchRoll( yaw, pitch, 0 );
+
+			var view	=	Matrix.LookAtRH( Target + offset.Backward * Distance * addZoom, Target, Vector3.Up );
+
+			return view;
+		}
 
 
 		/// <summary>
@@ -62,12 +83,7 @@ namespace IronStar.Editor2 {
 		/// <param name="gameTime"></param>
 		public void Update ( GameTime gameTime )
 		{
-			var yaw		=	MathUtil.DegreesToRadians( Yaw + addYaw );
-			var pitch	=	MathUtil.DegreesToRadians( MathUtil.Clamp(Pitch + addPitch, -85, 85) );
-
-			var offset	=	Matrix.RotationYawPitchRoll( yaw, pitch, 0 );
-
-			var view	=	Matrix.LookAtRH( Target + offset.Backward * Distance * addZoom, Target, Vector3.Up );
+			var view	=	GetViewMatrix();
 
 			var vp		=	rs.DisplayBounds;
 

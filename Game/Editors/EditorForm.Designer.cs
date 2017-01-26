@@ -39,6 +39,7 @@
 			this.tabMap = new System.Windows.Forms.TabPage();
 			this.tabFX = new System.Windows.Forms.TabPage();
 			this.tabMegatexture = new System.Windows.Forms.TabPage();
+			this.tabConfig = new System.Windows.Forms.TabPage();
 			this.menuStrip1.SuspendLayout();
 			this.panel1.SuspendLayout();
 			this.mainTabs.SuspendLayout();
@@ -121,6 +122,7 @@
 			this.mainTabs.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+			this.mainTabs.Controls.Add(this.tabConfig);
 			this.mainTabs.Controls.Add(this.tabModels);
 			this.mainTabs.Controls.Add(this.tabEntities);
 			this.mainTabs.Controls.Add(this.tabMap);
@@ -183,6 +185,16 @@
 			this.tabMegatexture.Text = "Megatexture";
 			this.tabMegatexture.UseVisualStyleBackColor = true;
 			// 
+			// tabConfig
+			// 
+			this.tabConfig.Location = new System.Drawing.Point(4, 22);
+			this.tabConfig.Name = "tabConfig";
+			this.tabConfig.Padding = new System.Windows.Forms.Padding(3);
+			this.tabConfig.Size = new System.Drawing.Size(556, 467);
+			this.tabConfig.TabIndex = 5;
+			this.tabConfig.Text = "Config";
+			this.tabConfig.UseVisualStyleBackColor = true;
+			// 
 			// EditorForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -221,5 +233,6 @@
 		private System.Windows.Forms.TabPage tabMap;
 		private System.Windows.Forms.TabPage tabFX;
 		private System.Windows.Forms.TabPage tabMegatexture;
+		private System.Windows.Forms.TabPage tabConfig;
 	}
 }

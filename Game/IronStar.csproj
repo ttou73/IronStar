@@ -59,9 +59,10 @@
   <ItemGroup>
     <Compile Include="Client\GameInput.cs" />
     <Compile Include="Commands\ShowWorldState.cs" />
+    <Compile Include="Editor2\EditorConfig.cs" />
     <Compile Include="Editor2\EditorHud.cs" />
     <Compile Include="Editor2\NullTool.cs" />
-    <Compile Include="Editor2\TranslationTool.cs" />
+    <Compile Include="Editor2\MoveTool.cs" />
     <Compile Include="Editor2\Manipulator.cs" />
     <Compile Include="Editor2\EditorCamera.cs" />
     <Compile Include="Core\EntityFactory.cs" />
@@ -94,6 +95,12 @@
     </Compile>
     <Compile Include="Editors\MapEditorControl.Designer.cs">
       <DependentUpon>MapEditorControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\ConfigEditorControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\ConfigEditorControl.Designer.cs">
+      <DependentUpon>ConfigEditorControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Editors\ObjectEditorControl.cs">
       <SubType>UserControl</SubType>
@@ -179,6 +186,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Editors\MapEditorControl.resx">
       <DependentUpon>MapEditorControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editors\ConfigEditorControl.resx">
+      <DependentUpon>ConfigEditorControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Editors\ObjectEditorControl.resx">
       <DependentUpon>ObjectEditorControl.cs</DependentUpon>

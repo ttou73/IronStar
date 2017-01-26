@@ -23,6 +23,7 @@ namespace IronStar.Editors {
 
 		readonly Game game;
 
+		ConfigEditorControl configEditor;
 		ObjectEditorControl	modelEditor;
 		ObjectEditorControl	entityEditor;
 		ObjectEditorControl	fxEditor;
@@ -40,6 +41,7 @@ namespace IronStar.Editors {
 			
 			InitializeComponent();
 
+			configEditor	=	new ConfigEditorControl( game ) { Dock = DockStyle.Fill };
 			modelEditor		=	new ObjectEditorControl( game, "models", typeof(ModelDescriptor), "Model"  ) { Dock = DockStyle.Fill };
 			entityEditor	=	new ObjectEditorControl( game, "entities", typeof(EntityFactory), "Entity" ) { Dock = DockStyle.Fill };
 			fxEditor		=	new ObjectEditorControl( game, "fx", typeof(FXFactory), "FX" ) { Dock = DockStyle.Fill };
@@ -48,6 +50,7 @@ namespace IronStar.Editors {
 			vtEditor		=	new ObjectEditorControl( game, "vt", typeof(VTTextureContent), "Megatexture" ) { Dock = DockStyle.Fill };
 			//vtEditor.AddEditAction("QQQQQ", (list) => for
 
+			mainTabs.TabPages["tabConfig"].Controls.Add( configEditor );
 			mainTabs.TabPages["tabModels"].Controls.Add( modelEditor );
 			mainTabs.TabPages["tabEntities"].Controls.Add( entityEditor );
 			mainTabs.TabPages["tabMap"].Controls.Add( mapEditor );

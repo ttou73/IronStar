@@ -85,6 +85,8 @@ namespace IronStar {
 				//	load configuration.
 				//	first run will cause warning, 
 				//	because configuration file does not exist yet.
+				game.Config.ExposeConfig( new EditorConfig(), "MapEditor", "editor" );
+
 				game.Config.Load( "Config.ini" );
 
 				//	enable and disable debug direct3d device :

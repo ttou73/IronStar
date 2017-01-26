@@ -28,7 +28,7 @@ namespace Fusion.Core.Configuration {
 		/// <summary>
 		/// Gets list of exposed objects.
 		/// </summary>
-		internal IDictionary<string,object> TargetObjects {
+		public IDictionary<string,object> TargetObjects {
 			get {
 				return targetObjects;
 			}
