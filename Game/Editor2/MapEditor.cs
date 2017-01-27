@@ -314,9 +314,15 @@ namespace IronStar.Editor2 {
 				}
 			}
 
-			//PushSelection();
+			FeedSelection();
 		}
 
+
+
+		void FeedSelection ()
+		{
+			Editors.Editor.GetMapEditor()?.SetSelection( selection );
+		}
 
 
 
@@ -370,6 +376,8 @@ namespace IronStar.Editor2 {
 						selection.Add( item );
 					}
 				}
+
+				FeedSelection();
 
 				marqueeSelecting = false;
 			}
