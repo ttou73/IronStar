@@ -48,10 +48,27 @@ namespace IronStar.Editor2 {
 				dr.DrawPoint(initialPoint, linerSize, GridColor);
 				dr.DrawPoint(currentPoint, linerSize, GridColor);
 				dr.DrawLine(initialPoint, currentPoint, GridColor);
+
+				foreach ( var item in editor.Selection ) {
+					var pos   = item.Transform.Translation;
+					var floor = item.Transform.Translation;
+					floor.Y = 0;
+
+					dr.DrawLine(floor, pos, GridColor);
+					dr.DrawWaypoint(floor, linerSize*5, GridColor);
+				}
+				
 			} else {
-				DrawArrow( dr, ray, origin, Vector3.UnitX, Color.Red  );
-				DrawArrow( dr, ray, origin, Vector3.UnitY, Color.Lime );
-				DrawArrow( dr, ray, origin, Vector3.UnitZ, Color.Blue );
+
+				var hitX	=	IntersectArrow( target.Transform.Translation, Vector3.UnitX, mp );
+				var hitY	=	IntersectArrow( target.Transform.Translation, Vector3.UnitY, mp );
+				var hitZ	=	IntersectArrow( target.Transform.Translation, Vector3.UnitZ, mp );
+
+				int hitInd	=	PollIntersections( hitX, hitY, hitZ );
+
+				DrawArrow( dr, ray, origin, Vector3.UnitX, hitInd == 0 ? SelectColor : Color.Red  );
+				DrawArrow( dr, ray, origin, Vector3.UnitY, hitInd == 1 ? SelectColor : Color.Lime );
+				DrawArrow( dr, ray, origin, Vector3.UnitZ, hitInd == 2 ? SelectColor : Color.Blue );
 			}
 		}
 

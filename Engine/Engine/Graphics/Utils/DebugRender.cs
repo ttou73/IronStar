@@ -462,7 +462,7 @@ namespace Fusion.Engine.Graphics {
 		}
 
 
-		public void DrawBox(BoundingBox bbox, Matrix transform, Color color)
+		public void DrawBox(BoundingBox bbox, Matrix transform, Color color, float width = 1 )
 		{
 			var crnrs = bbox.GetCorners();
 
@@ -471,20 +471,20 @@ namespace Fusion.Engine.Graphics {
 			var p = bbox.Maximum;
 			var n = bbox.Minimum;
 
-			DrawLine(Vector3.TransformCoordinate(new Vector3(p.X, p.Y, p.Z), transform), Vector3.TransformCoordinate(new Vector3(n.X, p.Y, p.Z), transform), color);
-			DrawLine(Vector3.TransformCoordinate(new Vector3(n.X, p.Y, p.Z), transform), Vector3.TransformCoordinate(new Vector3(n.X, p.Y, n.Z), transform), color);
-			DrawLine(Vector3.TransformCoordinate(new Vector3(n.X, p.Y, n.Z), transform), Vector3.TransformCoordinate(new Vector3(p.X, p.Y, n.Z), transform), color);
-			DrawLine(Vector3.TransformCoordinate(new Vector3(p.X, p.Y, n.Z), transform), Vector3.TransformCoordinate(new Vector3(p.X, p.Y, p.Z), transform), color);
-
-			DrawLine(Vector3.TransformCoordinate(new Vector3(p.X, n.Y, p.Z), transform), Vector3.TransformCoordinate(new Vector3(n.X, n.Y, p.Z), transform), color);
-			DrawLine(Vector3.TransformCoordinate(new Vector3(n.X, n.Y, p.Z), transform), Vector3.TransformCoordinate(new Vector3(n.X, n.Y, n.Z), transform), color);
-			DrawLine(Vector3.TransformCoordinate(new Vector3(n.X, n.Y, n.Z), transform), Vector3.TransformCoordinate(new Vector3(p.X, n.Y, n.Z), transform), color);
-			DrawLine(Vector3.TransformCoordinate(new Vector3(p.X, n.Y, n.Z), transform), Vector3.TransformCoordinate(new Vector3(p.X, n.Y, p.Z), transform), color);
-
-			DrawLine(Vector3.TransformCoordinate(new Vector3(p.X, p.Y, p.Z), transform), Vector3.TransformCoordinate(new Vector3(p.X, n.Y, p.Z), transform), color);
-			DrawLine(Vector3.TransformCoordinate(new Vector3(n.X, p.Y, p.Z), transform), Vector3.TransformCoordinate(new Vector3(n.X, n.Y, p.Z), transform), color);
-			DrawLine(Vector3.TransformCoordinate(new Vector3(n.X, p.Y, n.Z), transform), Vector3.TransformCoordinate(new Vector3(n.X, n.Y, n.Z), transform), color);
-			DrawLine(Vector3.TransformCoordinate(new Vector3(p.X, p.Y, n.Z), transform), Vector3.TransformCoordinate(new Vector3(p.X, n.Y, n.Z), transform), color);
+			DrawLine(Vector3.TransformCoordinate(new Vector3(p.X, p.Y, p.Z), transform), Vector3.TransformCoordinate(new Vector3(n.X, p.Y, p.Z), transform), color, color, width, width );
+			DrawLine(Vector3.TransformCoordinate(new Vector3(n.X, p.Y, p.Z), transform), Vector3.TransformCoordinate(new Vector3(n.X, p.Y, n.Z), transform), color, color, width, width );
+			DrawLine(Vector3.TransformCoordinate(new Vector3(n.X, p.Y, n.Z), transform), Vector3.TransformCoordinate(new Vector3(p.X, p.Y, n.Z), transform), color, color, width, width );
+			DrawLine(Vector3.TransformCoordinate(new Vector3(p.X, p.Y, n.Z), transform), Vector3.TransformCoordinate(new Vector3(p.X, p.Y, p.Z), transform), color, color, width, width );
+																																								
+			DrawLine(Vector3.TransformCoordinate(new Vector3(p.X, n.Y, p.Z), transform), Vector3.TransformCoordinate(new Vector3(n.X, n.Y, p.Z), transform), color, color, width, width );
+			DrawLine(Vector3.TransformCoordinate(new Vector3(n.X, n.Y, p.Z), transform), Vector3.TransformCoordinate(new Vector3(n.X, n.Y, n.Z), transform), color, color, width, width );
+			DrawLine(Vector3.TransformCoordinate(new Vector3(n.X, n.Y, n.Z), transform), Vector3.TransformCoordinate(new Vector3(p.X, n.Y, n.Z), transform), color, color, width, width );
+			DrawLine(Vector3.TransformCoordinate(new Vector3(p.X, n.Y, n.Z), transform), Vector3.TransformCoordinate(new Vector3(p.X, n.Y, p.Z), transform), color, color, width, width );
+																																								
+			DrawLine(Vector3.TransformCoordinate(new Vector3(p.X, p.Y, p.Z), transform), Vector3.TransformCoordinate(new Vector3(p.X, n.Y, p.Z), transform), color, color, width, width );
+			DrawLine(Vector3.TransformCoordinate(new Vector3(n.X, p.Y, p.Z), transform), Vector3.TransformCoordinate(new Vector3(n.X, n.Y, p.Z), transform), color, color, width, width );
+			DrawLine(Vector3.TransformCoordinate(new Vector3(n.X, p.Y, n.Z), transform), Vector3.TransformCoordinate(new Vector3(n.X, n.Y, n.Z), transform), color, color, width, width );
+			DrawLine(Vector3.TransformCoordinate(new Vector3(p.X, p.Y, n.Z), transform), Vector3.TransformCoordinate(new Vector3(p.X, n.Y, n.Z), transform), color, color, width, width );
 		}
 	}
 }

@@ -47,9 +47,11 @@ namespace IronStar.Editor2 {
 				var hitY	=	IntersectRing( target.Transform.Translation, Vector3.UnitY, mp );
 				var hitZ	=	IntersectRing( target.Transform.Translation, Vector3.UnitZ, mp );
 
-				DrawRing( dr, ray, origin, Vector3.UnitX,  hitX.Hit ? SelectColor : Color.Red  );
-				DrawRing( dr, ray, origin, Vector3.UnitY,  hitY.Hit ? SelectColor : Color.Lime );
-				DrawRing( dr, ray, origin, Vector3.UnitZ,  hitZ.Hit ? SelectColor : Color.Blue );
+				int hitInd	=	PollIntersections( hitX, hitY, hitZ );
+
+				DrawRing( dr, ray, origin, Vector3.UnitX,  hitInd == 0 ? SelectColor : Color.Red  );
+				DrawRing( dr, ray, origin, Vector3.UnitY,  hitInd == 1 ? SelectColor : Color.Lime );
+				DrawRing( dr, ray, origin, Vector3.UnitZ,  hitInd == 2 ? SelectColor : Color.Blue );
 			} else {
 
 				DrawRing( dr, ray, origin, direction, SelectColor );

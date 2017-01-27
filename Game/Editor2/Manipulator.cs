@@ -70,16 +70,6 @@ namespace IronStar.Editor2 {
 			var p1 = p0 + dir * editor.camera.PixelToWorldSize( origin, 90 );
 			var p2 = p1 + dir * editor.camera.PixelToWorldSize( origin, 20 );
 
-			var mp = game.Mouse.Position;
-
-			var r = IntersectArrow( p0, dir, mp );
-
-			if ( r.Hit ) {
-				color = SelectColor;
-				var sz = editor.camera.PixelToWorldSize( origin, 10 );
-				dr.DrawPoint( r.HitPoint, sz, color );
-			} 
-
 			dr.DrawLine(p0,p1, color, color, 2,2 );
 			dr.DrawLine(p1,p2, color, color, 9,1 );
 		}

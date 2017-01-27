@@ -4,8 +4,8 @@
     <MapFactory>
       <Guid>152a5316-2360-44e7-b652-fa2e2dce5757</Guid>
       <Transform>
-        <Translation X="4.32618" Y="3.464494" Z="3" />
-        <Rotation X="0.76854974" Y="0.60542804" Z="0.0283551216" W="-0.204899788" />
+        <Translation X="-13.2314005" Y="0.9791794" Z="2.02642155" />
+        <Rotation X="0.194846451" Y="0.9534787" Z="0.154445112" W="-0.170468688" />
         <Scaling>1</Scaling>
         <Visible>true</Visible>
         <Frozen>false</Frozen>
@@ -32,8 +32,8 @@
     <MapFactory>
       <Guid>6344f4dc-52eb-47fb-a9ee-b7a457a920ed</Guid>
       <Transform>
-        <Translation X="0" Y="3.558207" Z="-2" />
-        <Rotation X="0.224795192" Y="0.8719032" Z="-0.341092616" W="0.270014673" />
+        <Translation X="-0.153605208" Y="3.60368681" Z="-1.89461029" />
+        <Rotation X="-0.352439016" Y="0.828573942" Z="-0.106232449" W="0.421861053" />
         <Scaling>1</Scaling>
         <Visible>true</Visible>
         <Frozen>false</Frozen>
@@ -46,8 +46,8 @@
     <MapFactory>
       <Guid>d3623693-8078-4ff9-9f73-b8027cfd7b5d</Guid>
       <Transform>
-        <Translation X="-3.26910686" Y="4.558207" Z="5.94380665" />
-        <Rotation X="0.439757824" Y="0.7286858" Z="-0.523972034" W="0.03291586" />
+        <Translation X="-9.107637" Y="4.83395243" Z="9.144533" />
+        <Rotation X="0.36760354" Y="0.7267481" Z="-0.5768893" W="-0.0624783635" />
         <Scaling>1</Scaling>
         <Visible>true</Visible>
         <Frozen>false</Frozen>
@@ -60,8 +60,8 @@
     <MapFactory>
       <Guid>87ba4fdc-0e28-4fa6-b430-1a0cf5f6d306</Guid>
       <Transform>
-        <Translation X="0" Y="3.558207" Z="-1" />
-        <Rotation X="0.374069363" Y="0.8827968" Z="0.04192491" W="0.2810412" />
+        <Translation X="4.11902142" Y="3.558207" Z="-1" />
+        <Rotation X="0.312811255" Y="0.7733657" Z="0.0288782269" W="0.550654769" />
         <Scaling>1</Scaling>
         <Visible>true</Visible>
         <Frozen>false</Frozen>
