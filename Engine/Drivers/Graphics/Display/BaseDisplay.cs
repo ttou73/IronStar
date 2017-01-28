@@ -15,6 +15,7 @@ using Forms = System.Windows.Forms;
 using Fusion.Engine.Common;
 using Fusion.Core.Mathematics;
 using Fusion.Input.Touch;
+using Fusion.Input;
 using System.Runtime.InteropServices;
 using Fusion.Engine.Graphics;
 
@@ -305,6 +306,10 @@ namespace Fusion.Drivers.Graphics.Display {
 				form.Text		+=	" - [" + output.Description.DeviceName + "]";
 			}
 
+			#if false
+			form.MouseDown += Form_MouseDown;
+			#endif
+
 			form.KeyDown += form_KeyDown;
 			form.KeyUp += form_KeyUp;
 			form.KeyPress += form_KeyPress;
@@ -324,8 +329,19 @@ namespace Fusion.Drivers.Graphics.Display {
 			return form;
 		}
 
+		private void Form_MouseDown( object sender, MouseEventArgs e )
+		{
+			Input.Keys key = Input.Keys.None;
 
-
+			switch ( e.Button ) {
+				case MouseButtons.Left: key = Input.Keys.LeftButton; break;
+				case MouseButtons.Right: key = Input.Keys.RightButton; break;
+				case MouseButtons.Middle: key = Input.Keys.MiddleButton; break;
+				case MouseButtons.XButton1: key = Input.Keys.MouseButtonX1; break;
+				case MouseButtons.XButton2: key = Input.Keys.MouseButtonX2; break;
+			}
+			Game.InputDevice.NotifyMouseDown( key, e.X, e.Y );
+		}
 
 		void form_FormClosing ( object sender, FormClosingEventArgs e )
 		{

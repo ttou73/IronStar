@@ -151,11 +151,13 @@ namespace Fusion.Drivers.Input {
 		/// <param name="disposing"></param>
 		protected override void Dispose( bool disposing )
 		{
-			Device.KeyboardInput	-= KeyboardHandle;
-			Device.MouseInput		-= MouseHandler;
+			if (disposing) {
+				Device.KeyboardInput	-= KeyboardHandle;
+				Device.MouseInput		-= MouseHandler;
 
-			SetCursorVisibility(true);
-			Forms.Cursor.Clip		=	new Drawing.Rectangle( int.MinValue, int.MinValue, int.MaxValue, int.MaxValue );
+				SetCursorVisibility(true);
+				Forms.Cursor.Clip		=	new Drawing.Rectangle( int.MinValue, int.MinValue, int.MaxValue, int.MaxValue );
+			}
 
 			base.Dispose(disposing);
 		}
@@ -172,9 +174,8 @@ namespace Fusion.Drivers.Input {
 				return;
 			}
 
-			pressed.Add( key );
-			if ( KeyDown!=null ) {
-				KeyDown( this, new KeyEventArgs(){ Key = key } );
+			if (pressed.Add( key )) {
+				KeyDown?.Invoke( this, new KeyEventArgs() { Key = key } );
 			}
 		}
 
@@ -186,11 +187,8 @@ namespace Fusion.Drivers.Input {
 		/// <param name="key"></param>
 		void RemovePressedKey ( Keys key )
 		{
-			if (pressed.Contains(key)) {
-				pressed.Remove( key );
-				if ( KeyUp!=null ) {
-					KeyUp( this, new KeyEventArgs(){ Key = key } );
-				}
+			if (pressed.Remove( key )) {
+				KeyUp?.Invoke( this, new KeyEventArgs() { Key = key } );
 			}
 		}
 
@@ -202,9 +200,7 @@ namespace Fusion.Drivers.Input {
 		internal void RemoveAllPressedKeys()
 		{
 			foreach ( var key in pressed ) {
-				if ( KeyUp!=null ) {
-					KeyUp( this, new KeyEventArgs(){ Key = key } );
-				}
+				KeyUp?.Invoke( this, new KeyEventArgs() { Key = key } );
 			}
 			pressed.Clear();
 		}
@@ -233,10 +229,8 @@ namespace Fusion.Drivers.Input {
 				var p				= Game.GraphicsDevice.Display.Window.PointToClient(Forms.Cursor.Position);
 			
 				GlobalMouseOffset	= new Vector2(p.X, p.Y);
-				
-				if (MouseMove!=null) {
-					MouseMove(this, new MouseMoveEventArgs(){ Position = GlobalMouseOffset });
-				}
+
+				MouseMove?.Invoke( this, new MouseMoveEventArgs() { Position = GlobalMouseOffset } );
 			}
 
 
@@ -396,61 +390,50 @@ namespace Fusion.Drivers.Input {
 		 * 
 		-----------------------------------------------------------------------------------------*/
 
+		internal void NotifyMouseDown ( Keys key, int x, int y )
+		{
+			GlobalMouseOffset = new Vector2(x,y);
+			AddPressedKey( key );
+		}
+
 		internal void NotifyKeyDown ( Keys key, bool alt, bool shift, bool control )
 		{
-			var formKeyDown = FormKeyDown;
-			if (formKeyDown!=null) {
-				formKeyDown( this, new KeyEventArgs(){ Key = key } );
-			}
+			FormKeyDown?.Invoke( this, new KeyEventArgs() { Key = key } );
 		}
 
 
 		internal void NotifyKeyUp  ( Keys key, bool alt, bool shift, bool control )
 		{
-			var formKeyUp = FormKeyUp;
-			if (formKeyUp!=null) {
-				formKeyUp( this, new KeyEventArgs(){ Key = key } );
-			}
+			FormKeyUp?.Invoke( this, new KeyEventArgs() { Key = key } );
 		}
 
 
 		internal void NotifyKeyPress ( char keyChar )
 		{
-			var keyPress = FormKeyPress;
-			if (keyPress!=null) {
-				keyPress( this, new KeyPressArgs(){ KeyChar = keyChar } );
-			}
+			FormKeyPress?.Invoke( this, new KeyPressArgs() { KeyChar = keyChar } );
 		}
 
 
 		public void NotifyTouchTap(Vector2 tapPosition)
 		{
-			if (TouchGestureTap != null) {
-				TouchGestureTap(tapPosition);
-			}
+			TouchGestureTap?.Invoke( tapPosition );
 		}
 
 		public void NotifyTouchDoubleTap(Vector2 tapPosition)
 		{
-			if (TouchGestureDoubleTap != null) {
-				TouchGestureDoubleTap(tapPosition);
-			}
+			TouchGestureDoubleTap?.Invoke( tapPosition );
 		}
 
 
 		public void NotifyTouchSecondaryTap(Vector2 tapPosition)
 		{
-			if (TouchGestureSecondaryTap != null) {
-				TouchGestureSecondaryTap(tapPosition);
-			}
+			TouchGestureSecondaryTap?.Invoke( tapPosition );
 		}
 
 
 		public void NotifyTouchManipulation(Vector2 center, Vector2 delta, float scale)
 		{
-			if (TouchGestureManipulate != null) {
-				TouchGestureManipulate(center, delta, scale);
-			}
+			TouchGestureManipulate?.Invoke( center, delta, scale );
 		}
 
 
