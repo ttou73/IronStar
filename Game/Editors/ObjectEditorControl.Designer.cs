@@ -34,6 +34,9 @@
 			this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.actionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.button1 = new System.Windows.Forms.Button();
+			this.mappingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.sendObjectToMapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.panel2.SuspendLayout();
 			this.menuStrip1.SuspendLayout();
 			this.SuspendLayout();
@@ -51,6 +54,7 @@
 			// panel2
 			// 
 			this.panel2.BackColor = System.Drawing.SystemColors.ControlLightLight;
+			this.panel2.Controls.Add(this.button1);
 			this.panel2.Controls.Add(this.objectPropertyGrid);
 			this.panel2.Controls.Add(this.splitter1);
 			this.panel2.Controls.Add(this.objectListBox);
@@ -88,7 +92,8 @@
 			this.menuStrip1.BackColor = System.Drawing.SystemColors.ControlLightLight;
 			this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.nameToolStripMenuItem,
-            this.actionsToolStripMenuItem});
+            this.actionsToolStripMenuItem,
+            this.mappingToolStripMenuItem});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip1.Name = "menuStrip1";
 			this.menuStrip1.Size = new System.Drawing.Size(442, 24);
@@ -107,14 +112,14 @@
 			// newToolStripMenuItem
 			// 
 			this.newToolStripMenuItem.Name = "newToolStripMenuItem";
-			this.newToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.newToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
 			this.newToolStripMenuItem.Text = "New...";
 			this.newToolStripMenuItem.Click += new System.EventHandler(this.newToolStripMenuItem_Click);
 			// 
 			// deleteToolStripMenuItem
 			// 
 			this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-			this.deleteToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.deleteToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
 			this.deleteToolStripMenuItem.Text = "Delete";
 			this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
 			// 
@@ -124,12 +129,35 @@
 			this.actionsToolStripMenuItem.Size = new System.Drawing.Size(59, 20);
 			this.actionsToolStripMenuItem.Text = "Actions";
 			// 
-			// ObjectEditor
+			// button1
+			// 
+			this.button1.Location = new System.Drawing.Point(322, 491);
+			this.button1.Name = "button1";
+			this.button1.Size = new System.Drawing.Size(117, 23);
+			this.button1.TabIndex = 8;
+			this.button1.Text = "Send to Map";
+			this.button1.UseVisualStyleBackColor = true;
+			// 
+			// mappingToolStripMenuItem
+			// 
+			this.mappingToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.sendObjectToMapToolStripMenuItem});
+			this.mappingToolStripMenuItem.Name = "mappingToolStripMenuItem";
+			this.mappingToolStripMenuItem.Size = new System.Drawing.Size(67, 20);
+			this.mappingToolStripMenuItem.Text = "Mapping";
+			// 
+			// sendObjectToMapToolStripMenuItem
+			// 
+			this.sendObjectToMapToolStripMenuItem.Name = "sendObjectToMapToolStripMenuItem";
+			this.sendObjectToMapToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
+			this.sendObjectToMapToolStripMenuItem.Text = "Send Object to Map";
+			// 
+			// ObjectEditorControl
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.Controls.Add(this.panel2);
-			this.Name = "ObjectEditor";
+			this.Name = "ObjectEditorControl";
 			this.Size = new System.Drawing.Size(442, 517);
 			this.panel2.ResumeLayout(false);
 			this.panel2.PerformLayout();
@@ -149,5 +177,8 @@
 		private System.Windows.Forms.ToolStripMenuItem newToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem actionsToolStripMenuItem;
+		private System.Windows.Forms.Button button1;
+		private System.Windows.Forms.ToolStripMenuItem mappingToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem sendObjectToMapToolStripMenuItem;
 	}
 }

@@ -35,6 +35,11 @@ namespace IronStar.Editors {
 			propertyGridFactory	 .SelectedObjects = selection.Select( fact => fact.Factory ).ToArray();	
 
 		}
+
+
+		public void SetOutliner ( IEnumerable<MapFactory> items )
+		{
+		}
 		
 
 		void RefreshMapListItems ()

@@ -58,7 +58,6 @@ namespace IronStar.Editor2 {
 		public void Update ( GameTime gameTime )
 		{
 			spriteLayer.Clear();
-			spriteLayer.DrawDebugString(100,100, "Editor", Color.Orange, 1, 0);
 
 			var vp	= rs.DisplayBounds;
 

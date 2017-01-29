@@ -27,21 +27,21 @@
 		{
 			this.mapMenu = new System.Windows.Forms.MenuStrip();
 			this.mapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.createToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.displayToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.splitter1 = new System.Windows.Forms.Splitter();
-			this.propertyGridFactory = new System.Windows.Forms.PropertyGrid();
-			this.mapListBox = new System.Windows.Forms.ListBox();
+			this.gridToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+			this.showAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.hideSelectedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.buildToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.visibilityToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.navigationMeshToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.gridToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.showAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.hideSelectedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.irradianceCacheToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.splitter1 = new System.Windows.Forms.Splitter();
+			this.propertyGridFactory = new System.Windows.Forms.PropertyGrid();
+			this.panel1 = new System.Windows.Forms.Panel();
 			this.mapMenu.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -68,6 +68,18 @@
 			this.mapToolStripMenuItem.Size = new System.Drawing.Size(43, 20);
 			this.mapToolStripMenuItem.Text = "Map";
 			// 
+			// saveToolStripMenuItem
+			// 
+			this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
+			this.saveToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.saveToolStripMenuItem.Text = "Save";
+			// 
+			// saveAsToolStripMenuItem
+			// 
+			this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
+			this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.saveAsToolStripMenuItem.Text = "Save As...";
+			// 
 			// createToolStripMenuItem
 			// 
 			this.createToolStripMenuItem.Name = "createToolStripMenuItem";
@@ -85,48 +97,28 @@
 			this.displayToolStripMenuItem.Size = new System.Drawing.Size(57, 20);
 			this.displayToolStripMenuItem.Text = "Display";
 			// 
-			// splitter1
+			// gridToolStripMenuItem
 			// 
-			this.splitter1.BackColor = System.Drawing.SystemColors.ControlLightLight;
-			this.splitter1.Location = new System.Drawing.Point(206, 24);
-			this.splitter1.Name = "splitter1";
-			this.splitter1.Size = new System.Drawing.Size(3, 518);
-			this.splitter1.TabIndex = 3;
-			this.splitter1.TabStop = false;
+			this.gridToolStripMenuItem.Name = "gridToolStripMenuItem";
+			this.gridToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.gridToolStripMenuItem.Text = "Grid";
 			// 
-			// propertyGridFactory
+			// toolStripSeparator1
 			// 
-			this.propertyGridFactory.BackColor = System.Drawing.SystemColors.ControlLightLight;
-			this.propertyGridFactory.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.propertyGridFactory.Location = new System.Drawing.Point(209, 24);
-			this.propertyGridFactory.Name = "propertyGridFactory";
-			this.propertyGridFactory.Size = new System.Drawing.Size(316, 518);
-			this.propertyGridFactory.TabIndex = 5;
+			this.toolStripSeparator1.Name = "toolStripSeparator1";
+			this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
 			// 
-			// mapListBox
+			// showAllToolStripMenuItem
 			// 
-			this.mapListBox.Dock = System.Windows.Forms.DockStyle.Left;
-			this.mapListBox.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-			this.mapListBox.FormattingEnabled = true;
-			this.mapListBox.IntegralHeight = false;
-			this.mapListBox.Items.AddRange(new object[] {
-            "<MapFactory>",
-            "<Guid>152a5316-2360-44e7-b652-fa2e2dce5757</Guid>",
-            "<Transform>",
-            "<Translation X=\"5\" Y=\"0\" Z=\"0\" />",
-            "<Rotation X=\"0\" Y=\"0\" Z=\"0\" W=\"1\" />",
-            "<Scaling>1</Scaling>",
-            "<Visible>true</Visible>",
-            "<Frozen>false</Frozen>",
-            "</Transform>",
-            "<Factory xsi:type=\"StaticModelFactory\">",
-            "<Visible>true</Visible>",
-            "<Collidable>true</Collidable>",
-            "</Factory>"});
-			this.mapListBox.Location = new System.Drawing.Point(0, 24);
-			this.mapListBox.Name = "mapListBox";
-			this.mapListBox.Size = new System.Drawing.Size(206, 518);
-			this.mapListBox.TabIndex = 6;
+			this.showAllToolStripMenuItem.Name = "showAllToolStripMenuItem";
+			this.showAllToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.showAllToolStripMenuItem.Text = "Show All";
+			// 
+			// hideSelectedToolStripMenuItem
+			// 
+			this.hideSelectedToolStripMenuItem.Name = "hideSelectedToolStripMenuItem";
+			this.hideSelectedToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.hideSelectedToolStripMenuItem.Text = "Hide Selected";
 			// 
 			// buildToolStripMenuItem
 			// 
@@ -150,46 +142,38 @@
 			this.navigationMeshToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
 			this.navigationMeshToolStripMenuItem.Text = "Navigation Mesh...";
 			// 
-			// saveToolStripMenuItem
-			// 
-			this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-			this.saveToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-			this.saveToolStripMenuItem.Text = "Save";
-			// 
-			// saveAsToolStripMenuItem
-			// 
-			this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-			this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-			this.saveAsToolStripMenuItem.Text = "Save As...";
-			// 
-			// gridToolStripMenuItem
-			// 
-			this.gridToolStripMenuItem.Name = "gridToolStripMenuItem";
-			this.gridToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-			this.gridToolStripMenuItem.Text = "Grid";
-			// 
-			// showAllToolStripMenuItem
-			// 
-			this.showAllToolStripMenuItem.Name = "showAllToolStripMenuItem";
-			this.showAllToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-			this.showAllToolStripMenuItem.Text = "Show All";
-			// 
-			// hideSelectedToolStripMenuItem
-			// 
-			this.hideSelectedToolStripMenuItem.Name = "hideSelectedToolStripMenuItem";
-			this.hideSelectedToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-			this.hideSelectedToolStripMenuItem.Text = "Hide Selected";
-			// 
-			// toolStripSeparator1
-			// 
-			this.toolStripSeparator1.Name = "toolStripSeparator1";
-			this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
-			// 
 			// irradianceCacheToolStripMenuItem
 			// 
 			this.irradianceCacheToolStripMenuItem.Name = "irradianceCacheToolStripMenuItem";
 			this.irradianceCacheToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
 			this.irradianceCacheToolStripMenuItem.Text = "Irradiance Cache...";
+			// 
+			// splitter1
+			// 
+			this.splitter1.BackColor = System.Drawing.SystemColors.ControlLightLight;
+			this.splitter1.Location = new System.Drawing.Point(127, 24);
+			this.splitter1.Name = "splitter1";
+			this.splitter1.Size = new System.Drawing.Size(3, 518);
+			this.splitter1.TabIndex = 3;
+			this.splitter1.TabStop = false;
+			// 
+			// propertyGridFactory
+			// 
+			this.propertyGridFactory.BackColor = System.Drawing.SystemColors.ControlLightLight;
+			this.propertyGridFactory.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.propertyGridFactory.Location = new System.Drawing.Point(130, 24);
+			this.propertyGridFactory.Name = "propertyGridFactory";
+			this.propertyGridFactory.Size = new System.Drawing.Size(395, 518);
+			this.propertyGridFactory.TabIndex = 5;
+			// 
+			// panel1
+			// 
+			this.panel1.BackColor = System.Drawing.SystemColors.ControlLightLight;
+			this.panel1.Dock = System.Windows.Forms.DockStyle.Left;
+			this.panel1.Location = new System.Drawing.Point(0, 24);
+			this.panel1.Name = "panel1";
+			this.panel1.Size = new System.Drawing.Size(127, 518);
+			this.panel1.TabIndex = 6;
 			// 
 			// MapEditorControl
 			// 
@@ -197,7 +181,7 @@
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.Controls.Add(this.propertyGridFactory);
 			this.Controls.Add(this.splitter1);
-			this.Controls.Add(this.mapListBox);
+			this.Controls.Add(this.panel1);
 			this.Controls.Add(this.mapMenu);
 			this.Name = "MapEditorControl";
 			this.Size = new System.Drawing.Size(525, 542);
@@ -225,6 +209,6 @@
 		private System.Windows.Forms.ToolStripMenuItem visibilityToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem navigationMeshToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem irradianceCacheToolStripMenuItem;
-		private System.Windows.Forms.ListBox mapListBox;
+		private System.Windows.Forms.Panel panel1;
 	}
 }

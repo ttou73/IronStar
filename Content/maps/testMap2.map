@@ -32,8 +32,8 @@
     <MapFactory>
       <Guid>6344f4dc-52eb-47fb-a9ee-b7a457a920ed</Guid>
       <Transform>
-        <Translation X="-0.153605208" Y="3.60368681" Z="-1.89461029" />
-        <Rotation X="-0.352439016" Y="0.828573942" Z="-0.106232449" W="0.421861053" />
+        <Translation X="0.0204580277" Y="5.76469326" Z="-2.20021534" />
+        <Rotation X="-0.238251135" Y="0.466655016" Z="-0.280597568" W="0.804198146" />
         <Scaling>1</Scaling>
         <Visible>true</Visible>
         <Frozen>false</Frozen>
@@ -60,8 +60,8 @@
     <MapFactory>
       <Guid>87ba4fdc-0e28-4fa6-b430-1a0cf5f6d306</Guid>
       <Transform>
-        <Translation X="4.11902142" Y="3.558207" Z="-1" />
-        <Rotation X="0.312811255" Y="0.7733657" Z="0.0288782269" W="0.550654769" />
+        <Translation X="3.04068279" Y="5.71921349" Z="-1.30560493" />
+        <Rotation X="0.190659642" Y="0.4272006" Z="0.171329916" W="0.867060959" />
         <Scaling>1</Scaling>
         <Visible>true</Visible>
         <Frozen>false</Frozen>

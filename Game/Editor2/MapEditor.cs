@@ -96,6 +96,7 @@ namespace IronStar.Editor2 {
 				Log.Message("Creating new map: {0}", fullPath);
 				this.map = new Map();
 			}
+			OutlineScene();
 		}
 
 
@@ -324,6 +325,11 @@ namespace IronStar.Editor2 {
 			Editors.Editor.GetMapEditor()?.SetSelection( selection );
 		}
 
+
+		void OutlineScene ()
+		{
+			Editors.Editor.GetMapEditor()?.SetOutliner( map.Factories );
+		}
 
 
 		bool marqueeSelecting = false;
