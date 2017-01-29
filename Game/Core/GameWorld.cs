@@ -13,20 +13,16 @@ using Fusion.Engine.Client;
 using Fusion.Core.Extensions;
 using IronStar.SFX;
 using Fusion.Core.IniParser.Model;
-using IronStar.Views;
 using Fusion.Engine.Graphics;
 using IronStar.Mapping;
+using Fusion.Core;
 
 namespace IronStar.Core {
 
 	/// <summary>
 	/// World represents entire game state.
 	/// </summary>
-	public partial class GameWorld : IServerInstance, IClientInstance {
-
-		readonly string mapName;
-
-		Map map;
+	public partial class GameWorld : DisposableBase {
 
 		public readonly Guid UserGuid;
 
@@ -39,7 +35,6 @@ namespace IronStar.Core {
 
 		public readonly Game Game;
 		public readonly ContentManager Content;
-		readonly bool serverSide;
 
 		public delegate void EntityEventHandler ( object sender, EntityEventArgs e );
 
@@ -48,8 +43,6 @@ namespace IronStar.Core {
 		public EntityCollection entities;
 		uint idCounter = 1;
 
-		public event EntityEventHandler ReplicaSpawned;
-		public event EntityEventHandler ReplicaKilled;
 		public event EntityEventHandler EntitySpawned;
 		public event EntityEventHandler EntityKilled;
 
@@ -66,58 +59,12 @@ namespace IronStar.Core {
 
 
 		/// <summary>
-		/// Indicates that world is running on server side.
+		/// 
 		/// </summary>
-		public bool IsServerSide {
-			get { return serverSide; }
-		}
-
-
-
-		/// <summary>
-		/// Indicates that world is running on client side.
-		/// </summary>
-		public bool IsClientSide {
-			get { return !serverSide; }
-		}
-
-
-		/// <summary>
-		/// Gets server
-		/// </summary>
-		public GameServer GameServer {
-			get { 
-				if (!IsServerSide) {
-					throw new InvalidOperationException("World is not server-side");
-				}
-				return Game.GameServer;
-			}
-		}
-
-
-		/// <summary>
-		/// Gets server
-		/// </summary>
-		public GameClient GameClient {
-			get { 
-				if (!IsClientSide) {
-					throw new InvalidOperationException("World is nor client-side");
-				}
-				return Game.GameClient;
-			}
-		}
-
-
-
-
-		/// <summary>
-		/// This method called in main thread to complete non-thread safe operations.
-		/// </summary>
-		public void FinalizeLoad()
+		/// <param name="game"></param>
+		public GameWorld( Game game )
 		{
-			//foreach ( var mi in map.MeshInstance ) {
-			//	Game.RenderSystem.RenderWorld.Instances.Add( mi );
-			//}
+			this.Game	=	game;
 		}
 
 
@@ -125,26 +72,15 @@ namespace IronStar.Core {
 		/// <summary>
 		/// 
 		/// </summary>
-		public void Shutdown()
+		/// <param name="disposing"></param>
+		protected override void Dispose( bool disposing )
 		{
-			if ( IsClientSide ) {
-				fxPlayback?.Shutdown();
-				modelManager?.Shutdown();
+			if (disposing) {
+				SafeDispose( ref fxPlayback );
+				SafeDispose( ref modelManager );
 			}
 
-			if ( IsClientSide ) {
-				Game.RenderSystem.RenderWorld.ClearWorld();
-			}
-		}
-
-
-
-		/// <summary>
-		/// Returns server info.
-		/// </summary>
-		public string ServerInfo()
-		{
-			return mapName;
+			base.Dispose( disposing );
 		}
 
 
@@ -157,36 +93,7 @@ namespace IronStar.Core {
 		protected void LogTrace ( string frmt, params object[] args )
 		{
 			var s = string.Format( frmt, args );
-
-			if (IsClientSide) Log.Verbose("cl: " + s );
-			if (IsServerSide) Log.Verbose("sv: " + s );
-		}
-
-
-
-		/// <summary>
-		/// Adds view.
-		/// </summary>
-		/// <param name="view"></param>
-		public void AddView( WorldView view )
-		{
-			if (IsServerSide) {
-				return;
-				//throw new InvalidOperationException("Can not add EntityView to server-side world");
-			} 
-			views.Add( view );
-		}
-
-
-
-		/// <summary>
-		/// Gets view by its type
-		/// </summary>
-		/// <typeparam name="T"></typeparam>
-		/// <returns></returns>
-		public T GetView<T>() where T: WorldView
-		{
-			return (T)views.FirstOrDefault( v => v is T );
+			Log.Verbose("world: " + s);
 		}
 
 
@@ -197,18 +104,12 @@ namespace IronStar.Core {
 		/// <param name="gameTime"></param>
 		public virtual void SimulateWorld ( float elapsedTime )
 		{
-			if (IsServerSide) {
+			UpdatePlayers( elapsedTime );
 
-				UpdatePlayers( elapsedTime );
-
-				var dt	=	1 / GameServer.TargetFrameRate;
-				PhysSpace.TimeStepSettings.MaximumTimeStepsPerFrame = 6;
-				PhysSpace.TimeStepSettings.TimeStepDuration = 1.0f/60.0f;
-				PhysSpace.Update(dt);
-			}
-
-
-			fxSpawnSequence++;
+			var dt	=	1 / Game.GameServer.TargetFrameRate;
+			PhysSpace.TimeStepSettings.MaximumTimeStepsPerFrame = 6;
+			PhysSpace.TimeStepSettings.TimeStepDuration = 1.0f/60.0f;
+			PhysSpace.Update(dt);
 
 			//
 			//	Control entities :
@@ -222,11 +123,6 @@ namespace IronStar.Core {
 		}
 
 
-		byte fxSpawnSequence	=	0;
-
-		List<Vector3> clPos = new List<Vector3>();
-		List<Vector3> visPos = new List<Vector3>();
-
 
 		/// <summary>
 		/// Updates visual and audial stuff
@@ -235,11 +131,6 @@ namespace IronStar.Core {
 		public void PresentWorld ( float deltaTime, float lerpFactor )
 		{
 			var dr = Game.RenderSystem.RenderWorld.Debug;
-
-			if (!IsClientSide) {
-				throw new InvalidOperationException("PresentWorld could be called only on client side");
-			}
-
 
 			var visibleEntities = entities.Select( pair => pair.Value ).ToArray();
 
@@ -269,15 +160,17 @@ namespace IronStar.Core {
 		 *	Entity creation
 		-----------------------------------------------------------------------------------------*/
 
-
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="factory"></param>
+		/// <param name="classID"></param>
+		/// <param name="parentId"></param>
+		/// <param name="origin"></param>
+		/// <param name="orient"></param>
+		/// <returns></returns>
 		public Entity Spawn( EntityFactory factory, short classID, uint parentId, Vector3 origin, Quaternion orient )
 		{
-			//	due to server reconciliation
-			//	never create entities on client-side:
-			if ( IsClientSide ) {
-				return null;
-			}
-
 			//	get ID :
 			uint id = idCounter;
 
@@ -305,6 +198,7 @@ namespace IronStar.Core {
 		}
 
 
+
 		/// <summary>
 		/// When called on client-side returns null.
 		/// </summary>
@@ -315,22 +209,6 @@ namespace IronStar.Core {
 		/// <returns></returns>
 		public Entity Spawn ( string classname, uint parentId, Vector3 origin, Quaternion orient )
 		{
-			//	due to server reconciliation
-			//	never create entities on client-side:
-			if (IsClientSide) {
-				return null;
-			}
-
-			//	get ID :
-			uint id = idCounter;
-
-			idCounter++;
-
-			if (idCounter==0) {
-				//	this actually will never happen, about 103 day of intense playing.
-				throw new InvalidOperationException("Too much entities were spawned");
-			}
-
 			//
 			//	Create instance.
 			//	If creation failed later, entity become dummy.
@@ -340,6 +218,7 @@ namespace IronStar.Core {
 
 			return Spawn( factory, classID, parentId, origin, orient );
 		}
+
 
 
 		/// <summary>
@@ -371,7 +250,6 @@ namespace IronStar.Core {
 		{
 			return Spawn( classname, parentId, origin, Quaternion.RotationYawPitchRoll( yaw,0,0 ) );
 		}
-
 
 		
 		/*-----------------------------------------------------------------------------------------
@@ -468,6 +346,9 @@ namespace IronStar.Core {
 
 
 
+		/// <summary>
+		/// 
+		/// </summary>
 		void CommitKilledEntities ()
 		{
 			foreach ( var id in entityToKill ) {
@@ -478,6 +359,11 @@ namespace IronStar.Core {
 		}
 
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="id"></param>
 		void KillImmediatly ( uint id )
 		{
 			if (id==0) {
@@ -488,14 +374,8 @@ namespace IronStar.Core {
 
 			if ( entities.TryGetValue(id, out ent)) {
 
-				if (IsClientSide) {
-					ent.DestroyRenderState(fxPlayback);
-					ReplicaKilled?.Invoke( this, new EntityEventArgs(ent) );
-				}
-
-				if (IsServerSide) {
-					EntityKilled?.Invoke( this, new EntityEventArgs(ent) );
-				}
+				ent.DestroyRenderState(fxPlayback);
+				EntityKilled?.Invoke( this, new EntityEventArgs(ent) );
 				
 				entities.Remove( id );
 				ent?.Controller?.Killed();
@@ -504,6 +384,7 @@ namespace IronStar.Core {
 				Log.Warning("Entity #{0} does not exist", id);
 			}
 		}
+
 
 
 		/// <summary>
@@ -515,6 +396,7 @@ namespace IronStar.Core {
 			LogTrace("kill: #{0}", id );
 			entityToKill.Add( id );
 		}
+
 
 
 		/// <summary>
@@ -547,7 +429,7 @@ namespace IronStar.Core {
 			var ents = entities.Select( pair => pair.Value ).OrderBy( e => e.ID ).ToArray();
 
 			Log.Message("");
-			Log.Message("---- {0} World state ---- ", IsServerSide ? "Server side" : "Client side" );
+			Log.Message("---- World state ---- ");
 
 			foreach ( var ent in ents ) {
 				
@@ -563,8 +445,5 @@ namespace IronStar.Core {
 			Log.Message("----------------" );
 			Log.Message("");
 		}
-
-
-
 	}
 }

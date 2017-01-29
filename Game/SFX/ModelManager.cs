@@ -16,10 +16,9 @@ using Fusion.Engine.Server;
 using Fusion.Engine.Graphics;
 using IronStar.Core;
 using Fusion.Engine.Audio;
-using IronStar.Views;
 
 namespace IronStar.SFX {
-	public class ModelManager {
+	public class ModelManager : DisposableBase {
 
 		LinkedList<ModelInstance> models;
 
@@ -48,10 +47,13 @@ namespace IronStar.SFX {
 		/// <summary>
 		/// 
 		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		void Game_Reloading( object sender, EventArgs e )
+		protected override void Dispose( bool disposing )
 		{
+			if (disposing) {
+				KillAllModels();
+				game.Reloading -= Game_Reloading;
+			}
+			base.Dispose( disposing );
 		}
 
 
@@ -59,10 +61,10 @@ namespace IronStar.SFX {
 		/// <summary>
 		/// 
 		/// </summary>
-		public void Shutdown ()
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		void Game_Reloading( object sender, EventArgs e )
 		{
-			KillAllModels();
-			game.Reloading -= Game_Reloading;
 		}
 
 

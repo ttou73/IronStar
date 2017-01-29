@@ -15,7 +15,6 @@ using Fusion.Engine.Server;
 using Fusion.Engine.Graphics;
 using IronStar.Core;
 using Fusion.Engine.Audio;
-using IronStar.Views;
 
 namespace IronStar.SFX {
 	public class ModelInstance {

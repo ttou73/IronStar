@@ -16,7 +16,6 @@ using Fusion.Engine.Server;
 using Fusion.Engine.Graphics;
 using IronStar.Core;
 using Fusion.Engine.Audio;
-using IronStar.Views;
 
 
 namespace IronStar.SFX {
@@ -159,7 +158,8 @@ namespace IronStar.SFX {
 		/// <param name="roll"></param>
 		public void ShakeCamera ( float yaw, float pitch, float roll )
 		{
-			fxPlayback.world.GetView<GameCamera>().Shake( fxEvent.EntityID, yaw, pitch, roll );
+			Log.Warning("No shaking is avaiable");
+			//fxPlayback.world.GetView<GameCamera>().Shake( fxEvent.EntityID, yaw, pitch, roll );
 		}
 
 		/*-----------------------------------------------------------------------------------------

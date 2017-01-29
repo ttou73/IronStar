@@ -13,10 +13,8 @@ using Fusion.Engine.Client;
 using Fusion.Core.Extensions;
 using IronStar.SFX;
 using Fusion.Core.IniParser.Model;
-using IronStar.Views;
 using Fusion.Engine.Graphics;
 using IronStar.Mapping;
-using IronStar.Client;
 
 namespace IronStar.Core {
 

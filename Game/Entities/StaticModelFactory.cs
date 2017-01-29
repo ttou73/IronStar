@@ -72,9 +72,6 @@ namespace IronStar.Entities {
 			if (node.MeshIndex<0) {
 				return;
 			}
-			if (gameWorld.IsServerSide) {
-				return;
-			}
 
 			var rs = gameWorld.Game.RenderSystem;
 			var rw = gameWorld.Game.RenderSystem.RenderWorld;

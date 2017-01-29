@@ -16,19 +16,16 @@ using Fusion.Core.IniParser.Model;
 using Fusion.Engine.Graphics;
 using IronStar.Mapping;
 
-namespace IronStar.Core {
 
-	/// <summary>
-	/// World represents entire game state.
-	/// </summary>
-	public partial class GameWorld : IServerInstance, IClientInstance {
+namespace IronStar {
+	class ServerWorld : IServerInstance {
 
 		/// <summary>
 		/// Initializes server-side world.
 		/// </summary>
 		/// <param name="maxPlayers"></param>
 		/// <param name="maxEntities"></param>
-		public GameWorld ( GameServer server, string map )
+		public ServerWorld ( GameServer server, string map )
 		{
 			this.mapName	=	map;
 			

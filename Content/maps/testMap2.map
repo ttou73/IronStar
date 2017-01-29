@@ -32,8 +32,8 @@
     <MapFactory>
       <Guid>6344f4dc-52eb-47fb-a9ee-b7a457a920ed</Guid>
       <Transform>
-        <Translation X="0.0204580277" Y="5.76469326" Z="-2.20021534" />
-        <Rotation X="-0.238251135" Y="0.466655016" Z="-0.280597568" W="0.804198146" />
+        <Translation X="3.76481366" Y="5.76469326" Z="1.2274406" />
+        <Rotation X="0.064139545" Y="-0.321712673" Z="-0.3624703" W="0.872354567" />
         <Scaling>1</Scaling>
         <Visible>true</Visible>
         <Frozen>false</Frozen>

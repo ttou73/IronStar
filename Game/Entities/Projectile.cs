@@ -62,9 +62,7 @@ namespace IronStar.Entities {
 			trailFXAtom			=	atoms[ trailFX ]; 
 
 			//	step projectile forward compensating server latency
-			if (world.IsServerSide) {
-				UpdateProjectile( entity, 1.0f / world.GameServer.TargetFrameRate );
-			}
+			UpdateProjectile( entity, 1.0f / Game.GameServer.TargetFrameRate );
 		}
 
 

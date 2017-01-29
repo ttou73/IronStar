@@ -15,11 +15,10 @@ using Fusion.Engine.Server;
 using Fusion.Engine.Graphics;
 using IronStar.Core;
 using Fusion.Engine.Audio;
-using IronStar.Views;
 
 
 namespace IronStar.SFX {
-	public class FXPlayback {
+	public class FXPlayback : DisposableBase {
 
 		TextureAtlas spriteSheet;
 
@@ -50,13 +49,13 @@ namespace IronStar.SFX {
 
 
 
-		/// <summary>
-		/// 
-		/// </summary>
-		public void Shutdown ()
+		protected override void Dispose( bool disposing )
 		{
-			StopAllSFX();
-			game.Reloading -= Game_Reloading;
+			if (disposing) {
+				StopAllSFX();
+				game.Reloading -= Game_Reloading;
+			}
+			base.Dispose( disposing );
 		}
 
 

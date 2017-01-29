@@ -13,7 +13,6 @@ using Fusion.Engine.Client;
 using Fusion.Core.Extensions;
 using IronStar.SFX;
 using Fusion.Core.IniParser.Model;
-using IronStar.Views;
 using Fusion.Engine.Graphics;
 
 namespace IronStar.Core {
@@ -31,14 +30,10 @@ namespace IronStar.Core {
 		/// <returns></returns>
 		public bool IsPlayer( uint id )
 		{
-			if ( GameClient==null ) {
-				return false;
-			}
-
 			Entity e;
 
 			if ( entities.TryGetValue( id, out e ) ) {
-				return e.UserGuid == clientGuid;
+				return e.UserGuid == UserGuid;
 			} else {
 				return false;
 			}

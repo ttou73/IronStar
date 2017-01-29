@@ -14,7 +14,6 @@ using Fusion.Engine.Client;
 using Fusion.Engine.Server;
 using Fusion.Engine.Graphics;
 using IronStar.Core;
-using IronStar.Views;
 using IronStar.Entities;
 using BEPUphysics;
 using BU = BEPUutilities;
