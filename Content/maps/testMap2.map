@@ -11,8 +11,11 @@
         <Frozen>false</Frozen>
       </Transform>
       <Factory xsi:type="StaticModelFactory">
-        <Visible>true</Visible>
-        <Collidable>true</Collidable>
+        <Model>
+          <ScenePath />
+          <Scale>1</Scale>
+          <Color Red="10" Green="10" Blue="10" Alpha="1" />
+        </Model>
       </Factory>
     </MapFactory>
     <MapFactory>
@@ -25,22 +28,28 @@
         <Frozen>false</Frozen>
       </Transform>
       <Factory xsi:type="StaticModelFactory">
-        <Visible>true</Visible>
-        <Collidable>true</Collidable>
+        <Model>
+          <ScenePath />
+          <Scale>1</Scale>
+          <Color Red="10" Green="10" Blue="10" Alpha="1" />
+        </Model>
       </Factory>
     </MapFactory>
     <MapFactory>
       <Guid>6344f4dc-52eb-47fb-a9ee-b7a457a920ed</Guid>
       <Transform>
-        <Translation X="3.76481366" Y="5.76469326" Z="1.2274406" />
+        <Translation X="3.76481366" Y="5.76469326" Z="11.7958364" />
         <Rotation X="0.064139545" Y="-0.321712673" Z="-0.3624703" W="0.872354567" />
         <Scaling>1</Scaling>
         <Visible>true</Visible>
         <Frozen>false</Frozen>
       </Transform>
       <Factory xsi:type="StaticModelFactory">
-        <Visible>true</Visible>
-        <Collidable>true</Collidable>
+        <Model>
+          <ScenePath />
+          <Scale>1</Scale>
+          <Color Red="10" Green="10" Blue="10" Alpha="1" />
+        </Model>
       </Factory>
     </MapFactory>
     <MapFactory>
@@ -53,22 +62,28 @@
         <Frozen>false</Frozen>
       </Transform>
       <Factory xsi:type="StaticModelFactory">
-        <Visible>true</Visible>
-        <Collidable>true</Collidable>
+        <Model>
+          <ScenePath />
+          <Scale>1</Scale>
+          <Color Red="10" Green="10" Blue="10" Alpha="1" />
+        </Model>
       </Factory>
     </MapFactory>
     <MapFactory>
       <Guid>87ba4fdc-0e28-4fa6-b430-1a0cf5f6d306</Guid>
       <Transform>
-        <Translation X="3.04068279" Y="5.71921349" Z="-1.30560493" />
+        <Translation X="3.04068279" Y="5.71921349" Z="9.262791" />
         <Rotation X="0.190659642" Y="0.4272006" Z="0.171329916" W="0.867060959" />
         <Scaling>1</Scaling>
         <Visible>true</Visible>
         <Frozen>false</Frozen>
       </Transform>
       <Factory xsi:type="StaticModelFactory">
-        <Visible>true</Visible>
-        <Collidable>true</Collidable>
+        <Model>
+          <ScenePath />
+          <Scale>1</Scale>
+          <Color Red="10" Green="10" Blue="10" Alpha="1" />
+        </Model>
       </Factory>
     </MapFactory>
   </Factories>

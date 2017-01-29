@@ -21,14 +21,13 @@ namespace IronStar.Core {
 
 	public abstract class EntityFactory {
 		
-		static Type[] factories = null;
+		public abstract EntityController Spawn (Entity entity, GameWorld world);
 
 
 		[Category("Common")]
 		[Description("Target name of object created by this factory. Used within maps. For entity templates this value make no sense.")]
 		public string Targetname { get; set; }
 
-		public abstract EntityController Spawn (Entity entity, GameWorld world);
 
 		[XmlIgnore]
 		[Browsable(false)]
@@ -43,6 +42,8 @@ namespace IronStar.Core {
 			return GetType().Name;
 		}
 
+
+		static Type[] factories = null;
 
 		public static Type[] GetFactoryTypes ()
 		{

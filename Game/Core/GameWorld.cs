@@ -62,9 +62,17 @@ namespace IronStar.Core {
 		/// 
 		/// </summary>
 		/// <param name="game"></param>
-		public GameWorld( Game game )
+		public GameWorld( Game game, bool enablePresentation )
 		{
 			this.Game	=	game;
+
+			Content		=	new ContentManager( Game );
+			entities	=	new EntityCollection();
+
+			if (enablePresentation) {
+				fxPlayback		=	new SFX.FXPlayback( this );
+				modelManager	=	new SFX.ModelManager( this );
+			}
 		}
 
 
@@ -188,8 +196,6 @@ namespace IronStar.Core {
 			var entity = new Entity(id, classID, parentId, origin, orient);
 			entities.Add( id, entity );
 
-			//LogTrace( "spawn: {0} - #{1}", factory?.GetType(), id );
-
 			entity.Controller = factory?.Spawn( entity, this );
 
 			EntitySpawned?.Invoke( this, new EntityEventArgs( entity ) );
@@ -209,12 +215,8 @@ namespace IronStar.Core {
 		/// <returns></returns>
 		public Entity Spawn ( string classname, uint parentId, Vector3 origin, Quaternion orient )
 		{
-			//
-			//	Create instance.
-			//	If creation failed later, entity become dummy.
-			//
 			var classID	=	Atoms[classname];
-			var factory	=	Content.Load<EntityFactory>(@"entities\" + classname, (EntityFactory)null );
+			var factory	=	Content.Load(@"entities\" + classname, (EntityFactory)null );
 
 			return Spawn( factory, classID, parentId, origin, orient );
 		}
@@ -330,6 +332,9 @@ namespace IronStar.Core {
 		}
 
 
+		/*-----------------------------------------------------------------------------------------
+		 *	Entity stuff :
+		-----------------------------------------------------------------------------------------*/
 
 		/// <summary>
 		/// 
@@ -416,7 +421,7 @@ namespace IronStar.Core {
 		/// <param name="writer"></param>
 		public virtual void ReadFromSnapshot ( Stream stream, float lerpFactor )
 		{
-			snapshotReader.Read( stream, entities, fxe=>fxPlayback.RunFX(fxe), null, id=>KillImmediatly(id) );
+			snapshotReader.Read( stream, entities, fxe=>fxPlayback?.RunFX(fxe), null, id=>KillImmediatly(id) );
 		}
 
 

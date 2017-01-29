@@ -10,16 +10,13 @@ using Fusion.Core.Mathematics;
 namespace IronStar.Core {
 	public class EntityCollection : Dictionary<uint,Entity> {
 
-		readonly AtomCollection atoms;
-
 
 		/// <summary>
 		/// Creates instance of entity collection.
 		/// </summary>
 		/// <param name="atoms"></param>
-		public EntityCollection ( AtomCollection atoms )
+		public EntityCollection ()
 		{
-			this.atoms	=	atoms;
 		}
 
 

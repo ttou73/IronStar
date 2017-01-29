@@ -49,17 +49,17 @@ namespace IronStar.Editor2 {
 
 				int hitInd	=	PollIntersections( hitX, hitY, hitZ );
 
-				DrawRing( dr, ray, origin, Vector3.UnitX,  hitInd == 0 ? SelectColor : Color.Red  );
-				DrawRing( dr, ray, origin, Vector3.UnitY,  hitInd == 1 ? SelectColor : Color.Lime );
-				DrawRing( dr, ray, origin, Vector3.UnitZ,  hitInd == 2 ? SelectColor : Color.Blue );
+				DrawRing( dr, ray, origin, Vector3.UnitX,  hitInd == 0 ? Utils.SelectColor : Color.Red  );
+				DrawRing( dr, ray, origin, Vector3.UnitY,  hitInd == 1 ? Utils.SelectColor : Color.Lime );
+				DrawRing( dr, ray, origin, Vector3.UnitZ,  hitInd == 2 ? Utils.SelectColor : Color.Blue );
 			} else {
 
-				DrawRing( dr, ray, origin, direction, SelectColor );
+				DrawRing( dr, ray, origin, direction, Utils.SelectColor );
 
 				var vecSize	=	editor.camera.PixelToWorldSize(origin, 110);
 
-				dr.DrawLine( origin, origin + vector0 * vecSize, SelectColor, SelectColor, 2, 2 );
-				dr.DrawLine( origin, origin + vector1 * vecSize, SelectColor, SelectColor, 2, 2 );
+				dr.DrawLine( origin, origin + vector0 * vecSize, Utils.SelectColor, Utils.SelectColor, 2, 2 );
+				dr.DrawLine( origin, origin + vector1 * vecSize, Utils.SelectColor, Utils.SelectColor, 2, 2 );
 			}
 		}
 

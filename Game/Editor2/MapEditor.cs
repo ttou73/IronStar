@@ -40,8 +40,6 @@ namespace IronStar.Editor2 {
 		readonly Stack<MapFactory[]> selectionStack = new Stack<MapFactory[]>();
 		readonly List<MapFactory> selection = new List<MapFactory>();
 
-		Space physSpace;
-
 		Map	map = null;
 
 		public Map Map {
@@ -51,6 +49,8 @@ namespace IronStar.Editor2 {
 		}
 
 		public readonly EditorConfig Config;
+
+		GameWorld world;
 
 
 		/// <summary>
@@ -72,14 +72,13 @@ namespace IronStar.Editor2 {
 			camera			=	new EditorCamera( this );
 			hud				=	new EditorHud( this );
 			manipulator		=	new NullTool( this );
+			world			=	new GameWorld( Game, true );
 
 			SetupUI();
 
 			Game.Keyboard.ScanKeyboard =	true;
 
 			fullPath	=	Builder.GetFullPath(@"maps\" + map + ".map");
-
-			physSpace	=	new Space();
 		}
 
 
@@ -96,19 +95,8 @@ namespace IronStar.Editor2 {
 				Log.Message("Creating new map: {0}", fullPath);
 				this.map = new Map();
 			}
-			OutlineScene();
-		}
 
-
-
-		public void Refresh ()
-		{
-			var form = Editors.Editor.GetMapEditor();
-			if (form==null) {
-				return;
-			}
-
-			form.SetSelection( GetSelection() );
+			FeedSelection();
 		}
 
 
@@ -124,6 +112,15 @@ namespace IronStar.Editor2 {
 		}
 
 
+		/// <summary>
+		/// 
+		/// </summary>
+		void FeedSelection ()
+		{
+			Editors.Editor.GetMapEditor()?.SetSelection( selection );
+		}
+
+
 
 		/// <summary>
 		/// 
@@ -133,8 +130,10 @@ namespace IronStar.Editor2 {
 		{
 			if ( !disposedValue ) {
 				if ( disposing ) {
+
+					world?.Dispose();
 					hud?.Dispose();
-					hud = null;
+
 					SaveMap();
 				}
 
@@ -199,6 +198,9 @@ namespace IronStar.Editor2 {
 		{
 			camera.Update( gameTime );
 
+			world.SimulateWorld( gameTime.ElapsedSec );
+			world.PresentWorld( gameTime.ElapsedSec, 1 );
+
 			rs.RenderWorld.Debug.DrawGrid( 10 );
 
 			hud.Update(gameTime);
@@ -208,7 +210,7 @@ namespace IronStar.Editor2 {
 			//
 			foreach ( var item in map.Factories ) {
 
-				var color = new Color(0,4,96);
+				var color = Utils.WireColor;
 
 				rs.RenderWorld.Debug.DrawBasis( item.Transform.World, 0.125f );
 				rs.RenderWorld.Debug.DrawBox( item.Factory.BoundingBox, item.Transform.World, color);
@@ -219,7 +221,7 @@ namespace IronStar.Editor2 {
 			//
 			foreach ( var item in selection ) {
 
-				var color = new Color(67,255,163);
+				var color = Utils.WireColorSelected;
 
 				if (selection.Last()!=item) {
 					color = Color.White;
@@ -227,8 +229,6 @@ namespace IronStar.Editor2 {
 
 				rs.RenderWorld.Debug.DrawBasis( item.Transform.World, 0.125f );
 				rs.RenderWorld.Debug.DrawBox( item.Factory.BoundingBox, item.Transform.World, color);
-
-				rs.RenderWorld.Debug.DrawRing( Matrix.Identity, 1, Color.Blue, 1, 16 );
 			}
 
 			var mp = Game.Mouse.Position;
@@ -237,12 +237,10 @@ namespace IronStar.Editor2 {
 		}
 
 
-		Ray TransformRay ( Matrix m, Ray r )
-		{
-			return new Ray( Vector3.TransformCoordinate( r.Position, m ), Vector3.TransformNormal( r.Direction, m ).Normalized() );
-		}
 
-
+		/// <summary>
+		/// 
+		/// </summary>
 		void Focus ()
 		{
 			var targets = selection.Any() ? selection.ToArray() : map.Factories.ToArray();
@@ -266,6 +264,7 @@ namespace IronStar.Editor2 {
 		}
 
 
+
 		/// <summary>
 		/// 
 		/// </summary>
@@ -284,7 +283,7 @@ namespace IronStar.Editor2 {
 				var iw		=	Matrix.Invert( item.Transform.World );
 				float distance;
 
-				var rayT	=	TransformRay( iw, ray );
+				var rayT	=	Utils.TransformRay( iw, ray );
 
 				if (rayT.Intersects(ref bbox, out distance)) {
 					if (minDistance > distance) {
@@ -320,19 +319,11 @@ namespace IronStar.Editor2 {
 
 
 
-		void FeedSelection ()
-		{
-			Editors.Editor.GetMapEditor()?.SetSelection( selection );
-		}
+		bool  marqueeSelecting = false;
+		bool  selectingMarqueeAdd = false;
+		Point selectingMarqueeStart;
+		Point selectingMarqueeEnd;
 
-
-		void OutlineScene ()
-		{
-			Editors.Editor.GetMapEditor()?.SetOutliner( map.Factories );
-		}
-
-
-		bool marqueeSelecting = false;
 		public Rectangle SelectionMarquee {
 			get { 
 				if (!marqueeSelecting) {
@@ -348,11 +339,10 @@ namespace IronStar.Editor2 {
 			}
 		}
 
-		Point selectingMarqueeStart;
-		Point selectingMarqueeEnd;
 
-		public void StartMarqueeSelection ( int x, int y )
+		public void StartMarqueeSelection ( int x, int y, bool add )
 		{
+			selectingMarqueeAdd = add;
 			marqueeSelecting = true;
 			selectingMarqueeStart = new Point(x,y);
 			selectingMarqueeEnd	  = selectingMarqueeStart;
@@ -375,7 +365,9 @@ namespace IronStar.Editor2 {
 					return;
 				}
 
-				ClearSelection();
+				if (!selectingMarqueeAdd) {
+					ClearSelection();
+				}
 
 				foreach ( var item in map.Factories ) {
 					if (camera.IsInRectangle( item.Transform.Translation, SelectionMarquee )) {

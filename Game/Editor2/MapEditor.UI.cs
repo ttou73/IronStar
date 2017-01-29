@@ -86,7 +86,7 @@ namespace IronStar.Editor2 {
 				}
 			} else {
 				if (!manipulator.StartManipulation( e.X, e.Y )) {
-					StartMarqueeSelection( e.X, e.Y );
+					StartMarqueeSelection( e.X, e.Y, Game.Keyboard.IsKeyDown(Keys.LeftShift) );
 				}
 			}
 		}

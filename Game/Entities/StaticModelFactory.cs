@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -7,23 +8,29 @@ using BEPUphysics.BroadPhaseEntries;
 using Fusion.Core.Mathematics;
 using Fusion.Engine.Graphics;
 using IronStar.Core;
+using IronStar.SFX;
 
 namespace IronStar.Entities {
 
 	public class StaticModelFactory : EntityFactory {
 
 		
-		/// <summary>
-		/// 
-		/// </summary>
-		public bool Visible { get; set; } = true;
 
 
 		/// <summary>
 		/// 
 		/// </summary>
-		public bool Collidable { get; set; } = true;
+		/// 
+		[Category("Static Model")]
+		[TypeConverter( typeof( ExpandableObjectConverter ) )]
+		public ModelDescriptor Model { get; set; }
 
+
+
+		public StaticModelFactory ()
+		{
+			Model	=	new ModelDescriptor();
+		}
 
 
 		/// <summary>
@@ -34,10 +41,6 @@ namespace IronStar.Entities {
 		/// <param name="node"></param>
 		public void CreateStaticCollisionModel ( GameWorld gameWorld, Scene scene, Node node, Matrix worldMatrix )
 		{
-			if (!Collidable) {
-				return;
-			}
-
 			if (node.MeshIndex<0) {
 				return;
 			}
@@ -66,9 +69,6 @@ namespace IronStar.Entities {
 		/// <param name="worldMatrix"></param>
 		public void CreateStaticVisibleModel ( GameWorld gameWorld, Scene scene, Node node, Matrix worldMatrix )
 		{
-			if (!Visible) {
-				return;
-			}
 			if (node.MeshIndex<0) {
 				return;
 			}

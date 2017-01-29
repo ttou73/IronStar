@@ -16,9 +16,6 @@ namespace IronStar.Editor2 {
 		readonly protected Game game;
 		readonly protected MapEditor editor;
 
-		readonly protected Color SelectColor	=	new Color(255,211,149);
-		readonly protected Color GridColor		=	new Color(64,64,64);
-
 		public abstract bool IsManipulating { get; }
 
 

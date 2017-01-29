@@ -12,6 +12,20 @@ using IronStar.Mapping;
 namespace IronStar.Editor2 {
 	static class Utils {
 
+		readonly public static Color SelectColor		=	new Color(255,211,149);
+		readonly public static Color GridColor			=	new Color(64,64,64);
+		readonly public static Color WireColor			=	new Color(0,4,96);
+		readonly public static Color WireColorSelected	=	new Color(67,255,163);
+
+		
+		public static Ray TransformRay ( Matrix m, Ray r )
+		{
+			return new Ray( Vector3.TransformCoordinate( r.Position, m ), Vector3.TransformNormal( r.Direction, m ).Normalized() );
+		}
+
+
+
+
         public static float RayIntersectsRay(ref Ray ray1, ref Ray ray2, out Vector3 point1, out Vector3 point2 )
 		{
 			float t1, t2;

@@ -43,19 +43,19 @@ namespace IronStar.Editor2 {
 			var ray = editor.camera.PointToRay( x, y );
 
 			if (manipulating) {
-				DrawArrow( dr, ray, origin, direction, SelectColor  );
+				DrawArrow( dr, ray, origin, direction, Utils.SelectColor  );
 
-				dr.DrawPoint(initialPoint, linerSize, GridColor);
-				dr.DrawPoint(currentPoint, linerSize, GridColor);
-				dr.DrawLine(initialPoint, currentPoint, GridColor);
+				dr.DrawPoint(initialPoint, linerSize, Utils.GridColor);
+				dr.DrawPoint(currentPoint, linerSize, Utils.GridColor);
+				dr.DrawLine(initialPoint, currentPoint, Utils.GridColor);
 
 				foreach ( var item in editor.Selection ) {
 					var pos   = item.Transform.Translation;
 					var floor = item.Transform.Translation;
 					floor.Y = 0;
 
-					dr.DrawLine(floor, pos, GridColor);
-					dr.DrawWaypoint(floor, linerSize*5, GridColor);
+					dr.DrawLine(floor, pos, Utils.GridColor);
+					dr.DrawWaypoint(floor, linerSize*5, Utils.GridColor);
 				}
 				
 			} else {
@@ -66,9 +66,9 @@ namespace IronStar.Editor2 {
 
 				int hitInd	=	PollIntersections( hitX, hitY, hitZ );
 
-				DrawArrow( dr, ray, origin, Vector3.UnitX, hitInd == 0 ? SelectColor : Color.Red  );
-				DrawArrow( dr, ray, origin, Vector3.UnitY, hitInd == 1 ? SelectColor : Color.Lime );
-				DrawArrow( dr, ray, origin, Vector3.UnitZ, hitInd == 2 ? SelectColor : Color.Blue );
+				DrawArrow( dr, ray, origin, Vector3.UnitX, hitInd == 0 ? Utils.SelectColor : Color.Red  );
+				DrawArrow( dr, ray, origin, Vector3.UnitY, hitInd == 1 ? Utils.SelectColor : Color.Lime );
+				DrawArrow( dr, ray, origin, Vector3.UnitZ, hitInd == 2 ? Utils.SelectColor : Color.Blue );
 			}
 		}
 
