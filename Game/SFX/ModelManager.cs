@@ -85,9 +85,20 @@ namespace IronStar.SFX {
 
 			var model		=	new ModelInstance( this, modelDesc, scene, entity );
 
-			models.AddLast(model);
+			AddModel( model );
 
 			return model;
+		}
+
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="modelInstance"></param>
+		public void AddModel ( ModelInstance modelInstance )
+		{
+			models.AddLast( modelInstance );
 		}
 
 

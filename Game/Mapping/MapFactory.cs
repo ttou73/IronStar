@@ -8,6 +8,7 @@ using System.Xml.Serialization;
 using Fusion.Core.Mathematics;
 using IronStar.Core;
 using Fusion.Engine.Graphics;
+using IronStar.SFX;
 
 namespace IronStar.Mapping {
 	public class MapFactory {
@@ -19,6 +20,7 @@ namespace IronStar.Mapping {
 		{
 			Transform	=	new MapTransform();
 			Factory		=	null;
+			Model		=	new ModelDescriptor();
 		}
 
 
@@ -39,6 +41,12 @@ namespace IronStar.Mapping {
 		/// </summary>
 		[TypeConverter(typeof(ExpandableObjectConverter))]		
 		public EntityFactory Factory { get; set; }
+
+		/// <summary>
+		/// Entity factory
+		/// </summary>
+		[TypeConverter(typeof(ExpandableObjectConverter))]		
+		public ModelDescriptor Model { get; set; }
 
 
 		/// <summary>

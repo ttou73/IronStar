@@ -54,8 +54,11 @@ namespace IronStar.Core {
 
 		List<FXEvent> fxEvents = new List<FXEvent>();
 
-		SFX.FXPlayback		fxPlayback;
-		SFX.ModelManager	modelManager;
+		SFX.FXPlayback		fxPlayback = null;
+		SFX.ModelManager	modelManager = null;
+
+		public SFX.ModelManager	ModelManager { get { return modelManager; } }
+		public SFX.FXPlayback	FXPlayback   { get { return fxPlayback; } }
 
 
 		/// <summary>
@@ -70,8 +73,29 @@ namespace IronStar.Core {
 			entities	=	new EntityCollection();
 
 			if (enablePresentation) {
+
+				var rw = Game.RenderSystem.RenderWorld;
+
+				rw.VirtualTexture = Content.Load<VirtualTexture>("*megatexture");
 				fxPlayback		=	new SFX.FXPlayback( this );
 				modelManager	=	new SFX.ModelManager( this );
+
+				rw.HdrSettings.BloomAmount  = 0.1f;
+				rw.HdrSettings.DirtAmount   = 0.0f;
+				rw.HdrSettings.KeyValue     = 0.18f;
+
+				rw.SkySettings.SunPosition			= new Vector3( 1.0f, 0.8f, 1.3f );
+				rw.SkySettings.SunLightIntensity	= 100;
+				rw.SkySettings.SkyTurbidity			= 8;
+				rw.SkySettings.SkyIntensity			= 0.5f;
+
+				rw.LightSet.DirectLight.Direction	=	rw.SkySettings.SunLightDirection;
+				rw.LightSet.DirectLight.Intensity	=	rw.SkySettings.SunLightColor;
+
+				rw.LightSet.AmbientLevel	=	rw.SkySettings.AmbientLevel;
+				rw.LightSet.SpotAtlas		=	Content.Load<TextureAtlas>(@"spots\spots");
+
+				rw.FogSettings.Density		=	0.001f;
 			}
 		}
 
