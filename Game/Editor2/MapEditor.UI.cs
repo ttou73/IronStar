@@ -58,6 +58,10 @@ namespace IronStar.Editor2 {
 				if (e.Key==Keys.E) {
 					manipulator = new RotateTool(this);
 				}
+
+				if (e.Key==Keys.Delete) {
+					DeleteSelection();
+				}
 			}
 		}
 

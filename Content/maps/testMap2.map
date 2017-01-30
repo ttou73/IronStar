@@ -2,10 +2,10 @@
 <Map xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <Factories>
     <MapFactory>
-      <Guid>152a5316-2360-44e7-b652-fa2e2dce5757</Guid>
+      <Guid>00000000-0000-0000-0000-000000000000</Guid>
       <Transform>
-        <Translation X="-13.2314005" Y="0.9791794" Z="2.02642155" />
-        <Rotation X="0.194846451" Y="0.9534787" Z="0.154445112" W="-0.170468688" />
+        <Translation X="7" Y="4" Z="2.5" />
+        <Rotation X="-0.004409522" Y="0.0334936529" Z="-0.004409523" W="0.99941957" />
         <Scaling>1</Scaling>
         <Visible>true</Visible>
         <Frozen>false</Frozen>
@@ -17,12 +17,17 @@
           <Color Red="10" Green="10" Blue="10" Alpha="1" />
         </Model>
       </Factory>
+      <Model>
+        <ScenePath>scenes\mtrlTest.fbx</ScenePath>
+        <Scale>0.05</Scale>
+        <Color Red="10" Green="10" Blue="10" Alpha="1" />
+      </Model>
     </MapFactory>
     <MapFactory>
-      <Guid>fbb5f936-3d4a-4e27-a4ec-5dbd4e5ce427</Guid>
+      <Guid>00000000-0000-0000-0000-000000000000</Guid>
       <Transform>
-        <Translation X="0.42395708" Y="8.558207" Z="-9.641235" />
-        <Rotation X="0.473571241" Y="0.515388966" Z="-0.709111035" W="0.08524136" />
+        <Translation X="5" Y="4.5" Z="0.5" />
+        <Rotation X="0.5624222" Y="0.3036032" Z="0.232962921" W="0.732962847" />
         <Scaling>1</Scaling>
         <Visible>true</Visible>
         <Frozen>false</Frozen>
@@ -34,57 +39,11 @@
           <Color Red="10" Green="10" Blue="10" Alpha="1" />
         </Model>
       </Factory>
-    </MapFactory>
-    <MapFactory>
-      <Guid>6344f4dc-52eb-47fb-a9ee-b7a457a920ed</Guid>
-      <Transform>
-        <Translation X="3.76481366" Y="5.76469326" Z="11.7958364" />
-        <Rotation X="0.064139545" Y="-0.321712673" Z="-0.3624703" W="0.872354567" />
-        <Scaling>1</Scaling>
-        <Visible>true</Visible>
-        <Frozen>false</Frozen>
-      </Transform>
-      <Factory xsi:type="StaticModelFactory">
-        <Model>
-          <ScenePath />
-          <Scale>1</Scale>
-          <Color Red="10" Green="10" Blue="10" Alpha="1" />
-        </Model>
-      </Factory>
-    </MapFactory>
-    <MapFactory>
-      <Guid>d3623693-8078-4ff9-9f73-b8027cfd7b5d</Guid>
-      <Transform>
-        <Translation X="-9.107637" Y="4.83395243" Z="9.144533" />
-        <Rotation X="0.36760354" Y="0.7267481" Z="-0.5768893" W="-0.0624783635" />
-        <Scaling>1</Scaling>
-        <Visible>true</Visible>
-        <Frozen>false</Frozen>
-      </Transform>
-      <Factory xsi:type="StaticModelFactory">
-        <Model>
-          <ScenePath />
-          <Scale>1</Scale>
-          <Color Red="10" Green="10" Blue="10" Alpha="1" />
-        </Model>
-      </Factory>
-    </MapFactory>
-    <MapFactory>
-      <Guid>87ba4fdc-0e28-4fa6-b430-1a0cf5f6d306</Guid>
-      <Transform>
-        <Translation X="3.04068279" Y="5.71921349" Z="9.262791" />
-        <Rotation X="0.190659642" Y="0.4272006" Z="0.171329916" W="0.867060959" />
-        <Scaling>1</Scaling>
-        <Visible>true</Visible>
-        <Frozen>false</Frozen>
-      </Transform>
-      <Factory xsi:type="StaticModelFactory">
-        <Model>
-          <ScenePath />
-          <Scale>1</Scale>
-          <Color Red="10" Green="10" Blue="10" Alpha="1" />
-        </Model>
-      </Factory>
+      <Model>
+        <ScenePath>scenes\boxes\boxModel.fbx</ScenePath>
+        <Scale>1</Scale>
+        <Color Red="100" Green="100" Blue="100" Alpha="1" />
+      </Model>
     </MapFactory>
   </Factories>
 </Map>

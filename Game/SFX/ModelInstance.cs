@@ -39,8 +39,10 @@ namespace IronStar.SFX {
 		/// 
 		/// </summary>
 		/// <param name="modelManager"></param>
-		/// <param name="preTransform"></param>
-		/// <param name="meshInstance"></param>
+		/// <param name="descriptor"></param>
+		/// <param name="scene"></param>
+		/// <param name="entity"></param>
+		/// <param name="matrix"></param>
 		public ModelInstance ( ModelManager modelManager, ModelDescriptor descriptor, Scene scene, Entity entity )
 		{
 			this.modelManager   =   modelManager;
@@ -66,7 +68,6 @@ namespace IronStar.SFX {
 					meshInstances[i] = null;
 				}
 			}
-
 		}
 
 
@@ -82,7 +83,7 @@ namespace IronStar.SFX {
 
 			for ( int i = 0; i<nodeCount; i++ ) {
 				if (meshInstances[i]!=null) {
-					meshInstances[i].World = preTransform * globalTransforms[i] * worldMatrix;
+					meshInstances[i].World = globalTransforms[i] * preTransform * worldMatrix;
 					meshInstances[i].Color = color;
 				}
 			}

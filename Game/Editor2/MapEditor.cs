@@ -183,6 +183,50 @@ namespace IronStar.Editor2 {
 		}
 
 
+		public void Select( MapFactory factory )
+		{
+			if ( factory==null ) {
+				throw new ArgumentNullException( "factory" );
+			}
+			if ( !map.Factories.Contains( factory ) ) {
+				throw new ArgumentException( "Provided factory does not exist in current map" );
+			}
+			selection.Clear();
+			selection.Add( factory );
+
+			FeedSelection();
+		}
+
+
+		public void DeleteSelection ()
+		{
+			map.Factories.RemoveAll( item => selection.Contains(item) );	
+			ClearSelection();
+			FeedSelection();
+		}
+
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public void RefreshAppearance ()
+		{
+			world.ModelManager.KillAllModels();
+
+			foreach ( var factory in map.Factories ) {
+
+				if (string.IsNullOrWhiteSpace( factory.Model.ScenePath )) {
+					continue;
+				}
+
+				var scene	=	world.Content.Load<Scene>( factory.Model.ScenePath );
+				var dummy	=	new Entity( 0,0,0, factory.Transform.Translation, factory.Transform.Rotation );
+				var model	=	new ModelInstance( world.ModelManager, factory.Model, scene, dummy );
+
+				world.ModelManager.AddModel( model );
+			}
+		}
 
 		/*-----------------------------------------------------------------------------------------
 		 * 
@@ -197,6 +241,8 @@ namespace IronStar.Editor2 {
 		void IEditorInstance.Update( GameTime gameTime )
 		{
 			camera.Update( gameTime );
+
+			RefreshAppearance();
 
 			world.SimulateWorld( gameTime.ElapsedSec );
 			world.PresentWorld( gameTime.ElapsedSec, 1 );

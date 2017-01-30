@@ -15,6 +15,8 @@ using Fusion.Build;
 using Native.Fbx;
 using System.Reflection;
 using Fusion.Engine.Common;
+using IronStar.Core;
+using IronStar.Editor2;
 
 namespace IronStar.Editors {
 	public partial class MapEditorControl : UserControl {
@@ -25,46 +27,50 @@ namespace IronStar.Editors {
 		{
 			this.Game	=	game;
 			InitializeComponent();
+
+			PopulateCreateMenu();
+		}
+
+
+
+		void PopulateCreateMenu()
+		{
+			createToolStripMenuItem.Enabled = true;
+
+			var types = Misc.GetAllSubclassesOf( typeof(EntityFactory), false );
+
+
+
+			foreach ( var factType in types ) {
+
+				var item    =   new ToolStripMenuItem();
+
+				item.Text   =   factType.Name;
+
+				item.Click  +=  ( s, e ) => {
+
+					var fact  = new MapFactory();
+
+					var mapEditor = Game.GameEditor.Instance as MapEditor;
+	
+					fact.Factory = (EntityFactory)Activator.CreateInstance( factType );
+					
+					mapEditor.Map.Factories.Add( fact );
+					mapEditor.Select( fact );
+				};
+
+				createToolStripMenuItem.DropDownItems.Add( item );
+			}
+
 		}
 
 
 
 		public void SetSelection ( IEnumerable<MapFactory> selection )
 		{
-			//propertyGridTransform.SelectedObjects = selection.Select( fact => fact.Transform ).ToArray();	
-			propertyGridFactory	 .SelectedObjects = selection.Select( fact => fact.Factory ).ToArray();	
-
+			gridFactory.SelectedObjects		= selection.Select( fact => fact.Factory ).ToArray();	
+			gridTransform.SelectedObjects	= selection.Select( fact => fact.Transform ).ToArray();	
+			gridModel.SelectedObjects		= selection.Select( fact => fact.Model ).ToArray();	
 		}
-
-
-		public void SetOutliner ( IEnumerable<MapFactory> items )
-		{
-		}
-		
-
-		void RefreshMapListItems ()
-		{
-			
-			//mapListBox.RefreshListBox();
-		}
-
-
-
-		void PopulatePropertyGrid ()
-		{
-			//mapPropertyGrid.SelectedObjects = mapListBox.SelectedItems.Cast<MapFactory>().Select( n => n.Factory ).ToArray();
-		}
-
-
-
-		private void mapListBox_SelectedIndexChanged( object sender, EventArgs e )
-		{
-			PopulatePropertyGrid();
-		}
-
-		private void mapPropertyGrid_PropertyValueChanged( object s, PropertyValueChangedEventArgs e )
-		{
-		}
-
 	}
 }
