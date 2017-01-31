@@ -17,9 +17,9 @@ namespace Native {
 
 		static public ref class RecastBuilder {
 		public:
-			static PolyMesh^  BuildNavigationMesh(RecastMesh^ input, Configuration^ configuration, BuildContext^ buildContext);
+			static PolyMesh^  BuildNavigationMesh(RecastMesh^ input, RCConfig^ configuration, BuildContext^ buildContext);
 			
-			static Vector3^ CalculateBmin(RecastMesh^ mesh) {
+			static Vector3 CalculateBmin(RecastMesh^ mesh) {
 				auto rv = *(mesh->Vertices[0]);
 				auto arr = mesh->Vertices;
 				for (int i = 0; i < arr->Length; i++) {
@@ -36,10 +36,10 @@ namespace Native {
 						rv.Z = testV->Z;
 					}
 				}
-				return %rv;
+				return rv;
 			}
 
-			static Vector3^ CalculateBmax(RecastMesh^ mesh) {
+			static Vector3 CalculateBmax(RecastMesh^ mesh) {
 				auto rv = *(mesh->Vertices[0]);
 				auto arr = mesh->Vertices;
 				for (int i = 0; i < arr->Length; i++) {
@@ -56,16 +56,16 @@ namespace Native {
 						rv.Z = testV->Z;
 					}
 				}
-				return %rv;
+				return rv;
 			}
 
-			static void CalculateGridSize(Configuration^ configuration) {
+			static void CalculateGridSize(RCConfig^ configuration) {
 				auto native = configuration->nativeConfig;
 				rcCalcGridSize(native->bmin, native->bmax, native->cs, &native->width, &native->height);
 			}
 
 			//TODO:: think about location of this function
-			static void MarkWalkableTriangles(BuildContext^ context, Configuration^ configuration, RecastMesh^ mesh, array<uchar>^ triangleAreas) {
+			static void MarkWalkableTriangles(BuildContext^ context, RCConfig^ configuration, RecastMesh^ mesh, array<uchar>^ triangleAreas) {
 
 
 				//TODO :: keep array in RecastMesh in native array(not in c++/cli Vector3)

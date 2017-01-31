@@ -25,7 +25,7 @@ namespace Native {
 				nativeMeshDetail = nullptr;
 			}
 
-			void Build(BuildContext^ context, Configuration^ configuration, CompactHeightField^ chf, PolyMesh^ mesh) {
+			void Build(BuildContext^ context, RCConfig^ configuration, CompactHeightField^ chf, PolyMesh^ mesh) {
 
 				auto t = rcBuildPolyMeshDetail(context->nativeContext, *(mesh->nativeMesh), *(chf->nativeCHF), configuration->DetailSampleDist, configuration->DetailSampleMaxError, *nativeMeshDetail);
 				if (!t) {

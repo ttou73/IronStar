@@ -21,7 +21,7 @@ namespace Native {
 				nativeCHF = nullptr;
 			}
 
-			void Build(BuildContext^ context, Configuration^ configuration, HeightField^ heightField) {
+			void Build(BuildContext^ context, RCConfig^ configuration, HeightField^ heightField) {
 
 				auto t = rcBuildCompactHeightfield(context->nativeContext, configuration->WalkableHeight, configuration->WalkableClimb, *(heightField->nativeHeightField), *nativeCHF);
 				if (!t) {
@@ -29,7 +29,7 @@ namespace Native {
 				}
 			}
 
-			void ErodeWalkableArea(BuildContext^ context, Configuration^ configuration) {
+			void ErodeWalkableArea(BuildContext^ context, RCConfig^ configuration) {
 				bool t = rcErodeWalkableArea(context->nativeContext, configuration->WalkableRadius, *nativeCHF);
 
 				if (!t) {
@@ -37,7 +37,7 @@ namespace Native {
 				}
 			}
 
-			void BuildRegionsMonotone(BuildContext^ context, Configuration^ configuration) {
+			void BuildRegionsMonotone(BuildContext^ context, RCConfig^ configuration) {
 				bool t = rcBuildRegionsMonotone(context->nativeContext, *nativeCHF, 0, configuration->MinRegionArea, configuration->MergeRegionArea);
 
 				if (!t) {

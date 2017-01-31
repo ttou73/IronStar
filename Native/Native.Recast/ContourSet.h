@@ -24,7 +24,7 @@ namespace Native {
 				nativeSet = nullptr;
 			}
 
-			void Build(BuildContext^ context, Configuration^ configuration, CompactHeightField^ chf) {
+			void Build(BuildContext^ context, RCConfig^ configuration, CompactHeightField^ chf) {
 
 				auto t = rcBuildContours(context->nativeContext, *(chf->nativeCHF), configuration->MaxSimplificationError, configuration->MaxEdgeLen, *nativeSet);
 				if (!t) {

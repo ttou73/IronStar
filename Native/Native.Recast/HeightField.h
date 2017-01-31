@@ -23,14 +23,14 @@ namespace Native {
 				nativeHeightField = nullptr;
 			}
 
-			void Create(BuildContext^ context, Configuration^ configuration) {
-				auto t = rcCreateHeightfield(context->nativeContext, *nativeHeightField, configuration->Width, configuration->Height, configuration->nativeConfig->bmin, configuration->nativeConfig->bmax, configuration->CS, configuration->CH);
+			void Create(BuildContext^ context, RCConfig^ configuration) {
+				auto t = rcCreateHeightfield(context->nativeContext, *nativeHeightField, configuration->Width, configuration->Height, configuration->nativeConfig->bmin, configuration->nativeConfig->bmax, configuration->CellSize, configuration->CellHeight);
 				if (!t) {
 					throw gcnew HeightFieldCreateException();
 				}
 			}
 
-			void RasterizeTriangles(BuildContext^ context, Configuration^ configuration, RecastMesh^ mesh, array<uchar>^ triangleAreas) {
+			void RasterizeTriangles(BuildContext^ context, RCConfig^ configuration, RecastMesh^ mesh, array<uchar>^ triangleAreas) {
 				//TODO :: keep array in RecastMesh in native array(not in c++/cli Vector3)
 				float* vertices = new float[mesh->Vertices->Length * 3];
 				for (int i = 0; i < mesh->Vertices->Length; i++) {
@@ -48,15 +48,15 @@ namespace Native {
 				delete[] vertices;
 			}
 
-			void FilterLowHangingWalkableObstacles(BuildContext^ buildContext, Configuration^ configuration) {
+			void FilterLowHangingWalkableObstacles(BuildContext^ buildContext, RCConfig^ configuration) {
 				rcFilterLowHangingWalkableObstacles(buildContext->nativeContext, configuration->WalkableClimb, *nativeHeightField);
 			}
 
-			void FilterLedgeSpans(BuildContext^ buildContext, Configuration^ configuration) {
+			void FilterLedgeSpans(BuildContext^ buildContext, RCConfig^ configuration) {
 				rcFilterLedgeSpans(buildContext->nativeContext,configuration->WalkableHeight, configuration->WalkableClimb, *nativeHeightField);
 			}	
 
-			void FilterWalkableLowHeightSpans(BuildContext^ buildContext, Configuration^ configuration) {
+			void FilterWalkableLowHeightSpans(BuildContext^ buildContext, RCConfig^ configuration) {
 				rcFilterWalkableLowHeightSpans(buildContext->nativeContext, configuration->WalkableHeight, *nativeHeightField);
 			}
 

@@ -25,7 +25,7 @@ namespace Native {
 				nativeMesh = nullptr;
 			}
 
-			void Build(BuildContext^ context, Configuration^ configuration, CompactHeightField^ chf, ContourSet^ set) {
+			void Build(BuildContext^ context, RCConfig^ configuration, CompactHeightField^ chf, ContourSet^ set) {
 
 				auto t = rcBuildPolyMesh(context->nativeContext, *(set->nativeSet), configuration->MaxVertsPerPoly, *nativeMesh);
 				if (!t) {

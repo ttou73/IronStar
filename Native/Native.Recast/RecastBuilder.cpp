@@ -1,13 +1,13 @@
 #include "RecastBuilder.h"
 using namespace Native::Recast;
 
-PolyMesh^ RecastBuilder::BuildNavigationMesh(RecastMesh ^ input, Configuration^ configuration, BuildContext^ buildContext)
+PolyMesh^ RecastBuilder::BuildNavigationMesh(RecastMesh ^ input, RCConfig^ configuration, BuildContext^ buildContext)
 {
 	int triangleCount = input->Indices->Length / 3;
 	int verticesCount = input->Vertices->Length;
 
-	configuration->Bmin = CalculateBmin(input);
-	configuration->Bmax = CalculateBmax(input);
+	configuration->BMin = CalculateBmin(input);
+	configuration->BMax = CalculateBmax(input);
 
 	CalculateGridSize(configuration);
 
