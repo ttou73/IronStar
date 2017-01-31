@@ -20,43 +20,43 @@ namespace Native {
 			static PolyMesh^  BuildNavigationMesh(RecastMesh^ input, Configuration^ configuration, BuildContext^ buildContext);
 			
 			static Vector3^ CalculateBmin(RecastMesh^ mesh) {
-				auto rv = (mesh->Vertices[0]);
+				auto rv = *(mesh->Vertices[0]);
 				auto arr = mesh->Vertices;
 				for (int i = 0; i < arr->Length; i++) {
 					auto testV = arr[i];
-					if (testV->X < rv->X) {
-						rv->X = testV->X;
+					if (testV->X < rv.X) {
+						rv.X = testV->X;
 					}
 
-					if (testV->Y < rv->Y) {
-						rv->Y = testV->Y;
+					if (testV->Y < rv.Y) {
+						rv.Y = testV->Y;
 					}
 
-					if (testV->Z < rv->Z) {
-						rv->Z = testV->Z;
+					if (testV->Z < rv.Z) {
+						rv.Z = testV->Z;
 					}
 				}
-				return rv;
+				return %rv;
 			}
 
 			static Vector3^ CalculateBmax(RecastMesh^ mesh) {
-				auto rv = (mesh->Vertices[0]);
+				auto rv = *(mesh->Vertices[0]);
 				auto arr = mesh->Vertices;
 				for (int i = 0; i < arr->Length; i++) {
 					auto testV = arr[i];
-					if (testV->X > rv->X) {
-						rv->X = testV->X;
+					if (testV->X > rv.X) {
+						rv.X = testV->X;
 					}
 
-					if (testV->Y > rv->Y) {
-						rv->Y = testV->Y;
+					if (testV->Y > rv.Y) {
+						rv.Y = testV->Y;
 					}
 
-					if (testV->Z > rv->Z) {
-						rv->Z = testV->Z;
+					if (testV->Z > rv.Z) {
+						rv.Z = testV->Z;
 					}
 				}
-				return rv;
+				return %rv;
 			}
 
 			static void CalculateGridSize(Configuration^ configuration) {

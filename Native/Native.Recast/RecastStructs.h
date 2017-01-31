@@ -14,6 +14,13 @@ namespace Native {
 				Y = y;
 				Z = z;
 			};
+
+			Vector3(const Vector3% other) {
+				X = other.X;
+				Y = other.Y;
+				Z = other.Z;
+			}
+			
 			float X;
 			float Y;
 			float Z;
