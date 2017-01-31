@@ -219,8 +219,13 @@ namespace Native {
 				}
 			}
 
+			RCConfig()
+			{
+				nativeConfig = new rcConfig();
+			}
+
 		internal:
-			rcConfig* nativeConfig;
+			rcConfig *nativeConfig;
 		};
 	}
 }

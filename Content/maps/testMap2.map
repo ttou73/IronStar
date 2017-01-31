@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Map xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <NavConfig>
-    <DetailSampleMaxError>0</DetailSampleMaxError>
-    <DetailSampleDist>0</DetailSampleDist>
-    <MaxVertsPerPoly>0</MaxVertsPerPoly>
-    <MergeRegionArea>0</MergeRegionArea>
-    <MinRegionArea>0</MinRegionArea>
-    <MaxSimplificationError>0</MaxSimplificationError>
-    <MaxEdgeLen>0</MaxEdgeLen>
-    <WalkableRadius>0</WalkableRadius>
-    <WalkableClimb>0</WalkableClimb>
-    <WalkableHeight>0</WalkableHeight>
-    <WalkableSlopeAngle>0</WalkableSlopeAngle>
-    <BMax X="0" Y="0" Z="0" />
-    <BMin X="0" Y="0" Z="0" />
-    <CellHeight>0</CellHeight>
-    <CellSize>0</CellSize>
-    <BorderSize>0</BorderSize>
+    <DetailSampleMaxError>1</DetailSampleMaxError>
+    <DetailSampleDist>6</DetailSampleDist>
+    <MaxVertsPerPoly>3</MaxVertsPerPoly>
+    <MergeRegionArea>400</MergeRegionArea>
+    <MinRegionArea>64</MinRegionArea>
+    <MaxSimplificationError>1.3</MaxSimplificationError>
+    <MaxEdgeLen>40</MaxEdgeLen>
+    <WalkableRadius>2</WalkableRadius>
+    <WalkableClimb>4</WalkableClimb>
+    <WalkableHeight>10</WalkableHeight>
+    <WalkableSlopeAngle>45</WalkableSlopeAngle>
+    <BMax X="0" Y="0" Z="100" />
+    <BMin X="-100" Y="0" Z="-100" />
+    <CellHeight>0.2</CellHeight>
+    <CellSize>0.3</CellSize>
+    <BorderSize>1</BorderSize>
     <TileSize>0</TileSize>
-    <Height>0</Height>
-    <Width>0</Width>
+    <Height>667</Height>
+    <Width>333</Width>
   </NavConfig>
   <Factories>
     <MapFactory>

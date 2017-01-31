@@ -85,5 +85,10 @@ namespace IronStar.Editors {
 		{
 			PropertyDialog.Show( this, "Recast Configuration", MapEditor.Map.NavConfig );
 		}
+
+		private void navigationMeshToolStripMenuItem_Click( object sender, EventArgs e )
+		{
+			MapEditor.Map.BuildNavigationMesh();
+		}
 	}
 }

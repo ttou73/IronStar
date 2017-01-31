@@ -154,7 +154,8 @@
 			// 
 			this.navigationMeshToolStripMenuItem.Name = "navigationMeshToolStripMenuItem";
 			this.navigationMeshToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
-			this.navigationMeshToolStripMenuItem.Text = "Navigation Mesh...";
+			this.navigationMeshToolStripMenuItem.Text = "Navigation Mesh";
+			this.navigationMeshToolStripMenuItem.Click += new System.EventHandler(this.navigationMeshToolStripMenuItem_Click);
 			// 
 			// irradianceCacheToolStripMenuItem
 			// 
