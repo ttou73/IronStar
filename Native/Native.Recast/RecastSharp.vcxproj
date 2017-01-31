@@ -20,7 +20,7 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{0DAF5F26-3AA9-479C-831A-693AA074B05E}</ProjectGuid>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <Keyword>ManagedCProj</Keyword>
     <RootNamespace>RecastSharp</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
@@ -142,7 +142,6 @@
     <ClInclude Include="PolyMeshDetail.h" />
     <ClInclude Include="RecastSharp.h" />
     <ClInclude Include="RecastBuilder.h" />
-    <ClInclude Include="RecastStructs.h" />
     <ClInclude Include="Recast\Headers\Recast.h" />
     <ClInclude Include="Recast\Headers\RecastAlloc.h" />
     <ClInclude Include="Recast\Headers\RecastAssert.h" />
@@ -175,6 +174,11 @@
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="app.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Engine\Fusion.csproj">
+      <Project>{085c9e62-cddf-4b95-994d-085c74fa90fc}</Project>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Image Include="app.ico" />

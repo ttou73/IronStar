@@ -51,9 +51,6 @@
     <ClInclude Include="RecastBuilder.h">
       <Filter>RecastWrapper\Headers</Filter>
     </ClInclude>
-    <ClInclude Include="RecastStructs.h">
-      <Filter>RecastWrapper\Headers</Filter>
-    </ClInclude>
     <ClInclude Include="RecastSharp.h">
       <Filter>RecastWrapper\Headers</Filter>
     </ClInclude>

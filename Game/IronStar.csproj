@@ -125,6 +125,7 @@
     <Compile Include="Entities\StartPoint.cs" />
     <Compile Include="Entities\WorldspawnFactory.cs" />
     <Compile Include="Entities\StaticModelFactory.cs" />
+    <Compile Include="Mapping\Map.Build.cs" />
     <Compile Include="Mapping\MapFactory.cs" />
     <Compile Include="Mapping\Map.cs" />
     <Compile Include="Mapping\MapTransform.cs" />
@@ -167,6 +168,10 @@
     <ProjectReference Include="..\Native\Native.Fbx\Native.Fbx.vcxproj">
       <Project>{1131387f-6129-4287-a973-8b43dc9efd49}</Project>
       <Name>Native.Fbx</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Native\Native.Recast\RecastSharp.vcxproj">
+      <Project>{0daf5f26-3aa9-479c-831a-693aa074b05e}</Project>
+      <Name>Native.Recast</Name>
     </ProjectReference>
     <ProjectReference Include="..\SDKs\BEPUPhysics\BEPUphysics\BEPUphysics.csproj">
       <Project>{c0d52c9f-14b8-4008-8ddc-109c27561a5c}</Project>
