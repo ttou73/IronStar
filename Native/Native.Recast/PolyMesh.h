@@ -57,6 +57,18 @@ namespace Native {
 				}
 			}
 
+			property Vector3 BMin {
+				Vector3 get() {
+					return Vector3(nativeMesh->bmin[0], nativeMesh->bmin[1], nativeMesh->bmin[2]);
+				}
+			}
+
+			property Vector3 Bmax {
+				Vector3 get() {
+					return Vector3(nativeMesh->bmax[0], nativeMesh->bmax[1], nativeMesh->bmax[2]);
+				}
+			}
+
 			property int VerticesCount {
 				int get() {
 					return nativeMesh->nverts;
