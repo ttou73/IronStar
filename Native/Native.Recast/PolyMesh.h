@@ -57,6 +57,18 @@ namespace Native {
 				}
 			}
 
+			///< The area id assigned to each polygon. [Length: #npolys]
+			property array<uchar>^ Areas {
+				array<uchar>^ get() {
+					array<uchar>^ temp = gcnew array<uchar>(nativeMesh->npolys);
+					const uchar* temp2 = nativeMesh->areas;
+					for (int i = 0; i < nativeMesh->npolys; i++) {
+						temp[i] = temp2[i];
+					}
+					return temp;
+				}
+			}
+
 			property Vector3 BMin {
 				Vector3 get() {
 					return Vector3(nativeMesh->bmin[0], nativeMesh->bmin[1], nativeMesh->bmin[2]);
@@ -68,6 +80,8 @@ namespace Native {
 					return Vector3(nativeMesh->bmax[0], nativeMesh->bmax[1], nativeMesh->bmax[2]);
 				}
 			}
+
+			
 
 			property int VerticesCount {
 				int get() {

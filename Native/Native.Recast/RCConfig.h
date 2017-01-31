@@ -8,6 +8,12 @@ using namespace Fusion::Core::Mathematics;
 namespace Native {
 	namespace Recast {
 
+		public enum class PartitionType {
+			Watershed,
+			Monotone,
+			Layer
+		};
+
 		public ref class RCConfig {
 
 		public:
@@ -219,6 +225,10 @@ namespace Native {
 				}
 			}
 
+
+			property PartitionType PartitionType;
+
+
 			RCConfig()
 			{
 				nativeConfig = new rcConfig();
@@ -227,6 +237,8 @@ namespace Native {
 		internal:
 			rcConfig *nativeConfig;
 		};
+
+	
 	}
 }
 #endif

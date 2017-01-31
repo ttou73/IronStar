@@ -39,7 +39,23 @@ PolyMesh^ RecastBuilder::BuildNavigationMesh(RecastMesh ^ input, RCConfig^ confi
 	//TODO:: add another type of triangulation
 
 	//Monotonne partition
-	chf->BuildRegionsMonotone(buildContext, configuration);
+
+	switch (configuration->PartitionType)
+	{
+	case PartitionType::Watershed:
+		chf->BuildDistanceField(buildContext, configuration);
+		chf->BuildRegions(buildContext, configuration);
+			break;
+	case PartitionType::Monotone:
+		chf->BuildRegionsMonotone(buildContext, configuration);
+		break;
+	case PartitionType::Layer:
+		break;
+	default:
+		throw gcnew System::Exception();
+		break;
+	}
+
 
 	ContourSet^ contourSet = ContourSet::AllocateContourSet();
 	contourSet->Build(buildContext, configuration, chf);

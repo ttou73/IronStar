@@ -37,8 +37,32 @@ namespace Native {
 				}
 			}
 
+			void BuildDistanceField(BuildContext^ context, RCConfig^ configuration) {
+				bool t = rcBuildDistanceField(context->nativeContext, *nativeCHF);
+
+				if (!t) {
+					throw gcnew CompactHeightFieldPartitionException();
+				}
+			}
+
+			void BuildRegions(BuildContext^ context, RCConfig^ configuration) {
+				bool t = rcBuildRegions(context->nativeContext, *nativeCHF, 0, configuration->MinRegionArea, configuration->MergeRegionArea);
+
+				if (!t) {
+					throw gcnew CompactHeightFieldPartitionException();
+				}
+			}
+
 			void BuildRegionsMonotone(BuildContext^ context, RCConfig^ configuration) {
 				bool t = rcBuildRegionsMonotone(context->nativeContext, *nativeCHF, 0, configuration->MinRegionArea, configuration->MergeRegionArea);
+
+				if (!t) {
+					throw gcnew CompactHeightFieldPartitionException();
+				}
+			}
+
+			void BuildLayerRegions(BuildContext^ context, RCConfig^ configuration) {
+				bool t = rcBuildLayerRegions(context->nativeContext, *nativeCHF, 0, configuration->MinRegionArea);
 
 				if (!t) {
 					throw gcnew CompactHeightFieldPartitionException();
