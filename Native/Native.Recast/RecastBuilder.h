@@ -13,34 +13,12 @@ namespace Native {
 	namespace Recast {
 
 
+
 		static public ref class RecastBuilder {
 		public:
-			static PolyMesh^  BuildNavigationMesh(RecastMesh^ input, Configuration^ configuration, BuildContext^ buildContext);
-
-			static void CalculateGridSize(Configuration^ configuration) {
-				auto native = configuration->nativeConfig;
-				rcCalcGridSize(native->bmin, native->bmax, native->cs, &native->width, &native->height);
-			}
-
-			//TODO:: think about location of this function
-			static void MarkWalkableTriangles(BuildContext^ context, Configuration^ configuration, RecastMesh^ mesh, array<uchar>^ triangleAreas) {
-
-
-				//TODO :: keep array in RecastMesh in native array(not in c++/cli Vector3)
-				float* vertices = new float[mesh->Vertices->Length * 3];
-				for (int i = 0; i < mesh->Vertices->Length; i++) {
-					vertices[i * 3 + 0] = mesh->Vertices[i]->X;
-					vertices[i * 3 + 1] = mesh->Vertices[i]->Y;
-					vertices[i * 3 + 2] = mesh->Vertices[i]->Z;
-				}
-				pin_ptr<uchar> ptr = &triangleAreas[0];
-				pin_ptr<int> triPtr = &mesh->Indices[0];
-				//TODO: check ptr
-				rcMarkWalkableTriangles(context->nativeContext, configuration->WalkableSlopeAngle, vertices, mesh->Vertices->Length, (int*)triPtr, mesh->Indices->Length / 3, (uchar*)ptr);
-				delete[] vertices;
-			}
-
-			static  Vector3^ CalculateBmin(RecastMesh^ mesh) {
+			PolyMesh^  BuildNavigationMesh(RecastMesh^ input, Configuration^ configuration, BuildContext^ buildContext);
+			
+			static Vector3^ CalculateBmin(RecastMesh^ mesh) {
 				auto rv = (mesh->Vertices[0]);
 				auto arr = mesh->Vertices;
 				for (int i = 0; i < arr->Length; i++) {
@@ -79,7 +57,32 @@ namespace Native {
 				}
 				return rv;
 			}
+
+			static void CalculateGridSize(Configuration^ configuration) {
+				auto native = configuration->nativeConfig;
+				rcCalcGridSize(native->bmin, native->bmax, native->cs, &native->width, &native->height);
+			}
+
+			//TODO:: think about location of this function
+			static void MarkWalkableTriangles(BuildContext^ context, Configuration^ configuration, RecastMesh^ mesh, array<uchar>^ triangleAreas) {
+
+
+				//TODO :: keep array in RecastMesh in native array(not in c++/cli Vector3)
+				float* vertices = new float[mesh->Vertices->Length * 3];
+				for (int i = 0; i < mesh->Vertices->Length; i++) {
+					vertices[i * 3 + 0] = mesh->Vertices[i]->X;
+					vertices[i * 3 + 1] = mesh->Vertices[i]->Y;
+					vertices[i * 3 + 2] = mesh->Vertices[i]->Z;
+				}
+				pin_ptr<uchar> ptr = &triangleAreas[0];
+				pin_ptr<int> triPtr = &mesh->Indices[0];
+				//TODO: check ptr
+				rcMarkWalkableTriangles(context->nativeContext, configuration->WalkableSlopeAngle, vertices, mesh->Vertices->Length, (int*)triPtr, mesh->Indices->Length / 3, (uchar*)ptr);
+				delete[] vertices;
+			}
 		};
+
+		
 	}
 }
 
