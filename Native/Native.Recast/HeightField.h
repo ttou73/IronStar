@@ -34,9 +34,9 @@ namespace Native {
 				//TODO :: keep array in RecastMesh in native array(not in c++/cli Vector3)
 				float* vertices = new float[mesh->Vertices->Length * 3];
 				for (int i = 0; i < mesh->Vertices->Length; i++) {
-					vertices[i * 3 + 0] = mesh->Vertices[i]->X;
-					vertices[i * 3 + 1] = mesh->Vertices[i]->Y;
-					vertices[i * 3 + 2] = mesh->Vertices[i]->Z;
+					vertices[i * 3 + 0] = mesh->Vertices[i].X;
+					vertices[i * 3 + 1] = mesh->Vertices[i].Y;
+					vertices[i * 3 + 2] = mesh->Vertices[i].Z;
 				}
 				pin_ptr<uchar> ptr = &triangleAreas[0];
 				pin_ptr<int> tris = &mesh->Indices[0];

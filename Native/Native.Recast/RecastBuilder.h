@@ -20,40 +20,40 @@ namespace Native {
 			static PolyMesh^  BuildNavigationMesh(RecastMesh^ input, RCConfig^ configuration, BuildContext^ buildContext);
 			
 			static Vector3 CalculateBmin(RecastMesh^ mesh) {
-				auto rv = *(mesh->Vertices[0]);
+				auto rv = mesh->Vertices[0];
 				auto arr = mesh->Vertices;
 				for (int i = 0; i < arr->Length; i++) {
 					auto testV = arr[i];
-					if (testV->X < rv.X) {
-						rv.X = testV->X;
+					if (testV.X < rv.X) {
+						rv.X = testV.X;
 					}
 
-					if (testV->Y < rv.Y) {
-						rv.Y = testV->Y;
+					if (testV.Y < rv.Y) {
+						rv.Y = testV.Y;
 					}
 
-					if (testV->Z < rv.Z) {
-						rv.Z = testV->Z;
+					if (testV.Z < rv.Z) {
+						rv.Z = testV.Z;
 					}
 				}
 				return rv;
 			}
 
 			static Vector3 CalculateBmax(RecastMesh^ mesh) {
-				auto rv = *(mesh->Vertices[0]);
+				auto rv = mesh->Vertices[0];
 				auto arr = mesh->Vertices;
 				for (int i = 0; i < arr->Length; i++) {
 					auto testV = arr[i];
-					if (testV->X > rv.X) {
-						rv.X = testV->X;
+					if (testV.X > rv.X) {
+						rv.X = testV.X;
 					}
 
-					if (testV->Y > rv.Y) {
-						rv.Y = testV->Y;
+					if (testV.Y > rv.Y) {
+						rv.Y = testV.Y;
 					}
 
-					if (testV->Z > rv.Z) {
-						rv.Z = testV->Z;
+					if (testV.Z > rv.Z) {
+						rv.Z = testV.Z;
 					}
 				}
 				return rv;
@@ -71,9 +71,9 @@ namespace Native {
 				//TODO :: keep array in RecastMesh in native array(not in c++/cli Vector3)
 				float* vertices = new float[mesh->Vertices->Length * 3];
 				for (int i = 0; i < mesh->Vertices->Length; i++) {
-					vertices[i * 3 + 0] = mesh->Vertices[i]->X;
-					vertices[i * 3 + 1] = mesh->Vertices[i]->Y;
-					vertices[i * 3 + 2] = mesh->Vertices[i]->Z;
+					vertices[i * 3 + 0] = mesh->Vertices[i].X;
+					vertices[i * 3 + 1] = mesh->Vertices[i].Y;
+					vertices[i * 3 + 2] = mesh->Vertices[i].Z;
 				}
 				pin_ptr<uchar> ptr = &triangleAreas[0];
 				pin_ptr<int> triPtr = &mesh->Indices[0];

@@ -21,7 +21,7 @@ namespace Native {
 		public ref class RecastMesh
 		{
 		public:
-			array<Vector3^ >^ Vertices;
+			array<Vector3>^ Vertices;
 			array<int>^ Indices;
 		};
 
