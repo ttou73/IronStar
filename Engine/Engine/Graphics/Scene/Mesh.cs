@@ -69,14 +69,14 @@ namespace Fusion.Engine.Graphics {
 		/// Gets indices ready for hardware use
 		/// </summary>
 		/// <returns></returns>
-		public int[] GetIndices ()
+		public int[] GetIndices ( int baseIndex = 0 )
 		{
 			int[] array = new int[ Triangles.Count * 3];
 
 			for (int i=0; i<Triangles.Count; i++) {
-				array[i*3+0] = Triangles[i].Index0;
-				array[i*3+1] = Triangles[i].Index1;
-				array[i*3+2] = Triangles[i].Index2;
+				array[i*3+0] = Triangles[i].Index0 + baseIndex;
+				array[i*3+1] = Triangles[i].Index1 + baseIndex;
+				array[i*3+2] = Triangles[i].Index2 + baseIndex;
 			}
 
 			return array;

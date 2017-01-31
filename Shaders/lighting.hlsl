@@ -311,6 +311,8 @@ void CSMain(
 	//	Ambient :
 	//-----------------------------------------------------
 	
+	totalLight.rgb += Params.AmbientColor * diffuse.rgb * ssao.rgb;
+	
 	float3 fogColor	=	FogTable.SampleLevel( SamplerLinearClamp, -viewDirN, 0 ).rgb;
 	
 	if (depth<0.9999f) {

@@ -1,26 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Map xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <NavConfig>
-    <DetailSampleMaxError>1</DetailSampleMaxError>
-    <DetailSampleDist>6</DetailSampleDist>
-    <MaxVertsPerPoly>3</MaxVertsPerPoly>
-    <MergeRegionArea>400</MergeRegionArea>
-    <MinRegionArea>64</MinRegionArea>
-    <MaxSimplificationError>1.3</MaxSimplificationError>
-    <MaxEdgeLen>40</MaxEdgeLen>
-    <WalkableRadius>2</WalkableRadius>
-    <WalkableClimb>4</WalkableClimb>
-    <WalkableHeight>10</WalkableHeight>
-    <WalkableSlopeAngle>45</WalkableSlopeAngle>
-    <BMax X="0" Y="0" Z="100" />
-    <BMin X="-100" Y="0" Z="-100" />
-    <CellHeight>0.2</CellHeight>
-    <CellSize>0.3</CellSize>
-    <BorderSize>1</BorderSize>
-    <TileSize>0</TileSize>
-    <Height>667</Height>
-    <Width>333</Width>
-  </NavConfig>
   <Factories>
     <MapFactory>
       <Guid>00000000-0000-0000-0000-000000000000</Guid>
@@ -47,7 +26,7 @@
     <MapFactory>
       <Guid>00000000-0000-0000-0000-000000000000</Guid>
       <Transform>
-        <Translation X="1.5" Y="9" Z="0.5" />
+        <Translation X="9" Y="10" Z="20" />
         <Rotation X="0.4304593" Y="2.98023224E-08" Z="0.43045935" W="0.79335326" />
         <Scaling>1</Scaling>
         <Visible>true</Visible>

@@ -249,6 +249,8 @@ namespace IronStar.Editor2 {
 
 			rs.RenderWorld.Debug.DrawGrid( 10 );
 
+			map.DrawNavigationMeshDebug( rs.RenderWorld.Debug );
+
 			hud.Update(gameTime);
 
 			//

@@ -88,7 +88,7 @@ namespace IronStar.Editors {
 
 		private void navigationMeshToolStripMenuItem_Click( object sender, EventArgs e )
 		{
-			MapEditor.Map.BuildNavigationMesh();
+			MapEditor.Map.BuildNavigationMesh( MapEditor.Content );
 		}
 	}
 }
