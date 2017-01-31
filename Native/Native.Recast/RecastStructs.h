@@ -3,6 +3,7 @@
 #define RecastStructs
 
 namespace Native {
+	/*
 	namespace Recast {
 
 		public ref struct Vector3 {
@@ -26,6 +27,7 @@ namespace Native {
 		};
 
 	}
+	*/
 }
 
 

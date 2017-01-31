@@ -9,6 +9,7 @@
 using uint = unsigned int;
 using ushort = unsigned short;
 using uchar = unsigned char;
+using namespace Fusion::Core::Mathematics;
 
 
 namespace Native {

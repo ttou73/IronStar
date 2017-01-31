@@ -32,6 +32,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{2C943100-BC24-44CD-9A8E-70A34775B8A7}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Native.Recast", "Native\Native.Recast\RecastSharp.vcxproj", "{0DAF5F26-3AA9-479C-831A-693AA074B05E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{085C9E62-CDDF-4B95-994D-085C74FA90FC} = {085C9E62-CDDF-4B95-994D-085C74FA90FC}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
