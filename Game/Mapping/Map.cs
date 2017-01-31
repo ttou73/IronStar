@@ -128,8 +128,11 @@ namespace IronStar.Mapping {
 		/// <returns></returns>
 		public static Map LoadFromXml ( Stream stream )
 		{
-			var	extraTypes = Misc.GetAllSubclassesOf( typeof( EntityFactory ) );
-			return (Map)Misc.LoadObjectFromXml( typeof( Map ), stream, extraTypes );
+			var extraTypes = new List<Type>();
+			extraTypes.AddRange( Misc.GetAllSubclassesOf( typeof( EntityFactory ) ) );
+			extraTypes.Add( typeof( Native.Recast.RCConfig ) );
+
+			return (Map)Misc.LoadObjectFromXml( typeof( Map ), stream, extraTypes.ToArray() );
 		}
 
 
@@ -140,8 +143,11 @@ namespace IronStar.Mapping {
 		/// <param name="stream"></param>
 		public static void SaveToXml ( Map map, Stream stream )
 		{
-			var	extraTypes = Misc.GetAllSubclassesOf( typeof( EntityFactory ) );
-			Misc.SaveObjectToXml( map, typeof( Map ), stream, extraTypes );
+			var extraTypes = new List<Type>();
+			extraTypes.AddRange( Misc.GetAllSubclassesOf( typeof( EntityFactory ) ) );
+			extraTypes.Add( typeof( Native.Recast.RCConfig ) );
+			
+			Misc.SaveObjectToXml( map, typeof( Map ), stream, extraTypes.ToArray() );
 		}
 
 

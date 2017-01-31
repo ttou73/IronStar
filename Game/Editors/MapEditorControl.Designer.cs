@@ -39,20 +39,22 @@
 			this.visibilityToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.navigationMeshToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.irradianceCacheToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+			this.editRecastConfigurationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.splitter1 = new System.Windows.Forms.Splitter();
 			this.panel1 = new System.Windows.Forms.Panel();
 			this.tabControl1 = new System.Windows.Forms.TabControl();
-			this.tabFactory = new System.Windows.Forms.TabPage();
-			this.tabModel = new System.Windows.Forms.TabPage();
-			this.gridFactory = new System.Windows.Forms.PropertyGrid();
-			this.gridModel = new System.Windows.Forms.PropertyGrid();
 			this.tabTransform = new System.Windows.Forms.TabPage();
 			this.gridTransform = new System.Windows.Forms.PropertyGrid();
+			this.tabFactory = new System.Windows.Forms.TabPage();
+			this.gridFactory = new System.Windows.Forms.PropertyGrid();
+			this.tabModel = new System.Windows.Forms.TabPage();
+			this.gridModel = new System.Windows.Forms.PropertyGrid();
 			this.mapMenu.SuspendLayout();
 			this.tabControl1.SuspendLayout();
+			this.tabTransform.SuspendLayout();
 			this.tabFactory.SuspendLayout();
 			this.tabModel.SuspendLayout();
-			this.tabTransform.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// mapMenu
@@ -135,7 +137,9 @@
 			this.buildToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.visibilityToolStripMenuItem,
             this.navigationMeshToolStripMenuItem,
-            this.irradianceCacheToolStripMenuItem});
+            this.irradianceCacheToolStripMenuItem,
+            this.toolStripSeparator2,
+            this.editRecastConfigurationToolStripMenuItem});
 			this.buildToolStripMenuItem.Name = "buildToolStripMenuItem";
 			this.buildToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
 			this.buildToolStripMenuItem.Text = "Build";
@@ -157,6 +161,18 @@
 			this.irradianceCacheToolStripMenuItem.Name = "irradianceCacheToolStripMenuItem";
 			this.irradianceCacheToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
 			this.irradianceCacheToolStripMenuItem.Text = "Irradiance Cache...";
+			// 
+			// toolStripSeparator2
+			// 
+			this.toolStripSeparator2.Name = "toolStripSeparator2";
+			this.toolStripSeparator2.Size = new System.Drawing.Size(195, 6);
+			// 
+			// editRecastConfigurationToolStripMenuItem
+			// 
+			this.editRecastConfigurationToolStripMenuItem.Name = "editRecastConfigurationToolStripMenuItem";
+			this.editRecastConfigurationToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
+			this.editRecastConfigurationToolStripMenuItem.Text = "Recast Configuration...";
+			this.editRecastConfigurationToolStripMenuItem.Click += new System.EventHandler(this.editRecastConfigurationToolStripMenuItem_Click);
 			// 
 			// splitter1
 			// 
@@ -189,44 +205,6 @@
 			this.tabControl1.Size = new System.Drawing.Size(395, 518);
 			this.tabControl1.TabIndex = 7;
 			// 
-			// tabFactory
-			// 
-			this.tabFactory.Controls.Add(this.gridFactory);
-			this.tabFactory.Location = new System.Drawing.Point(4, 22);
-			this.tabFactory.Name = "tabFactory";
-			this.tabFactory.Size = new System.Drawing.Size(387, 492);
-			this.tabFactory.TabIndex = 0;
-			this.tabFactory.Text = "Factory";
-			this.tabFactory.UseVisualStyleBackColor = true;
-			// 
-			// tabModel
-			// 
-			this.tabModel.Controls.Add(this.gridModel);
-			this.tabModel.Location = new System.Drawing.Point(4, 22);
-			this.tabModel.Name = "tabModel";
-			this.tabModel.Size = new System.Drawing.Size(387, 492);
-			this.tabModel.TabIndex = 1;
-			this.tabModel.Text = "Model";
-			this.tabModel.UseVisualStyleBackColor = true;
-			// 
-			// gridFactory
-			// 
-			this.gridFactory.BackColor = System.Drawing.SystemColors.ControlLightLight;
-			this.gridFactory.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.gridFactory.Location = new System.Drawing.Point(0, 0);
-			this.gridFactory.Name = "gridFactory";
-			this.gridFactory.Size = new System.Drawing.Size(387, 492);
-			this.gridFactory.TabIndex = 6;
-			// 
-			// gridModel
-			// 
-			this.gridModel.BackColor = System.Drawing.SystemColors.ControlLightLight;
-			this.gridModel.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.gridModel.Location = new System.Drawing.Point(0, 0);
-			this.gridModel.Name = "gridModel";
-			this.gridModel.Size = new System.Drawing.Size(387, 492);
-			this.gridModel.TabIndex = 7;
-			// 
 			// tabTransform
 			// 
 			this.tabTransform.Controls.Add(this.gridTransform);
@@ -246,6 +224,44 @@
 			this.gridTransform.Size = new System.Drawing.Size(387, 492);
 			this.gridTransform.TabIndex = 7;
 			// 
+			// tabFactory
+			// 
+			this.tabFactory.Controls.Add(this.gridFactory);
+			this.tabFactory.Location = new System.Drawing.Point(4, 22);
+			this.tabFactory.Name = "tabFactory";
+			this.tabFactory.Size = new System.Drawing.Size(387, 492);
+			this.tabFactory.TabIndex = 0;
+			this.tabFactory.Text = "Factory";
+			this.tabFactory.UseVisualStyleBackColor = true;
+			// 
+			// gridFactory
+			// 
+			this.gridFactory.BackColor = System.Drawing.SystemColors.ControlLightLight;
+			this.gridFactory.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.gridFactory.Location = new System.Drawing.Point(0, 0);
+			this.gridFactory.Name = "gridFactory";
+			this.gridFactory.Size = new System.Drawing.Size(387, 492);
+			this.gridFactory.TabIndex = 6;
+			// 
+			// tabModel
+			// 
+			this.tabModel.Controls.Add(this.gridModel);
+			this.tabModel.Location = new System.Drawing.Point(4, 22);
+			this.tabModel.Name = "tabModel";
+			this.tabModel.Size = new System.Drawing.Size(387, 492);
+			this.tabModel.TabIndex = 1;
+			this.tabModel.Text = "Model";
+			this.tabModel.UseVisualStyleBackColor = true;
+			// 
+			// gridModel
+			// 
+			this.gridModel.BackColor = System.Drawing.SystemColors.ControlLightLight;
+			this.gridModel.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.gridModel.Location = new System.Drawing.Point(0, 0);
+			this.gridModel.Name = "gridModel";
+			this.gridModel.Size = new System.Drawing.Size(387, 492);
+			this.gridModel.TabIndex = 7;
+			// 
 			// MapEditorControl
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -259,9 +275,9 @@
 			this.mapMenu.ResumeLayout(false);
 			this.mapMenu.PerformLayout();
 			this.tabControl1.ResumeLayout(false);
+			this.tabTransform.ResumeLayout(false);
 			this.tabFactory.ResumeLayout(false);
 			this.tabModel.ResumeLayout(false);
-			this.tabTransform.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -291,5 +307,7 @@
 		private System.Windows.Forms.PropertyGrid gridFactory;
 		private System.Windows.Forms.TabPage tabModel;
 		private System.Windows.Forms.PropertyGrid gridModel;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+		private System.Windows.Forms.ToolStripMenuItem editRecastConfigurationToolStripMenuItem;
 	}
 }

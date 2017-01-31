@@ -8,6 +8,7 @@
 #include "ContourSet.h"
 #include "PolyMesh.h"
 #include "PolyMeshDetail.h"
+#include "RCConfig.h"
 
 namespace Native {
 	namespace Recast {

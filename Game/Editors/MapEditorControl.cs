@@ -17,6 +17,7 @@ using System.Reflection;
 using Fusion.Engine.Common;
 using IronStar.Core;
 using IronStar.Editor2;
+using Fusion.Development;
 
 namespace IronStar.Editors {
 	public partial class MapEditorControl : UserControl {
@@ -31,6 +32,12 @@ namespace IronStar.Editors {
 			PopulateCreateMenu();
 		}
 
+
+		MapEditor MapEditor {
+			get {
+				return Game.GameEditor.Instance as MapEditor;
+			}
+		}
 
 
 		void PopulateCreateMenu()
@@ -71,6 +78,12 @@ namespace IronStar.Editors {
 			gridFactory.SelectedObjects		= selection.Select( fact => fact.Factory ).ToArray();	
 			gridTransform.SelectedObjects	= selection.Select( fact => fact.Transform ).ToArray();	
 			gridModel.SelectedObjects		= selection.Select( fact => fact.Model ).ToArray();	
+		}
+
+
+		private void editRecastConfigurationToolStripMenuItem_Click( object sender, EventArgs e )
+		{
+			PropertyDialog.Show( this, "Recast Configuration", MapEditor.Map.NavConfig );
 		}
 	}
 }

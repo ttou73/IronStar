@@ -69,6 +69,9 @@
     <ClInclude Include="PolyMeshDetail.h">
       <Filter>RecastWrapper\Headers</Filter>
     </ClInclude>
+    <ClInclude Include="RCConfig.h">
+      <Filter>RecastWrapper\Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="RecastSharp.cpp">
@@ -113,9 +116,6 @@
     <ClCompile Include="RecastBuilder.cpp">
       <Filter>RecastWrapper\Source</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="app.rc">

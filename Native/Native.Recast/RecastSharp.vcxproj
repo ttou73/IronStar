@@ -140,6 +140,7 @@
     <ClInclude Include="HeightField.h" />
     <ClInclude Include="PolyMesh.h" />
     <ClInclude Include="PolyMeshDetail.h" />
+    <ClInclude Include="RCConfig.h" />
     <ClInclude Include="RecastSharp.h" />
     <ClInclude Include="RecastBuilder.h" />
     <ClInclude Include="Recast\Headers\Recast.h" />

@@ -21,7 +21,7 @@ using Native.Recast;
 namespace IronStar.Mapping {
 	public partial class Map {
 
-		public Configuration NavConfig { get; set; } = new Configuration();
+		public Native.Recast.RCConfig NavConfig { get; set; } = new RCConfig();
 
 		/// <summary>
 		/// 
