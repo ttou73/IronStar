@@ -16,7 +16,7 @@ namespace Native {
 
 		static public ref class RecastBuilder {
 		public:
-			PolyMesh^  BuildNavigationMesh(RecastMesh^ input, Configuration^ configuration, BuildContext^ buildContext);
+			static PolyMesh^  BuildNavigationMesh(RecastMesh^ input, Configuration^ configuration, BuildContext^ buildContext);
 			
 			static Vector3^ CalculateBmin(RecastMesh^ mesh) {
 				auto rv = (mesh->Vertices[0]);

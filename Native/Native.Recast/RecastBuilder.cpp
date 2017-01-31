@@ -24,7 +24,9 @@ PolyMesh^ RecastBuilder::BuildNavigationMesh(RecastMesh ^ input, Configuration^ 
 	MarkWalkableTriangles(buildContext, configuration, input, triangleAreas);
 	heightField->RasterizeTriangles(buildContext, configuration, input, triangleAreas);
 
-
+	heightField->FilterLowHangingWalkableObstacles(buildContext, configuration);
+	heightField->FilterLedgeSpans(buildContext, configuration);
+	heightField->FilterWalkableLowHeightSpans(buildContext, configuration);	
 
 	CompactHeightField^ chf = CompactHeightField::AllocateCompactHeightField();
 	chf->Build(buildContext, configuration, heightField);
