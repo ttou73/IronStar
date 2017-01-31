@@ -129,16 +129,12 @@ namespace Native {
 			/// The minimum bounds of the field's AABB. [(x, y, z)] [Units: wu]
 			property Vector3^ Bmin {
 				void set(Vector3^ vertices) {
-					float newArray[3];
 					nativeConfig->bmin[0] = vertices->X;
 					nativeConfig->bmin[1] = vertices->Y;
 					nativeConfig->bmin[2] = vertices->Z;
 				}
 				Vector3^ get() {
-					Vector3^ rv;
-					rv->X = nativeConfig->bmin[0];
-					rv->Y = nativeConfig->bmin[1];
-					rv->Z = nativeConfig->bmin[2];
+					Vector3^ rv = gcnew Vector3(nativeConfig->bmin[0], nativeConfig->bmin[1], nativeConfig->bmin[2]);
 					return rv;
 				}
 			}
@@ -147,16 +143,12 @@ namespace Native {
 			/// The maximum bounds of the field's AABB. [(x, y, z)] [Units: wu]
 			property Vector3^ Bmax {
 				void set(Vector3^ vertices) {
-					float newArray[3];
 					nativeConfig->bmax[0] = vertices->X;
 					nativeConfig->bmax[1] = vertices->Y;
 					nativeConfig->bmax[2] = vertices->Z;
 				}
 				Vector3^ get() {
-					Vector3^ rv;
-					rv->X = nativeConfig->bmax[0];
-					rv->Y = nativeConfig->bmax[1];
-					rv->Z = nativeConfig->bmax[2];
+					Vector3^ rv = gcnew Vector3(nativeConfig->bmax[0], nativeConfig->bmax[1], nativeConfig->bmax[2]);
 					return rv;
 				}
 			}
