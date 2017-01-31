@@ -39,8 +39,9 @@ namespace Native {
 					vertices[i * 3 + 2] = mesh->Vertices[i]->Z;
 				}
 				pin_ptr<uchar> ptr = &triangleAreas[0];
+				pin_ptr<int> tris = &mesh->Indices[0];
 				//TODO: check ptr
-				auto t = rcRasterizeTriangles(context->nativeContext, vertices, (uchar*)ptr, mesh->Indices->Length / 3, *nativeHeightField, configuration->WalkableClimb);
+				auto t = rcRasterizeTriangles(context->nativeContext, vertices, mesh->Vertices->Length, (int*)tris, (uchar*)ptr, mesh->Indices->Length / 3, *nativeHeightField, configuration->WalkableClimb); 
 				if (!t) {
 					throw gcnew HeightFieldCreateException();
 				}
