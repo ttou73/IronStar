@@ -97,6 +97,7 @@ namespace IronStar.Editor2 {
 				this.map = new Map();
 			}
 
+			ResetWorld();
 			FeedSelection();
 		}
 

@@ -58,5 +58,35 @@
         <Color Red="10" Green="10" Blue="10" Alpha="1" />
       </Model>
     </MapNode>
+    <MapNode>
+      <Visible>true</Visible>
+      <Frozen>false</Frozen>
+      <Position X="0" Y="26" Z="0" />
+      <Rotation X="0" Y="0" Z="0" W="1" />
+      <Scaling>1</Scaling>
+      <Factory xsi:type="ProxyFactory">
+        <Classname>plasma</Classname>
+      </Factory>
+      <Model>
+        <ScenePath />
+        <Scale>1</Scale>
+        <Color Red="10" Green="10" Blue="10" Alpha="1" />
+      </Model>
+    </MapNode>
+    <MapNode>
+      <Visible>true</Visible>
+      <Frozen>false</Frozen>
+      <Position X="0" Y="31.5" Z="0" />
+      <Rotation X="0" Y="0" Z="0" W="1" />
+      <Scaling>1</Scaling>
+      <Factory xsi:type="ProxyFactory">
+        <Classname>box</Classname>
+      </Factory>
+      <Model>
+        <ScenePath />
+        <Scale>1</Scale>
+        <Color Red="10" Green="10" Blue="10" Alpha="1" />
+      </Model>
+    </MapNode>
   </Nodes>
 </Map>
