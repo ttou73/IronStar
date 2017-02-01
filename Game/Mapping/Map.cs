@@ -30,7 +30,7 @@ namespace IronStar.Mapping {
 		/// <summary>
 		/// List of nodes
 		/// </summary>
-		public List<MapFactory> Factories { get; set; }
+		public List<MapNode> Nodes { get; set; }
 
 	
 		List<MeshInstance> instances;
@@ -181,7 +181,7 @@ namespace IronStar.Mapping {
 			}
 
 
-			foreach ( var factory in Factories ) {
+			foreach ( var factory in Nodes ) {
 
 				Node node;
 

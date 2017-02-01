@@ -37,8 +37,8 @@ namespace IronStar.Editor2 {
 		public Manipulator	manipulator;
 		public EditorHud	hud;
 
-		readonly Stack<MapFactory[]> selectionStack = new Stack<MapFactory[]>();
-		readonly List<MapFactory> selection = new List<MapFactory>();
+		readonly Stack<MapNode[]> selectionStack = new Stack<MapNode[]>();
+		readonly List<MapNode> selection = new List<MapNode>();
 
 		Map	map = null;
 
@@ -155,11 +155,11 @@ namespace IronStar.Editor2 {
 		 * 
 		-----------------------------------------------------------------------------------------*/
 
-		public IEnumerable<MapFactory> Selection {
+		public IEnumerable<MapNode> Selection {
 			get { return selection; }
 		}
 
-		public MapFactory[] GetSelection() 
+		public MapNode[] GetSelection() 
 		{
 			return selection.ToArray();
 		}
@@ -183,12 +183,12 @@ namespace IronStar.Editor2 {
 		}
 
 
-		public void Select( MapFactory factory )
+		public void Select( MapNode factory )
 		{
 			if ( factory==null ) {
 				throw new ArgumentNullException( "factory" );
 			}
-			if ( !map.Factories.Contains( factory ) ) {
+			if ( !map.Nodes.Contains( factory ) ) {
 				throw new ArgumentException( "Provided factory does not exist in current map" );
 			}
 			selection.Clear();
@@ -200,7 +200,7 @@ namespace IronStar.Editor2 {
 
 		public void DeleteSelection ()
 		{
-			map.Factories.RemoveAll( item => selection.Contains(item) );	
+			map.Nodes.RemoveAll( item => selection.Contains(item) );	
 			ClearSelection();
 			FeedSelection();
 		}
@@ -214,15 +214,15 @@ namespace IronStar.Editor2 {
 		{
 			world.ModelManager.KillAllModels();
 
-			foreach ( var factory in map.Factories ) {
+			foreach ( var node in map.Nodes ) {
 
-				if (string.IsNullOrWhiteSpace( factory.Model.ScenePath )) {
+				if (string.IsNullOrWhiteSpace( node.Model.ScenePath )) {
 					continue;
 				}
 
-				var scene	=	world.Content.Load<Scene>( factory.Model.ScenePath );
-				var dummy	=	new Entity( 0,0,0, factory.Transform.Translation, factory.Transform.Rotation );
-				var model	=	new ModelInstance( world.ModelManager, factory.Model, scene, dummy );
+				var scene	=	world.Content.Load<Scene>( node.Model.ScenePath );
+				var dummy	=	new Entity( 0,0,0, node.Translation, node.Rotation );
+				var model	=	new ModelInstance( world.ModelManager, node.Model, scene, dummy );
 
 				world.ModelManager.AddModel( model );
 			}
@@ -256,12 +256,12 @@ namespace IronStar.Editor2 {
 			//
 			//	Draw unselected :
 			//
-			foreach ( var item in map.Factories ) {
+			foreach ( var item in map.Nodes ) {
 
 				var color = Utils.WireColor;
 
-				rs.RenderWorld.Debug.DrawBasis( item.Transform.World, 0.125f );
-				rs.RenderWorld.Debug.DrawBox( item.Factory.BoundingBox, item.Transform.World, color);
+				rs.RenderWorld.Debug.DrawBasis( item.WorldMatrix, 0.125f );
+				rs.RenderWorld.Debug.DrawBox( item.Factory.BoundingBox, item.WorldMatrix, color);
 			}
 
 			//
@@ -275,8 +275,8 @@ namespace IronStar.Editor2 {
 					color = Color.White;
 				}
 
-				rs.RenderWorld.Debug.DrawBasis( item.Transform.World, 0.125f );
-				rs.RenderWorld.Debug.DrawBox( item.Factory.BoundingBox, item.Transform.World, color);
+				rs.RenderWorld.Debug.DrawBasis( item.WorldMatrix, 0.125f );
+				rs.RenderWorld.Debug.DrawBox( item.Factory.BoundingBox, item.WorldMatrix, color);
 			}
 
 			var mp = Game.Mouse.Position;
@@ -291,7 +291,7 @@ namespace IronStar.Editor2 {
 		/// </summary>
 		void Focus ()
 		{
-			var targets = selection.Any() ? selection.ToArray() : map.Factories.ToArray();
+			var targets = selection.Any() ? selection.ToArray() : map.Nodes.ToArray();
 
 			BoundingBox bbox;
 
@@ -299,7 +299,7 @@ namespace IronStar.Editor2 {
 				bbox = new BoundingBox( new Vector3(-10,-10,-10), new Vector3(10,10,10) );
 			} else {
 
-				bbox = BoundingBox.FromPoints( targets.Select( t => t.Transform.Translation ).ToArray() );
+				bbox = BoundingBox.FromPoints( targets.Select( t => t.Translation ).ToArray() );
 
 			}
 
@@ -323,12 +323,12 @@ namespace IronStar.Editor2 {
 			var ray = camera.PointToRay( x, y );
 
 			var minDistance	=	float.MaxValue;
-			var pickedItem	=	(MapFactory)null;
+			var pickedItem	=	(MapNode)null;
 
 
-			foreach ( var item in map.Factories ) {
+			foreach ( var item in map.Nodes ) {
 				var bbox	=	item.Factory.BoundingBox;
-				var iw		=	Matrix.Invert( item.Transform.World );
+				var iw		=	Matrix.Invert( item.WorldMatrix );
 				float distance;
 
 				var rayT	=	Utils.TransformRay( iw, ray );
@@ -417,8 +417,8 @@ namespace IronStar.Editor2 {
 					ClearSelection();
 				}
 
-				foreach ( var item in map.Factories ) {
-					if (camera.IsInRectangle( item.Transform.Translation, SelectionMarquee )) {
+				foreach ( var item in map.Nodes ) {
+					if (camera.IsInRectangle( item.Translation, SelectionMarquee )) {
 						selection.Add( item );
 					}
 				}

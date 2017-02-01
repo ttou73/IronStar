@@ -36,16 +36,16 @@ namespace IronStar.Editor2 {
 			}
 
 			var target		= editor.Selection.Last();
-			var origin		= target.Transform.Translation;
+			var origin		= target.Translation;
 
 			var linerSize	= editor.camera.PixelToWorldSize( origin, 5 );
 			var ray			= editor.camera.PointToRay( x, y );
 
 
 			if (!manipulating) {
-				var hitX	=	IntersectRing( target.Transform.Translation, Vector3.UnitX, mp );
-				var hitY	=	IntersectRing( target.Transform.Translation, Vector3.UnitY, mp );
-				var hitZ	=	IntersectRing( target.Transform.Translation, Vector3.UnitZ, mp );
+				var hitX	=	IntersectRing( target.Translation, Vector3.UnitX, mp );
+				var hitY	=	IntersectRing( target.Translation, Vector3.UnitY, mp );
+				var hitZ	=	IntersectRing( target.Translation, Vector3.UnitZ, mp );
 
 				int hitInd	=	PollIntersections( hitX, hitY, hitZ );
 
@@ -93,7 +93,7 @@ namespace IronStar.Editor2 {
 		float		snapValue;
 
 
-		MapFactory[] targets  = null;
+		MapNode[] targets  = null;
 		Quaternion[] initRots = null;
 
 
@@ -110,9 +110,9 @@ namespace IronStar.Editor2 {
 			vector1		=	Vector3.Zero;
 
 			targets		=	editor.GetSelection();
-			initRots	=	targets.Select( t => t.Transform.Rotation ).ToArray();
+			initRots	=	targets.Select( t => t.Rotation ).ToArray();
 
-			var origin	=	targets.Last().Transform.Translation;
+			var origin	=	targets.Last().Translation;
 			var mp		=	new Point( x, y );
 
 
@@ -158,7 +158,7 @@ namespace IronStar.Editor2 {
 		{
 			if (manipulating) {
 
-				var origin	=	targets.Last().Transform.Translation;
+				var origin	=	targets.Last().Translation;
 				var mp		=	new Point( x, y );
 
 				var result	=	IntersectRing( origin, direction, mp );
@@ -183,7 +183,7 @@ namespace IronStar.Editor2 {
 
 					var addRot	=	Quaternion.RotationAxis( direction, angle );
 
-					target.Transform.Rotation = addRot * rot;
+					target.Rotation = addRot * rot;
 				}
 			}
 		}

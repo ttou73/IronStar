@@ -56,7 +56,7 @@ namespace IronStar.Mapping {
 			var indices = new List<int>();
 			var vertices = new List<Vector3>();
 
-			foreach ( var factory in Factories ) {
+			foreach ( var factory in Nodes ) {
 				if (!string.IsNullOrWhiteSpace(factory.Model.ScenePath)) {
 
 					var scene = content.Load<Scene>( factory.Model.ScenePath );
@@ -69,7 +69,7 @@ namespace IronStar.Mapping {
 
 					for ( int i=0; i<scene.Nodes.Count; i++) {
 
-						var worldMatrix = worldMatricies[i] * factory.Transform.World;
+						var worldMatrix = worldMatricies[i] * factory.WorldMatrix;
 
 						var node = scene.Nodes[i];
 

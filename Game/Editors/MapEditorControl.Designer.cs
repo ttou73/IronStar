@@ -44,7 +44,7 @@
 			this.splitter1 = new System.Windows.Forms.Splitter();
 			this.panel1 = new System.Windows.Forms.Panel();
 			this.tabControl1 = new System.Windows.Forms.TabControl();
-			this.tabTransform = new System.Windows.Forms.TabPage();
+			this.tabNode = new System.Windows.Forms.TabPage();
 			this.gridTransform = new System.Windows.Forms.PropertyGrid();
 			this.tabFactory = new System.Windows.Forms.TabPage();
 			this.gridFactory = new System.Windows.Forms.PropertyGrid();
@@ -52,7 +52,7 @@
 			this.gridModel = new System.Windows.Forms.PropertyGrid();
 			this.mapMenu.SuspendLayout();
 			this.tabControl1.SuspendLayout();
-			this.tabTransform.SuspendLayout();
+			this.tabNode.SuspendLayout();
 			this.tabFactory.SuspendLayout();
 			this.tabModel.SuspendLayout();
 			this.SuspendLayout();
@@ -195,7 +195,7 @@
 			// 
 			// tabControl1
 			// 
-			this.tabControl1.Controls.Add(this.tabTransform);
+			this.tabControl1.Controls.Add(this.tabNode);
 			this.tabControl1.Controls.Add(this.tabFactory);
 			this.tabControl1.Controls.Add(this.tabModel);
 			this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -206,15 +206,15 @@
 			this.tabControl1.Size = new System.Drawing.Size(395, 518);
 			this.tabControl1.TabIndex = 7;
 			// 
-			// tabTransform
+			// tabNode
 			// 
-			this.tabTransform.Controls.Add(this.gridTransform);
-			this.tabTransform.Location = new System.Drawing.Point(4, 22);
-			this.tabTransform.Name = "tabTransform";
-			this.tabTransform.Size = new System.Drawing.Size(387, 492);
-			this.tabTransform.TabIndex = 2;
-			this.tabTransform.Text = "Transform";
-			this.tabTransform.UseVisualStyleBackColor = true;
+			this.tabNode.Controls.Add(this.gridTransform);
+			this.tabNode.Location = new System.Drawing.Point(4, 22);
+			this.tabNode.Name = "tabNode";
+			this.tabNode.Size = new System.Drawing.Size(387, 492);
+			this.tabNode.TabIndex = 2;
+			this.tabNode.Text = "Node";
+			this.tabNode.UseVisualStyleBackColor = true;
 			// 
 			// gridTransform
 			// 
@@ -276,7 +276,7 @@
 			this.mapMenu.ResumeLayout(false);
 			this.mapMenu.PerformLayout();
 			this.tabControl1.ResumeLayout(false);
-			this.tabTransform.ResumeLayout(false);
+			this.tabNode.ResumeLayout(false);
 			this.tabFactory.ResumeLayout(false);
 			this.tabModel.ResumeLayout(false);
 			this.ResumeLayout(false);
@@ -302,7 +302,7 @@
 		private System.Windows.Forms.ToolStripMenuItem irradianceCacheToolStripMenuItem;
 		private System.Windows.Forms.Panel panel1;
 		private System.Windows.Forms.TabControl tabControl1;
-		private System.Windows.Forms.TabPage tabTransform;
+		private System.Windows.Forms.TabPage tabNode;
 		private System.Windows.Forms.PropertyGrid gridTransform;
 		private System.Windows.Forms.TabPage tabFactory;
 		private System.Windows.Forms.PropertyGrid gridFactory;

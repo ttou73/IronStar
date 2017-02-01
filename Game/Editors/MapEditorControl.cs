@@ -56,13 +56,13 @@ namespace IronStar.Editors {
 
 				item.Click  +=  ( s, e ) => {
 
-					var fact  = new MapFactory();
+					var fact  = new MapNode();
 
 					var mapEditor = Game.GameEditor.Instance as MapEditor;
 	
 					fact.Factory = (EntityFactory)Activator.CreateInstance( factType );
 					
-					mapEditor.Map.Factories.Add( fact );
+					mapEditor.Map.Nodes.Add( fact );
 					mapEditor.Select( fact );
 				};
 
@@ -73,11 +73,11 @@ namespace IronStar.Editors {
 
 
 
-		public void SetSelection ( IEnumerable<MapFactory> selection )
+		public void SetSelection ( IEnumerable<MapNode> selection )
 		{
-			gridFactory.SelectedObjects		= selection.Select( fact => fact.Factory ).ToArray();	
-			gridTransform.SelectedObjects	= selection.Select( fact => fact.Transform ).ToArray();	
-			gridModel.SelectedObjects		= selection.Select( fact => fact.Model ).ToArray();	
+			gridTransform.SelectedObjects	= selection.Select( node => node ).ToArray();	
+			gridFactory.SelectedObjects		= selection.Select( node => node.Factory ).ToArray();	
+			gridModel.SelectedObjects		= selection.Select( node => node.Model ).ToArray();	
 		}
 
 
