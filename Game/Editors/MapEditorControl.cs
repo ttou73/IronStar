@@ -90,5 +90,10 @@ namespace IronStar.Editors {
 		{
 			MapEditor.Map.BuildNavigationMesh( MapEditor.Content );
 		}
+
+		private void refreshWorldToolStripMenuItem_Click( object sender, EventArgs e )
+		{
+			MapEditor.ResetWorld();
+		}
 	}
 }

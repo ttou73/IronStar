@@ -36,16 +36,16 @@ namespace IronStar.Editor2 {
 			}
 
 			var target		= editor.Selection.Last();
-			var origin		= target.Translation;
+			var origin		= target.Position;
 
 			var linerSize	= editor.camera.PixelToWorldSize( origin, 5 );
 			var ray			= editor.camera.PointToRay( x, y );
 
 
 			if (!manipulating) {
-				var hitX	=	IntersectRing( target.Translation, Vector3.UnitX, mp );
-				var hitY	=	IntersectRing( target.Translation, Vector3.UnitY, mp );
-				var hitZ	=	IntersectRing( target.Translation, Vector3.UnitZ, mp );
+				var hitX	=	IntersectRing( target.Position, Vector3.UnitX, mp );
+				var hitY	=	IntersectRing( target.Position, Vector3.UnitY, mp );
+				var hitZ	=	IntersectRing( target.Position, Vector3.UnitZ, mp );
 
 				int hitInd	=	PollIntersections( hitX, hitY, hitZ );
 
@@ -112,7 +112,7 @@ namespace IronStar.Editor2 {
 			targets		=	editor.GetSelection();
 			initRots	=	targets.Select( t => t.Rotation ).ToArray();
 
-			var origin	=	targets.Last().Translation;
+			var origin	=	targets.Last().Position;
 			var mp		=	new Point( x, y );
 
 
@@ -158,7 +158,7 @@ namespace IronStar.Editor2 {
 		{
 			if (manipulating) {
 
-				var origin	=	targets.Last().Translation;
+				var origin	=	targets.Last().Position;
 				var mp		=	new Point( x, y );
 
 				var result	=	IntersectRing( origin, direction, mp );

@@ -23,12 +23,6 @@ namespace IronStar.Core {
 		
 		public abstract EntityController Spawn (Entity entity, GameWorld world);
 
-
-		[Category("Common")]
-		[Description("Target name of object created by this factory. Used within maps. For entity templates this value make no sense.")]
-		public string Targetname { get; set; }
-
-
 		[XmlIgnore]
 		[Browsable(false)]
 		public virtual BoundingBox BoundingBox {

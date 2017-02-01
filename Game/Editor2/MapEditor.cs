@@ -73,6 +73,7 @@ namespace IronStar.Editor2 {
 			hud				=	new EditorHud( this );
 			manipulator		=	new NullTool( this );
 			world			=	new GameWorld( Game, true );
+			world.InitServerAtoms();
 
 			SetupUI();
 
@@ -210,23 +211,20 @@ namespace IronStar.Editor2 {
 		/// <summary>
 		/// 
 		/// </summary>
-		public void RefreshAppearance ()
+		public void ResetWorld ()
 		{
+			world.KillAll();
 			world.ModelManager.KillAllModels();
 
 			foreach ( var node in map.Nodes ) {
-
-				if (string.IsNullOrWhiteSpace( node.Model.ScenePath )) {
-					continue;
-				}
-
-				var scene	=	world.Content.Load<Scene>( node.Model.ScenePath );
-				var dummy	=	new Entity( 0,0,0, node.Translation, node.Rotation );
-				var model	=	new ModelInstance( world.ModelManager, node.Model, scene, dummy );
-
-				world.ModelManager.AddModel( model );
+				var ent = world.Spawn( node.Factory, 0,0, node.Position, node.Rotation );
 			}
+
 		}
+
+
+
+		public bool EnableSimulation { get; set; } = false;
 
 		/*-----------------------------------------------------------------------------------------
 		 * 
@@ -242,9 +240,11 @@ namespace IronStar.Editor2 {
 		{
 			camera.Update( gameTime );
 
-			RefreshAppearance();
+			//RefreshAppearance();
 
-			world.SimulateWorld( gameTime.ElapsedSec );
+			if (EnableSimulation) {
+				world.SimulateWorld( gameTime.ElapsedSec );
+			}
 			world.PresentWorld( gameTime.ElapsedSec, 1 );
 
 			rs.RenderWorld.Debug.DrawGrid( 10 );
@@ -299,7 +299,7 @@ namespace IronStar.Editor2 {
 				bbox = new BoundingBox( new Vector3(-10,-10,-10), new Vector3(10,10,10) );
 			} else {
 
-				bbox = BoundingBox.FromPoints( targets.Select( t => t.Translation ).ToArray() );
+				bbox = BoundingBox.FromPoints( targets.Select( t => t.Position ).ToArray() );
 
 			}
 
@@ -418,7 +418,7 @@ namespace IronStar.Editor2 {
 				}
 
 				foreach ( var item in map.Nodes ) {
-					if (camera.IsInRectangle( item.Translation, SelectionMarquee )) {
+					if (camera.IsInRectangle( item.Position, SelectionMarquee )) {
 						selection.Add( item );
 					}
 				}

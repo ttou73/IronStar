@@ -128,7 +128,6 @@
     <Compile Include="Mapping\Map.Build.cs" />
     <Compile Include="Mapping\MapNode.cs" />
     <Compile Include="Mapping\Map.cs" />
-    <Compile Include="Mapping\MapTransform.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

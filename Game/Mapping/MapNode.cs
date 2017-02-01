@@ -38,7 +38,7 @@ namespace IronStar.Mapping {
 		
 		[Category("Transform")]
 		[Description("Node translation vector")]
-		public Vector3 Translation { get; set; }
+		public Vector3 Position { get; set; }
 
 		[Category("Transform")]
 		[Description("Node rotation quaternion")]
@@ -52,13 +52,13 @@ namespace IronStar.Mapping {
 		/// <summary>
 		/// Entity factory
 		/// </summary>
-		[TypeConverter(typeof(ExpandableObjectConverter))]		
+		[Browsable(false)]
 		public EntityFactory Factory { get; set; }
 
 		/// <summary>
 		/// Entity factory
 		/// </summary>
-		[TypeConverter(typeof(ExpandableObjectConverter))]		
+		[Browsable(false)]
 		public ModelDescriptor Model { get; set; }
 
 
@@ -70,7 +70,7 @@ namespace IronStar.Mapping {
 			get {
 				return Matrix.RotationQuaternion( Rotation ) 
 					* Matrix.Scaling( Scaling )
-					* Matrix.Translation( Translation );
+					* Matrix.Translation( Position );
 			}
 		}
 

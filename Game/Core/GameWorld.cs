@@ -72,6 +72,9 @@ namespace IronStar.Core {
 			Content		=	new ContentManager( Game );
 			entities	=	new EntityCollection();
 
+			physSpace	=	new BEPUphysics.Space();
+			physSpace.ForceUpdater.Gravity = new BEPUutilities.Vector3(0,-16,0);
+
 			if (enablePresentation) {
 
 				var rw = Game.RenderSystem.RenderWorld;
@@ -98,6 +101,21 @@ namespace IronStar.Core {
 				rw.FogSettings.Density		=	0.001f;
 			}
 		}
+
+
+		public void InitServerAtoms ()
+		{
+			Atoms = new AtomCollection();
+
+			var atoms = new List<string>();
+
+			atoms.AddRange( Content.EnumerateAssets( "fx" ) );
+			atoms.AddRange( Content.EnumerateAssets( "entities" ) );
+			atoms.AddRange( Content.EnumerateAssets( "models" ) );
+
+			Atoms.AddRange( atoms );
+		}
+
 
 
 
@@ -426,6 +444,19 @@ namespace IronStar.Core {
 			entityToKill.Add( id );
 		}
 
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public void KillAll()
+		{
+			foreach ( var ent in entities ) {
+				ent.Value.DestroyRenderState(fxPlayback);
+				ent.Value.Controller?.Killed();
+			}
+			entities.Clear();
+		}
 
 
 		/// <summary>

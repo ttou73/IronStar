@@ -58,9 +58,15 @@ namespace IronStar.Editor2 {
 				if (e.Key==Keys.E) {
 					manipulator = new RotateTool(this);
 				}
-
 				if (e.Key==Keys.Delete) {
 					DeleteSelection();
+				}
+				if (e.Key==Keys.Space) {
+					EnableSimulation = !EnableSimulation;
+				}
+				if (e.Key==Keys.Escape) {
+					EnableSimulation = false;
+					ResetWorld();
 				}
 			}
 		}
