@@ -19,8 +19,14 @@ namespace IronStar.Mapping {
 		public MapNode ()
 		{
 			Factory		=	null;
-			Model		=	new ModelDescriptor();
 		}
+
+
+		/// <summary>
+		/// for editor use only
+		/// </summary>
+		[XmlIgnore]
+		public Entity Enitity = null;
 
 
 		[Category("Entity")]
@@ -55,12 +61,6 @@ namespace IronStar.Mapping {
 		[Browsable(false)]
 		public EntityFactory Factory { get; set; }
 
-		/// <summary>
-		/// Entity factory
-		/// </summary>
-		[Browsable(false)]
-		public ModelDescriptor Model { get; set; }
-
 
 		/// <summary>
 		/// Gets 
@@ -72,6 +72,57 @@ namespace IronStar.Mapping {
 					* Matrix.Scaling( Scaling )
 					* Matrix.Translation( Position );
 			}
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
+		public Entity SpawnEntity ( GameWorld world )
+		{
+			Enitity = world.Spawn( Factory, 0,0, Position, Rotation );
+			return Enitity;
+		}
+
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="world"></param>
+		public void ResetEntity ( GameWorld world )
+		{
+			if (world.IsAlive(Enitity.ID)) {
+				Enitity.Position = Enitity.PositionOld = Position;
+				Enitity.Rotation = Enitity.RotationOld = Rotation;
+				Enitity.LinearVelocity = Vector3.Zero;
+				Enitity.AngularVelocity = Vector3.Zero;
+				Enitity.Controller?.EditorReset( Enitity );
+			} else {
+				HardResetEntity(world);
+			}
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="world"></param>
+		public void HardResetEntity ( GameWorld world )
+		{
+			KillEntity( world );
+			SpawnEntity( world );
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="world"></param>
+		public void KillEntity ( GameWorld world )
+		{
+			world.Kill( Enitity.ID );
 		}
 
 

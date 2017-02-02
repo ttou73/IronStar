@@ -56,6 +56,7 @@ namespace IronStar.Mapping {
 			var indices = new List<int>();
 			var vertices = new List<Vector3>();
 
+			/*
 			foreach ( var factory in Nodes ) {
 				if (!string.IsNullOrWhiteSpace(factory.Model.ScenePath)) {
 
@@ -85,6 +86,7 @@ namespace IronStar.Mapping {
 					}
 				}
 			}
+			*/
 
 
             var rcmesh = new RecastMesh();

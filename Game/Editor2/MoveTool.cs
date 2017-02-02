@@ -175,7 +175,7 @@ namespace IronStar.Editor2 {
 					}
 				}
 
-				editor.ResetWorld();
+				editor.ResetWorld(false);
 			}
 		}
 

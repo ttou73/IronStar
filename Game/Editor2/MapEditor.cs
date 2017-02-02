@@ -99,8 +99,9 @@ namespace IronStar.Editor2 {
 				this.map = new Map();
 			}
 
-			ResetWorld();
-			FeedSelection();
+			foreach ( var node in map.Nodes ) {
+				node.SpawnEntity( world );
+			}
 		}
 
 
@@ -204,7 +205,11 @@ namespace IronStar.Editor2 {
 
 		public void DeleteSelection ()
 		{
-			map.Nodes.RemoveAll( item => selection.Contains(item) );	
+			foreach ( var se in selection ) {
+				se.KillEntity( world );
+				map.Nodes.Remove( se );
+			}
+
 			ClearSelection();
 			FeedSelection();
 		}
@@ -214,15 +219,18 @@ namespace IronStar.Editor2 {
 		/// <summary>
 		/// 
 		/// </summary>
-		public void ResetWorld (bool test=false)
+		public void ResetWorld (bool hardResetSelection)
 		{
-			world.KillAll();
-			world.ModelManager.KillAllModels();
-
 			EnableSimulation = false;
 
+			if (hardResetSelection) {
+				foreach ( var se in selection ) {
+					se.HardResetEntity( world );
+				}
+			}
+
 			foreach ( var node in map.Nodes ) {
-				var ent = world.Spawn( node.Factory, 0,0, node.Position, node.Rotation );
+				node.ResetEntity( world );
 			}
 		}
 

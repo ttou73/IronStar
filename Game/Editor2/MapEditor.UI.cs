@@ -66,7 +66,10 @@ namespace IronStar.Editor2 {
 				}
 				if (e.Key==Keys.Escape) {
 					EnableSimulation = false;
-					ResetWorld();
+					ResetWorld(false);
+				}
+				if (e.Key==Keys.K) {
+					ResetWorld(true);
 				}
 			}
 		}

@@ -186,7 +186,7 @@ namespace IronStar.Editor2 {
 					target.Rotation = addRot * rot;
 				}
 
-				editor.ResetWorld(true);
+				editor.ResetWorld(false);
 			}
 		}
 

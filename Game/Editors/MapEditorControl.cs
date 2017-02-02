@@ -77,7 +77,6 @@ namespace IronStar.Editors {
 		{
 			gridTransform.SelectedObjects	= selection.Select( node => node ).ToArray();	
 			gridFactory.SelectedObjects		= selection.Select( node => node.Factory ).ToArray();	
-			gridModel.SelectedObjects		= selection.Select( node => node.Model ).ToArray();	
 		}
 
 
@@ -93,22 +92,22 @@ namespace IronStar.Editors {
 
 		private void refreshWorldToolStripMenuItem_Click( object sender, EventArgs e )
 		{
-			MapEditor.ResetWorld();
+			MapEditor.ResetWorld(false);
 		}
 
 		private void gridTransform_PropertyValueChanged( object s, PropertyValueChangedEventArgs e )
 		{
-			MapEditor.ResetWorld();
+			MapEditor.ResetWorld(false);
 		}
 
 		private void gridFactory_PropertyValueChanged( object s, PropertyValueChangedEventArgs e )
 		{
-			MapEditor.ResetWorld();
+			MapEditor.ResetWorld(false);
 		}
 
 		private void gridModel_PropertyValueChanged( object s, PropertyValueChangedEventArgs e )
 		{
-			MapEditor.ResetWorld();
+			MapEditor.ResetWorld(false);
 		}
 	}
 }

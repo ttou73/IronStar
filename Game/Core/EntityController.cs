@@ -28,6 +28,19 @@ namespace IronStar.Core {
 		}
 
 
+
+		/// <summary>
+		/// Reset controller: reset internal counters, targets etc.
+		/// Read position from entity.
+		/// For editor use only.
+		/// </summary>
+		public virtual void EditorReset ( Entity entity )
+		{
+			
+		}
+
+
+
 		/// <summary>
 		/// Updates controller.
 		/// </summary>

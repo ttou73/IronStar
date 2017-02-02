@@ -35,6 +35,8 @@ namespace IronStar.Entities {
 
 		float	lifeTime;
 
+		readonly float totalLifeTime;
+
 		readonly short trailFXAtom;
 		readonly Space space;
 		GameWorld world;
@@ -51,6 +53,8 @@ namespace IronStar.Entities {
 
 			var atoms	=	world.Atoms;
 
+			totalLifeTime		=	factory.LifeTime;
+
 			this.velocity		=	factory.Velocity	;	
 			this.hitImpulse		=	factory.Impulse	;	
 			this.hitDamage		=	factory.Damage	;	
@@ -66,7 +70,13 @@ namespace IronStar.Entities {
 		}
 
 
-		
+		public override void EditorReset( Entity entity )
+		{
+			lifeTime = totalLifeTime;
+		}
+
+
+
 		/// <summary>
 		/// 
 		/// </summary>

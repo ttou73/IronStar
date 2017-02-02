@@ -63,6 +63,17 @@ namespace IronStar.Entities {
 		Random rand = new Random();
 
 
+		public override void EditorReset( Entity entity )
+		{
+			var ms = new MotionState();
+			ms.AngularVelocity	=	MathConverter.Convert( entity.AngularVelocity );
+			ms.LinearVelocity	=	MathConverter.Convert( entity.LinearVelocity );
+			ms.Orientation		=	MathConverter.Convert( entity.Rotation );
+			ms.Position			=	MathConverter.Convert( entity.Position );
+			box.MotionState = ms;
+		}
+
+
 		/// <summary>
 		/// 
 		/// </summary>
