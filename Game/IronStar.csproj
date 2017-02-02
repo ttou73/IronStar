@@ -123,16 +123,20 @@
     <Compile Include="Entities\RigidBodyFactory.cs" />
     <Compile Include="Entities\ProxyFactory.cs" />
     <Compile Include="Entities\StartPoint.cs" />
+    <Compile Include="Entities\StaticModel.cs" />
     <Compile Include="Entities\WorldspawnFactory.cs" />
     <Compile Include="Entities\StaticModelFactory.cs" />
     <Compile Include="Mapping\Map.Build.cs" />
     <Compile Include="Mapping\MapNode.cs" />
     <Compile Include="Mapping\Map.cs" />
+    <Compile Include="Physics\AnimatedCModel.cs" />
+    <Compile Include="Physics\StaticCollisionModel.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Physics\PhysicsManager.cs" />
     <Compile Include="SFX\FXFactory.Utils.cs" />
     <Compile Include="SFX\FXFactory.cs" />
     <Compile Include="SFX\ModelInstance.cs" />
@@ -184,6 +188,7 @@
   <ItemGroup>
     <EmbeddedResource Include="Editors\EditorForm.resx">
       <DependentUpon>EditorForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Editors\MapEditorControl.resx">
       <DependentUpon>MapEditorControl.cs</DependentUpon>

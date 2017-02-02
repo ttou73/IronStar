@@ -174,6 +174,8 @@ namespace IronStar.Editor2 {
 						target.Position = pos + (currentPoint - initialPoint);
 					}
 				}
+
+				editor.ResetWorld();
 			}
 		}
 

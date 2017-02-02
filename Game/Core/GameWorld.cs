@@ -16,6 +16,7 @@ using Fusion.Core.IniParser.Model;
 using Fusion.Engine.Graphics;
 using IronStar.Mapping;
 using Fusion.Core;
+using IronStar.Physics;
 
 namespace IronStar.Core {
 
@@ -56,9 +57,11 @@ namespace IronStar.Core {
 
 		SFX.FXPlayback		fxPlayback = null;
 		SFX.ModelManager	modelManager = null;
+		PhysicsManager		physics	= null;
 
 		public SFX.ModelManager	ModelManager { get { return modelManager; } }
 		public SFX.FXPlayback	FXPlayback   { get { return fxPlayback; } }
+		public PhysicsManager	Physics		{ get { return physics; } }
 
 
 		/// <summary>
@@ -72,8 +75,7 @@ namespace IronStar.Core {
 			Content		=	new ContentManager( Game );
 			entities	=	new EntityCollection();
 
-			physSpace	=	new BEPUphysics.Space();
-			physSpace.ForceUpdater.Gravity = new BEPUutilities.Vector3(0,-16,0);
+			physics		=	new PhysicsManager( this, 16 );
 
 			if (enablePresentation) {
 
@@ -156,11 +158,8 @@ namespace IronStar.Core {
 		{
 			UpdatePlayers( elapsedTime );
 
-			var dt	=	1 / Game.GameServer.TargetFrameRate;
-			PhysSpace.TimeStepSettings.MaximumTimeStepsPerFrame = 6;
-			PhysSpace.TimeStepSettings.TimeStepDuration = 1.0f/60.0f;
-			PhysSpace.Update(dt);
-
+			physics.Update( elapsedTime );
+				
 			//
 			//	Control entities :
 			//

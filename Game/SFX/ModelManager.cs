@@ -16,6 +16,7 @@ using Fusion.Engine.Server;
 using Fusion.Engine.Graphics;
 using IronStar.Core;
 using Fusion.Engine.Audio;
+using BEPUphysics.BroadPhaseEntries;
 
 namespace IronStar.SFX {
 	public class ModelManager : DisposableBase {

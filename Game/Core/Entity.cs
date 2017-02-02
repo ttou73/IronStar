@@ -215,6 +215,9 @@ namespace IronStar.Core {
 		{
 			FXInstance?.Kill();
 			FXInstance = null;
+
+			ModelInstance?.Kill();
+			ModelInstance	=	null;
 		}
 
 

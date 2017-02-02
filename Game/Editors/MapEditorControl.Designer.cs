@@ -31,6 +31,8 @@
 			this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.createToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.displayToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.refreshWorldToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
 			this.gridToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.showAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -50,8 +52,6 @@
 			this.gridFactory = new System.Windows.Forms.PropertyGrid();
 			this.tabModel = new System.Windows.Forms.TabPage();
 			this.gridModel = new System.Windows.Forms.PropertyGrid();
-			this.refreshWorldToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
 			this.mapMenu.SuspendLayout();
 			this.tabControl1.SuspendLayout();
 			this.tabNode.SuspendLayout();
@@ -85,13 +85,13 @@
 			// saveToolStripMenuItem
 			// 
 			this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-			this.saveToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.saveToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
 			this.saveToolStripMenuItem.Text = "Save";
 			// 
 			// saveAsToolStripMenuItem
 			// 
 			this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-			this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
 			this.saveAsToolStripMenuItem.Text = "Save As...";
 			// 
 			// createToolStripMenuItem
@@ -113,27 +113,39 @@
 			this.displayToolStripMenuItem.Size = new System.Drawing.Size(57, 20);
 			this.displayToolStripMenuItem.Text = "Display";
 			// 
+			// refreshWorldToolStripMenuItem
+			// 
+			this.refreshWorldToolStripMenuItem.Name = "refreshWorldToolStripMenuItem";
+			this.refreshWorldToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+			this.refreshWorldToolStripMenuItem.Text = "Refresh World";
+			this.refreshWorldToolStripMenuItem.Click += new System.EventHandler(this.refreshWorldToolStripMenuItem_Click);
+			// 
+			// toolStripSeparator3
+			// 
+			this.toolStripSeparator3.Name = "toolStripSeparator3";
+			this.toolStripSeparator3.Size = new System.Drawing.Size(145, 6);
+			// 
 			// gridToolStripMenuItem
 			// 
 			this.gridToolStripMenuItem.Name = "gridToolStripMenuItem";
-			this.gridToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.gridToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
 			this.gridToolStripMenuItem.Text = "Grid";
 			// 
 			// toolStripSeparator1
 			// 
 			this.toolStripSeparator1.Name = "toolStripSeparator1";
-			this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
+			this.toolStripSeparator1.Size = new System.Drawing.Size(145, 6);
 			// 
 			// showAllToolStripMenuItem
 			// 
 			this.showAllToolStripMenuItem.Name = "showAllToolStripMenuItem";
-			this.showAllToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.showAllToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
 			this.showAllToolStripMenuItem.Text = "Show All";
 			// 
 			// hideSelectedToolStripMenuItem
 			// 
 			this.hideSelectedToolStripMenuItem.Name = "hideSelectedToolStripMenuItem";
-			this.hideSelectedToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.hideSelectedToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
 			this.hideSelectedToolStripMenuItem.Text = "Hide Selected";
 			// 
 			// buildToolStripMenuItem
@@ -228,6 +240,7 @@
 			this.gridTransform.Name = "gridTransform";
 			this.gridTransform.Size = new System.Drawing.Size(387, 492);
 			this.gridTransform.TabIndex = 7;
+			this.gridTransform.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.gridTransform_PropertyValueChanged);
 			// 
 			// tabFactory
 			// 
@@ -247,6 +260,7 @@
 			this.gridFactory.Name = "gridFactory";
 			this.gridFactory.Size = new System.Drawing.Size(387, 492);
 			this.gridFactory.TabIndex = 6;
+			this.gridFactory.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.gridFactory_PropertyValueChanged);
 			// 
 			// tabModel
 			// 
@@ -266,18 +280,7 @@
 			this.gridModel.Name = "gridModel";
 			this.gridModel.Size = new System.Drawing.Size(387, 492);
 			this.gridModel.TabIndex = 7;
-			// 
-			// refreshWorldToolStripMenuItem
-			// 
-			this.refreshWorldToolStripMenuItem.Name = "refreshWorldToolStripMenuItem";
-			this.refreshWorldToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-			this.refreshWorldToolStripMenuItem.Text = "Refresh World";
-			this.refreshWorldToolStripMenuItem.Click += new System.EventHandler(this.refreshWorldToolStripMenuItem_Click);
-			// 
-			// toolStripSeparator3
-			// 
-			this.toolStripSeparator3.Name = "toolStripSeparator3";
-			this.toolStripSeparator3.Size = new System.Drawing.Size(149, 6);
+			this.gridModel.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.gridModel_PropertyValueChanged);
 			// 
 			// MapEditorControl
 			// 

@@ -83,8 +83,12 @@ namespace IronStar.Entities {
 
 
 
+		public override void Killed()
+		{
+			space.Remove(box);
+		}
 
-		
+
 		/// <summary>
 		/// 
 		/// </summary>

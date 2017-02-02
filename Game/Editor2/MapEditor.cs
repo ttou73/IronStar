@@ -52,6 +52,8 @@ namespace IronStar.Editor2 {
 
 		GameWorld world;
 
+		public GameWorld World { get { return world; } }
+
 
 		/// <summary>
 		/// Initializes server-side world.
@@ -212,15 +214,16 @@ namespace IronStar.Editor2 {
 		/// <summary>
 		/// 
 		/// </summary>
-		public void ResetWorld ()
+		public void ResetWorld (bool test=false)
 		{
 			world.KillAll();
 			world.ModelManager.KillAllModels();
 
+			EnableSimulation = false;
+
 			foreach ( var node in map.Nodes ) {
 				var ent = world.Spawn( node.Factory, 0,0, node.Position, node.Rotation );
 			}
-
 		}
 
 

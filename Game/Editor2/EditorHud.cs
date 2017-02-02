@@ -64,6 +64,8 @@ namespace IronStar.Editor2 {
 			spriteLayer.Draw(null, 0,0,vp.Width,44, new Color(64,64,64,192) );
 
 			RText( 0, Color.Orange, "FPS = {0:0.00}", gameTime.Fps );
+			RText( 1, Color.Orange, "RW Instances = {0}", rs.RenderWorld.Instances.Count );
+			RText( 2, Color.Orange, "Entities = {0}", editor.World.entities.Count );
 
 			LText( 0, Color.LightGray, "[F1] - Dashboard     [Q] - Select   ");
 			LText( 1, Color.LightGray, "[F2] - Save Map      [W] - Move     ");

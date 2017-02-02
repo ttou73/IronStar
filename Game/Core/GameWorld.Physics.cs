@@ -27,14 +27,14 @@ namespace IronStar.Core {
 	/// </summary>
 	public partial class GameWorld {
 
-		Space physSpace = new BEPUphysics.Space();
+		//Space physSpace = new BEPUphysics.Space();
 
 		/// <summary>
 		/// Gets physical space
 		/// </summary>
 		public Space PhysSpace { 
 			get {
-				return physSpace;
+				return physics.PhysSpace;
 			}
 		}
 	}

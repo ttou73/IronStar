@@ -95,5 +95,20 @@ namespace IronStar.Editors {
 		{
 			MapEditor.ResetWorld();
 		}
+
+		private void gridTransform_PropertyValueChanged( object s, PropertyValueChangedEventArgs e )
+		{
+			MapEditor.ResetWorld();
+		}
+
+		private void gridFactory_PropertyValueChanged( object s, PropertyValueChangedEventArgs e )
+		{
+			MapEditor.ResetWorld();
+		}
+
+		private void gridModel_PropertyValueChanged( object s, PropertyValueChangedEventArgs e )
+		{
+			MapEditor.ResetWorld();
+		}
 	}
 }
