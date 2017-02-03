@@ -34,9 +34,6 @@
 			this.refreshWorldToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
 			this.gridToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-			this.showAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.hideSelectedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.buildToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.visibilityToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.navigationMeshToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -52,6 +49,9 @@
 			this.gridFactory = new System.Windows.Forms.PropertyGrid();
 			this.tabModel = new System.Windows.Forms.TabPage();
 			this.gridModel = new System.Windows.Forms.PropertyGrid();
+			this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+			this.freezeSelectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.unfreezeAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.mapMenu.SuspendLayout();
 			this.tabControl1.SuspendLayout();
 			this.tabNode.SuspendLayout();
@@ -106,9 +106,9 @@
             this.refreshWorldToolStripMenuItem,
             this.toolStripSeparator3,
             this.gridToolStripMenuItem,
-            this.toolStripSeparator1,
-            this.showAllToolStripMenuItem,
-            this.hideSelectedToolStripMenuItem});
+            this.toolStripSeparator4,
+            this.freezeSelectionToolStripMenuItem,
+            this.unfreezeAllToolStripMenuItem});
 			this.displayToolStripMenuItem.Name = "displayToolStripMenuItem";
 			this.displayToolStripMenuItem.Size = new System.Drawing.Size(57, 20);
 			this.displayToolStripMenuItem.Text = "Display";
@@ -116,37 +116,20 @@
 			// refreshWorldToolStripMenuItem
 			// 
 			this.refreshWorldToolStripMenuItem.Name = "refreshWorldToolStripMenuItem";
-			this.refreshWorldToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+			this.refreshWorldToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
 			this.refreshWorldToolStripMenuItem.Text = "Refresh World";
 			this.refreshWorldToolStripMenuItem.Click += new System.EventHandler(this.refreshWorldToolStripMenuItem_Click);
 			// 
 			// toolStripSeparator3
 			// 
 			this.toolStripSeparator3.Name = "toolStripSeparator3";
-			this.toolStripSeparator3.Size = new System.Drawing.Size(145, 6);
+			this.toolStripSeparator3.Size = new System.Drawing.Size(151, 6);
 			// 
 			// gridToolStripMenuItem
 			// 
 			this.gridToolStripMenuItem.Name = "gridToolStripMenuItem";
-			this.gridToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+			this.gridToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
 			this.gridToolStripMenuItem.Text = "Grid";
-			// 
-			// toolStripSeparator1
-			// 
-			this.toolStripSeparator1.Name = "toolStripSeparator1";
-			this.toolStripSeparator1.Size = new System.Drawing.Size(145, 6);
-			// 
-			// showAllToolStripMenuItem
-			// 
-			this.showAllToolStripMenuItem.Name = "showAllToolStripMenuItem";
-			this.showAllToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
-			this.showAllToolStripMenuItem.Text = "Show All";
-			// 
-			// hideSelectedToolStripMenuItem
-			// 
-			this.hideSelectedToolStripMenuItem.Name = "hideSelectedToolStripMenuItem";
-			this.hideSelectedToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
-			this.hideSelectedToolStripMenuItem.Text = "Hide Selected";
 			// 
 			// buildToolStripMenuItem
 			// 
@@ -282,6 +265,25 @@
 			this.gridModel.TabIndex = 7;
 			this.gridModel.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.gridModel_PropertyValueChanged);
 			// 
+			// toolStripSeparator4
+			// 
+			this.toolStripSeparator4.Name = "toolStripSeparator4";
+			this.toolStripSeparator4.Size = new System.Drawing.Size(151, 6);
+			// 
+			// freezeSelectionToolStripMenuItem
+			// 
+			this.freezeSelectionToolStripMenuItem.Name = "freezeSelectionToolStripMenuItem";
+			this.freezeSelectionToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
+			this.freezeSelectionToolStripMenuItem.Text = "Freeze Selection";
+			this.freezeSelectionToolStripMenuItem.Click += new System.EventHandler(this.freezeSelectionToolStripMenuItem_Click);
+			// 
+			// unfreezeAllToolStripMenuItem
+			// 
+			this.unfreezeAllToolStripMenuItem.Name = "unfreezeAllToolStripMenuItem";
+			this.unfreezeAllToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
+			this.unfreezeAllToolStripMenuItem.Text = "Unfreeze All";
+			this.unfreezeAllToolStripMenuItem.Click += new System.EventHandler(this.unfreezeAllToolStripMenuItem_Click);
+			// 
 			// MapEditorControl
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -312,9 +314,6 @@
 		private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem saveAsToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem gridToolStripMenuItem;
-		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-		private System.Windows.Forms.ToolStripMenuItem showAllToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem hideSelectedToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem buildToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem visibilityToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem navigationMeshToolStripMenuItem;
@@ -331,5 +330,8 @@
 		private System.Windows.Forms.ToolStripMenuItem editRecastConfigurationToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem refreshWorldToolStripMenuItem;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+		private System.Windows.Forms.ToolStripMenuItem freezeSelectionToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem unfreezeAllToolStripMenuItem;
 	}
 }

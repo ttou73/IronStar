@@ -30,6 +30,42 @@ using BEPUphysics.BroadPhaseEntries.MobileCollidables;
 namespace IronStar.Core {
 	public partial class GameWorld  {
 
+		public bool RayCastAgainstEntity ( Vector3 from, Vector3 to, out Vector3 pos, out float distance, out Entity hitEntity )
+		{
+			hitEntity	=	null;
+			var dir		=	to - from;
+			var dist	=	dir.Length();
+			var ndir	=	dir.Normalized();
+
+			distance	=	float.MaxValue;
+			Ray ray		=	new Ray( from, ndir );
+
+			pos		= to;
+
+			var rcr		= new RayCastResult();	
+			var bRay	= MathConverter.Convert( ray );
+
+			bool result = PhysSpace.RayCast( bRay, dist, out rcr );
+
+			if (!result) {
+				return false;
+			}
+
+			var convex		=	rcr.HitObject as ConvexCollidable;
+			var collidable	=	rcr.HitObject as Collidable;
+			pos				=	MathConverter.Convert( rcr.HitData.Location );
+
+			if (convex!=null) {
+				hitEntity = convex.Entity.Tag as Entity;
+			} else if (collidable!=null) {
+				hitEntity = collidable.Tag as Entity;
+			}
+
+			distance	=	rcr.HitData.T;
+
+			return true;
+		}
+
 		/// <summary>
 		/// 
 		/// </summary>

@@ -109,5 +109,19 @@ namespace IronStar.Editors {
 		{
 			MapEditor.ResetWorld(false);
 		}
+
+		private void toolStripMenuItem1_Click( object sender, EventArgs e )
+		{
+		}
+
+		private void freezeSelectionToolStripMenuItem_Click( object sender, EventArgs e )
+		{
+			MapEditor.FreezeSelected();
+		}
+
+		private void unfreezeAllToolStripMenuItem_Click( object sender, EventArgs e )
+		{
+			MapEditor.UnfreezeAll();
+		}
 	}
 }

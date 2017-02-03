@@ -99,9 +99,9 @@ namespace IronStar.Editor2 {
 				this.map = new Map();
 			}
 
-			foreach ( var node in map.Nodes ) {
-				node.SpawnEntity( world );
-			}
+			map.ActivateMap( world );
+			world.SimulateWorld( 0.016f );
+			world.PresentWorld( 0.016f, 1 );
 		}
 
 
@@ -298,6 +298,24 @@ namespace IronStar.Editor2 {
 
 
 
+
+		public void UnfreezeAll ()
+		{
+			foreach ( var node in map.Nodes ) {
+				node.Frozen = false;
+			}
+		}
+
+
+		public void FreezeSelected ()
+		{
+			foreach ( var node in Selection ) {
+				node.Frozen = true;
+			}
+			ClearSelection();
+		}
+
+
 		/// <summary>
 		/// 
 		/// </summary>
@@ -323,123 +341,6 @@ namespace IronStar.Editor2 {
 			camera.Distance = size;
 		}
 
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="x"></param>
-		/// <param name="y"></param>
-		void Select( int x, int y, bool add )
-		{
-			var ray = camera.PointToRay( x, y );
-
-			var minDistance	=	float.MaxValue;
-			var pickedItem	=	(MapNode)null;
-
-
-			foreach ( var item in map.Nodes ) {
-				var bbox	=	item.Factory.BoundingBox;
-				var iw		=	Matrix.Invert( item.WorldMatrix );
-				float distance;
-
-				var rayT	=	Utils.TransformRay( iw, ray );
-
-				if (rayT.Intersects(ref bbox, out distance)) {
-					if (minDistance > distance) {
-						minDistance = distance;
-						pickedItem = item;
-					}
-				}
-			}
-
-			if (add) {
-
-				if (pickedItem==null) {
-					return;
-				}
-
-				if (selection.Contains(pickedItem)) {
-					selection.Remove(pickedItem);
-				} else {
-					selection.Add(pickedItem);
-				}
-
-			} else {
-
-				ClearSelection();
-
-				if (pickedItem!=null) {
-					selection.Add(pickedItem);
-				}
-			}
-
-			FeedSelection();
-		}
-
-
-
-		bool  marqueeSelecting = false;
-		bool  selectingMarqueeAdd = false;
-		Point selectingMarqueeStart;
-		Point selectingMarqueeEnd;
-
-		public Rectangle SelectionMarquee {
-			get { 
-				if (!marqueeSelecting) {
-					return new Rectangle(0,0,0,0);
-				} else {
-					return new Rectangle( 
-						Math.Min( selectingMarqueeStart.X, selectingMarqueeEnd.X ),
-						Math.Min( selectingMarqueeStart.Y, selectingMarqueeEnd.Y ),
-						Math.Abs( selectingMarqueeStart.X - selectingMarqueeEnd.X ),
-						Math.Abs( selectingMarqueeStart.Y - selectingMarqueeEnd.Y )
-					);
-				}
-			}
-		}
-
-
-		public void StartMarqueeSelection ( int x, int y, bool add )
-		{
-			selectingMarqueeAdd = add;
-			marqueeSelecting = true;
-			selectingMarqueeStart = new Point(x,y);
-			selectingMarqueeEnd	  = selectingMarqueeStart;
-		}
-
-		public void UpdateMarqueeSelection ( int x, int y )
-		{
-			if (marqueeSelecting) {
-				selectingMarqueeEnd	  = new Point(x,y);
-			}
-		}
-
-		public void StopMarqueeSelection ( int x, int y )
-		{
-			if (marqueeSelecting) {
-
-
-				if (selectingMarqueeStart==selectingMarqueeEnd) {
-					marqueeSelecting = false;
-					return;
-				}
-
-				if (!selectingMarqueeAdd) {
-					ClearSelection();
-				}
-
-				foreach ( var item in map.Nodes ) {
-					if (camera.IsInRectangle( item.Position, SelectionMarquee )) {
-						selection.Add( item );
-					}
-				}
-
-				FeedSelection();
-
-				marqueeSelecting = false;
-			}
-		}
 
 	}
 }

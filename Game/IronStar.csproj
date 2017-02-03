@@ -62,6 +62,7 @@
     <Compile Include="Commands\ShowWorldState.cs" />
     <Compile Include="Editor2\EditorConfig.cs" />
     <Compile Include="Editor2\EditorHud.cs" />
+    <Compile Include="Editor2\MapEditor.Selection.cs" />
     <Compile Include="Editor2\RotateTool.cs" />
     <Compile Include="Editor2\NullTool.cs" />
     <Compile Include="Editor2\MoveTool.cs" />

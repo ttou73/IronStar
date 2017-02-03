@@ -3,9 +3,9 @@
   <Nodes>
     <MapNode>
       <Visible>true</Visible>
-      <Frozen>false</Frozen>
+      <Frozen>true</Frozen>
       <Position X="-6.875" Y="-0.5" Z="8.875" />
-      <Rotation X="0" Y="0" Z="0" W="1" />
+      <Rotation X="2.98023224E-08" Y="0" Z="0" W="0.99999994" />
       <Scaling>1</Scaling>
       <Factory xsi:type="StaticModelFactory">
         <Model>testMtrl</Model>
@@ -24,8 +24,8 @@
     <MapNode>
       <Visible>true</Visible>
       <Frozen>false</Frozen>
-      <Position X="-11.75" Y="16.5" Z="0" />
-      <Rotation X="0.25" Y="-0.0669873" Z="0.25" W="0.933012664" />
+      <Position X="-11.75" Y="8.125" Z="3" />
+      <Rotation X="0.07341082" Y="0.187966838" Z="-0.301005781" W="0.9320272" />
       <Scaling>1</Scaling>
       <Factory xsi:type="ProxyFactory">
         <Classname>box</Classname>
@@ -34,8 +34,8 @@
     <MapNode>
       <Visible>true</Visible>
       <Frozen>false</Frozen>
-      <Position X="-10.875" Y="12.5" Z="0" />
-      <Rotation X="0.25" Y="-0.0669873" Z="0.25" W="0.933012664" />
+      <Position X="-10.875" Y="15.625" Z="0" />
+      <Rotation X="0.1830127" Y="-0.1830127" Z="-0.249999985" W="0.933012664" />
       <Scaling>1</Scaling>
       <Factory xsi:type="ProxyFactory">
         <Classname>box</Classname>
