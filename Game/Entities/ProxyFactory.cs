@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Fusion;
+using Fusion.Core.Mathematics;
+using Fusion.Engine.Graphics;
 using IronStar.Core;
 using IronStar.Editors;
 
@@ -13,7 +15,20 @@ namespace IronStar.Entities {
 
 		
 		[TypeConverter(typeof(EntityListConverter))]
-		public string Classname { get; set; } = "";
+		public string Classname { 
+			get { return classname; }
+			set {
+				if (classname!=value) {
+					classname = value;
+					dirty = true;
+				}
+			}
+		}
+
+
+		string classname = "";
+		bool dirty = true;
+		EntityFactory factory = null;
 
 
 		/// <summary>
@@ -29,10 +44,22 @@ namespace IronStar.Entities {
 				return null;
 			}
 
-			var factory = world.Content.Load<EntityFactory>(@"entities\" + Classname);
+			factory = world.Content.Load<EntityFactory>(@"entities\" + Classname);
 
 			return factory.Spawn( entity, world );
 		}
+
+
+
+		public override void Draw( DebugRender dr, Matrix transform, Color color )
+		{
+			if (factory==null) {
+				base.Draw( dr, transform, color );
+			} else {
+				factory.Draw( dr, transform, color );
+			}
+		}
+
 
 	}
 }

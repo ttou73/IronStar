@@ -301,15 +301,15 @@ namespace Fusion.Engine.Graphics {
 		}
 
 
-		public void DrawBasis(Matrix basis, float scale)
+		public void DrawBasis(Matrix basis, float scale, float width=1)
 		{
 			Vector3 pos = Vector3.TransformCoordinate(Vector3.Zero, basis);
 			Vector3 xaxis = Vector3.TransformNormal(Vector3.UnitX * scale, basis);
 			Vector3 yaxis = Vector3.TransformNormal(Vector3.UnitY * scale, basis);
 			Vector3 zaxis = Vector3.TransformNormal(Vector3.UnitZ * scale, basis);
-			DrawLine(pos, pos + xaxis, Color.Red);
-			DrawLine(pos, pos + yaxis, Color.Lime);
-			DrawLine(pos, pos + zaxis, Color.Blue);
+			DrawLine(pos, pos + xaxis, Color.Red , Color.Red , width, width);
+			DrawLine(pos, pos + yaxis, Color.Lime, Color.Lime, width, width);
+			DrawLine(pos, pos + zaxis, Color.Blue, Color.Blue, width, width);
 		}
 
 

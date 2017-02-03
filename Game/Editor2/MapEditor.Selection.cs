@@ -104,8 +104,6 @@ namespace IronStar.Editor2 {
 
 			if (world.RayCastAgainstEntity( from, to, out hitPoint, out distance, out entity )) {
 
-				rs.RenderWorld.Debug.DrawPoint( hitPoint, 0.5f, Color.Red );
-
 				return map.Nodes.FirstOrDefault( n => n.Entity == entity && !n.Frozen );
 
 			} else {
@@ -145,7 +143,7 @@ namespace IronStar.Editor2 {
 					continue;
 				}
 
-				var bbox	=	item.Factory.BoundingBox;
+				var bbox	=	DefaultBox;
 				var iw		=	Matrix.Invert( item.WorldMatrix );
 				float d;
 

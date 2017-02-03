@@ -26,6 +26,8 @@ namespace IronStar.Editor2 {
 	/// </summary>
 	public partial class MapEditor : IEditorInstance {
 
+		public static readonly BoundingBox DefaultBox = new BoundingBox( Vector3.One * (-0.25f), Vector3.One * 0.25f );
+
 		readonly string mapName;
 		readonly string fullPath;
 		
@@ -252,6 +254,8 @@ namespace IronStar.Editor2 {
 		{
 			camera.Update( gameTime );
 
+			var dr = rs.RenderWorld.Debug;
+
 			//RefreshAppearance();
 
 			if (EnableSimulation) {
@@ -270,10 +274,9 @@ namespace IronStar.Editor2 {
 			//
 			foreach ( var item in map.Nodes ) {
 
-				var color = Utils.WireColor;
+				var color = item.Frozen ? Utils.GridColor : Utils.WireColor;
 
-				rs.RenderWorld.Debug.DrawBasis( item.WorldMatrix, 0.125f );
-				rs.RenderWorld.Debug.DrawBox( item.Factory.BoundingBox, item.WorldMatrix, color);
+				item.Factory.Draw( dr, item.WorldMatrix, color ); 
 			}
 
 			//
@@ -287,8 +290,8 @@ namespace IronStar.Editor2 {
 					color = Color.White;
 				}
 
-				rs.RenderWorld.Debug.DrawBasis( item.WorldMatrix, 0.125f );
-				rs.RenderWorld.Debug.DrawBox( item.Factory.BoundingBox, item.WorldMatrix, color);
+				dr.DrawBasis( item.WorldMatrix, 0.5f, 3 );
+				item.Factory.Draw( dr, item.WorldMatrix, color ); 
 			}
 
 			var mp = Game.Mouse.Position;

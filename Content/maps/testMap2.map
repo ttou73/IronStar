@@ -15,7 +15,7 @@
       <Visible>true</Visible>
       <Frozen>false</Frozen>
       <Position X="-13" Y="16.625" Z="4" />
-      <Rotation X="0.25" Y="-0.0669873" Z="0.25" W="0.933012664" />
+      <Rotation X="-0.116183914" Y="-0.519610345" Z="0.01911509" W="0.8462511" />
       <Scaling>1</Scaling>
       <Factory xsi:type="ProxyFactory">
         <Classname>box</Classname>
@@ -24,8 +24,8 @@
     <MapNode>
       <Visible>true</Visible>
       <Frozen>false</Frozen>
-      <Position X="-11.75" Y="8.125" Z="3" />
-      <Rotation X="0.07341082" Y="0.187966838" Z="-0.301005781" W="0.9320272" />
+      <Position X="-12.5" Y="9.375" Z="3" />
+      <Rotation X="0.745156" Y="-0.1368715" Z="0.29482317" W="0.5823125" />
       <Scaling>1</Scaling>
       <Factory xsi:type="ProxyFactory">
         <Classname>box</Classname>
@@ -35,7 +35,7 @@
       <Visible>true</Visible>
       <Frozen>false</Frozen>
       <Position X="-10.875" Y="15.625" Z="0" />
-      <Rotation X="0.1830127" Y="-0.1830127" Z="-0.249999985" W="0.933012664" />
+      <Rotation X="0.0227367878" Y="-0.685913" Z="-0.389680028" W="0.6141301" />
       <Scaling>1</Scaling>
       <Factory xsi:type="ProxyFactory">
         <Classname>box</Classname>

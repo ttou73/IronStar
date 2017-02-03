@@ -43,5 +43,16 @@ namespace IronStar.Entities {
 		{
 			return new RigidBody( entity, world, this );
 		}
+
+
+		public override void Draw( DebugRender dr, Matrix transform, Color color )
+		{
+			var w = Width/2;
+			var h = Height/2;
+			var d = Depth/2;
+
+			dr.DrawBox( new BoundingBox( new Vector3(-w, -h, -d), new Vector3(w, h, d) ), transform, color );
+			dr.DrawPoint( transform.TranslationVector, (w+h+d)/3/2, color );
+		}
 	}
 }

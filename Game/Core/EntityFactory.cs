@@ -16,6 +16,7 @@ using Fusion.Engine.Common;
 using Fusion.Engine.Storage;
 using System.ComponentModel;
 using System.Xml.Serialization;
+using IronStar.Editor2;
 
 namespace IronStar.Core {
 
@@ -23,13 +24,17 @@ namespace IronStar.Core {
 		
 		public abstract EntityController Spawn (Entity entity, GameWorld world);
 
-		[XmlIgnore]
-		[Browsable(false)]
-		public virtual BoundingBox BoundingBox {
-			get {
-				return new BoundingBox( Vector3.One * (-0.25f), Vector3.One * 0.25f );
-			}
+		/// <summary>
+		/// Draws entity in editor
+		/// </summary>
+		/// <param name="dr"></param>
+		/// <param name="transform"></param>
+		/// <param name="color"></param>
+		public virtual void Draw ( DebugRender dr, Matrix transform, Color color )
+		{
+			dr.DrawBox(	MapEditor.DefaultBox, transform, color );
 		}
+
 
 		public override string ToString()
 		{
