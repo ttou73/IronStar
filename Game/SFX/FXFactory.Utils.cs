@@ -63,20 +63,20 @@ namespace IronStar.SFX {
 		}
 
 
-		public static Vector3 GetRadialDistribution ( Random rand, FXDistribution3D distribution, float average, float deviation )
+		public static Vector3 GetRadialDistribution ( Random rand, FXDistribution3D distribution, float min, float max )
 		{
 			switch (distribution) {
-				case FXDistribution3D.UniformRadial: return rand.UniformRadialDistribution( average-deviation, average+deviation );
-				case FXDistribution3D.GaussRadial: return rand.GaussRadialDistribution( average, deviation/1.5f );
+				case FXDistribution3D.UniformRadial: return rand.UniformRadialDistribution( min, max );
+				case FXDistribution3D.GaussRadial: return rand.GaussRadialDistribution( (min+max)/2, (max-min)/3.0f );
 				default: return Vector3.Zero;
 			}
 		}
 
-		public static float GetLinearDistribution( Random rand, FXDistribution distribution, float average, float deviation )
+		public static float GetLinearDistribution( Random rand, FXDistribution distribution, float min, float max )
 		{
 			switch ( distribution ) {
-				case FXDistribution.Uniform: return rand.NextFloat( average - deviation, average + deviation );
-				case FXDistribution.Gauss: return rand.GaussDistribution( average, deviation/1.5f );
+				case FXDistribution.Uniform: return rand.NextFloat( min, max );
+				case FXDistribution.Gauss: return rand.GaussDistribution( (min+max)/2, (max-min)/3.0f );
 				default: return 0;
 			}
 

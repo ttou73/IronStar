@@ -152,21 +152,23 @@ namespace IronStar.SFX {
 		[XmlAttribute]
 		[Description( "Lifetime distribution" )]
 		public FXDistribution Distribution { get; set; } = FXDistribution.Uniform;
+
 		[XmlAttribute]
-		[Description( "Average (mean) value of particle lifetime" )]
-		public float Average { get; set; } = 1;
+		[Description( "Minimum particle lifetime" )]
+		public float MinLifetime { get; set; } = 1;
+
 		[XmlAttribute]
-		[Description( "Probability interval (three-sigma rule for Gauss distribution)" )]
-		public float Deviation { get; set; } = 0;
+		[Description( "Maximum particle lifetime" )]
+		public float MaxLifetime { get; set; } = 1;
 
 		public override string ToString()
 		{
-			return string.Format( "{0}: [{1:0.##}, {2:0.##}]", Distribution, Average, Deviation );
+			return string.Format( "{0}: [{1:0.##}, {2:0.##}]", Distribution, MinLifetime, MaxLifetime );
 		}
 
 		public float GetLifetime ( Random rand )
 		{
-			return FXFactory.GetLinearDistribution( rand, Distribution, Average, Deviation );
+			return FXFactory.GetLinearDistribution( rand, Distribution, MinLifetime, MaxLifetime );
 		}
 	}
 
@@ -204,24 +206,24 @@ namespace IronStar.SFX {
 		public FXDistribution LinearDistribution { get; set; } = FXDistribution.Uniform;
 
 		[XmlAttribute]
-		[Description( "Average radial velocity" )]
-		public float LinearAverage { get; set; } = 1;
+		[Description( "Minimum linear velocity" )]
+		public float LinearVelocityMin { get; set; } = 0;
 
 		[XmlAttribute]
-		[Description( "Radial velocity deviation" )]
-		public float LinearDeviation { get; set; } = 0;
+		[Description( "Maximum linear velocity" )]
+		public float LinearVelocityMax { get; set; } = 1;
 
 		[XmlAttribute]
 		[Description( "Radial velocity distribution" )]
 		public FXDistribution3D RadialDistribution { get; set; } = FXDistribution3D.UniformRadial;
 		
 		[XmlAttribute]
-		[Description( "Average radial velocity" )]
-		public float RadialAverage { get; set; } = 1;
+		[Description( "Minimum radial velocity" )]
+		public float RadialVelocityMin { get; set; } = 0;
 		
 		[XmlAttribute]
-		[Description( "Radial velocity deviation" )]
-		public float RadialDeviation { get; set; } = 0;
+		[Description( "Maximum radial velocity" )]
+		public float RadialVelocityMax { get; set; } = 1;
 
 		[XmlAttribute]
 		[Description( "Source velocity addition factor" )]
@@ -229,14 +231,14 @@ namespace IronStar.SFX {
 
 		public override string ToString()
 		{
-			return string.Format( "L:{0}:{1:0.##} R:{2}:{3:0.##}", LinearDistribution, LinearAverage, RadialDistribution, RadialAverage );
+			return string.Format( "L:{0}:{1:0.##} R:{2}:{3:0.##}", LinearDistribution, LinearVelocityMin, RadialDistribution, RadialVelocityMin );
 		}
 
 		public Vector3 GetVelocity( FXEvent fxEvent, Random rand )
 		{
-			var velocityValue   =   FXFactory.GetLinearDistribution( rand, LinearDistribution, LinearAverage, LinearDeviation );
+			var velocityValue   =   FXFactory.GetLinearDistribution( rand, LinearDistribution, LinearVelocityMin, LinearVelocityMax );
 			var velocity		=   FXFactory.GetDirection( Direction, velocityValue, fxEvent );
-			var addition		=	FXFactory.GetRadialDistribution( rand, RadialDistribution, RadialAverage, RadialDeviation );
+			var addition		=	FXFactory.GetRadialDistribution( rand, RadialDistribution, RadialVelocityMin, RadialVelocityMax );
 			var advection		=	fxEvent.Velocity * Advection;
 
 			return velocity + addition + advection;
@@ -259,21 +261,21 @@ namespace IronStar.SFX {
 
 		[XmlAttribute]
 		[Description( "Average size of spawn area" )]
-		public float AverageSize { get; set; } = 0;
+		public float MinSize { get; set; } = 0;
 
 		[XmlAttribute]
 		[Description( "Average size of spawn area" )]
-		public float SizeDeviation { get; set; } = 0;
+		public float MaxSize { get; set; } = 0;
 
 		public override string ToString()
 		{
-			return string.Format( "D:{0}:{1:0.##} Sz:{2}:{3:0.##}", OffsetDirection, OffsetFactor, Distribution, AverageSize );
+			return string.Format( "D:{0}:{1:0.##} Sz:{2}:{3:0.##}", OffsetDirection, OffsetFactor, Distribution, MinSize );
 		}
 
 		public Vector3 GetPosition ( FXEvent fxEvent, Random rand )
 		{
 			var position = FXFactory.GetPosition( OffsetDirection, OffsetFactor, fxEvent);
-			var radial	= FXFactory.GetRadialDistribution( rand, Distribution, AverageSize, SizeDeviation );
+			var radial	= FXFactory.GetRadialDistribution( rand, Distribution, MinSize, MaxSize );
 			return position + radial;
 		}
 	}
