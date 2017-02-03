@@ -20,85 +20,11 @@ using Fusion;
 namespace IronStar.Mapping {
 	public partial class Map : IPrecachable {
 
-		/// <summary>
-		/// Base scene path
-		/// </summary>
-		[XmlAttribute]
-		public string ScenePath { get; set; }
-
 
 		/// <summary>
 		/// List of nodes
 		/// </summary>
 		public List<MapNode> Nodes { get; set; }
-
-	
-		List<MeshInstance> instances;
-		List<StaticMesh> collisionMeshes;
-		List<SpawnInfo> spawnInfos;
-
-		/// <summary>
-		/// Gets base scene
-		/// </summary>
-		[XmlIgnore]
-		public Scene Scene {
-			get {
-				return scene;
-			}
-		}
-
-		Scene scene = null;
-
-
-		/// <summary>
-		/// Gets list of mesh instances.
-		/// </summary>
-		[XmlIgnore]
-		public IEnumerable<MeshInstance> MeshInstance {
-			get {
-				return instances;
-			}
-		}
-
-
-		/// <summary>
-		/// Gets list of static collision meshes
-		/// </summary>
-		[XmlIgnore]
-		public IEnumerable<StaticMesh> StaticCollisionMeshes {
-			get {
-				return collisionMeshes;
-			}
-		}
-
-
-		/// <summary>
-		/// Gets list of spawn infos
-		/// </summary>
-		[XmlIgnore]
-		public IEnumerable<SpawnInfo> SpawnInfos {
-			get {
-				return spawnInfos;
-			}
-		}
-
-
-		/// <summary>
-		/// Spawn info
-		/// </summary>
-		public class SpawnInfo {
-			public SpawnInfo( string classname, Vector3 origin, Quaternion rotation )
-			{
-				Classname   =   classname;
-				Origin      =   origin;
-				Rotation    =   rotation;
-			}
-
-			public readonly string Classname;
-			public readonly Vector3 Origin;
-			public readonly Quaternion Rotation;
-		}
-
 
 
 		/// <summary>
@@ -107,7 +33,6 @@ namespace IronStar.Mapping {
 		public Map ()
 		{
 		}
-
 
 
 		/// <summary>
@@ -119,6 +44,16 @@ namespace IronStar.Mapping {
 			//content.Precache<Scene>( ScenePath );
 		}
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public void ActivateMap ( GameWorld gameWorld )
+		{
+			foreach ( var node in Nodes ) {
+				node.SpawnEntity( gameWorld );
+			}
+		}
 
 
 		/// <summary>
@@ -136,7 +71,6 @@ namespace IronStar.Mapping {
 		}
 
 
-
 		/// <summary>
 		/// 
 		/// </summary>
@@ -148,75 +82,6 @@ namespace IronStar.Mapping {
 			extraTypes.Add( typeof( Native.Recast.RCConfig ) );
 			
 			Misc.SaveObjectToXml( map, typeof( Map ), stream, extraTypes.ToArray() );
-		}
-
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public void ActivateMap ( GameWorld gameWorld )
-		{
-			#if false
-			var content	=	gameWorld.Content;
-			scene		=	content.Load<Scene>( ScenePath );
-
-			instances       =   new List<MeshInstance>();
-			collisionMeshes =   new List<StaticMesh>();
-			spawnInfos      =   new List<SpawnInfo>();
-
-			//	compute absolute transforms :
-			var transforms  = new Matrix[ scene.Nodes.Count ];
-			scene.ComputeAbsoluteTransforms( transforms );
-
-			var nodePathMap	=	scene.GetPathNodeMapping();
-
-			//	iterate through the scene's nodes :
-			for ( int i = 0; i<scene.Nodes.Count; i++ ) {
-
-				var node    =   scene.Nodes[i];
-				var world   =   transforms[i];
-				var name    =   node.Name;
-				var mesh    =   node.MeshIndex < 0 ? null : scene.Meshes[ node.MeshIndex ];
-			}
-
-
-			foreach ( var factory in Nodes ) {
-
-				Node node;
-
-				if (nodePathMap.TryGetValue( factory.NodePath, out node ) ) {
-
-					var modeIndex	=	scene.Nodes.IndexOf( node );
-					var meshIndex	=	node.MeshIndex;
-					var transform	=	transforms[ modeIndex ];
-					var position	=	transform.TranslationVector;
-					var rotation	=	Quaternion.RotationMatrix( transform );
-
-					if (factory.Factory is StaticModelFactory) {
-						var smf	=	(StaticModelFactory)factory.Factory;
-
-						smf.CreateStaticCollisionModel( gameWorld, scene, node, transform );
-						smf.CreateStaticVisibleModel( gameWorld, scene, node, transform );
-							
-						continue;
-					}
-
-					if (factory.Factory is WorldspawnFactory) {
-						var wsf =	(WorldspawnFactory)factory.Factory;
-
-						wsf.SetupWorldPhysics( gameWorld );
-
-						continue;
-					}
-
-					var entity		=	gameWorld.Spawn( factory.Factory, -1, 0, position, rotation );
-					
-				} else {
-					Log.Warning("Missing referenced node : {0}", factory.NodePath );
-				}
-			}
-			#endif
 		}
 	}
 
@@ -237,9 +102,6 @@ namespace IronStar.Mapping {
 			}
 
 			var map = (Map)Misc.LoadObjectFromXml( typeof( Map ), stream, extraTypes );
-
-			//	preload scene :
-			content.Load<Scene>( map.ScenePath );
 
 			return map;
 		}

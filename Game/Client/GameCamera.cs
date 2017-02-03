@@ -20,8 +20,11 @@ using Fusion.Engine.Audio;
 
 
 namespace IronStar.Views {
-	public class GameCamera : WorldView {
+	public class GameCamera {
 
+		public readonly Game Game;
+		public readonly GameWorld World;
+		readonly ShooterClient client;
 		uint playerID = 0;
 
 		/// <summary>
@@ -29,11 +32,12 @@ namespace IronStar.Views {
 		/// </summary>
 		/// <param name="game"></param>
 		/// <param name="space"></param>
-		public GameCamera ( GameWorld world ) : base( world )
+		public GameCamera ( GameWorld world, ShooterClient client ) 
 		{
-			if (world.IsClientSide) {
-				currentFov	=	90;//(world.GameClient as ShooterClient).Fov;
-			}
+			this.World	=	world;
+			this.Game	=	world.Game;
+			this.client	=	client;
+			currentFov	=	90;//(world.GameClient as ShooterClient).Fov;
 		}
 
 
@@ -54,7 +58,7 @@ namespace IronStar.Views {
 		/// 
 		/// </summary>
 		/// <param name="gameTime"></param>
-		public override void Update ( float elapsedTime, float lerpFactor )
+		public void Update ( float elapsedTime, float lerpFactor )
 		{
 			var rw	= Game.RenderSystem.RenderWorld;
 			var sw	= Game.SoundSystem.SoundWorld;
@@ -84,7 +88,7 @@ namespace IronStar.Views {
 			playerID	=	player.ID;
 			CalcBobbing( player, elapsedTime );
 
-			var uc	=	World.UserCommand;
+			var uc	=	client.UserCommand;
 
 			var m	= 	Matrix.RotationYawPitchRoll(	
 							uc.Yaw	 + MathUtil.Rad( bobYaw.Offset), 

@@ -26,7 +26,7 @@ namespace IronStar.Mapping {
 		/// for editor use only
 		/// </summary>
 		[XmlIgnore]
-		public Entity Enitity = null;
+		public Entity Entity = null;
 
 
 		[Category("Entity")]
@@ -81,8 +81,8 @@ namespace IronStar.Mapping {
 		/// <returns></returns>
 		public Entity SpawnEntity ( GameWorld world )
 		{
-			Enitity = world.Spawn( Factory, 0,0, Position, Rotation );
-			return Enitity;
+			Entity = world.Spawn( Factory, 0,0, Position, Rotation );
+			return Entity;
 		}
 
 
@@ -93,12 +93,16 @@ namespace IronStar.Mapping {
 		/// <param name="world"></param>
 		public void ResetEntity ( GameWorld world )
 		{
-			if (world.IsAlive(Enitity.ID)) {
-				Enitity.Position = Enitity.PositionOld = Position;
-				Enitity.Rotation = Enitity.RotationOld = Rotation;
-				Enitity.LinearVelocity = Vector3.Zero;
-				Enitity.AngularVelocity = Vector3.Zero;
-				Enitity.Controller?.EditorReset( Enitity );
+			if (Entity==null) {
+				HardResetEntity(world);
+				return;
+			}
+			if (world.IsAlive(Entity.ID)) {
+				Entity.Position = Entity.PositionOld = Position;
+				Entity.Rotation = Entity.RotationOld = Rotation;
+				Entity.LinearVelocity = Vector3.Zero;
+				Entity.AngularVelocity = Vector3.Zero;
+				Entity.Controller?.EditorReset( Entity );
 			} else {
 				HardResetEntity(world);
 			}
@@ -122,7 +126,9 @@ namespace IronStar.Mapping {
 		/// <param name="world"></param>
 		public void KillEntity ( GameWorld world )
 		{
-			world.Kill( Enitity.ID );
+			if (Entity!=null) {
+				world.Kill( Entity.ID );
+			}
 		}
 
 

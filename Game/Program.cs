@@ -29,14 +29,12 @@ namespace IronStar {
 
 			public IClientInstance CreateClient( Game game, Guid clientGuid )
 			{
-				throw new NotImplementedException();
-				//return new GameWorld( game.GameClient, clientGuid );
+				return new ShooterClient( game.GameClient, clientGuid );
 			}
 
 			public IServerInstance CreateServer( Game game, string map, string options )
 			{
-				throw new NotImplementedException();
-				//return new GameWorld( game.GameServer, map );
+				return new ShooterServer( game.GameServer, map );
 			}
 
 			public IUserInterface CreateUI( Game game )

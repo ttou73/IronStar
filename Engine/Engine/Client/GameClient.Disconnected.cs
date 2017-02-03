@@ -16,11 +16,12 @@ namespace Fusion.Engine.Client {
 
 		class Disconnected : State {
 
+			ClientContext context;
+
 			public Disconnected ( ClientContext context, string reason ) : base(context.GameClient, ClientState.Disconnected)
 			{
+				this.context = context;
 				Message	=	reason;
-
-				context?.Dispose();
 			}
 
 
@@ -41,6 +42,8 @@ namespace Fusion.Engine.Client {
 
 			public override void Update ( GameTime gameTime )
 			{
+				context?.Dispose();
+
 				//	fall immediatly to stand-by mode:
 				gameClient.SetState( new StandBy( gameClient ) );
 			}

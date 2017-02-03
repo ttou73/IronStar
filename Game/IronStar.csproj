@@ -57,6 +57,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Client\GameCamera.cs" />
     <Compile Include="Client\GameInput.cs" />
     <Compile Include="Commands\ShowWorldState.cs" />
     <Compile Include="Editor2\EditorConfig.cs" />
@@ -75,7 +76,6 @@
     <Compile Include="Core\GameWorld.Query.cs" />
     <Compile Include="Core\Old\Filter.cs" />
     <Compile Include="Core\Old\Oscillator.cs" />
-    <Compile Include="Core\Old\WorldView.cs" />
     <Compile Include="Core\GameWorld.Physics.cs" />
     <Compile Include="Core\SnapshotReader.cs" />
     <Compile Include="Core\SnapshotWriter.cs" />
@@ -157,9 +157,11 @@
     <Compile Include="Core\Entity.cs" />
     <Compile Include="Core\GameWorld.cs" />
     <Compile Include="MathConverter.cs" />
+    <Compile Include="ShooterClient.cs" />
     <Compile Include="ShooterInterface.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ShooterServer.cs" />
     <Compile Include="UserCommand.cs" />
     <Compile Include="SFX\FXPlayback.cs" />
   </ItemGroup>

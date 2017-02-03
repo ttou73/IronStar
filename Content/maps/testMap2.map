@@ -4,50 +4,18 @@
     <MapNode>
       <Visible>true</Visible>
       <Frozen>false</Frozen>
-      <Position X="-9" Y="12.5" Z="-2" />
-      <Rotation X="0.7478172" Y="-0.248694" Z="-0.601511359" W="0.13078627" />
+      <Position X="-6.875" Y="-0.5" Z="8.875" />
+      <Rotation X="0" Y="0" Z="0" W="1" />
       <Scaling>1</Scaling>
-      <Factory xsi:type="RigidBodyFactory">
-        <Width>1</Width>
-        <Height>1</Height>
-        <Depth>1</Depth>
-        <Mass>1</Mass>
-        <Model>box</Model>
+      <Factory xsi:type="StaticModelFactory">
+        <Model>testMtrl</Model>
       </Factory>
     </MapNode>
     <MapNode>
       <Visible>true</Visible>
       <Frozen>false</Frozen>
-      <Position X="-17.875" Y="13" Z="0" />
-      <Rotation X="0.06922437" Y="-0.5283499" Z="-0.0397442" W="-0.845266163" />
-      <Scaling>1</Scaling>
-      <Factory xsi:type="RigidBodyFactory">
-        <Width>1</Width>
-        <Height>1</Height>
-        <Depth>1</Depth>
-        <Mass>1</Mass>
-        <Model>box</Model>
-      </Factory>
-    </MapNode>
-    <MapNode>
-      <Visible>true</Visible>
-      <Frozen>false</Frozen>
-      <Position X="-13.375" Y="9" Z="0" />
-      <Rotation X="0.9665668" Y="0.0812163949" Z="-0.234971315" W="0.06277993" />
-      <Scaling>1</Scaling>
-      <Factory xsi:type="RigidBodyFactory">
-        <Width>1</Width>
-        <Height>1</Height>
-        <Depth>1</Depth>
-        <Mass>1</Mass>
-        <Model>box</Model>
-      </Factory>
-    </MapNode>
-    <MapNode>
-      <Visible>true</Visible>
-      <Frozen>false</Frozen>
-      <Position X="-20.5" Y="12" Z="0" />
-      <Rotation X="-0.5259135" Y="-0.246799618" Z="-0.3440373" W="-0.7376609" />
+      <Position X="-13" Y="16.625" Z="4" />
+      <Rotation X="0.25" Y="-0.0669873" Z="0.25" W="0.933012664" />
       <Scaling>1</Scaling>
       <Factory xsi:type="ProxyFactory">
         <Classname>box</Classname>
@@ -56,21 +24,21 @@
     <MapNode>
       <Visible>true</Visible>
       <Frozen>false</Frozen>
-      <Position X="-9" Y="1" Z="-2" />
-      <Rotation X="0.707106769" Y="0" Z="0" W="0.707106769" />
+      <Position X="-11.75" Y="16.5" Z="0" />
+      <Rotation X="0.25" Y="-0.0669873" Z="0.25" W="0.933012664" />
       <Scaling>1</Scaling>
       <Factory xsi:type="ProxyFactory">
-        <Classname>rocket</Classname>
+        <Classname>box</Classname>
       </Factory>
     </MapNode>
     <MapNode>
       <Visible>true</Visible>
       <Frozen>false</Frozen>
-      <Position X="-6.875" Y="-0.5" Z="8.875" />
-      <Rotation X="0" Y="0" Z="0" W="1" />
+      <Position X="-10.875" Y="12.5" Z="0" />
+      <Rotation X="0.25" Y="-0.0669873" Z="0.25" W="0.933012664" />
       <Scaling>1</Scaling>
-      <Factory xsi:type="StaticModelFactory">
-        <Model>testMtrl</Model>
+      <Factory xsi:type="ProxyFactory">
+        <Classname>box</Classname>
       </Factory>
     </MapNode>
   </Nodes>

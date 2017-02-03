@@ -47,12 +47,6 @@ namespace IronStar.Core {
 		public event EntityEventHandler EntitySpawned;
 		public event EntityEventHandler EntityKilled;
 
-		/// <summary>
-		/// Gets list of world views.
-		/// </summary>
-		readonly List<WorldView> views = new List<WorldView>();
-
-
 		List<FXEvent> fxEvents = new List<FXEvent>();
 
 		SFX.FXPlayback		fxPlayback = null;
@@ -68,9 +62,11 @@ namespace IronStar.Core {
 		/// 
 		/// </summary>
 		/// <param name="game"></param>
-		public GameWorld( Game game, bool enablePresentation )
+		public GameWorld( Game game, bool enablePresentation, Guid userGuid )
 		{
 			this.Game	=	game;
+
+			this.UserGuid	=	userGuid;
 
 			Content		=	new ContentManager( Game );
 			entities	=	new EntityCollection();
@@ -188,13 +184,6 @@ namespace IronStar.Core {
 			//
 			foreach ( var entity in visibleEntities ) {
 				entity.UpdateRenderState( fxPlayback, modelManager );
-			}
-
-			//
-			//	update view :
-			//
-			foreach ( var view in views ) {
-				view.Update( deltaTime, lerpFactor );
 			}
 
 			//

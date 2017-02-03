@@ -74,7 +74,7 @@ namespace IronStar.Editor2 {
 			camera			=	new EditorCamera( this );
 			hud				=	new EditorHud( this );
 			manipulator		=	new NullTool( this );
-			world			=	new GameWorld( Game, true );
+			world			=	new GameWorld( Game, true, new Guid() );
 			world.InitServerAtoms();
 
 			SetupUI();

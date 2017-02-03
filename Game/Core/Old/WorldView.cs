@@ -17,8 +17,6 @@ using Fusion.Engine.Graphics;
 namespace IronStar.Core {
 	public abstract class WorldView {
 		
-		public readonly Game Game;
-		public readonly GameWorld World;
 
 		/// <summary>
 		/// 
@@ -26,8 +24,6 @@ namespace IronStar.Core {
 		/// <param name="world"></param>
 		public WorldView ( GameWorld world )
 		{
-			this.World	=	world;
-			this.Game	=	world.Game;
 		}
 
 

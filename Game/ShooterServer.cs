@@ -15,78 +15,58 @@ using IronStar.SFX;
 using Fusion.Core.IniParser.Model;
 using Fusion.Engine.Graphics;
 using IronStar.Mapping;
-
+using IronStar.Core;
 
 namespace IronStar {
-	class ServerWorld : IServerInstance {
+	class ShooterServer : IServerInstance {
 
-		/// <summary>
-		/// Initializes server-side world.
-		/// </summary>
-		/// <param name="maxPlayers"></param>
-		/// <param name="maxEntities"></param>
-		public ServerWorld ( GameServer server, string map )
+		readonly GameWorld world;
+		readonly string mapName;
+		Map map;
+
+		
+		public ShooterServer ( GameServer server, string mapName )
 		{
-			this.mapName	=	map;
-			
-			Atoms	=	new AtomCollection();
-
-			Log.Verbose( "world: server" );
-			this.serverSide =   true;
-			this.Game       =   server.Game;
-			this.UserGuid   =   new Guid();
-			Content         =   new ContentManager( Game );
-			entities        =   new EntityCollection(Atoms);
-
-			AddAtoms();
-		}
-
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		void AddAtoms ()
-		{
-			var atoms = new List<string>();
-
-			atoms.AddRange( Content.EnumerateAssets( "fx" ) );
-			atoms.AddRange( Content.EnumerateAssets( "entities" ) );
-			atoms.AddRange( Content.EnumerateAssets( "models" ) );
-
-			Atoms.AddRange( atoms );
+			world			=	new GameWorld( server.Game, false, new Guid() );
+			this.mapName	=	mapName;
 		}
 
 
 		void IServerInstance.Initialize()
 		{
-			this.map		=   Content.Load<Map>( @"maps\" + mapName );
-			this.map.ActivateMap( this );
+			map		=   world.Content.Load<Map>( @"maps\" + mapName );
+			world.InitServerAtoms();
+			map.ActivateMap( world );
 
-
-			#region TEMP STUFF
-			Random	r = new Random();
-			for (int i=0; i<10; i++) {
-				Spawn("box", 0, Vector3.Up * 400 + r.GaussRadialDistribution(20,2), 0 );
-			}// */
-			#endregion
-
-
-			EntityKilled += MPWorld_EntityKilled;
+			//EntityKilled += MPWorld_EntityKilled;
 		}
 
+
+
+		public AtomCollection Atoms {
+			get {
+				return world.Atoms;
+			}
+		}
+
+
+		public string ServerInfo()
+		{
+			return mapName;
+		}
 
 
 		public byte[] Update( GameTime gameTime )
 		{
-			SimulateWorld( gameTime.ElapsedSec );
+			world.SimulateWorld( gameTime.ElapsedSec );
 
 			//	write world to stream :
 			using ( var ms = new MemoryStream() ) {
-				WriteToSnapshot( ms );
+				world.WriteToSnapshot( ms );
 				return ms.GetBuffer();
 			}
 		}
+
 
 		public void FeedCommand( Guid clientGuid, byte[] userCommand, uint commandID, float lag )
 		{
@@ -94,37 +74,43 @@ namespace IronStar {
 				return;
 			}
 
-			PlayerCommand( clientGuid, userCommand, lag );
+			world.PlayerCommand( clientGuid, userCommand, lag );
 		}
+
 
 		public void FeedNotification( Guid clientGuid, string message )
 		{
 			Log.Message( "NOTIFICATION {0}: {1}", clientGuid, message );
 		}
 
+
 		public void ClientConnected( Guid clientGuid, string userInfo )
 		{
 			Log.Message("Client Connected: {0} {1}", clientGuid, userInfo );
-			PlayerConnected( clientGuid, userInfo );
+			world.PlayerConnected( clientGuid, userInfo );
 		}
+
 
 		public void ClientActivated( Guid clientGuid )
 		{
 			Log.Message("Client Activated: {0}", clientGuid );
-			PlayerEntered( clientGuid );
+			world.PlayerEntered( clientGuid );
 		}
+
 
 		public void ClientDeactivated( Guid clientGuid )
 		{
 			Log.Message("Client Deactivated: {0}", clientGuid );
-			PlayerLeft( clientGuid );
+			world.PlayerLeft( clientGuid );
 		}
+
 
 		public void ClientDisconnected( Guid clientGuid )
 		{
 			Log.Message("Client Disconnected: {0}", clientGuid );
-			PlayerDisconnected( clientGuid );
+			world.PlayerDisconnected( clientGuid );
 		}
+
 
 		public bool ApproveClient( Guid clientGuid, string userInfo, out string reason )
 		{
@@ -133,6 +119,7 @@ namespace IronStar {
 			throw new NotImplementedException();
 		}
 
+
 		#region IDisposable Support
 		private bool disposedValue = false; // To detect redundant calls
 
@@ -140,7 +127,7 @@ namespace IronStar {
 		{
 			if ( !disposedValue ) {
 				if ( disposing ) {
-					Shutdown();
+					world?.Dispose();
 				}
 
 				disposedValue = true;
