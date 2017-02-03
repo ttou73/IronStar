@@ -96,7 +96,7 @@ namespace IronStar.Mapping {
 
 			SourceNavigationMesh = rcmesh;
  
-            NavigationMesh = RecastBuilder.BuildNavigationMesh( rcmesh, NavConfig, context );
+            NavigationMesh = RecastBuilder.BuildNavigationMesh( rcmesh, NavConfig, context, true );
 
 
 			var cs = NavConfig.CellSize;

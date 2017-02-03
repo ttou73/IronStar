@@ -6,7 +6,6 @@
 #include "RCConfig.h"
 #include "Recast.h"
 #include <string.h>
-#include "RecastStructs.h"
 using uint = unsigned int;
 using ushort = unsigned short;
 using uchar = unsigned char;
@@ -49,31 +48,12 @@ namespace Native {
 		};
 			
 	 
-		public ref struct HeightFieldCreateException : public System::Exception {
+		public ref struct RecastException : public System::Exception {
 
-		};
+		public:
+			RecastException(System::String^ s) : System::Exception(s) {
 
-
-		public ref struct CompactHeightFieldBuildException : public System::Exception {
-
-		};
-		public ref struct CompactHeightFieldErodeException : public System::Exception {
-
-		};
-
-		public ref struct CompactHeightFieldPartitionException : public System::Exception {
-
-		};
-		public ref struct BuildContourSetException : public System::Exception {
-
-		};
-
-		public ref struct BuildPolyMeshException : public System::Exception {
-
-		};
-
-		public ref struct BuildPolyMeshDetailException : public System::Exception {
-
+			}
 		};
 	}
 }

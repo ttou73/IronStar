@@ -1,7 +1,6 @@
 #pragma once
 #ifndef RecastBuilder_H
 #define RecastBuilder_H
-#include "RecastStructs.h"
 #include "RecastSharp.h"
 #include "HeightField.h"
 #include "CompactHeightField.h"
@@ -17,7 +16,7 @@ namespace Native {
 
 		static public ref class RecastBuilder {
 		public:
-			static PolyMesh^  BuildNavigationMesh(RecastMesh^ input, RCConfig^ configuration, BuildContext^ buildContext);
+			static PolyMesh^  BuildNavigationMesh(RecastMesh^ input, RCConfig^ configuration, BuildContext^ buildContext, bool generateDetails);
 			
 			static Vector3 CalculateBmin(RecastMesh^ mesh) {
 				auto rv = mesh->Vertices[0];

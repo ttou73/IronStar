@@ -18,8 +18,10 @@ namespace Native {
 
 		public:
 
-			/// The width of the field along the x-axis. [Limit: >= 0] [Units: vx]
-			[CategoryAttribute("Field")]
+			[CategoryAttribute("Field")]	
+			///<summary>
+			///The width of the field along the x-axis. [Limit: >= 0] [Units: vx]
+			///</summary>
 			property int Width {
 				void set(int value) {
 					nativeConfig->width = value;
@@ -232,6 +234,16 @@ namespace Native {
 			RCConfig()
 			{
 				nativeConfig = new rcConfig();
+			}
+
+			~RCConfig() {
+				this->!RCConfig();
+			}
+
+			!RCConfig() {
+				if (nativeConfig != nullptr) {
+					delete nativeConfig;
+				}
 			}
 
 		internal:

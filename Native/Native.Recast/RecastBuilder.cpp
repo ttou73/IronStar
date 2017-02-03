@@ -1,7 +1,7 @@
 #include "RecastBuilder.h"
 using namespace Native::Recast;
 
-PolyMesh^ RecastBuilder::BuildNavigationMesh(RecastMesh ^ input, RCConfig^ configuration, BuildContext^ buildContext)
+PolyMesh^ RecastBuilder::BuildNavigationMesh(RecastMesh ^ input, RCConfig^ configuration, BuildContext^ buildContext, bool generatePolyMeshDetail)
 {
 	int triangleCount = input->Indices->Length / 3;
 	int verticesCount = input->Vertices->Length;
@@ -11,7 +11,7 @@ PolyMesh^ RecastBuilder::BuildNavigationMesh(RecastMesh ^ input, RCConfig^ confi
 
 	CalculateGridSize(configuration);
 
-	HeightField^ heightField = HeightField::AllocateHeightField();
+	HeightField^ heightField = gcnew HeightField();
 	
 	heightField->Create(buildContext, configuration);
 
@@ -22,21 +22,21 @@ PolyMesh^ RecastBuilder::BuildNavigationMesh(RecastMesh ^ input, RCConfig^ confi
 	}
 
 	MarkWalkableTriangles(buildContext, configuration, input, triangleAreas);
+
 	heightField->RasterizeTriangles(buildContext, configuration, input, triangleAreas);
 
 	heightField->FilterLowHangingWalkableObstacles(buildContext, configuration);
 	heightField->FilterLedgeSpans(buildContext, configuration);
 	heightField->FilterWalkableLowHeightSpans(buildContext, configuration);	
-
-	CompactHeightField^ chf = CompactHeightField::AllocateCompactHeightField();
+		
+	CompactHeightField^ chf = gcnew CompactHeightField();
 	chf->Build(buildContext, configuration, heightField);
-	heightField->Free();
+	
+	heightField->~HeightField();
 
 	chf->ErodeWalkableArea(buildContext, configuration);
 
 	//TODO:: MARK volume areas
-
-	//TODO:: add another type of triangulation
 
 	//Monotonne partition
 
@@ -50,6 +50,7 @@ PolyMesh^ RecastBuilder::BuildNavigationMesh(RecastMesh ^ input, RCConfig^ confi
 		chf->BuildRegionsMonotone(buildContext, configuration);
 		break;
 	case PartitionType::Layer:
+		chf->BuildLayerRegions(buildContext, configuration);
 		break;
 	default:
 		throw gcnew System::Exception();
@@ -57,25 +58,21 @@ PolyMesh^ RecastBuilder::BuildNavigationMesh(RecastMesh ^ input, RCConfig^ confi
 	}
 
 
-	ContourSet^ contourSet = ContourSet::AllocateContourSet();
+	ContourSet^ contourSet = gcnew ContourSet();
 	contourSet->Build(buildContext, configuration, chf);
 
 
-	PolyMesh^ polyMesh = PolyMesh::AllocatePolyMesh();
+	PolyMesh^ polyMesh = gcnew PolyMesh();
 	polyMesh->Build(buildContext, configuration, chf, contourSet);
 
 
-	PolyMeshDetail^ polyMeshDetail = PolyMeshDetail::AllocatePolyMeshDetail();
-	polyMeshDetail->Build(buildContext, configuration, chf, polyMesh);
-
-	chf->Free();
-	contourSet->Free();
-
-	//Comment next line for working with Detour
-	polyMeshDetail->Free();
-
-	//TODO:: we should return polyMeshDetail too
+	if (generatePolyMeshDetail) {
+		PolyMeshDetail^ polyMeshDetail = gcnew PolyMeshDetail();
+		polyMeshDetail->Build(buildContext, configuration, chf, polyMesh);
+		polyMesh->Details = polyMeshDetail;
+	}
+	chf->~CompactHeightField();
+	contourSet->~ContourSet();
 	
 	return polyMesh;
-	// TODO: insert return statement here
 }

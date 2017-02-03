@@ -2,34 +2,42 @@
 #ifndef RecastPolyMeshDetail
 #define RecastPolyMeshDetail
 #include "Recast.h"
-#include "RecastBuilder.h"
 #include "RecastSharp.h"
 #include "ContourSet.h"
+#include "PolyMesh.h"
 
 namespace Native {
 	namespace Recast {
+
+
 		public ref class PolyMeshDetail
 		{
 		public:
-			static PolyMeshDetail^ AllocatePolyMeshDetail() {
+			PolyMeshDetail() {
 				auto temp = rcAllocPolyMeshDetail();
 				if (temp == nullptr) {
 					//TODO
-					throw gcnew System::OutOfMemoryException();
+					throw gcnew System::OutOfMemoryException("Can't create PolyMeshDetail. Not enough memory");
 				}
-				return gcnew PolyMeshDetail(temp);
+				nativeMeshDetail = temp;
 			}
 
-			void Free() {
-				rcFreePolyMeshDetail(nativeMeshDetail);
-				nativeMeshDetail = nullptr;
+			~PolyMeshDetail() {
+				this->!PolyMeshDetail();
+			}
+
+			!PolyMeshDetail() {
+				if (nativeMeshDetail != nullptr) {
+					rcFreePolyMeshDetail(nativeMeshDetail);
+					nativeMeshDetail = nullptr;
+				}
 			}
 
 			void Build(BuildContext^ context, RCConfig^ configuration, CompactHeightField^ chf, PolyMesh^ mesh) {
 
 				auto t = rcBuildPolyMeshDetail(context->nativeContext, *(mesh->nativeMesh), *(chf->nativeCHF), configuration->DetailSampleDist, configuration->DetailSampleMaxError, *nativeMeshDetail);
 				if (!t) {
-					throw gcnew BuildContourSetException();
+					throw gcnew RecastException("Can't build PolyMeshDetail");
 				}
 			}
 		internal:

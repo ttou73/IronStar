@@ -2,33 +2,40 @@
 #ifndef RecastContourSet
 #define RecastContourSet
 #include "Recast.h"
-#include "RecastBuilder.h"
 #include "RecastSharp.h"
+#include "CompactHeightField.h"
 
 namespace Native {
 	namespace Recast {
 		public ref class ContourSet
 		{
 		public:
-			static ContourSet^ AllocateContourSet() {
+			ContourSet() {
 				auto temp = rcAllocContourSet();
 				if (temp == nullptr) {
 					//TODO
 					throw gcnew System::OutOfMemoryException();
 				}
-				return gcnew ContourSet(temp);
+				nativeSet = temp;
 			}
 
-			void Free() {
-				rcFreeContourSet(nativeSet);
-				nativeSet = nullptr;
+
+			~ContourSet() {
+				this->!ContourSet();
+			}
+
+			!ContourSet() {
+				if (nativeSet != nullptr) {
+					rcFreeContourSet(nativeSet);
+					nativeSet = nullptr;
+				}
 			}
 
 			void Build(BuildContext^ context, RCConfig^ configuration, CompactHeightField^ chf) {
 
 				auto t = rcBuildContours(context->nativeContext, *(chf->nativeCHF), configuration->MaxSimplificationError, configuration->MaxEdgeLen, *nativeSet);
 				if (!t) {
-					throw gcnew BuildContourSetException();
+					throw gcnew RecastException("Can't build ContourSet");
 				}
 			}
 		internal:

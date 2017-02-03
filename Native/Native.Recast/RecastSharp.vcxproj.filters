@@ -116,6 +116,9 @@
     <ClCompile Include="RecastBuilder.cpp">
       <Filter>RecastWrapper\Source</Filter>
     </ClCompile>
+    <ClCompile Include="PolyMesh.cpp">
+      <Filter>RecastWrapper\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="app.rc">

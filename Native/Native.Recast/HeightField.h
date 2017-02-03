@@ -9,24 +9,30 @@ namespace Native {
 		public ref class HeightField
 		{
 		public:
-			static HeightField^ AllocateHeightField() {
+
+			HeightField() {
 				auto temp = rcAllocHeightfield();
 				if (temp == nullptr) {
-					//TODO
-					throw gcnew System::OutOfMemoryException();
+					throw gcnew System::OutOfMemoryException("Can't create HeightField. Not enough memory");
 				}
-				return gcnew HeightField(temp);
+				nativeHeightField = temp;
 			}
 
-			void Free() {
-				rcFreeHeightField(nativeHeightField);
-				nativeHeightField = nullptr;
+			~HeightField() {
+				this->!HeightField();
+			}
+
+			!HeightField() {
+				if (nativeHeightField != nullptr) {
+					rcFreeHeightField(nativeHeightField);
+					nativeHeightField = nullptr;
+				}
 			}
 
 			void Create(BuildContext^ context, RCConfig^ configuration) {
 				auto t = rcCreateHeightfield(context->nativeContext, *nativeHeightField, configuration->Width, configuration->Height, configuration->nativeConfig->bmin, configuration->nativeConfig->bmax, configuration->CellSize, configuration->CellHeight);
 				if (!t) {
-					throw gcnew HeightFieldCreateException();
+					throw gcnew RecastException("Can't build HeightField");
 				}
 			}
 
@@ -43,7 +49,7 @@ namespace Native {
 				//TODO: check ptr
 				auto t = rcRasterizeTriangles(context->nativeContext, vertices, mesh->Vertices->Length, (int*)tris, (uchar*)ptr, mesh->Indices->Length / 3, *nativeHeightField, configuration->WalkableClimb); 
 				if (!t) {
-					throw gcnew HeightFieldCreateException();
+					throw gcnew RecastException("Can't rasterize triangles");
 				}
 				delete[] vertices;
 			}
@@ -60,7 +66,6 @@ namespace Native {
 				rcFilterWalkableLowHeightSpans(buildContext->nativeContext, configuration->WalkableHeight, *nativeHeightField);
 			}
 
-			//TODO. Think about finalizer and destructor.
 		internal:
 			HeightField(rcHeightfield* native) {
 				nativeHeightField = native;

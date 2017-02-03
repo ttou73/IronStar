@@ -7,25 +7,32 @@ namespace Native {
 		public ref class CompactHeightField
 		{
 		public:
-			static CompactHeightField^ AllocateCompactHeightField() {
+			CompactHeightField() {
 				auto temp = rcAllocCompactHeightfield();
 				if (temp == nullptr) {
 					//TODO
 					throw gcnew System::OutOfMemoryException();
 				}
-				return gcnew CompactHeightField(temp);
+				nativeCHF = temp;
 			}
 
-			void Free() {
-				rcFreeCompactHeightfield(nativeCHF);
-				nativeCHF = nullptr;
+			~CompactHeightField() {
+				this->!CompactHeightField();
 			}
+
+			!CompactHeightField() {
+				if (nativeCHF != nullptr) {
+					rcFreeCompactHeightfield(nativeCHF);
+					nativeCHF = nullptr;
+				}
+			}
+
 
 			void Build(BuildContext^ context, RCConfig^ configuration, HeightField^ heightField) {
 
 				auto t = rcBuildCompactHeightfield(context->nativeContext, configuration->WalkableHeight, configuration->WalkableClimb, *(heightField->nativeHeightField), *nativeCHF);
 				if (!t) {
-					throw gcnew CompactHeightFieldBuildException();
+					throw gcnew RecastException("Can't build CompactHeightField");
 				}
 			}
 
@@ -33,7 +40,7 @@ namespace Native {
 				bool t = rcErodeWalkableArea(context->nativeContext, configuration->WalkableRadius, *nativeCHF);
 
 				if (!t) {
-					throw gcnew CompactHeightFieldErodeException();
+					throw gcnew RecastException("Can't erode walkable area");
 				}
 			}
 
@@ -41,7 +48,7 @@ namespace Native {
 				bool t = rcBuildDistanceField(context->nativeContext, *nativeCHF);
 
 				if (!t) {
-					throw gcnew CompactHeightFieldPartitionException();
+					throw gcnew RecastException("Can't build distance field");
 				}
 			}
 
@@ -49,7 +56,7 @@ namespace Native {
 				bool t = rcBuildRegions(context->nativeContext, *nativeCHF, 0, configuration->MinRegionArea, configuration->MergeRegionArea);
 
 				if (!t) {
-					throw gcnew CompactHeightFieldPartitionException();
+					throw gcnew RecastException("Can't build regions");
 				}
 			}
 
@@ -57,7 +64,7 @@ namespace Native {
 				bool t = rcBuildRegionsMonotone(context->nativeContext, *nativeCHF, 0, configuration->MinRegionArea, configuration->MergeRegionArea);
 
 				if (!t) {
-					throw gcnew CompactHeightFieldPartitionException();
+					throw gcnew RecastException("Can't build monotone regions");
 				}
 			}
 
@@ -65,7 +72,7 @@ namespace Native {
 				bool t = rcBuildLayerRegions(context->nativeContext, *nativeCHF, 0, configuration->MinRegionArea);
 
 				if (!t) {
-					throw gcnew CompactHeightFieldPartitionException();
+					throw gcnew RecastException("Can't build layer regions");
 				}
 			}
 
