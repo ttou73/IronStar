@@ -73,10 +73,11 @@ namespace IronStar.Editors {
 
 
 
-		public void SetSelection ( IEnumerable<MapNode> selection )
+		public void SetSelection ( IEnumerable<MapNode> selection, object env )
 		{
 			gridTransform.SelectedObjects	= selection.Select( node => node ).ToArray();	
 			gridFactory.SelectedObjects		= selection.Select( node => node.Factory ).ToArray();	
+			gridEnv.SelectedObject			= env;
 		}
 
 
@@ -105,7 +106,7 @@ namespace IronStar.Editors {
 			MapEditor.ResetWorld(false);
 		}
 
-		private void gridModel_PropertyValueChanged( object s, PropertyValueChangedEventArgs e )
+		private void gridEnv_PropertyValueChanged( object s, PropertyValueChangedEventArgs e )
 		{
 			MapEditor.ResetWorld(false);
 		}

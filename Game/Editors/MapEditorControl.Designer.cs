@@ -34,6 +34,9 @@
 			this.refreshWorldToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
 			this.gridToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+			this.freezeSelectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.unfreezeAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.buildToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.visibilityToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.navigationMeshToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -47,16 +50,13 @@
 			this.gridTransform = new System.Windows.Forms.PropertyGrid();
 			this.tabFactory = new System.Windows.Forms.TabPage();
 			this.gridFactory = new System.Windows.Forms.PropertyGrid();
-			this.tabModel = new System.Windows.Forms.TabPage();
-			this.gridModel = new System.Windows.Forms.PropertyGrid();
-			this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
-			this.freezeSelectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.unfreezeAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.tabEnv = new System.Windows.Forms.TabPage();
+			this.gridEnv = new System.Windows.Forms.PropertyGrid();
 			this.mapMenu.SuspendLayout();
 			this.tabControl1.SuspendLayout();
 			this.tabNode.SuspendLayout();
 			this.tabFactory.SuspendLayout();
-			this.tabModel.SuspendLayout();
+			this.tabEnv.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// mapMenu
@@ -116,20 +116,39 @@
 			// refreshWorldToolStripMenuItem
 			// 
 			this.refreshWorldToolStripMenuItem.Name = "refreshWorldToolStripMenuItem";
-			this.refreshWorldToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
+			this.refreshWorldToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
 			this.refreshWorldToolStripMenuItem.Text = "Refresh World";
 			this.refreshWorldToolStripMenuItem.Click += new System.EventHandler(this.refreshWorldToolStripMenuItem_Click);
 			// 
 			// toolStripSeparator3
 			// 
 			this.toolStripSeparator3.Name = "toolStripSeparator3";
-			this.toolStripSeparator3.Size = new System.Drawing.Size(151, 6);
+			this.toolStripSeparator3.Size = new System.Drawing.Size(155, 6);
 			// 
 			// gridToolStripMenuItem
 			// 
 			this.gridToolStripMenuItem.Name = "gridToolStripMenuItem";
-			this.gridToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
+			this.gridToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
 			this.gridToolStripMenuItem.Text = "Grid";
+			// 
+			// toolStripSeparator4
+			// 
+			this.toolStripSeparator4.Name = "toolStripSeparator4";
+			this.toolStripSeparator4.Size = new System.Drawing.Size(155, 6);
+			// 
+			// freezeSelectionToolStripMenuItem
+			// 
+			this.freezeSelectionToolStripMenuItem.Name = "freezeSelectionToolStripMenuItem";
+			this.freezeSelectionToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
+			this.freezeSelectionToolStripMenuItem.Text = "Freeze Selection";
+			this.freezeSelectionToolStripMenuItem.Click += new System.EventHandler(this.freezeSelectionToolStripMenuItem_Click);
+			// 
+			// unfreezeAllToolStripMenuItem
+			// 
+			this.unfreezeAllToolStripMenuItem.Name = "unfreezeAllToolStripMenuItem";
+			this.unfreezeAllToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
+			this.unfreezeAllToolStripMenuItem.Text = "Unfreeze All";
+			this.unfreezeAllToolStripMenuItem.Click += new System.EventHandler(this.unfreezeAllToolStripMenuItem_Click);
 			// 
 			// buildToolStripMenuItem
 			// 
@@ -196,7 +215,7 @@
 			// 
 			this.tabControl1.Controls.Add(this.tabNode);
 			this.tabControl1.Controls.Add(this.tabFactory);
-			this.tabControl1.Controls.Add(this.tabModel);
+			this.tabControl1.Controls.Add(this.tabEnv);
 			this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tabControl1.Location = new System.Drawing.Point(130, 24);
 			this.tabControl1.Multiline = true;
@@ -245,44 +264,25 @@
 			this.gridFactory.TabIndex = 6;
 			this.gridFactory.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.gridFactory_PropertyValueChanged);
 			// 
-			// tabModel
+			// tabEnv
 			// 
-			this.tabModel.Controls.Add(this.gridModel);
-			this.tabModel.Location = new System.Drawing.Point(4, 22);
-			this.tabModel.Name = "tabModel";
-			this.tabModel.Size = new System.Drawing.Size(387, 492);
-			this.tabModel.TabIndex = 1;
-			this.tabModel.Text = "Model";
-			this.tabModel.UseVisualStyleBackColor = true;
+			this.tabEnv.Controls.Add(this.gridEnv);
+			this.tabEnv.Location = new System.Drawing.Point(4, 22);
+			this.tabEnv.Name = "tabEnv";
+			this.tabEnv.Size = new System.Drawing.Size(387, 492);
+			this.tabEnv.TabIndex = 1;
+			this.tabEnv.Text = "Environment";
+			this.tabEnv.UseVisualStyleBackColor = true;
 			// 
-			// gridModel
+			// gridEnv
 			// 
-			this.gridModel.BackColor = System.Drawing.SystemColors.ControlLightLight;
-			this.gridModel.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.gridModel.Location = new System.Drawing.Point(0, 0);
-			this.gridModel.Name = "gridModel";
-			this.gridModel.Size = new System.Drawing.Size(387, 492);
-			this.gridModel.TabIndex = 7;
-			this.gridModel.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.gridModel_PropertyValueChanged);
-			// 
-			// toolStripSeparator4
-			// 
-			this.toolStripSeparator4.Name = "toolStripSeparator4";
-			this.toolStripSeparator4.Size = new System.Drawing.Size(151, 6);
-			// 
-			// freezeSelectionToolStripMenuItem
-			// 
-			this.freezeSelectionToolStripMenuItem.Name = "freezeSelectionToolStripMenuItem";
-			this.freezeSelectionToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
-			this.freezeSelectionToolStripMenuItem.Text = "Freeze Selection";
-			this.freezeSelectionToolStripMenuItem.Click += new System.EventHandler(this.freezeSelectionToolStripMenuItem_Click);
-			// 
-			// unfreezeAllToolStripMenuItem
-			// 
-			this.unfreezeAllToolStripMenuItem.Name = "unfreezeAllToolStripMenuItem";
-			this.unfreezeAllToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
-			this.unfreezeAllToolStripMenuItem.Text = "Unfreeze All";
-			this.unfreezeAllToolStripMenuItem.Click += new System.EventHandler(this.unfreezeAllToolStripMenuItem_Click);
+			this.gridEnv.BackColor = System.Drawing.SystemColors.ControlLightLight;
+			this.gridEnv.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.gridEnv.Location = new System.Drawing.Point(0, 0);
+			this.gridEnv.Name = "gridEnv";
+			this.gridEnv.Size = new System.Drawing.Size(387, 492);
+			this.gridEnv.TabIndex = 7;
+			this.gridEnv.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.gridEnv_PropertyValueChanged);
 			// 
 			// MapEditorControl
 			// 
@@ -299,7 +299,7 @@
 			this.tabControl1.ResumeLayout(false);
 			this.tabNode.ResumeLayout(false);
 			this.tabFactory.ResumeLayout(false);
-			this.tabModel.ResumeLayout(false);
+			this.tabEnv.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -324,8 +324,8 @@
 		private System.Windows.Forms.PropertyGrid gridTransform;
 		private System.Windows.Forms.TabPage tabFactory;
 		private System.Windows.Forms.PropertyGrid gridFactory;
-		private System.Windows.Forms.TabPage tabModel;
-		private System.Windows.Forms.PropertyGrid gridModel;
+		private System.Windows.Forms.TabPage tabEnv;
+		private System.Windows.Forms.PropertyGrid gridEnv;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
 		private System.Windows.Forms.ToolStripMenuItem editRecastConfigurationToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem refreshWorldToolStripMenuItem;

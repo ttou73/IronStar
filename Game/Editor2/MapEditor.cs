@@ -124,7 +124,7 @@ namespace IronStar.Editor2 {
 		/// </summary>
 		void FeedSelection ()
 		{
-			Editors.Editor.GetMapEditor()?.SetSelection( selection );
+			Editors.Editor.GetMapEditor()?.SetSelection( selection, map.Environment );
 		}
 
 

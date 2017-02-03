@@ -22,6 +22,12 @@ namespace IronStar.Mapping {
 
 
 		/// <summary>
+		/// 
+		/// </summary>
+		public MapEnvironment Environment { get; set; }
+
+
+		/// <summary>
 		/// List of nodes
 		/// </summary>
 		public List<MapNode> Nodes { get; set; }
@@ -32,6 +38,8 @@ namespace IronStar.Mapping {
 		/// </summary>
 		public Map ()
 		{
+			Nodes		=	new List<MapNode>();
+			Environment	=	new MapEnvironment();
 		}
 
 
