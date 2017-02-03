@@ -48,7 +48,7 @@ namespace Native {
 		};
 			
 	 
-		public ref struct RecastException : public System::Exception {
+		public ref class RecastException : public System::Exception {
 
 		public:
 			RecastException(System::String^ s) : System::Exception(s) {

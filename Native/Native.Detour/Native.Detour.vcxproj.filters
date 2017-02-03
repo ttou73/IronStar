@@ -1,0 +1,133 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Detour">
+      <UniqueIdentifier>{4753be95-dd76-406e-b76d-84840e38d9ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Detour\Headers">
+      <UniqueIdentifier>{d39caab9-65c6-4f9d-a0ac-9256cae20b3f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Detour\Source">
+      <UniqueIdentifier>{c162fe6c-be3a-4204-8493-e43eb2dc8bad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DetourWrapper">
+      <UniqueIdentifier>{29838afe-6797-4c2c-9146-043176100c2c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DetourWrapper\Headers">
+      <UniqueIdentifier>{52a6f575-86c4-405c-97cb-0dd9953626d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DetourWrapper\Source">
+      <UniqueIdentifier>{2b1260d3-684c-4426-be2c-f036b1bbf284}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Native.Detour.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Stdafx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Detour\Headers\DetourAlloc.h">
+      <Filter>Detour\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Detour\Headers\DetourAssert.h">
+      <Filter>Detour\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Detour\Headers\DetourCommon.h">
+      <Filter>Detour\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Detour\Headers\DetourMath.h">
+      <Filter>Detour\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Detour\Headers\DetourNavMesh.h">
+      <Filter>Detour\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Detour\Headers\DetourNavMeshBuilder.h">
+      <Filter>Detour\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Detour\Headers\DetourNavMeshQuery.h">
+      <Filter>Detour\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Detour\Headers\DetourNode.h">
+      <Filter>Detour\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Detour\Headers\DetourStatus.h">
+      <Filter>Detour\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="DetourConfiguration.h">
+      <Filter>DetourWrapper\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="DetourSharp.h">
+      <Filter>DetourWrapper\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="NavigationMeshData.h">
+      <Filter>DetourWrapper\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="NavigationMesh.h">
+      <Filter>DetourWrapper\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshTile.h">
+      <Filter>DetourWrapper\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="NavigationMeshQuery.h">
+      <Filter>DetourWrapper\Headers</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Native.Detour.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AssemblyInfo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Stdafx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Detour\Source\DetourAlloc.cpp">
+      <Filter>Detour\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Detour\Source\DetourCommon.cpp">
+      <Filter>Detour\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Detour\Source\DetourNavMesh.cpp">
+      <Filter>Detour\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Detour\Source\DetourNavMeshBuilder.cpp">
+      <Filter>Detour\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Detour\Source\DetourNavMeshQuery.cpp">
+      <Filter>Detour\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Detour\Source\DetourNode.cpp">
+      <Filter>Detour\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="NavigationMesh.cpp">
+      <Filter>DetourWrapper\Source</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="app.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="app.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+</Project>
