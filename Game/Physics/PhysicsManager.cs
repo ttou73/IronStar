@@ -31,6 +31,15 @@ namespace IronStar.Physics {
 		}
 		
 
+		public float Gravity {
+			get {
+				return -physSpace.ForceUpdater.Gravity.Y;
+			}
+			set {
+				physSpace.ForceUpdater.Gravity = new BEPUVector3(0, -value, 0);
+			}
+		}
+
 		/// <summary>
 		/// 
 		/// </summary>
@@ -39,7 +48,7 @@ namespace IronStar.Physics {
 			this.World	=	world;
 			Game		=	world.Game;
 
-			physSpace.ForceUpdater.Gravity = new BEPUVector3(0, -gravity, 0);
+			Gravity		=	gravity;
 		}
 
 
@@ -52,6 +61,13 @@ namespace IronStar.Physics {
 		{
 			foreach ( var sm in staticModels ) {
 				sm.Update();
+			}
+
+			if (elapsedTime==0) {
+				physSpace.TimeStepSettings.MaximumTimeStepsPerFrame = 1;
+				physSpace.TimeStepSettings.TimeStepDuration = 0;
+				physSpace.Update(0);
+				return;
 			}
 
 			var dt	=	1 / Game.GameServer.TargetFrameRate;

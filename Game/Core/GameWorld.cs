@@ -58,6 +58,17 @@ namespace IronStar.Core {
 		public PhysicsManager	Physics		{ get { return physics; } }
 
 
+		public struct Environment {
+			public Vector3 SunDirection;
+			public float Turbidity;
+			public float FogDensity;
+			public float Gravity;
+			public float SunIntensity;
+		}
+
+		public Environment environment;
+
+
 		/// <summary>
 		/// 
 		/// </summary>
@@ -81,22 +92,7 @@ namespace IronStar.Core {
 				fxPlayback		=	new SFX.FXPlayback( this );
 				modelManager	=	new SFX.ModelManager( this );
 
-				rw.HdrSettings.BloomAmount  = 0.1f;
-				rw.HdrSettings.DirtAmount   = 0.0f;
-				rw.HdrSettings.KeyValue     = 0.18f;
-
-				rw.SkySettings.SunPosition			= new Vector3( 1.0f, 0.8f, 1.3f );
-				rw.SkySettings.SunLightIntensity	= 100;
-				rw.SkySettings.SkyTurbidity			= 8;
-				rw.SkySettings.SkyIntensity			= 0.5f;
-
-				rw.LightSet.DirectLight.Direction	=	rw.SkySettings.SunLightDirection;
-				rw.LightSet.DirectLight.Intensity	=	rw.SkySettings.SunLightColor;
-
-				rw.LightSet.AmbientLevel	=	rw.SkySettings.AmbientLevel;
 				rw.LightSet.SpotAtlas		=	Content.Load<TextureAtlas>(@"spots\spots");
-
-				rw.FogSettings.Density		=	0.001f;
 			}
 		}
 
@@ -176,6 +172,7 @@ namespace IronStar.Core {
 		public void PresentWorld ( float deltaTime, float lerpFactor )
 		{
 			var dr = Game.RenderSystem.RenderWorld.Debug;
+			var rw = Game.RenderSystem.RenderWorld;
 
 			var visibleEntities = entities.Select( pair => pair.Value ).ToArray();
 
@@ -191,6 +188,26 @@ namespace IronStar.Core {
 			//	
 			fxPlayback.Update( deltaTime, lerpFactor );
 			modelManager.Update( deltaTime, lerpFactor );
+
+			//
+			//	update environment :
+			//
+			rw.HdrSettings.BloomAmount  = 0.1f;
+			rw.HdrSettings.DirtAmount   = 0.0f;
+			rw.HdrSettings.KeyValue     = 0.18f;
+
+			rw.SkySettings.SunPosition			=	environment.SunDirection;
+			rw.SkySettings.SunLightIntensity	=	environment.SunIntensity;
+			rw.SkySettings.SkyTurbidity			=	environment.Turbidity;
+			rw.SkySettings.SkyIntensity			=	0.5f;
+
+			rw.FogSettings.Density				=	environment.FogDensity;
+
+			rw.LightSet.DirectLight.Direction	=	rw.SkySettings.SunLightDirection;
+			rw.LightSet.DirectLight.Intensity	=	rw.SkySettings.SunLightColor;
+
+			rw.LightSet.AmbientLevel	=	rw.SkySettings.AmbientLevel;
+
 		}
 
 
@@ -453,7 +470,7 @@ namespace IronStar.Core {
 		/// <param name="writer"></param>
 		public virtual void WriteToSnapshot ( Stream stream )
 		{
-			snapshotWriter.Write( stream, entities, fxEvents );
+			snapshotWriter.Write( stream, ref environment, entities, fxEvents );
 		}
 
 
@@ -464,7 +481,7 @@ namespace IronStar.Core {
 		/// <param name="writer"></param>
 		public virtual void ReadFromSnapshot ( Stream stream, float lerpFactor )
 		{
-			snapshotReader.Read( stream, entities, fxe=>fxPlayback?.RunFX(fxe), null, id=>KillImmediatly(id) );
+			snapshotReader.Read( stream, ref environment, entities, fxe=>fxPlayback?.RunFX(fxe), null, id=>KillImmediatly(id) );
 		}
 
 

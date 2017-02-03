@@ -102,7 +102,7 @@ namespace IronStar.Editor2 {
 			}
 
 			map.ActivateMap( world );
-			world.SimulateWorld( 0.016f );
+			world.SimulateWorld( 0 );
 			world.PresentWorld( 0.016f, 1 );
 		}
 
@@ -234,6 +234,8 @@ namespace IronStar.Editor2 {
 			foreach ( var node in map.Nodes ) {
 				node.ResetEntity( world );
 			}
+
+			world.SimulateWorld(0);
 		}
 
 

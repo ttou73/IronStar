@@ -26,9 +26,11 @@ namespace IronStar.Core {
 		/// <param name="snapshotStream"></param>
 		/// <param name="entities"></param>
 		/// <param name="fxEvents"></param>
-		public void Read ( Stream snapshotStream, Dictionary<uint,Entity> entities, Action<FXEvent> runfx, Action<Entity> spawned, Action<uint> killed )
+		public void Read<T> ( Stream snapshotStream, ref T header, Dictionary<uint,Entity> entities, Action<FXEvent> runfx, Action<Entity> spawned, Action<uint> killed ) where T: struct
 		{
 			using ( var reader = new BinaryReader( snapshotStream ) ) {
+
+				header	=	reader.Read<T>();
 
 				int snapshotCounter			=	reader.ReadInt32();
 				int snapshotCountrerDelta	=	snapshotCounter - recvSnapshotCounter;

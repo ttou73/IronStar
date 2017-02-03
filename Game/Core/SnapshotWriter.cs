@@ -26,9 +26,11 @@ namespace IronStar.Core {
 		/// <param name="snapshotStream"></param>
 		/// <param name="entities"></param>
 		/// <param name="fxEvents"></param>
-		public void Write ( Stream snapshotStream, Dictionary<uint,Entity> entities, List<FXEvent> fxEvents )
+		public void Write<T> ( Stream snapshotStream, ref T header, Dictionary<uint,Entity> entities, List<FXEvent> fxEvents ) where T: struct
 		{
 			using ( var writer = new BinaryWriter( snapshotStream ) ) {
+
+				writer.Write<T>( header );
 
 				var entityArray = entities.OrderBy( pair => pair.Value.ID ).Select( pair1 => pair1.Value ).ToArray();
 

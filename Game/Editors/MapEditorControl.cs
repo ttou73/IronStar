@@ -109,6 +109,7 @@ namespace IronStar.Editors {
 		private void gridEnv_PropertyValueChanged( object s, PropertyValueChangedEventArgs e )
 		{
 			MapEditor.ResetWorld(false);
+			MapEditor.Map.UpdateEnvironment( MapEditor.World );
 		}
 
 		private void toolStripMenuItem1_Click( object sender, EventArgs e )

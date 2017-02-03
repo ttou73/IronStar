@@ -58,10 +58,30 @@ namespace IronStar.Mapping {
 		/// </summary>
 		public void ActivateMap ( GameWorld gameWorld )
 		{
+			UpdateEnvironment( gameWorld );
+
 			foreach ( var node in Nodes ) {
 				node.SpawnEntity( gameWorld );
 			}
 		}
+
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="gameWorld"></param>
+		public void UpdateEnvironment ( GameWorld gameWorld )
+		{
+			gameWorld.Physics.Gravity			=	Environment.Gravity;
+
+			gameWorld.environment.FogDensity	=	Environment.FogDensity;
+			gameWorld.environment.Gravity		=	Environment.Gravity;
+			gameWorld.environment.SunIntensity	=	Environment.SunIntensity;
+			gameWorld.environment.SunDirection	=	Environment.SunPosition;
+			gameWorld.environment.Turbidity		=	Environment.SkyTrubidity;
+		}
+
 
 
 		/// <summary>

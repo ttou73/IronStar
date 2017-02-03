@@ -71,6 +71,8 @@ namespace IronStar.Entities {
 			ms.Orientation		=	MathConverter.Convert( entity.Rotation );
 			ms.Position			=	MathConverter.Convert( entity.Position );
 			box.MotionState = ms;
+			box.Orientation		=	MathConverter.Convert( entity.Rotation );
+			box.Position		=	MathConverter.Convert( entity.Position );
 		}
 
 
