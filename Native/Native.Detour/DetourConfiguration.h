@@ -9,6 +9,7 @@
 namespace Native {
 	namespace Detour {
 		public ref class DetourConfiguration {
+			public:
 			DetourConfiguration() {
 				nativeParams = new dtNavMeshCreateParams();
 				memset(nativeParams, 0, sizeof(*nativeParams));

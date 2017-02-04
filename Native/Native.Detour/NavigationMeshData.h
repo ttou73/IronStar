@@ -7,6 +7,7 @@ namespace Native {
 	namespace Detour {
 		public ref class NavigationMeshData {
 
+		public:
 			NavigationMeshData(DetourConfiguration^ config) {
 				uchar* arr;
 				int test;
