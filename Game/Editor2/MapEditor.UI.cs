@@ -33,11 +33,11 @@ namespace IronStar.Editor2 {
 		{
 			var rootFrame = Game.Frames.RootFrame;
 
-			rootFrame.MouseDown += RootFrame_MouseDown;
+			rootFrame.MouseDown	+= RootFrame_MouseDown;
 			rootFrame.MouseMove	+= RootFrame_MouseMove;
 			rootFrame.MouseUp	+= RootFrame_MouseUp;
 
-			rootFrame.Click      +=RootFrame_Click;
+			rootFrame.Click		+= RootFrame_Click;
 
 			Game.Keyboard.KeyDown +=Keyboard_KeyDown;
 
@@ -70,6 +70,12 @@ namespace IronStar.Editor2 {
 				}
 				if (e.Key==Keys.K) {
 					ResetWorld(true);
+				}
+				if (e.Key==Keys.L) {
+					SetToEntity();
+				}
+				if (e.Key==Keys.Enter) {
+					ActivateSelected();
 				}
 			}
 		}

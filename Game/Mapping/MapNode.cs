@@ -102,7 +102,7 @@ namespace IronStar.Mapping {
 				Entity.Rotation = Entity.RotationOld = Rotation;
 				Entity.LinearVelocity = Vector3.Zero;
 				Entity.AngularVelocity = Vector3.Zero;
-				Entity.Controller?.EditorReset( Entity );
+				Entity.Controller?.Reset();
 			} else {
 				HardResetEntity(world);
 			}

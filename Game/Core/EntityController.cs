@@ -34,11 +34,20 @@ namespace IronStar.Core {
 		/// Read position from entity.
 		/// For editor use only.
 		/// </summary>
-		public virtual void EditorReset ( Entity entity )
+		public virtual void Reset ()
 		{
 			
 		}
 
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="activator">Entity that activates given entity. Could be NULL</param>
+		public virtual void Activate ( Entity activator )
+		{
+		}
 
 
 		/// <summary>

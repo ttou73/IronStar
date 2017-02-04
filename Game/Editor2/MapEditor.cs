@@ -239,6 +239,24 @@ namespace IronStar.Editor2 {
 		}
 
 
+		public void SetToEntity ()
+		{
+			foreach ( var se in selection ) {
+				if (se.Entity!=null) {
+					se.Position	=	se.Entity.Position;
+					se.Rotation	=	se.Entity.Rotation;
+				}
+			}
+		}
+
+
+		public void ActivateSelected ()
+		{
+			foreach ( var se in selection ) {
+				se?.Entity?.Controller?.Activate(null);
+			}
+		}
+
 
 		public bool EnableSimulation { get; set; } = false;
 

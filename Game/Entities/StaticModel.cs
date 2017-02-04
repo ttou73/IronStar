@@ -16,6 +16,30 @@ namespace IronStar.Entities {
 
 	public class StaticModel : EntityController {
 
+
+		public class Factory : EntityFactory {
+
+			/// <summary>
+			/// 
+			/// </summary>
+			/// 
+			[Category("Static Model")]
+			public string Model { get; set; }
+
+
+			/// <summary>
+			/// 
+			/// </summary>
+			/// <param name="entity"></param>
+			/// <param name="world"></param>
+			/// <returns></returns>
+			public override EntityController Spawn( Entity entity, GameWorld world )
+			{
+				return new StaticModel( entity, world, null );
+			}
+
+		}
+
 		StaticCollisionModel	collisionModel;
 
 

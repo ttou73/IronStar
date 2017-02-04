@@ -70,7 +70,7 @@ namespace IronStar.Entities {
 		}
 
 
-		public override void EditorReset( Entity entity )
+		public override void Reset()
 		{
 			lifeTime = totalLifeTime;
 		}

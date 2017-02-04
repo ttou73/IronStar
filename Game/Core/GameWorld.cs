@@ -186,6 +186,12 @@ namespace IronStar.Core {
 			//
 			//	updare effects :
 			//	
+			foreach ( var fxe in fxEvents ) {
+				fxPlayback.RunFX( fxe );
+			}
+			fxEvents.Clear();
+
+
 			fxPlayback.Update( deltaTime, lerpFactor );
 			modelManager.Update( deltaTime, lerpFactor );
 

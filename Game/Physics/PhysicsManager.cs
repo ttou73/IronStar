@@ -40,6 +40,8 @@ namespace IronStar.Physics {
 			}
 		}
 
+
+
 		/// <summary>
 		/// 
 		/// </summary>
@@ -65,8 +67,8 @@ namespace IronStar.Physics {
 
 			if (elapsedTime==0) {
 				physSpace.TimeStepSettings.MaximumTimeStepsPerFrame = 1;
-				physSpace.TimeStepSettings.TimeStepDuration = 0;
-				physSpace.Update(0);
+				physSpace.TimeStepSettings.TimeStepDuration = 1/1024.0f;
+				physSpace.Update(1/1024.0f);
 				return;
 			}
 
