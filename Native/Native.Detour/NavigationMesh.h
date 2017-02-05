@@ -9,9 +9,7 @@ namespace Native {
 	namespace Detour {
 
 		public ref class NavigationMeshParams {
-
-
-
+		public:
 			~NavigationMeshParams() {
 				this->!NavigationMeshParams();
 			}
@@ -90,7 +88,7 @@ namespace Native {
 		public ref class NavigationMesh {
 
 			//TODO : don't return OperationStatus (OS), throw exception if OS is failed
-
+		public:
 			NavigationMesh() {
 				nativeNavMesh = dtAllocNavMesh();
 			}

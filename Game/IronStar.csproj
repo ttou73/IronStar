@@ -173,6 +173,10 @@
       <Project>{085c9e62-cddf-4b95-994d-085c74fa90fc}</Project>
       <Name>Fusion</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Native\Native.Detour\Native.Detour.vcxproj">
+      <Project>{5d5df8be-ad60-4b6c-a518-62dfdcb3fd8c}</Project>
+      <Name>Native.Detour</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Native\Native.Fbx\Native.Fbx.vcxproj">
       <Project>{1131387f-6129-4287-a973-8b43dc9efd49}</Project>
       <Name>Native.Fbx</Name>

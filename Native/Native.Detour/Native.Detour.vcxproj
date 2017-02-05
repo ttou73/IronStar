@@ -101,6 +101,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <AdditionalIncludeDirectories>$(ProjectDir)Detour\Headers\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalDependencies />
@@ -149,6 +150,8 @@
     <ClInclude Include="NavigationMesh.h" />
     <ClInclude Include="NavigationMeshData.h" />
     <ClInclude Include="NavigationMeshQuery.h" />
+    <ClInclude Include="Poly.h" />
+    <ClInclude Include="QueryFilter.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Stdafx.h" />
   </ItemGroup>
@@ -162,6 +165,7 @@
     <ClCompile Include="Detour\Source\DetourNode.cpp" />
     <ClCompile Include="Native.Detour.cpp" />
     <ClCompile Include="NavigationMesh.cpp" />
+    <ClCompile Include="NavigationMeshQuery.cpp" />
     <ClCompile Include="Stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

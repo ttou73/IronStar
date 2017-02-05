@@ -87,6 +87,12 @@
     <ClInclude Include="NavigationMeshQuery.h">
       <Filter>DetourWrapper\Headers</Filter>
     </ClInclude>
+    <ClInclude Include="QueryFilter.h">
+      <Filter>DetourWrapper\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Poly.h">
+      <Filter>DetourWrapper\Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Native.Detour.cpp">
@@ -117,6 +123,9 @@
       <Filter>Detour\Source</Filter>
     </ClCompile>
     <ClCompile Include="NavigationMesh.cpp">
+      <Filter>DetourWrapper\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="NavigationMeshQuery.cpp">
       <Filter>DetourWrapper\Source</Filter>
     </ClCompile>
   </ItemGroup>
