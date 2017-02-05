@@ -150,7 +150,7 @@ namespace IronStar.SFX {
 		/// 
 		/// </summary>
 		/// <param name="fxEvent"></param>
-		public FXInstance RunFX ( FXEvent fxEvent )
+		public FXInstance RunFX ( FXEvent fxEvent, bool looped )
 		{
 			var fxAtomID	=	fxEvent.FXAtom;
 
@@ -173,7 +173,7 @@ namespace IronStar.SFX {
 				return null;
 			}
 
-			var fxInstance	=	factory.CreateFXInstance( this, fxEvent, false );
+			var fxInstance	=	factory.CreateFXInstance( this, fxEvent, looped );
 
 			runningSFXes.Add( fxInstance );
 

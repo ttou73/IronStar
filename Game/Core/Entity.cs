@@ -183,9 +183,9 @@ namespace IronStar.Core {
 				FXInstance?.Kill();
 				FXInstance = null;
 
-				if (sfx>=0) {
+				if (sfx>0) {
 					var fxe = new FXEvent( sfx, ID, Position, LinearVelocity, Rotation );
-					FXInstance = fxPlayback.RunFX( fxe );
+					FXInstance = fxPlayback.RunFX( fxe, true );
 				}
 			}
 
@@ -195,7 +195,7 @@ namespace IronStar.Core {
 				ModelInstance?.Kill();
 				ModelInstance	=	null;
 
-				if (model>=0) {
+				if (model>0) {
 					ModelInstance	=	modelManager.AddModel( model, this );
 				}
 			}

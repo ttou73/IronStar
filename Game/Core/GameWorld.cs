@@ -187,7 +187,7 @@ namespace IronStar.Core {
 			//	updare effects :
 			//	
 			foreach ( var fxe in fxEvents ) {
-				fxPlayback.RunFX( fxe );
+				fxPlayback.RunFX( fxe, false );
 			}
 			fxEvents.Clear();
 
@@ -487,7 +487,7 @@ namespace IronStar.Core {
 		/// <param name="writer"></param>
 		public virtual void ReadFromSnapshot ( Stream stream, float lerpFactor )
 		{
-			snapshotReader.Read( stream, ref environment, entities, fxe=>fxPlayback?.RunFX(fxe), null, id=>KillImmediatly(id) );
+			snapshotReader.Read( stream, ref environment, entities, fxe=>fxPlayback?.RunFX(fxe,false), null, id=>KillImmediatly(id) );
 		}
 
 

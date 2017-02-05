@@ -103,7 +103,7 @@ namespace IronStar.Editors {
 
 		private void gridFactory_PropertyValueChanged( object s, PropertyValueChangedEventArgs e )
 		{
-			MapEditor.ResetWorld(false);
+			MapEditor.ResetWorld(true);
 		}
 
 		private void gridEnv_PropertyValueChanged( object s, PropertyValueChangedEventArgs e )
