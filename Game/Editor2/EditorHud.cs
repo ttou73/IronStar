@@ -67,6 +67,12 @@ namespace IronStar.Editor2 {
 			RText( 1, Color.Orange, "RW Instances = {0}", rs.RenderWorld.Instances.Count );
 			RText( 2, Color.Orange, "Entities = {0}", editor.World.entities.Count );
 
+			if (editor.EnableSimulation) {
+				RText( 3, Color.Red, "SIMULATION MODE" );
+			} else {
+				RText( 3, Color.Lime, "EDITOR MODE" );
+			}
+
 			LText( 0, Color.LightGray, "[F1] - Dashboard     [Q] - Select   ");
 			LText( 1, Color.LightGray, "[F2] - Save Map      [W] - Move     ");
 			LText( 2, Color.LightGray, "[F5] - Build Content [E] - Rotate   ");

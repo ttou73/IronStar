@@ -25,15 +25,15 @@
     <Enabled>true</Enabled>
     <Sprite>smoke</Sprite>
     <Effect>LitShadow</Effect>
-    <Count>5</Count>
+    <Count>7</Count>
     <Period>1</Period>
     <Timing Delay="0" Bunch="0" FadeIn="0.1" FadeOut="0.1" />
     <Color0 Red="0" Green="0" Blue="0" Alpha="0" />
     <Color1 Red="0.5" Green="0.5" Blue="0.5" Alpha="1" />
     <Lifetime Distribution="Gauss" MinLifetime="0.4" MaxLifetime="0.6" />
-    <Shape Size0="0.1" Size1="1" EnableRotation="true" InitialAngle="180" MinAngularVelocity="0" MaxAngularVelocity="60" />
-    <Position OffsetDirection="None" OffsetFactor="0" Distribution="UniformRadial" MinSize="0" MaxSize="0" />
-    <Velocity Direction="LocalForward" LinearDistribution="Gauss" LinearVelocityMin="0.9" LinearVelocityMax="1.7" RadialDistribution="GaussRadial" RadialVelocityMin="-0.2" RadialVelocityMax="0.2" Advection="0" />
+    <Shape Size0="0.1" Size1="0.7" EnableRotation="true" InitialAngle="180" MinAngularVelocity="0" MaxAngularVelocity="60" />
+    <Position OffsetDirection="None" OffsetFactor="0" Distribution="UniformRadial" MinSize="0" MaxSize="0.1" />
+    <Velocity Direction="LocalForward" LinearDistribution="Gauss" LinearVelocityMin="0.9" LinearVelocityMax="1.7" RadialDistribution="GaussRadial" RadialVelocityMin="-0.3" RadialVelocityMax="0.3" Advection="0" />
     <Acceleration GravityFactor="0" Damping="0" DragForce="0" Turbulence="0" />
   </ParticleStage2>
   <ParticleStage3>

@@ -20,13 +20,13 @@ namespace IronStar.Entities {
 		readonly string fx;
 		readonly FuncFXMode fxMode;
 		readonly bool once;
-		readonly int minInterval;
-		readonly int maxInterval;
+		readonly float minInterval;
+		readonly float maxInterval;
 		readonly bool start;
 		readonly short atom;
 
 		int activationCount = 0;
-		int timer = 0;
+		float timer = 0;
 		bool enabled;
 
 		public FuncFX( Entity entity, GameWorld world, FuncFXFactory factory ) : base(entity, world)
@@ -34,8 +34,8 @@ namespace IronStar.Entities {
 			fx			=	factory.FX;
 			fxMode		=	factory.FXMode;
 			once		=	factory.Once;
-			minInterval	=	factory.MinInterval;
-			maxInterval	=	factory.MinInterval;
+			minInterval	=	factory.MinInterval / 1000.0f;
+			maxInterval	=	factory.MaxInterval / 1000.0f;
 			start		=	factory.Start;
 
 			atom		=	world.Atoms[ fx ];
@@ -62,8 +62,9 @@ namespace IronStar.Entities {
 
 		public override void Reset()
 		{
-			activationCount = rand.Next( minInterval, maxInterval );
+			timer			= rand.NextFloat( minInterval, maxInterval );
 			enabled			= start;
+			activationCount	= 0;
 		}
 
 
@@ -76,11 +77,11 @@ namespace IronStar.Entities {
 			if (fxMode==FuncFXMode.AutoTrigger) {
 				
 				if (enabled) {
-					timer -= (int)(elapsedTime*1000);
+					timer -= elapsedTime;
 
 					if (timer<0) {
 						World.SpawnFX( fx, 0, Entity.Position, Entity.LinearVelocity, Entity.Rotation );
-						timer = rand.Next( minInterval, maxInterval );
+						timer = rand.NextFloat( minInterval, maxInterval );
 					}
 				} else {
 					timer = 0;
