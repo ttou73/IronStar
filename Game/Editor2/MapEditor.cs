@@ -218,6 +218,25 @@ namespace IronStar.Editor2 {
 
 
 
+		public void DuplicateSelection ()
+		{
+			var newItems = selection
+				.Select( item => item.Duplicate() )
+				.ToArray();
+
+			Map.Nodes.AddRange( newItems );
+
+			foreach ( var newItem in newItems ) {
+				newItem.SpawnEntity(world);
+			}
+
+			ResetWorld(true);
+			ClearSelection();
+
+			selection.AddRange( newItems );
+		}
+
+
 		/// <summary>
 		/// 
 		/// </summary>

@@ -27,8 +27,8 @@
     <MapNode>
       <Visible>true</Visible>
       <Frozen>false</Frozen>
-      <Position X="-15.066906" Y="3.74411416" Z="6.42773867" />
-      <Rotation X="0.37992087" Y="-0.5965145" Z="0.596080959" W="0.380155265" />
+      <Position X="-15.0844326" Y="-0.137315348" Z="6.39023447" />
+      <Rotation X="0.371955335" Y="-0.60226357" Z="0.599637032" W="0.373313844" />
       <Scaling>1</Scaling>
       <Factory xsi:type="ProxyFactory">
         <Classname>box</Classname>
@@ -37,8 +37,8 @@
     <MapNode>
       <Visible>true</Visible>
       <Frozen>false</Frozen>
-      <Position X="-15.0318174" Y="4.48131371" Z="6.472987" />
-      <Rotation X="0.960639358" Y="-0.0007574383" Z="0.2777975" W="0.000125691178" />
+      <Position X="-15.0301485" Y="0.5995167" Z="6.44975853" />
+      <Rotation X="0.9563838" Y="-0.00283795875" Z="0.2920955" W="-0.00144973164" />
       <Scaling>1</Scaling>
       <Factory xsi:type="ProxyFactory">
         <Classname>box</Classname>
@@ -47,8 +47,8 @@
     <MapNode>
       <Visible>true</Visible>
       <Frozen>false</Frozen>
-      <Position X="-15.0105343" Y="5.219472" Z="6.60407066" />
-      <Rotation X="0.0257079117" Y="-0.705409169" Z="-0.707811356" W="-0.0272063855" />
+      <Position X="-15.01864" Y="1.33718956" Z="6.635207" />
+      <Rotation X="0.0301459" Y="-0.704482138" Z="-0.7082762" W="-0.0337772332" />
       <Scaling>1</Scaling>
       <Factory xsi:type="ProxyFactory">
         <Classname>box</Classname>
@@ -62,11 +62,86 @@
       <Scaling>1</Scaling>
       <Factory xsi:type="FuncFXFactory">
         <FX>bullet_hit</FX>
-        <FXMode>Trigger</FXMode>
+        <FXMode>AutoTrigger</FXMode>
         <Once>false</Once>
         <Start>true</Start>
         <MinInterval>100</MinInterval>
         <MaxInterval>1000</MaxInterval>
+      </Factory>
+    </MapNode>
+    <MapNode>
+      <Visible>true</Visible>
+      <Frozen>false</Frozen>
+      <Position X="-2.625" Y="3.875" Z="1.25" />
+      <Rotation X="-0.117428519" Y="-0.838722467" Z="0.433838457" W="0.307472438" />
+      <Scaling>1</Scaling>
+      <Factory xsi:type="FuncFXFactory">
+        <FX>bullet_hit</FX>
+        <FXMode>AutoTrigger</FXMode>
+        <Once>false</Once>
+        <Start>true</Start>
+        <MinInterval>100</MinInterval>
+        <MaxInterval>1000</MaxInterval>
+      </Factory>
+    </MapNode>
+    <MapNode>
+      <Visible>true</Visible>
+      <Frozen>false</Frozen>
+      <Position X="-3.5" Y="3.875" Z="0.375" />
+      <Rotation X="-0.117428519" Y="-0.838722467" Z="0.433838457" W="0.307472438" />
+      <Scaling>1</Scaling>
+      <Factory xsi:type="FuncFXFactory">
+        <FX>bullet_hit</FX>
+        <FXMode>AutoTrigger</FXMode>
+        <Once>false</Once>
+        <Start>true</Start>
+        <MinInterval>100</MinInterval>
+        <MaxInterval>1000</MaxInterval>
+      </Factory>
+    </MapNode>
+    <MapNode>
+      <Visible>true</Visible>
+      <Frozen>false</Frozen>
+      <Position X="-2.625" Y="3.875" Z="0.375" />
+      <Rotation X="-0.117428519" Y="-0.838722467" Z="0.433838457" W="0.307472438" />
+      <Scaling>1</Scaling>
+      <Factory xsi:type="FuncFXFactory">
+        <FX>bullet_hit</FX>
+        <FXMode>AutoTrigger</FXMode>
+        <Once>false</Once>
+        <Start>true</Start>
+        <MinInterval>100</MinInterval>
+        <MaxInterval>1000</MaxInterval>
+      </Factory>
+    </MapNode>
+    <MapNode>
+      <Visible>true</Visible>
+      <Frozen>false</Frozen>
+      <Position X="-12.9987535" Y="-0.137102261" Z="6.377197" />
+      <Rotation X="0.113583408" Y="-0.6987864" Z="0.696968257" W="0.114156283" />
+      <Scaling>1</Scaling>
+      <Factory xsi:type="ProxyFactory">
+        <Classname>box</Classname>
+      </Factory>
+    </MapNode>
+    <MapNode>
+      <Visible>true</Visible>
+      <Frozen>false</Frozen>
+      <Position X="-12.8725805" Y="0.5996396" Z="6.50364351" />
+      <Rotation X="0.9097559" Y="-0.002316249" Z="0.4151312" W="-0.00226828759" />
+      <Scaling>1</Scaling>
+      <Factory xsi:type="ProxyFactory">
+        <Classname>box</Classname>
+      </Factory>
+    </MapNode>
+    <MapNode>
+      <Visible>true</Visible>
+      <Frozen>false</Frozen>
+      <Position X="-12.8696108" Y="1.3373301" Z="6.63034344" />
+      <Rotation X="0.5206273" Y="-0.474919647" Z="-0.478182644" W="-0.524156332" />
+      <Scaling>1</Scaling>
+      <Factory xsi:type="ProxyFactory">
+        <Classname>box</Classname>
       </Factory>
     </MapNode>
   </Nodes>

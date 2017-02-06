@@ -135,6 +135,19 @@ namespace IronStar.Mapping {
 		/// <summary>
 		/// 
 		/// </summary>
+		/// <returns></returns>
+		public MapNode Duplicate ()
+		{
+			var newNode = (MapNode)MemberwiseClone();
+			newNode.Factory = Factory.Duplicate();
+			newNode.Entity  = null;
+			return newNode;
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
 		/// <param name="dr"></param>
 		public void Draw ( DebugRender dr )
 		{

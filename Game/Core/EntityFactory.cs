@@ -42,6 +42,13 @@ namespace IronStar.Core {
 		}
 
 
+
+		public virtual EntityFactory Duplicate ()
+		{	
+			return (EntityFactory)MemberwiseClone();
+		}
+
+
 		static Type[] factories = null;
 
 		public static Type[] GetFactoryTypes ()
