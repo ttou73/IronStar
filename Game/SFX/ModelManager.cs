@@ -66,6 +66,7 @@ namespace IronStar.SFX {
 		/// <param name="e"></param>
 		void Game_Reloading( object sender, EventArgs e )
 		{
+			world.ForEachEntity( ent => ent.MakeRenderStateDirty() );
 		}
 
 

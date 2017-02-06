@@ -139,6 +139,12 @@ namespace IronStar.SFX {
 	}
 
 
+	public enum FXLightType {
+		Omni,
+		SpotShadow,
+	}
+
+
 	public enum FXLightStyle {
 		Const,
 		Saw,
@@ -446,6 +452,22 @@ namespace IronStar.SFX {
 		[XmlAttribute]
 		[Description( "Light style" )]
 		public FXLightStyle LightStyle { get; set; } = FXLightStyle.Const;
+
+		[XmlAttribute]
+		[Description( "Light type: omni-light or spot-light with shadow" )]
+		public FXLightType LightType { get; set; } = FXLightType.Omni;
+
+		[XmlAttribute]
+		[Description( "Spot angle" )]
+		public float SpotAngleX { get; set; } = 60.0f;
+
+		[XmlAttribute]
+		[Description( "Spot angle" )]
+		public float SpotAngleY { get; set; } = 60.0f;
+
+		[XmlAttribute]
+		[Description( "Spot light mask" )]
+		public string LightMask { get; set; } = "";
 
 		[XmlAttribute]
 		[Description( "Offset direction" )]

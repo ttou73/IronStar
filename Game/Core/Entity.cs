@@ -102,7 +102,10 @@ namespace IronStar.Core {
 		/// </summary>
 		public short Model {
 			get { return model; }
-			set { model = value; modelDirty = true; }
+			set { 
+				modelDirty = model != value; 
+				model = value; 
+			}
 		}
 		private short model = -1;
 		private bool modelDirty = true;

@@ -320,7 +320,7 @@ namespace IronStar.Core {
 		/// <param name="orient"></param>
 		public void SpawnFX ( string fxName, uint parentID, Vector3 origin, Vector3 velocity, Quaternion rotation )
 		{
-			LogTrace("fx : {0}", fxName);
+			//LogTrace("fx : {0}", fxName);
 			var fxID = Atoms[ fxName ];
 
 			if (fxID<0) {
