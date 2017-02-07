@@ -479,6 +479,61 @@ namespace IronStar.SFX {
 	}
 
 
+
+	public class FXDecal {
+
+		[XmlAttribute]
+		[Description( "Size of the decal" )]
+		public float Size { get; set; } = 0.5f;
+
+		[XmlAttribute]
+		[Description( "Depth of the decal" )]
+		public float Depth { get; set; } = 0.25f;
+
+		[XmlAttribute]
+		[Description( "Decal lifetime" )]
+		public float LifetimeNormal { get; set; } = 2.0f;
+
+		[XmlAttribute]
+		[Description( "Decal lifetime" )]
+		public float LifetimeGlow { get; set; } = 2.0f;
+
+		[Description( "Color decal texture name" )]
+		[Editor( typeof( SpriteFileLocationEditor ), typeof( UITypeEditor ) )]
+		public string ColorDecal { get; set; } = "";
+
+		[Description( "Normal map decal texture name" )]
+		[Editor( typeof( SpriteFileLocationEditor ), typeof( UITypeEditor ) )]
+		public string NormalDecal { get; set; } = "";
+
+		[Description( "Roughness decal texture name" )]
+		[Editor( typeof( SpriteFileLocationEditor ), typeof( UITypeEditor ) )]
+		public string RoughnessDecal { get; set; } = "";
+
+		[Description( "Metallic decal texture name" )]
+		[Editor( typeof( SpriteFileLocationEditor ), typeof( UITypeEditor ) )]
+		public string MetalDecal { get; set; } = "";
+
+		[Description( "Emission decal texture name" )]
+		[Editor( typeof( SpriteFileLocationEditor ), typeof( UITypeEditor ) )]
+		public string EmissionDecal { get; set; } = "";
+
+		public override string ToString()
+		{
+			if ( Enabled ) {
+				return string.Format( "Enabled" );
+			} else {
+				return string.Format( "Disabled" );
+			}
+		}
+
+		[XmlAttribute]
+		[Description( "Enables and disables decals" )]
+		public bool Enabled { get; set; } = false;
+	}
+
+
+
 	public class FXCameraShake {
 
 		public override string ToString()

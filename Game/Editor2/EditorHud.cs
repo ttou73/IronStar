@@ -17,6 +17,7 @@ namespace IronStar.Editor2 {
 		readonly MapEditor editor;
 
 		SpriteLayer	spriteLayer;
+		List<float> fps = new List<float>();
 
 
 		/// <summary>
@@ -59,11 +60,16 @@ namespace IronStar.Editor2 {
 		{
 			spriteLayer.Clear();
 
+			fps.Add( gameTime.Fps );
+			while(fps.Count>60) {
+				fps.RemoveAt(0);
+			}
+
 			var vp	= rs.DisplayBounds;
 
 			spriteLayer.Draw(null, 0,0,vp.Width,44, new Color(64,64,64,192) );
 
-			RText( 0, Color.Orange, "FPS = {0:0.00}", gameTime.Fps );
+			RText( 0, Color.Orange, "FPS = {0:000.00} - {1,6:###.00} {2,6:###.00} {3,6:###.00}", gameTime.Fps, fps.Min(), fps.Average(), fps.Max() );
 			RText( 1, Color.Orange, "RW Instances = {0}", rs.RenderWorld.Instances.Count );
 			RText( 2, Color.Orange, "Entities = {0}", editor.World.entities.Count );
 

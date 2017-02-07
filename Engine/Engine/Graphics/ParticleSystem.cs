@@ -457,11 +457,6 @@ namespace Fusion.Engine.Graphics {
 		{
 			var device	=	Game.GraphicsDevice;
 
-			if (rs.SkipParticles) {
-				return;
-			}
-
-
 			using ( new PixEvent(passName) ) {
 
 				device.ResetStates();
@@ -481,7 +476,6 @@ namespace Fusion.Engine.Graphics {
 				//
 				using (new PixEvent("Drawing")) {
 
-					device.ResetStates();
 	
 					//	target and viewport :
 					device.SetTargets( depthTarget, colorTarget );
@@ -526,6 +520,10 @@ namespace Fusion.Engine.Graphics {
 		/// <param name="gameTime"></param>
 		internal void Render ( GameTime gameTime, Camera camera, StereoEye stereoEye, HdrFrame viewFrame )
 		{
+			if (rs.SkipParticles) {
+				return;
+			}
+
 			var view		=	camera.GetViewMatrix( stereoEye );
 			var projection	=	camera.GetProjectionMatrix( stereoEye );
 
@@ -546,6 +544,10 @@ namespace Fusion.Engine.Graphics {
 		/// <param name="gameTime"></param>
 		internal void RenderShadow ( GameTime gameTime, Viewport viewport, Matrix view, Matrix projection, RenderTargetSurface particleShadow, DepthStencilSurface depthBuffer )
 		{
+			if (rs.SkipParticleShadows) {
+				return;
+			}
+
 			var colorTarget	=	particleShadow;
 			var depthTarget	=	depthBuffer;
 
