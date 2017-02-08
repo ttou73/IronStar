@@ -142,10 +142,7 @@ namespace Native {
 				}
 			}
 
-		internal:
-			PolyMesh(rcPolyMesh* mesh) {
-				nativeMesh = mesh;
-			}
+		internal: 
 			rcPolyMesh* nativeMesh;
 
 		private:
