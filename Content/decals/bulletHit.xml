@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-16"?>
+<FXDecalFactory xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <DefaultWidth>0.5</DefaultWidth>
+  <DefaultHeight>0.5</DefaultHeight>
+  <DefaultDepth>0.25</DefaultDepth>
+  <Emission Red="0" Green="0" Blue="0" Alpha="0" />
+  <BaseColor R="128" G="128" B="128" A="255" />
+  <Roughness>0.5</Roughness>
+  <Metallic>0.5</Metallic>
+  <ColorFactor>1</ColorFactor>
+  <SpecularFactor>1</SpecularFactor>
+  <NormalMapFactor>1</NormalMapFactor>
+</FXDecalFactory>

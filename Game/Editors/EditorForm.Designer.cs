@@ -34,12 +34,13 @@
 			this.buttonExit = new System.Windows.Forms.Button();
 			this.buttonBuild = new System.Windows.Forms.Button();
 			this.mainTabs = new System.Windows.Forms.TabControl();
+			this.tabConfig = new System.Windows.Forms.TabPage();
 			this.tabModels = new System.Windows.Forms.TabPage();
 			this.tabEntities = new System.Windows.Forms.TabPage();
 			this.tabMap = new System.Windows.Forms.TabPage();
 			this.tabFX = new System.Windows.Forms.TabPage();
 			this.tabMegatexture = new System.Windows.Forms.TabPage();
-			this.tabConfig = new System.Windows.Forms.TabPage();
+			this.tabDecals = new System.Windows.Forms.TabPage();
 			this.menuStrip1.SuspendLayout();
 			this.panel1.SuspendLayout();
 			this.mainTabs.SuspendLayout();
@@ -125,15 +126,26 @@
 			this.mainTabs.Controls.Add(this.tabConfig);
 			this.mainTabs.Controls.Add(this.tabModels);
 			this.mainTabs.Controls.Add(this.tabEntities);
-			this.mainTabs.Controls.Add(this.tabMap);
 			this.mainTabs.Controls.Add(this.tabFX);
+			this.mainTabs.Controls.Add(this.tabDecals);
 			this.mainTabs.Controls.Add(this.tabMegatexture);
+			this.mainTabs.Controls.Add(this.tabMap);
 			this.mainTabs.HotTrack = true;
 			this.mainTabs.Location = new System.Drawing.Point(3, 27);
 			this.mainTabs.Name = "mainTabs";
 			this.mainTabs.SelectedIndex = 0;
 			this.mainTabs.Size = new System.Drawing.Size(564, 493);
 			this.mainTabs.TabIndex = 5;
+			// 
+			// tabConfig
+			// 
+			this.tabConfig.Location = new System.Drawing.Point(4, 22);
+			this.tabConfig.Name = "tabConfig";
+			this.tabConfig.Padding = new System.Windows.Forms.Padding(3);
+			this.tabConfig.Size = new System.Drawing.Size(556, 467);
+			this.tabConfig.TabIndex = 5;
+			this.tabConfig.Text = "Config";
+			this.tabConfig.UseVisualStyleBackColor = true;
 			// 
 			// tabModels
 			// 
@@ -185,15 +197,15 @@
 			this.tabMegatexture.Text = "Megatexture";
 			this.tabMegatexture.UseVisualStyleBackColor = true;
 			// 
-			// tabConfig
+			// tabDecals
 			// 
-			this.tabConfig.Location = new System.Drawing.Point(4, 22);
-			this.tabConfig.Name = "tabConfig";
-			this.tabConfig.Padding = new System.Windows.Forms.Padding(3);
-			this.tabConfig.Size = new System.Drawing.Size(556, 467);
-			this.tabConfig.TabIndex = 5;
-			this.tabConfig.Text = "Config";
-			this.tabConfig.UseVisualStyleBackColor = true;
+			this.tabDecals.Location = new System.Drawing.Point(4, 22);
+			this.tabDecals.Name = "tabDecals";
+			this.tabDecals.Padding = new System.Windows.Forms.Padding(3);
+			this.tabDecals.Size = new System.Drawing.Size(556, 467);
+			this.tabDecals.TabIndex = 6;
+			this.tabDecals.Text = "Decals";
+			this.tabDecals.UseVisualStyleBackColor = true;
 			// 
 			// EditorForm
 			// 
@@ -234,5 +246,6 @@
 		private System.Windows.Forms.TabPage tabFX;
 		private System.Windows.Forms.TabPage tabMegatexture;
 		private System.Windows.Forms.TabPage tabConfig;
+		private System.Windows.Forms.TabPage tabDecals;
 	}
 }

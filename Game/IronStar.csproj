@@ -140,6 +140,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Physics\PhysicsManager.cs" />
+    <Compile Include="SFX\FXDecal.cs" />
     <Compile Include="SFX\FXFactory.Utils.cs" />
     <Compile Include="SFX\FXFactory.cs" />
     <Compile Include="SFX\ModelInstance.cs" />

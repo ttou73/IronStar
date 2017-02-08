@@ -76,7 +76,8 @@ namespace IronStar.Core {
 		public UserCtrlFlags UserCtrlFlags;
 
 		/// <summary>
-		/// Linear object velocity
+		/// Linear object velocity.
+		/// Linear velocity XYZ also means decal bounds.
 		/// </summary>
 		public Vector3 LinearVelocity;
 

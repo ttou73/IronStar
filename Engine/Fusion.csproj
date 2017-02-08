@@ -227,6 +227,7 @@
     <Compile Include="Engine\Common\IUserInterface.cs" />
     <Compile Include="Engine\Graphics\Commands\VTRestart.cs" />
     <Compile Include="Engine\Graphics\Effects\FogSettings.cs" />
+    <Compile Include="Engine\Graphics\Lights\Decal.cs" />
     <Compile Include="Engine\Graphics\RenderComponent.cs" />
     <Compile Include="Engine\Graphics\RequireShaderAttribute.cs" />
     <Compile Include="Core\Collection\ConcurrentPriorityQueue.cs" />
