@@ -108,14 +108,23 @@ namespace Native {
 		};
 
 		/// <summary>
-		/// Options for dtNavMeshQuery::initSlicedFindPath and updateSlicedFindPath
+		/// Options for NavigationMeshQuery.InitSlicedFindPath and UpdateSlicedFindPath
 		/// </summary>
 		public enum class FindPathOptions
 		{
-			///<summary>use raycasts during pathfind to "shortcut" (raycast still consider costs).</summary>
+			///<summary>Use raycasts during pathfind to "shortcut" (raycast still consider costs).</summary>
 			AnyAngle = DT_FINDPATH_ANY_ANGLE
 		};
 
+
+		/// <summary>
+		/// Options for NavigationMeshQuery.Raycast
+		/// </summary>
+		public enum class RaycastOptions
+		{
+			///<summary>Raycast should calculate movement cost along the ray and fill RaycastHit::cost.</summary>
+			UseCosts = DT_RAYCAST_USE_COSTS
+		};
 
 
 

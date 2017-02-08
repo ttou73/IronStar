@@ -12,13 +12,7 @@ namespace Native {
 		{
 		public:
 			//This class don't have destructors because navmesh owns all tiles and will free them.
-			MeshTile(dtMeshTile* other) {
-				nativeMeshTile = other;
-			}
-
-			MeshTile(const dtMeshTile* other) {
-				nativeMeshTile = other;
-			}
+			
 			//TODO: get native field.
 
 			property MeshTile^ Next {
@@ -28,6 +22,14 @@ namespace Native {
 			}
 		internal:
 			const dtMeshTile* nativeMeshTile;
+
+			MeshTile(dtMeshTile* other) {
+				nativeMeshTile = other;
+			}
+
+			MeshTile(const dtMeshTile* other) {
+				nativeMeshTile = other;
+			}
 		};
 	}
 }

@@ -150,6 +150,7 @@
     <Compile Include="Core\Content\IPrecachable.cs" />
     <Compile Include="Core\Extensions\KeyDataCollectionExtension.cs" />
     <Compile Include="Core\Extensions\LinkedListExtensions.cs" />
+    <Compile Include="Core\Mathematics\Segment.cs" />
     <Compile Include="Core\Shell\TestCommand.cs" />
     <Compile Include="Development\CheckListDialog.cs">
       <SubType>Form</SubType>

@@ -146,10 +146,10 @@
     <ClInclude Include="Detour\Headers\DetourNode.h" />
     <ClInclude Include="Detour\Headers\DetourStatus.h" />
     <ClInclude Include="MeshTile.h" />
-    <ClInclude Include="Native.Detour.h" />
     <ClInclude Include="NavigationMesh.h" />
     <ClInclude Include="NavigationMeshData.h" />
     <ClInclude Include="NavigationMeshQuery.h" />
+    <ClInclude Include="NodePool.h" />
     <ClInclude Include="Poly.h" />
     <ClInclude Include="QueryFilter.h" />
     <ClInclude Include="resource.h" />
@@ -163,7 +163,6 @@
     <ClCompile Include="Detour\Source\DetourNavMeshBuilder.cpp" />
     <ClCompile Include="Detour\Source\DetourNavMeshQuery.cpp" />
     <ClCompile Include="Detour\Source\DetourNode.cpp" />
-    <ClCompile Include="Native.Detour.cpp" />
     <ClCompile Include="NavigationMesh.cpp" />
     <ClCompile Include="NavigationMeshQuery.cpp" />
     <ClCompile Include="Stdafx.cpp">

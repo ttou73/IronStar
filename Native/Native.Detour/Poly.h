@@ -8,14 +8,36 @@ namespace Native {
 	namespace Detour {
 		public ref struct Poly {
 		public:
+
 			Poly() {
-
+				nativePoly = new dtPoly();
 			}
 
-			Poly(const Poly^ other) {
-
+			Poly% Poly::operator=(Poly% other)
+			{
+				nativePoly->areaAndtype = other.nativePoly->areaAndtype;
+				nativePoly->firstLink = other.nativePoly->firstLink;
+				nativePoly->flags = other.nativePoly->flags;
+				nativePoly->vertCount = other.nativePoly->vertCount;
+				for (int i = 0; i < 6; i++) {
+					nativePoly->neis[i] = other.nativePoly->neis[i];
+					nativePoly->verts[i] = other.nativePoly->verts[i];
+				}
+				return *this;
 			}
 
+			Poly(const Poly% other) {
+				nativePoly = new dtPoly();
+
+				nativePoly->areaAndtype = other.nativePoly->areaAndtype;
+				nativePoly->firstLink = other.nativePoly->firstLink;
+				nativePoly->flags = other.nativePoly->flags;
+				nativePoly->vertCount = other.nativePoly->vertCount;
+				for (int i = 0; i < 6; i++) {
+					nativePoly->neis[i] = other.nativePoly->neis[i];
+					nativePoly->verts[i] = other.nativePoly->verts[i];
+				}
+			}
 
 			/// The indices of the polygon's vertices.
 			/// The actual vertices are located in dtMeshTile::verts.
