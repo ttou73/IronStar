@@ -93,6 +93,7 @@ namespace IronStar.Core {
 				modelManager	=	new SFX.ModelManager( this );
 
 				rw.LightSet.SpotAtlas		=	Content.Load<TextureAtlas>(@"spots\spots");
+				rw.LightSet.DecalAtlas		=	Content.Load<TextureAtlas>(@"decals\decals");
 			}
 		}
 

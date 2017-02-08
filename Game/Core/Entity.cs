@@ -125,6 +125,14 @@ namespace IronStar.Core {
 
 
 		/// <summary>
+		/// Decal
+		/// </summary>
+		public short Decal {
+			get; set;
+		}
+
+
+		/// <summary>
 		/// 
 		/// </summary>
 		public FXInstance FXInstance { get; private set; }
@@ -333,6 +341,7 @@ namespace IronStar.Core {
 
 			writer.Write( Model );
 			writer.Write( Sfx );
+			writer.Write( Decal );
 		}
 
 
@@ -374,6 +383,7 @@ namespace IronStar.Core {
 
 			Model		=	reader.ReadInt16();
 			Sfx			=	reader.ReadInt16();
+			Decal		=	reader.ReadInt16();
 
 
 			//	entity teleported - reset position and rotation :

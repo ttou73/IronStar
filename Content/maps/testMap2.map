@@ -27,6 +27,7 @@
     <MapNode>
       <Visible>true</Visible>
       <Frozen>false</Frozen>
+      <Position X="-15.125" Y="-0.125" Z="7" />
       <Rotation X="0.37248832" Y="-0.601778865" Z="0.6001811" W="0.372689039" />
       <Scaling>1</Scaling>
       <Factory xsi:type="ProxyFactory">
@@ -36,6 +37,7 @@
     <MapNode>
       <Visible>true</Visible>
       <Frozen>false</Frozen>
+      <Position X="-15" Y="0.625" Z="7" />
       <Rotation X="0.9564803" Y="-0.00202659215" Z="0.291785" W="-0.00168901286" />
       <Scaling>1</Scaling>
       <Factory xsi:type="ProxyFactory">
@@ -45,6 +47,7 @@
     <MapNode>
       <Visible>true</Visible>
       <Frozen>false</Frozen>
+      <Position X="-15" Y="1.375" Z="7.25" />
       <Rotation X="0.02813699" Y="-0.705988944" Z="-0.706967652" W="-0.03137908" />
       <Scaling>1</Scaling>
       <Factory xsi:type="ProxyFactory">
@@ -134,6 +137,7 @@
     <MapNode>
       <Visible>true</Visible>
       <Frozen>false</Frozen>
+      <Position X="-12.875" Y="1.375" Z="7.5" />
       <Rotation X="0.520389557" Y="-0.473542452" Z="-0.479717165" W="-0.524236262" />
       <Scaling>1</Scaling>
       <Factory xsi:type="ProxyFactory">
@@ -143,6 +147,7 @@
     <MapNode>
       <Visible>true</Visible>
       <Frozen>false</Frozen>
+      <Position X="-15.125" Y="2.125" Z="7" />
       <Rotation X="0.370795161" Y="-0.601642966" Z="0.5999364" W="0.374983847" />
       <Scaling>1</Scaling>
       <Factory xsi:type="ProxyFactory">
@@ -152,6 +157,7 @@
     <MapNode>
       <Visible>true</Visible>
       <Frozen>false</Frozen>
+      <Position X="-15" Y="2.75" Z="7.125" />
       <Rotation X="0.9565567" Y="-0.00348194037" Z="0.2915234" W="0.00119236566" />
       <Scaling>1</Scaling>
       <Factory xsi:type="ProxyFactory">
@@ -161,6 +167,7 @@
     <MapNode>
       <Visible>true</Visible>
       <Frozen>false</Frozen>
+      <Position X="-13" Y="2.125" Z="7" />
       <Rotation X="0.115935825" Y="-0.6979794" Z="0.6977025" W="0.112227023" />
       <Scaling>1</Scaling>
       <Factory xsi:type="ProxyFactory">
@@ -170,6 +177,7 @@
     <MapNode>
       <Visible>true</Visible>
       <Frozen>false</Frozen>
+      <Position X="-12.875" Y="2.75" Z="7.125" />
       <Rotation X="0.9097537" Y="0.001519653" Z="0.415141523" W="-0.00184759474" />
       <Scaling>1</Scaling>
       <Factory xsi:type="ProxyFactory">

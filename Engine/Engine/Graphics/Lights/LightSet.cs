@@ -62,6 +62,14 @@ namespace Fusion.Engine.Graphics {
 
 
 		/// <summary>
+		/// Spot-light mask atlas.
+		/// </summary>
+		public TextureAtlas DecalAtlas {
+			get; set;
+		}
+
+
+		/// <summary>
 		/// Average ambient level.
 		/// </summary>
 		public Color4 AmbientLevel {

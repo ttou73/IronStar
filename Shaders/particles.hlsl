@@ -225,7 +225,7 @@ void GSMain( point VSOutput inputPoint[1], inout TriangleStream<GSOutput> output
 		p1.Color.rgb 	*= ( particleLighting[ prtId ].a );
 		p2.Color.rgb 	*= ( particleLighting[ prtId ].a );
 		p3.Color.rgb 	*= ( particleLighting[ prtId ].a );
-	}
+	}//*/
 	#endif
 	
 	#ifdef DRAW_SHADOW
@@ -236,15 +236,8 @@ void GSMain( point VSOutput inputPoint[1], inout TriangleStream<GSOutput> output
 	
 	outputStream.Append(p0);
 	outputStream.Append(p1);
-	outputStream.Append(p2);
-	
-	outputStream.RestartStrip();
-
-	outputStream.Append(p0);
-	outputStream.Append(p2);
 	outputStream.Append(p3);
-
-	outputStream.RestartStrip();
+	outputStream.Append(p2);
 }
 
 
