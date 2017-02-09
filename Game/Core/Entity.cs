@@ -125,20 +125,6 @@ namespace IronStar.Core {
 		private bool sfxDirty = true;
 
 
-		/// <summary>
-		/// Decal
-		/// </summary>
-		public short Decal {
-			get { return decal; }
-			set { 
-				decalDirty = sfx != value; 
-				decal = value; 
-			}
-		}
-		private short decal;
-		private bool decalDirty;
-
-
 
 		/// <summary>
 		/// 
@@ -149,11 +135,6 @@ namespace IronStar.Core {
 		/// 
 		/// </summary>
 		public ModelInstance ModelInstance { get; private set; }
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public DecalInstance DecalInstance { get; private set; }
 
 
 		/// <summary>
@@ -198,7 +179,7 @@ namespace IronStar.Core {
 		/// 
 		/// </summary>
 		/// <param name="fxPlayback"></param>
-		public void UpdateRenderState ( FXPlayback fxPlayback, ModelManager modelManager, DecalManager decalManager )
+		public void UpdateRenderState ( FXPlayback fxPlayback, ModelManager modelManager )
 		{
 			if (sfxDirty) {
 				sfxDirty = false;
@@ -222,17 +203,6 @@ namespace IronStar.Core {
 					ModelInstance	=	modelManager.AddModel( model, this );
 				}
 			}
-
-			if (decalDirty) {
-				decalDirty = false;
-
-				DecalInstance?.Kill();
-				DecalInstance	=	null;
-
-				if (decal>0) {
-					DecalInstance	=	decalManager.AddDecal( decal, this );
-				}
-			}
 		}
 
 
@@ -241,7 +211,6 @@ namespace IronStar.Core {
 		{
 			sfxDirty	=	true;
 			modelDirty	=	true;
-			decalDirty	=	true;
 		}
 
 
@@ -253,9 +222,6 @@ namespace IronStar.Core {
 
 			ModelInstance?.Kill();
 			ModelInstance	=	null;
-
-			DecalInstance?.Kill();
-			DecalInstance	=	null;
 		}
 
 
@@ -368,7 +334,6 @@ namespace IronStar.Core {
 
 			writer.Write( Model );
 			writer.Write( Sfx );
-			writer.Write( Decal );
 		}
 
 
@@ -410,8 +375,6 @@ namespace IronStar.Core {
 
 			Model		=	reader.ReadInt16();
 			Sfx			=	reader.ReadInt16();
-			Decal		=	reader.ReadInt16();
-
 
 			//	entity teleported - reset position and rotation :
 			if (oldTeleport!=TeleportCount) {

@@ -52,6 +52,10 @@
 			this.gridFactory = new System.Windows.Forms.PropertyGrid();
 			this.tabEnv = new System.Windows.Forms.TabPage();
 			this.gridEnv = new System.Windows.Forms.PropertyGrid();
+			this.decalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.modelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.lightProbeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.mapMenu.SuspendLayout();
 			this.tabControl1.SuspendLayout();
 			this.tabNode.SuspendLayout();
@@ -97,6 +101,11 @@
 			// 
 			// createToolStripMenuItem
 			// 
+			this.createToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.decalToolStripMenuItem,
+            this.modelToolStripMenuItem,
+            this.lightProbeToolStripMenuItem,
+            this.toolStripSeparator1});
 			this.createToolStripMenuItem.Name = "createToolStripMenuItem";
 			this.createToolStripMenuItem.Size = new System.Drawing.Size(53, 20);
 			this.createToolStripMenuItem.Text = "Create";
@@ -285,6 +294,30 @@
 			this.gridEnv.TabIndex = 7;
 			this.gridEnv.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.gridEnv_PropertyValueChanged);
 			// 
+			// decalToolStripMenuItem
+			// 
+			this.decalToolStripMenuItem.Name = "decalToolStripMenuItem";
+			this.decalToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.decalToolStripMenuItem.Text = "Decal";
+			this.decalToolStripMenuItem.Click += new System.EventHandler(this.decalToolStripMenuItem_Click);
+			// 
+			// modelToolStripMenuItem
+			// 
+			this.modelToolStripMenuItem.Name = "modelToolStripMenuItem";
+			this.modelToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.modelToolStripMenuItem.Text = "Model";
+			// 
+			// lightProbeToolStripMenuItem
+			// 
+			this.lightProbeToolStripMenuItem.Name = "lightProbeToolStripMenuItem";
+			this.lightProbeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.lightProbeToolStripMenuItem.Text = "Light Probe";
+			// 
+			// toolStripSeparator1
+			// 
+			this.toolStripSeparator1.Name = "toolStripSeparator1";
+			this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
+			// 
 			// MapEditorControl
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -334,5 +367,9 @@
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
 		private System.Windows.Forms.ToolStripMenuItem freezeSelectionToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem unfreezeAllToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem decalToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem modelToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem lightProbeToolStripMenuItem;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
 	}
 }

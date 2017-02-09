@@ -51,11 +51,9 @@ namespace IronStar.Core {
 
 		SFX.FXPlayback		fxPlayback = null;
 		SFX.ModelManager	modelManager = null;
-		SFX.DecalManager	decalManager = null;
 		PhysicsManager		physics	= null;
 
 		public SFX.ModelManager	ModelManager { get { return modelManager; } }
-		public SFX.DecalManager	DecalManager { get { return decalManager; } }
 		public SFX.FXPlayback	FXPlayback   { get { return fxPlayback; } }
 		public PhysicsManager	Physics		{ get { return physics; } }
 
@@ -93,7 +91,6 @@ namespace IronStar.Core {
 				rw.VirtualTexture = Content.Load<VirtualTexture>("*megatexture");
 				fxPlayback		=	new SFX.FXPlayback( this );
 				modelManager	=	new SFX.ModelManager( this );
-				decalManager	=	new SFX.DecalManager( this );
 
 				rw.LightSet.SpotAtlas		=	Content.Load<TextureAtlas>(@"spots\spots");
 			}
@@ -126,7 +123,6 @@ namespace IronStar.Core {
 			if (disposing) {
 				SafeDispose( ref fxPlayback );
 				SafeDispose( ref modelManager );
-				SafeDispose( ref decalManager );
 			}
 
 			base.Dispose( disposing );
@@ -185,7 +181,7 @@ namespace IronStar.Core {
 			//	draw all entities :
 			//
 			foreach ( var entity in visibleEntities ) {
-				entity.UpdateRenderState( fxPlayback, modelManager, decalManager );
+				entity.UpdateRenderState( fxPlayback, modelManager );
 			}
 
 			//
@@ -199,7 +195,6 @@ namespace IronStar.Core {
 
 			fxPlayback.Update( deltaTime, lerpFactor );
 			modelManager.Update( deltaTime, lerpFactor );
-			decalManager.Update( deltaTime, lerpFactor );
 
 			//
 			//	update environment :

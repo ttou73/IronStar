@@ -17,6 +17,8 @@ namespace Fusion.Engine.Graphics {
 		/// </summary>
 		public Matrix DecalMatrix;
 
+		public Matrix DecalMatrixInverse;
+
 		/// <summary>
 		/// Image index in decal atlas
 		/// </summary>

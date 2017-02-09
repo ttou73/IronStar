@@ -135,5 +135,10 @@ namespace IronStar.Editors {
 		{
 			MapEditor.SaveMap();
 		}
+
+		private void decalToolStripMenuItem_Click( object sender, EventArgs e )
+		{
+			MapEditor.Map.Nodes.Add( new MapDecal() );
+		}
 	}
 }

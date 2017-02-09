@@ -187,9 +187,11 @@ void CSMain(
 			
 			float4 decalPos	=	mul(worldPos, decalMatrix);
 			
-			if ( abs(decalPos.x)<1 && abs(decalPos.y)<1 && abs(decalPos.z)<1 ) {
 			
-				//totalLight.rgb	+=	 glowColor;
+			if ( abs(decalPos.x)<1 && abs(decalPos.y)<1 && abs(decalPos.z)<1 ) {
+				baseColor *= 0.5f;
+			
+				totalLight.rgb	+=	 glowColor;
 			
 				baseColor 	= lerp( baseColor.rgb, decalColor, decal.ColorFactor );
 				roughness 	= 0.05f;//lerp( roughness, decalR, decal.SpecularFactor );

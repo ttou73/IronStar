@@ -137,7 +137,7 @@
     <MapNode xsi:type="MapEntity">
       <Visible>true</Visible>
       <Frozen>false</Frozen>
-      <Position X="0" Y="1" Z="0" />
+      <Position X="-3.5" Y="1" Z="0" />
       <Rotation X="0.215496764" Y="0.9237389" Z="-0.2993097" W="-0.103350781" />
       <Scaling>1</Scaling>
       <Factory xsi:type="ProxyFactory">
@@ -254,18 +254,24 @@
         <Classname>box</Classname>
       </Factory>
     </MapNode>
-    <MapNode xsi:type="MapEntity">
+    <MapNode xsi:type="MapDecal">
       <Visible>true</Visible>
       <Frozen>false</Frozen>
-      <Position X="0" Y="0" Z="4" />
-      <Rotation X="-0.61521095" Y="0.257973582" Z="0.223311916" W="0.7107017" />
+      <Position X="2.5" Y="0" Z="-0.5" />
+      <Rotation X="-0.6444529" Y="-0.2860978" Z="-0.28430745" W="0.6496135" />
       <Scaling>1</Scaling>
-      <Factory xsi:type="FuncDecalFactory">
-        <Decal />
-        <Width>0.5</Width>
-        <Height>0.5</Height>
-        <Depth>0.25</Depth>
-      </Factory>
+      <ImageName />
+      <Width>1</Width>
+      <Height>5</Height>
+      <Depth>0.25</Depth>
+      <Emission Red="0" Green="0" Blue="2000" Alpha="0" />
+      <BaseColor R="0" G="0" B="128" A="255" />
+      <Roughness>0.05</Roughness>
+      <Metallic>0.5</Metallic>
+      <ColorFactor>1</ColorFactor>
+      <SpecularFactor>1</SpecularFactor>
+      <NormalMapFactor>1</NormalMapFactor>
+      <FalloffFactor>0.5</FalloffFactor>
     </MapNode>
   </Nodes>
 </Map>
