@@ -129,8 +129,15 @@ namespace IronStar.Core {
 		/// Decal
 		/// </summary>
 		public short Decal {
-			get; set;
+			get { return decal; }
+			set { 
+				decalDirty = sfx != value; 
+				decal = value; 
+			}
 		}
+		private short decal;
+		private bool decalDirty;
+
 
 
 		/// <summary>
@@ -138,11 +145,15 @@ namespace IronStar.Core {
 		/// </summary>
 		public FXInstance FXInstance { get; private set; }
 
-
 		/// <summary>
 		/// 
 		/// </summary>
 		public ModelInstance ModelInstance { get; private set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public DecalInstance DecalInstance { get; private set; }
 
 
 		/// <summary>
@@ -187,7 +198,7 @@ namespace IronStar.Core {
 		/// 
 		/// </summary>
 		/// <param name="fxPlayback"></param>
-		public void UpdateRenderState ( FXPlayback fxPlayback, ModelManager modelManager )
+		public void UpdateRenderState ( FXPlayback fxPlayback, ModelManager modelManager, DecalManager decalManager )
 		{
 			if (sfxDirty) {
 				sfxDirty = false;
@@ -211,6 +222,17 @@ namespace IronStar.Core {
 					ModelInstance	=	modelManager.AddModel( model, this );
 				}
 			}
+
+			if (decalDirty) {
+				decalDirty = false;
+
+				DecalInstance?.Kill();
+				DecalInstance	=	null;
+
+				if (decal>0) {
+					DecalInstance	=	decalManager.AddDecal( decal, this );
+				}
+			}
 		}
 
 
@@ -219,6 +241,7 @@ namespace IronStar.Core {
 		{
 			sfxDirty	=	true;
 			modelDirty	=	true;
+			decalDirty	=	true;
 		}
 
 
@@ -230,6 +253,9 @@ namespace IronStar.Core {
 
 			ModelInstance?.Kill();
 			ModelInstance	=	null;
+
+			DecalInstance?.Kill();
+			DecalInstance	=	null;
 		}
 
 

@@ -51,9 +51,11 @@ namespace IronStar.Core {
 
 		SFX.FXPlayback		fxPlayback = null;
 		SFX.ModelManager	modelManager = null;
+		SFX.DecalManager	decalManager = null;
 		PhysicsManager		physics	= null;
 
 		public SFX.ModelManager	ModelManager { get { return modelManager; } }
+		public SFX.DecalManager	DecalManager { get { return decalManager; } }
 		public SFX.FXPlayback	FXPlayback   { get { return fxPlayback; } }
 		public PhysicsManager	Physics		{ get { return physics; } }
 
@@ -91,9 +93,9 @@ namespace IronStar.Core {
 				rw.VirtualTexture = Content.Load<VirtualTexture>("*megatexture");
 				fxPlayback		=	new SFX.FXPlayback( this );
 				modelManager	=	new SFX.ModelManager( this );
+				decalManager	=	new SFX.DecalManager( this );
 
 				rw.LightSet.SpotAtlas		=	Content.Load<TextureAtlas>(@"spots\spots");
-				rw.LightSet.DecalAtlas		=	Content.Load<TextureAtlas>(@"decals\decals");
 			}
 		}
 
@@ -107,6 +109,7 @@ namespace IronStar.Core {
 			atoms.AddRange( Content.EnumerateAssets( "fx" ) );
 			atoms.AddRange( Content.EnumerateAssets( "entities" ) );
 			atoms.AddRange( Content.EnumerateAssets( "models" ) );
+			atoms.AddRange( Content.EnumerateAssets( "decals" ) );
 
 			Atoms.AddRange( atoms );
 		}
@@ -123,6 +126,7 @@ namespace IronStar.Core {
 			if (disposing) {
 				SafeDispose( ref fxPlayback );
 				SafeDispose( ref modelManager );
+				SafeDispose( ref decalManager );
 			}
 
 			base.Dispose( disposing );
@@ -181,7 +185,7 @@ namespace IronStar.Core {
 			//	draw all entities :
 			//
 			foreach ( var entity in visibleEntities ) {
-				entity.UpdateRenderState( fxPlayback, modelManager );
+				entity.UpdateRenderState( fxPlayback, modelManager, decalManager );
 			}
 
 			//
@@ -195,13 +199,14 @@ namespace IronStar.Core {
 
 			fxPlayback.Update( deltaTime, lerpFactor );
 			modelManager.Update( deltaTime, lerpFactor );
+			decalManager.Update( deltaTime, lerpFactor );
 
 			//
 			//	update environment :
 			//
-			rw.HdrSettings.BloomAmount  = 0.1f;
-			rw.HdrSettings.DirtAmount   = 0.0f;
-			rw.HdrSettings.KeyValue     = 0.18f;
+			rw.HdrSettings.BloomAmount			= 0.1f;
+			rw.HdrSettings.DirtAmount			= 0.0f;
+			rw.HdrSettings.KeyValue				= 0.18f;
 
 			rw.SkySettings.SunPosition			=	environment.SunDirection;
 			rw.SkySettings.SunLightIntensity	=	environment.SunIntensity;

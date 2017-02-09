@@ -103,6 +103,50 @@ namespace Fusion.Engine.Graphics {
 		/// <summary>
 		/// 
 		/// </summary>
+		void ComputeDecalTiles ( Matrix view, Matrix proj, LightSet lightSet )
+		{
+			var vp = Game.GraphicsDevice.DisplayBounds;
+
+			decalData = Enumerable
+					.Range(0,RenderSystem.MaxOmniLights)
+					.Select( i => new DecalGPU() )
+					.ToArray();
+
+			int index = 0;
+
+			foreach ( var decal in lightSet.Decals ) {
+
+				Vector4 min, max;
+
+				var visible = GetBasisExtent( view, proj, vp, decal.DecalMatrix, out min, out max );
+
+				if (!visible) {
+					continue;
+				}
+
+				decalData[index].DecalMatrix		=	decal.DecalMatrix;
+				decalData[index].BaseColorMetallic	=	new Vector4( decal.BaseColor.Red, decal.BaseColor.Green, decal.BaseColor.Blue, decal.Metallic );
+				decalData[index].EmissionRoughness	=	new Vector4( decal.Emission.Red, decal.Emission.Green, decal.Emission.Blue, decal.Roughness );
+				decalData[index].ExtentMax			=	max;
+				decalData[index].ExtentMin			=	min;
+				decalData[index].ColorFactor		=	decal.ColorFactor;
+				decalData[index].SpecularFactor		=	decal.SpecularFactor;
+				decalData[index].NormalMapFactor	=	decal.NormalMapFactor;
+				decalData[index].FalloffFactor		=	decal.FalloffFactor;
+				//decalData[index].ImageScaleOffset		=	decal.ImageRectangle;
+
+				index++;
+			}
+
+			decalBuffer.SetData( decalData );
+		}
+
+
+
+
+		/// <summary>
+		/// 
+		/// </summary>
 		void ComputeSpotLightsTiles ( Matrix view, Matrix projection, LightSet lightSet )
 		{
 			var znear	=	projection.M34 * projection.M43 / projection.M33;

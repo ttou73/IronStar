@@ -15,6 +15,7 @@ namespace Fusion.Engine.Graphics {
 		public const int	EnvMapSpecularMipCount = 7;
 		public const int	EnvMapDiffuseMipLevel = 7;
 
+		public const int	MaxDecals		=	1024;
 		public const int	MaxOmniLights	=	1024;
 		public const int	MaxEnvLights	=	256;
 		public const int	MaxSpotLights	=	16;

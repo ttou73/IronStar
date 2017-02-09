@@ -51,6 +51,8 @@ TextureCubeArray	EnvMap				: register(t12);
 StructuredBuffer<PARTICLE> Particles	: register(t13);
 Texture2D 			ParticleShadow		: register(t14);
 Texture2D 			EnvLut				: register(t15);
+StructuredBuffer<DECAL>	Decals			: register(t16);
+Texture2D 			DecalImages			: register(t17);
 
 
 float DepthToViewZ(float depthValue) {
@@ -69,6 +71,7 @@ RWStructuredBuffer<float4> ParticleLighting : register(u1);
 //	will be writing the same value, but performance may be diminished due to contention.
 groupshared uint minDepthInt = 0xFFFFFFFF; 
 groupshared uint maxDepthInt = 0;
+groupshared uint visibleDecalCount = 0; 
 groupshared uint visibleLightCount = 0; 
 groupshared uint visibleLightCountSpot = 0; 
 groupshared uint visibleLightCountEnv = 0; 
@@ -76,6 +79,7 @@ groupshared uint visibleLightIndices[1024];
 
 
 #define OMNI_LIGHT_COUNT 1024
+#define DECAL_COUNT 1024
 #define SPOT_LIGHT_COUNT 16
 #define ENV_LIGHT_COUNT 256
 
@@ -104,9 +108,6 @@ void CSMain(
 	float	depth 	 	=	GBufferDepth.Load( location ).r;
 	
 	normal	=	normalize( normal );
-
-	float3	diffuse 	=	lerp( baseColor, float3(0,0,0), metallic );
-	float3	specular  	=	lerp( float3(0.04f,0.04f,0.04f), baseColor, metallic );
 	
 	//	add half pixel to prevent visual detachment of ssao effect:
 	float4 	ssao		=	OcclusionMap	.SampleLevel(SamplerLinearClamp, (location.xy + float2(0.5,0.5))/float2(width,height), 0 );
@@ -122,19 +123,8 @@ void CSMain(
 	float3	viewDirN	=	normalize( viewDir );
 	
 	float4	totalLight	=	0;
+
 	
-	//-----------------------------------------------------
-	//	Direct light :
-	//-----------------------------------------------------
-	float3 csmFactor	=	ComputeCSM( worldPos, Params, ShadowSampler, SamplerLinearClamp, CSMTexture, ParticleShadow, true );
-	float3 lightDir		=	-normalize(Params.DirectLightDirection.xyz);
-	float3 lightColor	=	Params.DirectLightIntensity.rgb;
-	
-	float	nDotL		=	saturate( dot(normal.xyz, lightDir) );
-	float3 diffuseTerm	=	Lambert	( normal.xyz,  lightDir, lightColor, float3(1,1,1) );
-	float3 diffuseTerm2	=	Lambert	( normal.xyz,  lightDir, lightColor, float3(1,1,1), 1 );
-	totalLight.xyz		+=	csmFactor.rgb * diffuseTerm * diffuse.rgb;
-	totalLight.xyz		+=	csmFactor.rgb * nDotL * CookTorrance( normal.xyz,  viewDirN, lightDir, lightColor, specular, roughness );
 	
 	//-----------------------------------------------------
 	//	Common tile-related stuff :
@@ -151,6 +141,83 @@ void CSMain(
 	float minGroupDepth = asfloat(minDepthInt); 
 	float maxGroupDepth = asfloat(maxDepthInt);	
 	
+	//-----------------------------------------------------
+	//	Apply decals :
+	//-----------------------------------------------------
+	
+	if (1) {
+		uint decalCount = DECAL_COUNT;
+		
+		uint threadCount = BLOCK_SIZE_X * BLOCK_SIZE_Y; 
+		uint passCount = (decalCount+threadCount-1) / threadCount;
+		
+		for (uint passIt = 0; passIt < passCount; passIt++ ) {
+		
+			uint decalIndex = passIt * threadCount + groupIndex;
+			
+			DECAL dcl = Decals[decalIndex];
+			
+			float3 tileMin = float3( groupId.x*BLOCK_SIZE_X,    		  groupId.y*BLOCK_SIZE_Y,    			minGroupDepth);
+			float3 tileMax = float3( groupId.x*BLOCK_SIZE_X+BLOCK_SIZE_X, groupId.y*BLOCK_SIZE_Y+BLOCK_SIZE_Y, 	maxGroupDepth);
+			
+			if ( dcl.ExtentMax.x > tileMin.x && tileMax.x > dcl.ExtentMin.x 
+			  && dcl.ExtentMax.y > tileMin.y && tileMax.y > dcl.ExtentMin.y 
+			  && dcl.ExtentMax.z > tileMin.z && tileMax.z > dcl.ExtentMin.z ) 
+			{
+				uint offset; 
+				InterlockedAdd(visibleDecalCount, 1, offset); 
+				visibleLightIndices[offset] = decalIndex;
+			}
+		}
+		
+		GroupMemoryBarrierWithGroupSync();
+				
+		totalLight.rgb += visibleLightCount * float3(0.5, 0.0, 0.0) * 1;
+		
+		for (uint i = 0; i < visibleDecalCount; i++) {
+		
+			uint decalIndex = visibleLightIndices[i];
+			DECAL decal = Decals[decalIndex];
+
+			float4x4 decalMatrix	=	decal.DecalMatrix;
+			float3	 decalColor		=	decal.BaseColorMetallic.rgb;
+			float3	 glowColor		=	decal.EmissionRoughness.rgb;
+			float3	 decalR			=	decal.EmissionRoughness.a;
+			float3	 decalM			=	decal.BaseColorMetallic.a;
+			
+			float4 decalPos	=	mul(worldPos, decalMatrix);
+			
+			if ( abs(decalPos.x)<1 && abs(decalPos.y)<1 && abs(decalPos.z)<1 ) {
+			
+				//totalLight.rgb	+=	 glowColor;
+			
+				baseColor 	= lerp( baseColor.rgb, decalColor, decal.ColorFactor );
+				roughness 	= 0.05f;//lerp( roughness, decalR, decal.SpecularFactor );
+				metallic 	= lerp( metallic,  decalM, decal.SpecularFactor );
+			}
+		}
+	}
+
+	
+	//-----------------------------------------------------
+	//	Compute diffuse and specular color :
+	//-----------------------------------------------------
+
+	float3	diffuse 	=	lerp( baseColor, float3(0,0,0), metallic );
+	float3	specular  	=	lerp( float3(0.04f,0.04f,0.04f), baseColor, metallic );
+	
+	//-----------------------------------------------------
+	//	Direct light :
+	//-----------------------------------------------------
+	float3 csmFactor	=	ComputeCSM( worldPos, Params, ShadowSampler, SamplerLinearClamp, CSMTexture, ParticleShadow, true );
+	float3 lightDir		=	-normalize(Params.DirectLightDirection.xyz);
+	float3 lightColor	=	Params.DirectLightIntensity.rgb;
+	
+	float	nDotL		=	saturate( dot(normal.xyz, lightDir) );
+	float3 diffuseTerm	=	Lambert	( normal.xyz,  lightDir, lightColor, float3(1,1,1) );
+	float3 diffuseTerm2	=	Lambert	( normal.xyz,  lightDir, lightColor, float3(1,1,1), 1 );
+	totalLight.xyz		+=	csmFactor.rgb * diffuseTerm * diffuse.rgb;
+	totalLight.xyz		+=	csmFactor.rgb * nDotL * CookTorrance( normal.xyz,  viewDirN, lightDir, lightColor, specular, roughness );
 
 	//-----------------------------------------------------
 	//	OMNI LIGHTS :
@@ -353,6 +420,7 @@ void CSMain(
 		
 		float3 totalPrtLight	=	lightColor * csmFactor;
 
+		#if 0
 		//
 		//	Spot lights :
 		//
@@ -406,7 +474,8 @@ void CSMain(
 			totalPrtLight.xyz	+=	envFactor * falloff / 6;
 		}
 		
-
+		#endif
+		
 		//
 		//	Apply fog :
 		//

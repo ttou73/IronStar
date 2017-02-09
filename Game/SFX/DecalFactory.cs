@@ -1,18 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing.Design;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Fusion.Core.Content;
+using Fusion.Core.Extensions;
 using Fusion.Core.Mathematics;
+using Fusion.Development;
+using Fusion.Engine.Storage;
 
 namespace IronStar.SFX {
-	public class FXDecalFactory {
+	public class DecalFactory {
 
 		/// <summary>
 		/// Image index in decal atlas
 		/// </summary>
 		[Category("Image")]
+		[Editor( typeof( DecalFileLocationEditor ), typeof( UITypeEditor ) )]
 		public string ImageName { get; set; } = "";
 
 		/// <summary>
@@ -75,5 +82,21 @@ namespace IronStar.SFX {
 		[Category("Properties")]
 		public float NormalMapFactor { get; set;} = 1.0f;
 
+	}
+
+
+
+	/// <summary>
+	/// Scene loader
+	/// </summary>
+	[ContentLoader( typeof( DecalFactory ) )]
+	public sealed class DecalFactoryLoader : ContentLoader {
+
+		public override object Load( ContentManager content, Stream stream, Type requestedType, string assetPath, IStorage storage )
+		{
+			using ( var sr = new StreamReader( stream ) ) {
+				return Misc.LoadObjectFromXml( typeof(DecalFactory), stream, null );
+			}
+		}
 	}
 }

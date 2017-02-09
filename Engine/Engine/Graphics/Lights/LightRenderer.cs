@@ -31,9 +31,11 @@ namespace Fusion.Engine.Graphics {
 		OmniLightGPU[]		omniLightData;
 		SpotLightGPU[]		spotLightData;
 		EnvLightGPU[]		envLightData;
+		DecalGPU[]			decalData;
 		StructuredBuffer	omniLightBuffer	;
 		StructuredBuffer	spotLightBuffer	;
 		StructuredBuffer	envLightBuffer	;
+		StructuredBuffer	decalBuffer		;
 
 		internal RenderTarget2D	SpotColor { get { return spotColor; } }
 		internal DepthStencil2D	SpotDepth { get { return spotDepth; } }
@@ -111,6 +113,20 @@ namespace Fusion.Engine.Graphics {
 		}
 
 
+		struct DecalGPU {
+			public Matrix	DecalMatrix;
+			public Vector4 	EmissionRoughness;
+			public Vector4	BaseColorMetallic;
+			public Vector4	ImageScaleOffset;
+			public Vector4	ExtentMin;	// x,y, depth
+			public Vector4	ExtentMax;	// x,y, depth
+			public float	ColorFactor;
+			public float	SpecularFactor;
+			public float	NormalMapFactor;
+			public float	FalloffFactor;
+		}
+
+
 		Ubershader		lightingShader;
 		StateFactory	factory;
 		ConstantBuffer	lightingCB;
@@ -136,6 +152,7 @@ namespace Fusion.Engine.Graphics {
 			omniLightBuffer		=	new StructuredBuffer( Game.GraphicsDevice, typeof(OmniLightGPU), RenderSystem.MaxOmniLights, StructuredBufferFlags.None );
 			spotLightBuffer		=	new StructuredBuffer( Game.GraphicsDevice, typeof(SpotLightGPU), RenderSystem.MaxSpotLights, StructuredBufferFlags.None );
 			envLightBuffer		=	new StructuredBuffer( Game.GraphicsDevice, typeof(EnvLightGPU),  RenderSystem.MaxEnvLights, StructuredBufferFlags.None );
+			decalBuffer			=	new StructuredBuffer( Game.GraphicsDevice, typeof(DecalGPU),	 RenderSystem.MaxDecals,	StructuredBufferFlags.None );
 
 			using ( var ms = new MemoryStream( Properties.Resources.envLut ) ) {
 				envLut    =   UserTexture.CreateFromTga( rs, ms, false );
@@ -215,6 +232,7 @@ namespace Fusion.Engine.Graphics {
 				SafeDispose( ref omniLightBuffer );
 				SafeDispose( ref spotLightBuffer );
 				SafeDispose( ref envLightBuffer );
+				SafeDispose( ref decalBuffer );
 
 				SafeDispose( ref envLut );
 			}
@@ -282,9 +300,11 @@ namespace Fusion.Engine.Graphics {
 					cbData.FogDensity				=	viewLayer.FogSettings.Density;
 
 
-					ComputeOmniLightsTiles( view, projection, viewLayer.LightSet );
-					ComputeSpotLightsTiles( view, projection, viewLayer.LightSet );
-					ComputeEnvLightsTiles(  view, projection, viewLayer.LightSet );
+					ComputeOmniLightsTiles	( view, projection, viewLayer.LightSet );
+					ComputeSpotLightsTiles	( view, projection, viewLayer.LightSet );
+					ComputeEnvLightsTiles	( view, projection, viewLayer.LightSet );
+					ComputeDecalTiles		( view, projection, viewLayer.LightSet );
+
 
 					//
 					//	set states :
@@ -313,6 +333,8 @@ namespace Fusion.Engine.Graphics {
 					device.ComputeShaderResources[13]	=	viewLayer.ParticleSystem.SimulatedParticles;
 					device.ComputeShaderResources[14]	=	cascadedShadowMap.ParticleShadow;
 					device.ComputeShaderResources[15]	=	envLut.Srv;
+					device.ComputeShaderResources[16]	=	decalBuffer;
+					device.ComputeShaderResources[17]	=	viewLayer.LightSet.DecalAtlas==null ? rs.WhiteTexture.Srv : viewLayer.LightSet.DecalAtlas.Texture.Srv;
 
 					device.ComputeShaderConstants[0]	=	lightingCB;
 

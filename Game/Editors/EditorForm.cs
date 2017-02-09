@@ -46,7 +46,7 @@ namespace IronStar.Editors {
 			modelEditor		=	new ObjectEditorControl( game, "models", typeof(ModelDescriptor), "Model"  ) { Dock = DockStyle.Fill };
 			entityEditor	=	new ObjectEditorControl( game, "entities", typeof(EntityFactory), "Entity" ) { Dock = DockStyle.Fill };
 			fxEditor		=	new ObjectEditorControl( game, "fx", typeof(FXFactory), "FX" ) { Dock = DockStyle.Fill };
-			decalEditor		=	new ObjectEditorControl( game, "decals", typeof(FXDecalFactory), "Decals" ) { Dock = DockStyle.Fill };
+			decalEditor		=	new ObjectEditorControl( game, "decals", typeof(DecalFactory), "Decals" ) { Dock = DockStyle.Fill };
 			mapEditor		=	new MapEditorControl( game ) { Dock = DockStyle.Fill };
 			//vtEditor		=	new VTEditor("megatexture.ini") { Dock = DockStyle.Fill };
 			vtEditor		=	new ObjectEditorControl( game, "vt", typeof(VTTextureContent), "Megatexture" ) { Dock = DockStyle.Fill };

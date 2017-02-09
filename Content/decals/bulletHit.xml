@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-16"?>
-<FXDecalFactory xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<DecalFactory xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <ImageName>bulletHit</ImageName>
   <DefaultWidth>0.5</DefaultWidth>
   <DefaultHeight>0.5</DefaultHeight>
   <DefaultDepth>0.25</DefaultDepth>
@@ -10,4 +11,4 @@
   <ColorFactor>1</ColorFactor>
   <SpecularFactor>1</SpecularFactor>
   <NormalMapFactor>1</NormalMapFactor>
-</FXDecalFactory>
+</DecalFactory>

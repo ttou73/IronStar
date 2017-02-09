@@ -118,6 +118,98 @@ namespace Fusion.Engine.Graphics {
 		/// <summary>
 		/// 
 		/// </summary>
+		/// <param name="view"></param>
+		/// <param name="projection"></param>
+		/// <param name="frustum"></param>
+		/// <param name="min"></param>
+		/// <param name="max"></param>
+		/// <returns></returns>
+		bool GetBasisExtent ( Matrix view, Matrix projection, Rectangle viewport, Matrix basis, out Vector4 min, out Vector4 max )
+		{
+			min = max	=	Vector4.Zero;
+
+			var znear	=	projection.M34 * projection.M43 / projection.M33;
+			
+			var viewPoints = new Vector3[8];
+
+			viewPoints[0]	=	basis.TranslationVector + basis.Right + basis.Up + basis.Backward;
+			viewPoints[1]	=	basis.TranslationVector - basis.Right + basis.Up + basis.Backward;
+			viewPoints[2]	=	basis.TranslationVector - basis.Right - basis.Up + basis.Backward;
+			viewPoints[3]	=	basis.TranslationVector + basis.Right - basis.Up + basis.Backward;
+
+			viewPoints[4]	=	basis.TranslationVector + basis.Right + basis.Up - basis.Backward;
+			viewPoints[5]	=	basis.TranslationVector - basis.Right + basis.Up - basis.Backward;
+			viewPoints[6]	=	basis.TranslationVector - basis.Right - basis.Up - basis.Backward;
+			viewPoints[7]	=	basis.TranslationVector + basis.Right - basis.Up - basis.Backward;
+
+			for (int i=0; i<viewPoints.Length; i++) {
+				viewPoints[i] = Vector3.TransformCoordinate( viewPoints[i], view );
+			}
+
+			//this.rs.RenderWorld.Debug.DrawLine( viewPoints[0], viewPoints[1], Color.Magenta );
+			//this.rs.RenderWorld.Debug.DrawLine( viewPoints[1], viewPoints[2], Color.Magenta );
+			//this.rs.RenderWorld.Debug.DrawLine( viewPoints[2], viewPoints[3], Color.Magenta );
+			//this.rs.RenderWorld.Debug.DrawLine( viewPoints[3], viewPoints[0], Color.Magenta );
+			//this.rs.RenderWorld.Debug.DrawLine( viewPoints[4], viewPoints[5], Color.Magenta );
+			//this.rs.RenderWorld.Debug.DrawLine( viewPoints[5], viewPoints[6], Color.Magenta );
+			//this.rs.RenderWorld.Debug.DrawLine( viewPoints[6], viewPoints[7], Color.Magenta );
+			//this.rs.RenderWorld.Debug.DrawLine( viewPoints[7], viewPoints[4], Color.Magenta );
+			//this.rs.RenderWorld.Debug.DrawLine( viewPoints[0], viewPoints[4], Color.Magenta );
+			//this.rs.RenderWorld.Debug.DrawLine( viewPoints[1], viewPoints[5], Color.Magenta );
+			//this.rs.RenderWorld.Debug.DrawLine( viewPoints[2], viewPoints[6], Color.Magenta );
+			//this.rs.RenderWorld.Debug.DrawLine( viewPoints[3], viewPoints[7], Color.Magenta );
+
+			var lines = new[]{
+				new Line( viewPoints[0], viewPoints[1] ),
+				new Line( viewPoints[1], viewPoints[2] ),
+				new Line( viewPoints[2], viewPoints[3] ),
+				new Line( viewPoints[3], viewPoints[0] ),
+														
+				new Line( viewPoints[4], viewPoints[5] ),
+				new Line( viewPoints[5], viewPoints[6] ),
+				new Line( viewPoints[6], viewPoints[7] ),
+				new Line( viewPoints[7], viewPoints[4] ),
+													
+				new Line( viewPoints[0], viewPoints[4] ),
+				new Line( viewPoints[1], viewPoints[5] ),
+				new Line( viewPoints[2], viewPoints[6] ),
+				new Line( viewPoints[3], viewPoints[7] ),
+			};
+
+			lines = lines.Where( line => line.Clip(znear) ).ToArray();
+
+			if (!lines.Any()) {
+				return false;
+			}
+
+			var projPoints = new List<Vector3>();
+			
+			foreach ( var line in lines ) {
+				projPoints.Add( Vector3.TransformCoordinate( line.A, projection ) );
+				projPoints.Add( Vector3.TransformCoordinate( line.B, projection ) );
+			}
+
+			min.X	=	projPoints.Min( p => p.X );
+			min.Y	=	projPoints.Max( p => p.Y );
+			min.Z	=	projPoints.Min( p => p.Z );
+
+			max.X	=	projPoints.Max( p => p.X );
+			max.Y	=	projPoints.Min( p => p.Y );
+			max.Z	=	projPoints.Max( p => p.Z );
+
+			min.X	=	( min.X *  0.5f + 0.5f ) * viewport.Width;
+			min.Y	=	( min.Y * -0.5f + 0.5f ) * viewport.Height;
+
+			max.X	=	( max.X *  0.5f + 0.5f ) * viewport.Width;
+			max.Y	=	( max.Y * -0.5f + 0.5f ) * viewport.Height;
+
+			return true;
+		} 
+
+
+		/// <summary>
+		/// 
+		/// </summary>
 		/// <param name="projection"></param>
 		/// <param name="viewPos"></param>
 		/// <param name="radius"></param>

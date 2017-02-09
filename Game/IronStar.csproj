@@ -117,6 +117,7 @@
     <Compile Include="Entities\Character.Weaponry.cs" />
     <Compile Include="Entities\Character.cs" />
     <Compile Include="Entities\CharacterFactory.cs" />
+    <Compile Include="Entities\FuncDecal.cs" />
     <Compile Include="Entities\FuncFX.cs" />
     <Compile Include="Entities\NullFactory.cs" />
     <Compile Include="Entities\ProjectileFactory.cs" />
@@ -140,11 +141,13 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Physics\PhysicsManager.cs" />
-    <Compile Include="SFX\FXDecal.cs" />
+    <Compile Include="SFX\DecalFactory.cs" />
     <Compile Include="SFX\FXFactory.Utils.cs" />
     <Compile Include="SFX\FXFactory.cs" />
+    <Compile Include="SFX\DecalInstance.cs" />
     <Compile Include="SFX\ModelInstance.cs" />
     <Compile Include="SFX\ModelDescriptor.cs" />
+    <Compile Include="SFX\DecalManager.cs" />
     <Compile Include="SFX\ModelManager.cs" />
     <Compile Include="Core\Player.cs" />
     <Compile Include="Core\Enums.cs" />

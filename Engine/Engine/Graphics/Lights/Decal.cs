@@ -20,7 +20,7 @@ namespace Fusion.Engine.Graphics {
 		/// <summary>
 		/// Image index in decal atlas
 		/// </summary>
-		public int ImageIndex;
+		public Rectangle ImageRectangle;
 
 		/// <summary>
 		/// Decal emission intensity
@@ -30,7 +30,7 @@ namespace Fusion.Engine.Graphics {
 		/// <summary>
 		/// Decal base color
 		/// </summary>
-		public Color BaseColor = new Color(128,128,128,255);
+		public Color4 BaseColor = new Color4(1,1,1,1);
 
 		/// <summary>
 		/// Decal roughness
@@ -56,6 +56,11 @@ namespace Fusion.Engine.Graphics {
 		/// Normalmap blend factor [-1,1]
 		/// </summary>
 		public float NormalMapFactor = 1.0f;
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public float FalloffFactor = 0.0f;
 
 
 
