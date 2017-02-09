@@ -261,9 +261,10 @@ namespace IronStar.Editor2 {
 		public void SetToEntity ()
 		{
 			foreach ( var se in selection ) {
-				if (se.Entity!=null) {
-					se.Position	=	se.Entity.Position;
-					se.Rotation	=	se.Entity.Rotation;
+				var entity = (se as MapEntity)?.Entity;
+				if (entity!=null) {
+					se.Position	=	entity.Position;
+					se.Rotation	=	entity.Rotation;
 				}
 			}
 		}
@@ -272,7 +273,7 @@ namespace IronStar.Editor2 {
 		public void ActivateSelected ()
 		{
 			foreach ( var se in selection ) {
-				se?.Entity?.Controller?.Activate(null);
+				se.ActivateEntity();
 			}
 		}
 
@@ -315,7 +316,7 @@ namespace IronStar.Editor2 {
 
 				var color = item.Frozen ? Utils.GridColor : Utils.WireColor;
 
-				item.Factory.Draw( dr, item.WorldMatrix, color ); 
+				item.Draw( dr, color ); 
 			}
 
 			//
@@ -330,7 +331,7 @@ namespace IronStar.Editor2 {
 				}
 
 				dr.DrawBasis( item.WorldMatrix, 0.5f, 3 );
-				item.Factory.Draw( dr, item.WorldMatrix, color ); 
+				item.Draw( dr, color ); 
 			}
 
 			var mp = Game.Mouse.Position;

@@ -92,8 +92,8 @@ namespace IronStar.Mapping {
 		public static Map LoadFromXml ( Stream stream )
 		{
 			var extraTypes = new List<Type>();
+			extraTypes.AddRange( Misc.GetAllSubclassesOf( typeof( MapNode ) ) );
 			extraTypes.AddRange( Misc.GetAllSubclassesOf( typeof( EntityFactory ) ) );
-			extraTypes.Add( typeof( Native.Recast.RCConfig ) );
 
 			return (Map)Misc.LoadObjectFromXml( typeof( Map ), stream, extraTypes.ToArray() );
 		}
@@ -106,8 +106,8 @@ namespace IronStar.Mapping {
 		public static void SaveToXml ( Map map, Stream stream )
 		{
 			var extraTypes = new List<Type>();
+			extraTypes.AddRange( Misc.GetAllSubclassesOf( typeof( MapNode ) ) );
 			extraTypes.AddRange( Misc.GetAllSubclassesOf( typeof( EntityFactory ) ) );
-			extraTypes.Add( typeof( Native.Recast.RCConfig ) );
 			
 			Misc.SaveObjectToXml( map, typeof( Map ), stream, extraTypes.ToArray() );
 		}
@@ -125,13 +125,7 @@ namespace IronStar.Mapping {
 
 		public override object Load( ContentManager content, Stream stream, Type requestedType, string assetPath, IStorage storage )
 		{
-			if ( extraTypes==null ) {
-				extraTypes = Misc.GetAllSubclassesOf( typeof( EntityFactory ) );
-			}
-
-			var map = (Map)Misc.LoadObjectFromXml( typeof( Map ), stream, extraTypes );
-
-			return map;
+			return Map.LoadFromXml( stream );
 		}
 	}
 }

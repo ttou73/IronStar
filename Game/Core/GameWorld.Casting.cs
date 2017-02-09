@@ -52,14 +52,11 @@ namespace IronStar.Core {
 			}
 
 			var convex		=	rcr.HitObject as ConvexCollidable;
-			var collidable	=	rcr.HitObject as Collidable;
 			pos				=	MathConverter.Convert( rcr.HitData.Location );
 
 			if (convex!=null) {
 				hitEntity = convex.Entity.Tag as Entity;
-			} else if (collidable!=null) {
-				hitEntity = collidable.Tag as Entity;
-			}
+			} 
 
 			distance	=	rcr.HitData.T;
 

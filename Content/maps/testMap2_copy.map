@@ -24,7 +24,7 @@
         <Model>testMtrl</Model>
       </Factory>
     </MapNode>
-    <MapNode xsi:type="MapEntity">
+    <MapNode>
       <Visible>true</Visible>
       <Frozen>false</Frozen>
       <Position X="-3.543708" Y="3.83629656" Z="1.261776" />
@@ -39,7 +39,7 @@
         <MaxInterval>1000</MaxInterval>
       </Factory>
     </MapNode>
-    <MapNode xsi:type="MapEntity">
+    <MapNode>
       <Visible>true</Visible>
       <Frozen>false</Frozen>
       <Position X="-0.5" Y="0.5" Z="-0.5" />
@@ -54,7 +54,7 @@
         <MaxInterval>1000</MaxInterval>
       </Factory>
     </MapNode>
-    <MapNode xsi:type="MapEntity">
+    <MapNode>
       <Visible>true</Visible>
       <Frozen>false</Frozen>
       <Position X="-3.5" Y="3.875" Z="0.375" />
@@ -69,7 +69,7 @@
         <MaxInterval>1000</MaxInterval>
       </Factory>
     </MapNode>
-    <MapNode xsi:type="MapEntity">
+    <MapNode>
       <Visible>true</Visible>
       <Frozen>false</Frozen>
       <Position X="-1.125" Y="3.875" Z="0.375" />
@@ -84,7 +84,7 @@
         <MaxInterval>1000</MaxInterval>
       </Factory>
     </MapNode>
-    <MapNode xsi:type="MapEntity">
+    <MapNode>
       <Visible>true</Visible>
       <Frozen>false</Frozen>
       <Position X="-1.022389" Y="0.3640514" Z="5.2436285" />
@@ -94,7 +94,7 @@
         <Classname>box</Classname>
       </Factory>
     </MapNode>
-    <MapNode xsi:type="MapEntity">
+    <MapNode>
       <Visible>true</Visible>
       <Frozen>false</Frozen>
       <Position X="-3.34639478" Y="0.364284247" Z="3.940165" />
@@ -104,7 +104,7 @@
         <Classname>box</Classname>
       </Factory>
     </MapNode>
-    <MapNode xsi:type="MapEntity">
+    <MapNode>
       <Visible>true</Visible>
       <Frozen>false</Frozen>
       <Position X="-2.34068942" Y="0.363783717" Z="4.05050659" />
@@ -114,7 +114,7 @@
         <Classname>box</Classname>
       </Factory>
     </MapNode>
-    <MapNode xsi:type="MapEntity">
+    <MapNode>
       <Visible>true</Visible>
       <Frozen>false</Frozen>
       <Position X="-0.345576584" Y="0.3640711" Z="3.9439466" />
@@ -124,7 +124,7 @@
         <Classname>box</Classname>
       </Factory>
     </MapNode>
-    <MapNode xsi:type="MapEntity">
+    <MapNode>
       <Visible>true</Visible>
       <Frozen>false</Frozen>
       <Position X="-1.19968677" Y="0.7503069" Z="4.352139" />
@@ -134,7 +134,7 @@
         <Classname>box</Classname>
       </Factory>
     </MapNode>
-    <MapNode xsi:type="MapEntity">
+    <MapNode>
       <Visible>true</Visible>
       <Frozen>false</Frozen>
       <Position X="0" Y="1" Z="0" />
@@ -144,7 +144,7 @@
         <Classname>box</Classname>
       </Factory>
     </MapNode>
-    <MapNode xsi:type="MapEntity">
+    <MapNode>
       <Visible>true</Visible>
       <Frozen>false</Frozen>
       <Position X="-2.4700098" Y="0.364765674" Z="5.462233" />
@@ -154,17 +154,17 @@
         <Classname>box</Classname>
       </Factory>
     </MapNode>
-    <MapNode xsi:type="MapEntity">
+    <MapNode>
       <Visible>true</Visible>
       <Frozen>false</Frozen>
-      <Position X="8.502933" Y="0.364293218" Z="3.99547" />
-      <Rotation X="-0.124368645" Y="-2.49246057E-07" Z="-0.9922361" W="3.96125728E-07" />
+      <Position X="1.04203892" Y="0.3645" Z="3.94983268" />
+      <Rotation X="-0.12434347" Y="-0.000325232861" Z="-0.9922392" W="2.65061753E-05" />
       <Scaling>1</Scaling>
       <Factory xsi:type="ProxyFactory">
         <Classname>box</Classname>
       </Factory>
     </MapNode>
-    <MapNode xsi:type="MapEntity">
+    <MapNode>
       <Visible>true</Visible>
       <Frozen>false</Frozen>
       <Position X="-3.06081438" Y="0.364112616" Z="2.79199076" />
@@ -174,7 +174,7 @@
         <Classname>box</Classname>
       </Factory>
     </MapNode>
-    <MapNode xsi:type="MapEntity">
+    <MapNode>
       <Visible>true</Visible>
       <Frozen>false</Frozen>
       <Position X="-2.17838836" Y="1.00148749" Z="3.313387" />
@@ -184,7 +184,7 @@
         <Classname>box</Classname>
       </Factory>
     </MapNode>
-    <MapNode xsi:type="MapEntity">
+    <MapNode>
       <Visible>true</Visible>
       <Frozen>false</Frozen>
       <Position X="-4.61952257" Y="0.364337385" Z="4.222947" />
@@ -194,7 +194,7 @@
         <Classname>box</Classname>
       </Factory>
     </MapNode>
-    <MapNode xsi:type="MapEntity">
+    <MapNode>
       <Visible>true</Visible>
       <Frozen>false</Frozen>
       <Position X="-4.75324154" Y="0.4909539" Z="2.02202439" />
@@ -204,7 +204,7 @@
         <Classname>box</Classname>
       </Factory>
     </MapNode>
-    <MapNode xsi:type="MapEntity">
+    <MapNode>
       <Visible>true</Visible>
       <Frozen>false</Frozen>
       <Position X="-4.11357927" Y="0.363810152" Z="2.769469" />
@@ -214,7 +214,7 @@
         <Classname>box</Classname>
       </Factory>
     </MapNode>
-    <MapNode xsi:type="MapEntity">
+    <MapNode>
       <Visible>true</Visible>
       <Frozen>false</Frozen>
       <Position X="-1.79804993" Y="0.363827676" Z="2.75579071" />
@@ -224,7 +224,7 @@
         <Classname>box</Classname>
       </Factory>
     </MapNode>
-    <MapNode xsi:type="MapEntity">
+    <MapNode>
       <Visible>true</Visible>
       <Frozen>false</Frozen>
       <Position X="-6.106225" Y="0.3643017" Z="3.17747664" />
@@ -234,7 +234,7 @@
         <Classname>box</Classname>
       </Factory>
     </MapNode>
-    <MapNode xsi:type="MapEntity">
+    <MapNode>
       <Visible>true</Visible>
       <Frozen>false</Frozen>
       <Position X="-6.02627468" Y="0.364301383" Z="1.73446572" />
@@ -244,7 +244,7 @@
         <Classname>box</Classname>
       </Factory>
     </MapNode>
-    <MapNode xsi:type="MapEntity">
+    <MapNode>
       <Visible>true</Visible>
       <Frozen>false</Frozen>
       <Position X="-4.06508" Y="1.103066" Z="3.0441432" />
@@ -254,7 +254,7 @@
         <Classname>box</Classname>
       </Factory>
     </MapNode>
-    <MapNode xsi:type="MapEntity">
+    <MapNode>
       <Visible>true</Visible>
       <Frozen>false</Frozen>
       <Position X="0" Y="0" Z="4" />

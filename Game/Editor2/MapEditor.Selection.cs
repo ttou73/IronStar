@@ -104,7 +104,11 @@ namespace IronStar.Editor2 {
 
 			if (world.RayCastAgainstEntity( from, to, out hitPoint, out distance, out entity )) {
 
-				return map.Nodes.FirstOrDefault( n => n.Entity == entity && !n.Frozen );
+				return map
+					.Nodes
+					.Select( n1 => n1 as MapEntity )
+					.Where( n2 => n2 != null )
+					.FirstOrDefault( n3 => n3.Entity == entity && !n3.Frozen );
 
 			} else {
 				return null;
@@ -129,15 +133,15 @@ namespace IronStar.Editor2 {
 
 			foreach ( var item in map.Nodes ) {
 
-				//	no entity for some reason, skip it:
-				if (item.Entity==null) {
-					continue;
-				}
+				////	no entity for some reason, skip it:
+				//if (item.Entity==null) {
+				//	continue;
+				//}
 
-				//	entity has model, skip it:
-				if (item.Entity.Model>0) {
-					continue;
-				}
+				////	entity has model, skip it:
+				//if (item.Entity.Model>0) {
+				//	continue;
+				//}
 
 				if (item.Frozen) {
 					continue;

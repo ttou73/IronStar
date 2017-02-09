@@ -130,6 +130,7 @@
     <Compile Include="Entities\WorldspawnFactory.cs" />
     <Compile Include="Entities\StaticModelFactory.cs" />
     <Compile Include="Mapping\Map.Build.cs" />
+    <Compile Include="Mapping\MapEntity.cs" />
     <Compile Include="Mapping\MapEnvironment.cs" />
     <Compile Include="Mapping\MapNode.cs" />
     <Compile Include="Mapping\Map.cs" />

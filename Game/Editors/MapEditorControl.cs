@@ -56,7 +56,7 @@ namespace IronStar.Editors {
 
 				item.Click  +=  ( s, e ) => {
 
-					var fact  = new MapNode();
+					var fact  = new MapEntity();
 
 					var mapEditor = Game.GameEditor.Instance as MapEditor;
 	
@@ -75,8 +75,13 @@ namespace IronStar.Editors {
 
 		public void SetSelection ( IEnumerable<MapNode> selection, object env )
 		{
-			gridTransform.SelectedObjects	= selection.Select( node => node ).ToArray();	
-			gridFactory.SelectedObjects		= selection.Select( node => node.Factory ).ToArray();	
+			gridTransform.SelectedObjects	= selection
+					.Select( node => node ).ToArray();	
+
+			gridFactory.SelectedObjects		= selection
+					.Where( node => node is MapEntity )
+					.Select( node1 => (node1 as MapEntity).Factory ).ToArray();	
+
 			gridEnv.SelectedObject			= env;
 		}
 
@@ -124,6 +129,11 @@ namespace IronStar.Editors {
 		private void unfreezeAllToolStripMenuItem_Click( object sender, EventArgs e )
 		{
 			MapEditor.UnfreezeAll();
+		}
+
+		private void saveToolStripMenuItem_Click( object sender, EventArgs e )
+		{
+			MapEditor.SaveMap();
 		}
 	}
 }
