@@ -15,27 +15,24 @@ namespace Native {
 
 			Poly% Poly::operator=(Poly% other)
 			{
-				nativePoly->areaAndtype = other.nativePoly->areaAndtype;
-				nativePoly->firstLink = other.nativePoly->firstLink;
-				nativePoly->flags = other.nativePoly->flags;
-				nativePoly->vertCount = other.nativePoly->vertCount;
-				for (int i = 0; i < 6; i++) {
-					nativePoly->neis[i] = other.nativePoly->neis[i];
-					nativePoly->verts[i] = other.nativePoly->verts[i];
-				}
+				copy(other.nativePoly);
 				return *this;
 			}
 
 			Poly(const Poly% other) {
 				nativePoly = new dtPoly();
 
-				nativePoly->areaAndtype = other.nativePoly->areaAndtype;
-				nativePoly->firstLink = other.nativePoly->firstLink;
-				nativePoly->flags = other.nativePoly->flags;
-				nativePoly->vertCount = other.nativePoly->vertCount;
-				for (int i = 0; i < 6; i++) {
-					nativePoly->neis[i] = other.nativePoly->neis[i];
-					nativePoly->verts[i] = other.nativePoly->verts[i];
+				copy(other.nativePoly);
+			}
+
+
+			~Poly() {
+				this->!Poly();
+			}
+
+			!Poly() {
+				if (nativePoly != nullptr) {
+					delete nativePoly;
 				}
 			}
 
@@ -126,6 +123,21 @@ namespace Native {
 		internal:
 			dtPoly* nativePoly;
 
+			Poly(dtPoly* other) {
+				nativePoly = new dtPoly();
+				copy(other);
+			}
+
+			void copy(dtPoly* other) {
+				nativePoly->areaAndtype = other->areaAndtype;
+				nativePoly->firstLink = other->firstLink;
+				nativePoly->flags = other->flags;
+				nativePoly->vertCount = other->vertCount;
+				for (int i = 0; i < 6; i++) {
+					nativePoly->neis[i] = other->neis[i];
+					nativePoly->verts[i] = other->verts[i];
+				}
+			}
 			
 		};
 	}

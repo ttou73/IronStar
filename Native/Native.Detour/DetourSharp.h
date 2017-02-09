@@ -124,9 +124,17 @@ namespace Native {
 		{
 			///<summary>Raycast should calculate movement cost along the ray and fill RaycastHit::cost.</summary>
 			UseCosts = DT_RAYCAST_USE_COSTS
+		}; 
+
+		///<Summary>
+		/// Tile flags used for various functions and fields.
+		/// For an example, see dtNavMesh::addTile().
+		///</Summary>
+		public enum class TileFlags
+		{
+			///<summary> The navigation mesh owns the tile memory and is responsible for freeing it.</summary>
+			FreeData = DT_TILE_FREE_DATA,
 		};
-
-
 
 		static public ref class Detour {
 		public:

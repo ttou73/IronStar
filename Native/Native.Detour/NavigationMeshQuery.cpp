@@ -439,4 +439,47 @@ bool Native::Detour::NavigationMeshQuery::IsInClosedList(PolyReference ref)
 	return nativeQuery->isInClosedList(ref);
 }
 
+OperationStatus Native::Detour::NavigationMeshQuery::FindRandomPoint(QueryFilter ^ filter, RandomFloat ^ frand, PolyReference % randomRef, Vector3 % randomPt)
+{
+	PolyReference _randomRef;
+	float* _randomPt = new float[3];
+
+	IntPtr stubPointer = Marshal::GetFunctionPointerForDelegate(frand);
+	FRand functionPointer = static_cast<FRand>(stubPointer.ToPointer());
+		
+	auto rv = static_cast<OperationStatus>(nativeQuery->findRandomPoint(filter->nativeFilter, functionPointer, &_randomRef, _randomPt));
+
+	randomPt.X = _randomPt[0];
+	randomPt.Y = _randomPt[1];
+	randomPt.Z = _randomPt[2];
+
+	randomRef = _randomRef;
+	delete _randomPt;
+	return rv;
+}
+
+OperationStatus Native::Detour::NavigationMeshQuery::FindRandomPointAroundCircle(PolyReference startRef, Vector3 centerPos, const float maxRadius, QueryFilter ^ filter, RandomFloat ^ frand, PolyReference % randomRef, Vector3 % randomPt)
+{
+	
+	float* _pos = new float[3];
+	_pos[0] = centerPos.X; _pos[1] = centerPos.Y; _pos[2] = centerPos.X;
+
+	float* _randomPt = new float[3];
+	PolyReference _randomRef;
+
+	IntPtr stubPointer = Marshal::GetFunctionPointerForDelegate(frand);
+	FRand functionPointer = static_cast<FRand>(stubPointer.ToPointer());
+
+	auto rv = static_cast<OperationStatus>(nativeQuery->findRandomPointAroundCircle(startRef, _pos, maxRadius, filter->nativeFilter, functionPointer, 
+																					&_randomRef, _randomPt));
+
+	randomPt.X = _randomPt[0];
+	randomPt.Y = _randomPt[1];
+	randomPt.Z = _randomPt[2];
+
+	randomRef = _randomRef;
+	delete _randomPt;
+	return rv;
+}
+
 

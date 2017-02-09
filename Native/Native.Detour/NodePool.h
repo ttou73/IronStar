@@ -15,29 +15,13 @@ namespace Native {
 
 			Node% Node::operator=(Node% other)
 			{
-				nativeNode->cost = other.nativeNode->cost;
-				nativeNode->flags = other.nativeNode->flags;
-				nativeNode->id = other.nativeNode->id;
-				nativeNode->pidx = other.nativeNode->pidx;
-				nativeNode->state = other.nativeNode->state;
-				for (int i = 0; i < 3; i++) {
-					nativeNode->pos[i] = other.nativeNode->pos[i];
-				}
-				nativeNode->total = other.nativeNode->total;
+				copy(other.nativeNode);
 				return *this;
 			}
 
 			Node(const Node% other) {
 				nativeNode = new dtNode();
-				nativeNode->cost = other.nativeNode->cost;
-				nativeNode->flags = other.nativeNode->flags;
-				nativeNode->id = other.nativeNode->id;
-				nativeNode->pidx = other.nativeNode->pidx;
-				nativeNode->state = other.nativeNode->state;
-				for (int i = 0; i < 3; i++) {
-					nativeNode->pos[i] = other.nativeNode->pos[i];
-				}
-				nativeNode->total = other.nativeNode->total;
+				copy(other.nativeNode);
 			}
 
 			~Node() {
@@ -144,7 +128,17 @@ namespace Native {
 				nativeNode = node; 
 			}
 
-		
+			void copy(const dtNode* other) {
+				nativeNode->cost = other->cost;
+				nativeNode->flags = other->flags;
+				nativeNode->id = other->id;
+				nativeNode->pidx = other->pidx;
+				nativeNode->state = other->state;
+				for (int i = 0; i < 3; i++) {
+					nativeNode->pos[i] = other->pos[i];
+				}
+				nativeNode->total = other->total;
+			}
 			dtNode* nativeNode;
 		};
 

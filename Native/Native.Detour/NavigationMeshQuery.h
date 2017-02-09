@@ -10,6 +10,10 @@
 namespace Native {
 	namespace Detour {
 
+		public delegate float RandomFloat();
+
+		typedef float(*FRand)();
+
 		public ref struct RaycastHit
 		{
 		public:
@@ -403,6 +407,32 @@ namespace Native {
 			/// Gets the node pool.
 			/// @returns The node pool.
 			NodePool^ GetNodePool()  { return gcnew NodePool(nativeQuery->getNodePool(), false); }
+
+
+
+			/// Returns random location on navmesh.
+			/// Polygons are chosen weighted by area. The search runs in linear related to number of polygon.
+			///  @param[in]		filter			The polygon filter to apply to the query.
+			///  @param[in]		frand			Function returning a random number [0..1).
+			///  @param[out]	randomRef		The reference id of the random location.
+			///  @param[out]	randomPt		The random location. 
+			/// @returns The status flags for the query.
+			OperationStatus FindRandomPoint(QueryFilter^ filter, RandomFloat^ frand, [Out] PolyReference% randomRef, [Out] Vector3% randomPt);
+				
+			/// Returns random location on navmesh within the reach of specified location.
+			/// Polygons are chosen weighted by area. The search runs in linear related to number of polygon.
+			/// The location is not exactly constrained by the circle, but it limits the visited polygons.
+			///  @param[in]		startRef		The reference id of the polygon where the search starts.
+			///  @param[in]		centerPos		The center of the search circle. [(x, y, z)]
+			///  @param[in]		filter			The polygon filter to apply to the query.
+			///  @param[in]		frand			Function returning a random number [0..1).
+			///  @param[out]	randomRef		The reference id of the random location.
+			///  @param[out]	randomPt		The random location. [(x, y, z)]
+			/// @returns The status flags for the query.
+			OperationStatus FindRandomPointAroundCircle(PolyReference startRef, Vector3 centerPos, const float maxRadius, QueryFilter^ filter,
+														RandomFloat^ frand, [Out] PolyReference% randomRef, [Out] Vector3% randomPt);
+				
+
 
 			NavigationMesh^ GetNavigationMesh() {
 				return associatedNavMesh;
