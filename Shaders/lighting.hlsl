@@ -87,33 +87,30 @@ groupshared uint sortCount[1024];
 
 void sortIndices ( int n, int maxValue )
 {
-	/*uint swap;
-  for (int c = 0 ; c < ( n - 1 ); c++) {
-    for (int d = 0 ; d < n - c - 1; d++) {
-      if (visibleLightIndices[d] > visibleLightIndices[d+1]) {
-        swap       				 = visibleLightIndices[d];
-        visibleLightIndices[d]   = visibleLightIndices[d+1];
-        visibleLightIndices[d+1] = swap;
-      }
-    }
-  }*/
-  
-  for (int i = 0; i < maxValue; i++) {
-	  sortCount[i] = 0;
-  }
+	#if 1
+	uint swap;
+	for (int c = 0 ; c < ( n - 1 ); c++) {
+		for (int d = 0 ; d < n - c - 1; d++) {
+			if (visibleLightIndices[d] > visibleLightIndices[d+1]) {
+				swap       				 = visibleLightIndices[d];
+				visibleLightIndices[d]   = visibleLightIndices[d+1];
+				visibleLightIndices[d+1] = swap;
+			}
+		}
+	}
+	#else
+	for (int i = 0; i < n; i++) {
+		sortCount[visibleLightIndices[i]]++;
+	}
 
-  for (int i = 0; i < n; i++) {
-	  sortCount[visibleLightIndices[i]]++;
-  }
-
-  int curIndex = 0;
-  for (int i = 0; i < maxValue; i++) {
-	  while (sortCount[i] > 0) {
-		  sortCount[i]--;
-		  visibleLightIndices[curIndex++] = i;
-	  }
-  }
-
+	int curIndex = 0;
+	for (int i = 0; i < maxValue; i++) {
+		while (sortCount[i] > 0) {
+			sortCount[i]--;
+			visibleLightIndices[curIndex++] = i;
+		}
+	}
+	#endif
 }
 
 
@@ -189,6 +186,7 @@ void CSMain(
 			uint decalIndex = passIt * threadCount + groupIndex;
 			
 			DECAL dcl = Decals[decalIndex];
+			sortCount[decalIndex] = 0;
 			
 			float3 tileMin = float3( groupId.x*BLOCK_SIZE_X,    		  groupId.y*BLOCK_SIZE_Y,    			minGroupDepth);
 			float3 tileMax = float3( groupId.x*BLOCK_SIZE_X+BLOCK_SIZE_X, groupId.y*BLOCK_SIZE_Y+BLOCK_SIZE_Y, 	maxGroupDepth);
@@ -208,19 +206,7 @@ void CSMain(
 		totalLight.rgb += visibleDecalCount * float3(0.5, 0.0, 0.0) * 0;
 		
 		if (groupThreadId.x==0 && groupThreadId.y==0) {
-			int maxValue = visibleLightIndices[0];
-			for (int j = 0; j < visibleDecalCount; j++) {
-				if (visibleLightIndices[j] > maxValue) {
-					maxValue = visibleLightIndices[j];
-				}
-			}
-			if (maxValue < 0) {
-				maxValue = 0;
-			}
-			if (maxValue > 1024) {
-				maxValue = 1024;
-			}
-			sortIndices( visibleDecalCount, 1024);
+			sortIndices( visibleDecalCount, DECAL_COUNT);
 		}
 		
 		GroupMemoryBarrierWithGroupSync();
@@ -245,7 +231,7 @@ void CSMain(
 				totalLight.rgb	+=	 glowColor;
 			
 				baseColor 	= lerp( baseColor.rgb, decalColor, decal.ColorFactor );
-				roughness 	= 0.05f;//lerp( roughness, decalR, decal.SpecularFactor );
+				roughness 	= lerp( roughness, decalR, decal.SpecularFactor );
 				metallic 	= lerp( metallic,  decalM, decal.SpecularFactor );
 			}
 		}
