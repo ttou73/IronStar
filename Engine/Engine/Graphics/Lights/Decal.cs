@@ -22,7 +22,7 @@ namespace Fusion.Engine.Graphics {
 		/// <summary>
 		/// Image index in decal atlas
 		/// </summary>
-		public Rectangle ImageRectangle;
+		public RectangleF ImageRectangle;
 
 		/// <summary>
 		/// Decal emission intensity
@@ -63,6 +63,23 @@ namespace Fusion.Engine.Graphics {
 		/// 
 		/// </summary>
 		public float FalloffFactor = 0.0f;
+
+
+
+		public Vector4 GetScaleOffset ()
+		{
+			float ax = ImageRectangle.Width;
+			float ay = ImageRectangle.Height;
+			float bx = ImageRectangle.Left;
+			float by = ImageRectangle.Top;
+
+			float x		=	0.5f * ax;
+			float y		=  -0.5f * ay;
+			float z		=   0.5f * ax + bx;
+			float w		=	0.5f * ay + by;
+
+			return new Vector4(x,y,z,w);
+		}
 
 
 

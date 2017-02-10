@@ -137,7 +137,7 @@ void CSMain(
 	float	metallic	=	GBuffer1.Load( location ).a;
 	float	depth 	 	=	GBufferDepth.Load( location ).r;
 	
-	normal	=	normalize( normal );
+	//normal	=	normalize( normal );
 	
 	//	add half pixel to prevent visual detachment of ssao effect:
 	float4 	ssao		=	OcclusionMap	.SampleLevel(SamplerLinearClamp, (location.xy + float2(0.5,0.5))/float2(width,height), 0 );
@@ -206,7 +206,7 @@ void CSMain(
 		totalLight.rgb += visibleDecalCount * float3(0.5, 0.0, 0.0) * 0;
 		
 		if (groupThreadId.x==0 && groupThreadId.y==0) {
-			sortIndices( visibleDecalCount, DECAL_COUNT);
+			//sortIndices( visibleDecalCount, DECAL_COUNT);
 		}
 		
 		GroupMemoryBarrierWithGroupSync();
@@ -216,25 +216,37 @@ void CSMain(
 			uint decalIndex = visibleLightIndices[i];
 			DECAL decal = Decals[decalIndex];
 
-			float4x4 decalMatrix	=	decal.DecalMatrix;
+			float4x4 decalMatrixI	=	decal.DecalMatrixInv;
 			float3	 decalColor		=	decal.BaseColorMetallic.rgb;
 			float3	 glowColor		=	decal.EmissionRoughness.rgb;
 			float3	 decalR			=	decal.EmissionRoughness.a;
 			float3	 decalM			=	decal.BaseColorMetallic.a;
+			float4	 scaleOffset	=	decal.ImageScaleOffset;
+			float	 falloff		=	decal.FalloffFactor;
 			
-			float4 decalPos	=	mul(worldPos, decalMatrix);
-			
+			float4 decalPos	=	mul(worldPos, decalMatrixI);
 			
 			if ( abs(decalPos.x)<1 && abs(decalPos.y)<1 && abs(decalPos.z)<1 ) {
-				baseColor *= 0.5f;
 			
-				totalLight.rgb	+=	 glowColor;
+				//float2 uv			=	mad(mad(decalPos.xy, float2(-0.5,0.5), float2(0.5,0.5), offsetScale.zw, offsetScale.xy); 
+				float2 uv			=	mad(decalPos.xy, scaleOffset.xy, scaleOffset.zw); 
 			
-				baseColor 	= lerp( baseColor.rgb, decalColor, decal.ColorFactor );
-				roughness 	= lerp( roughness, decalR, decal.SpecularFactor );
-				metallic 	= lerp( metallic,  decalM, decal.SpecularFactor );
+				float4 decalImage	= 	DecalImages.SampleLevel( SamplerLinearClamp, uv, 0 );
+				float3 localNormal  = 	decalImage.xyz * 2 - 1;
+				float3 decalNormal	=	localNormal.x * decal.BasisX + localNormal.y * decal.BasisY - localNormal.z * decal.BasisZ;
+				float factor		=	decalImage.a * saturate(falloff - abs(decalPos.z)*falloff);
+				
+				totalLight.rgb	+=	 glowColor * factor;
+			
+				baseColor 	= lerp( baseColor.rgb, decalColor, decal.ColorFactor * factor );
+				roughness 	= lerp( roughness, decalR, decal.SpecularFactor * factor );
+				metallic 	= lerp( metallic,  decalM, decal.SpecularFactor * factor );
+				//normal		= lerp( normal, decalNormal, decal.NormalMapFactor * factor );
+
+				normal		= normal + decalNormal * decal.NormalMapFactor * factor;
 			}
 		}
+		
 	}
 
 	
@@ -242,8 +254,14 @@ void CSMain(
 	//	Compute diffuse and specular color :
 	//-----------------------------------------------------
 
+	normal 				=	normalize( normal );
 	float3	diffuse 	=	lerp( baseColor, float3(0,0,0), metallic );
 	float3	specular  	=	lerp( float3(0.04f,0.04f,0.04f), baseColor, metallic );
+	
+	// totalLight.xyz = normal.xyz*0.5+0.5;
+	// hdrTexture[dispatchThreadId.xy] = totalLight;
+	
+	// return;
 	
 	//-----------------------------------------------------
 	//	Direct light :

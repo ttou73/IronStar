@@ -67,16 +67,17 @@ namespace IronStar.Editor2 {
 
 			var vp	= rs.DisplayBounds;
 
-			spriteLayer.Draw(null, 0,0,vp.Width,44, new Color(64,64,64,192) );
+			spriteLayer.Draw(null, 0,0,vp.Width,44+8, new Color(64,64,64,192) );
 
-			RText( 0, Color.Orange, "FPS = {0:000.00} - {1,6:###.00} {2,6:###.00} {3,6:###.00}", gameTime.Fps, fps.Min(), fps.Average(), fps.Max() );
+			RText( 0, Color.Orange, "FPS = {0,5:###.00} - {1,6:###.00} {2,6:###.00} {3,6:###.00}", gameTime.Fps, fps.Min(), fps.Average(), fps.Max() );
 			RText( 1, Color.Orange, "RW Instances = {0}", rs.RenderWorld.Instances.Count );
-			RText( 2, Color.Orange, "Entities = {0}", editor.World.entities.Count );
+			RText( 2, Color.Orange, "Entities  = {0}", editor.World.entities.Count );
+			RText( 3, Color.Orange, "Map Nodes = {0}/{1}", editor.Selection.Count(), editor.Map.Nodes.Count );
 
 			if (editor.EnableSimulation) {
-				RText( 3, Color.Red, "SIMULATION MODE" );
+				RText( 4, Color.Red, "SIMULATION MODE" );
 			} else {
-				RText( 3, Color.Lime, "EDITOR MODE" );
+				RText( 4, Color.Lime, "EDITOR MODE" );
 			}
 
 			LText( 0, Color.LightGray, "[F1] - Dashboard     [Q] - Select   ");

@@ -124,7 +124,10 @@ namespace Fusion.Engine.Graphics {
 					continue;
 				}
 
-				decalData[index].DecalMatrix		=	decal.DecalMatrixInverse;
+				decalData[index].DecalMatrixInv		=	decal.DecalMatrixInverse;
+				decalData[index].BasisX				=	new Vector4(decal.DecalMatrix.Right.Normalized(),	0);
+				decalData[index].BasisY				=	new Vector4(decal.DecalMatrix.Up.Normalized(),		0);
+				decalData[index].BasisZ				=	new Vector4(decal.DecalMatrix.Backward.Normalized(),0);
 				decalData[index].BaseColorMetallic	=	new Vector4( decal.BaseColor.Red, decal.BaseColor.Green, decal.BaseColor.Blue, decal.Metallic );
 				decalData[index].EmissionRoughness	=	new Vector4( decal.Emission.Red, decal.Emission.Green, decal.Emission.Blue, decal.Roughness );
 				decalData[index].ExtentMax			=	max;
@@ -133,7 +136,12 @@ namespace Fusion.Engine.Graphics {
 				decalData[index].SpecularFactor		=	decal.SpecularFactor;
 				decalData[index].NormalMapFactor	=	decal.NormalMapFactor;
 				decalData[index].FalloffFactor		=	decal.FalloffFactor;
-				//decalData[index].ImageScaleOffset		=	decal.ImageRectangle;
+				decalData[index].ImageScaleOffset	=	decal.GetScaleOffset();
+
+				// apply gamma correction :
+				decalData[index].BaseColorMetallic.X	=	(float)Math.Pow( decalData[index].BaseColorMetallic.X, 2.2f );
+				decalData[index].BaseColorMetallic.Y	=	(float)Math.Pow( decalData[index].BaseColorMetallic.Y, 2.2f );
+				decalData[index].BaseColorMetallic.Z	=	(float)Math.Pow( decalData[index].BaseColorMetallic.Z, 2.2f );
 
 				index++;
 			}

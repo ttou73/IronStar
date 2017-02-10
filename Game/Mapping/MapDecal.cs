@@ -101,7 +101,14 @@ namespace IronStar.Mapping {
 
 		public override void SpawnEntity( GameWorld world )
 		{
+			if ( string.IsNullOrWhiteSpace(ImageName)) {
+				return;
+			}
+
 			decal	=	new Decal();
+
+			var rw	=	world.Game.RenderSystem.RenderWorld;
+			var ls	=	rw.LightSet;
 
 			decal.DecalMatrix		=	Matrix.Scaling( Width/2, Height/2, Depth/2 ) * WorldMatrix;
 			decal.DecalMatrixInverse=	Matrix.Invert( decal.DecalMatrix );
@@ -111,7 +118,7 @@ namespace IronStar.Mapping {
 			
 			decal.Metallic			=	Metallic;
 			decal.Roughness			=	Roughness;
-			//decal.ImageRectangle	=	decalManager.GetImageRectangleByName( factory.ImageName );
+			decal.ImageRectangle	=	ls.DecalAtlas.GetNormalizedRectangleByName( ImageName );
 
 			decal.ColorFactor		=	ColorFactor;
 			decal.SpecularFactor	=	SpecularFactor;
@@ -187,6 +194,7 @@ namespace IronStar.Mapping {
 		public override MapNode Duplicate()
 		{
 			var newNode = (MapDecal)MemberwiseClone();
+			newNode.decal = null;
 			return newNode;
 		}
 	}

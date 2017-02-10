@@ -54,7 +54,10 @@ struct ENVLIGHT {
 };
 
 struct DECAL {
-	float4x4 DecalMatrix;
+	float4x4 DecalMatrixInv;
+	float4	 BasisX;
+	float4	 BasisY;
+	float4	 BasisZ;
 	float4 	 EmissionRoughness;
 	float4	 BaseColorMetallic;
 	float4	 ImageScaleOffset;

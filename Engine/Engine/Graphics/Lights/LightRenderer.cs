@@ -114,7 +114,10 @@ namespace Fusion.Engine.Graphics {
 
 
 		struct DecalGPU {
-			public Matrix	DecalMatrix;
+			public Matrix	DecalMatrixInv;
+			public Vector4 	BasisX;
+			public Vector4 	BasisY;
+			public Vector4 	BasisZ;
 			public Vector4 	EmissionRoughness;
 			public Vector4	BaseColorMetallic;
 			public Vector4	ImageScaleOffset;
