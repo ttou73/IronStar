@@ -104,6 +104,7 @@ namespace IronStar.Mapping {
 			decal	=	new Decal();
 
 			decal.DecalMatrix		=	Matrix.Scaling( Width/2, Height/2, Depth/2 ) * WorldMatrix;
+			decal.DecalMatrixInverse=	Matrix.Invert( decal.DecalMatrix );
 									
 			decal.Emission			=	Emission;
 			decal.BaseColor			=	new Color4( BaseColor.R/255.0f, BaseColor.G/255.0f, BaseColor.B/255.0f, 1 );

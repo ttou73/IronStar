@@ -84,6 +84,21 @@ groupshared uint visibleLightIndices[1024];
 #define ENV_LIGHT_COUNT 256
 
 
+void sortIndices ( int n )
+{
+	uint swap;
+  for (int c = 0 ; c < ( n - 1 ); c++) {
+    for (int d = 0 ; d < n - c - 1; d++) {
+      if (visibleLightIndices[d] > visibleLightIndices[d+1]) {
+        swap       				 = visibleLightIndices[d];
+        visibleLightIndices[d]   = visibleLightIndices[d+1];
+        visibleLightIndices[d+1] = swap;
+      }
+    }
+  }
+}
+
+
 #ifdef SOLIDLIGHTING
 #define BLOCK_SIZE_X 16 
 #define BLOCK_SIZE_Y 16 
@@ -172,8 +187,14 @@ void CSMain(
 		
 		GroupMemoryBarrierWithGroupSync();
 				
-		totalLight.rgb += visibleLightCount * float3(0.5, 0.0, 0.0) * 1;
+		totalLight.rgb += visibleDecalCount * float3(0.5, 0.0, 0.0) * 0;
 		
+		if (groupThreadId.x==0 && groupThreadId.y==0) {
+			sortIndices( visibleDecalCount );
+		}
+		
+		GroupMemoryBarrierWithGroupSync();
+
 		for (uint i = 0; i < visibleDecalCount; i++) {
 		
 			uint decalIndex = visibleLightIndices[i];

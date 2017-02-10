@@ -124,7 +124,7 @@ namespace Fusion.Engine.Graphics {
 					continue;
 				}
 
-				decalData[index].DecalMatrix		=	decal.DecalMatrix;
+				decalData[index].DecalMatrix		=	decal.DecalMatrixInverse;
 				decalData[index].BaseColorMetallic	=	new Vector4( decal.BaseColor.Red, decal.BaseColor.Green, decal.BaseColor.Blue, decal.Metallic );
 				decalData[index].EmissionRoughness	=	new Vector4( decal.Emission.Red, decal.Emission.Green, decal.Emission.Blue, decal.Roughness );
 				decalData[index].ExtentMax			=	max;

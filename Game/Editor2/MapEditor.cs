@@ -142,6 +142,8 @@ namespace IronStar.Editor2 {
 					hud?.Dispose();
 
 					SaveMap();
+
+					Builder.SafeBuild(false, null, null);
 				}
 
 				disposedValue = true;
