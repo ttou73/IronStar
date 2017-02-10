@@ -365,8 +365,7 @@ namespace Native {
 			OperationStatus GetPolyWallSegments(PolyReference ref, QueryFilter^ filter, array<Segment>^% segments,
 				                                array<PolyReference>^% segmentRefs, const int maxSegments);
 				
-
-			//TODO : add random function
+			 
 
 			/// Finds the closest point on the specified polygon.
 			///  @param[in]		ref			The reference id of the polygon.

@@ -76,6 +76,7 @@ groupshared uint visibleLightCount = 0;
 groupshared uint visibleLightCountSpot = 0; 
 groupshared uint visibleLightCountEnv = 0; 
 groupshared uint visibleLightIndices[1024];
+groupshared uint sortCount[1024];
 
 
 #define OMNI_LIGHT_COUNT 1024
@@ -84,9 +85,9 @@ groupshared uint visibleLightIndices[1024];
 #define ENV_LIGHT_COUNT 256
 
 
-void sortIndices ( int n )
+void sortIndices ( int n, int maxValue )
 {
-	uint swap;
+	/*uint swap;
   for (int c = 0 ; c < ( n - 1 ); c++) {
     for (int d = 0 ; d < n - c - 1; d++) {
       if (visibleLightIndices[d] > visibleLightIndices[d+1]) {
@@ -95,7 +96,24 @@ void sortIndices ( int n )
         visibleLightIndices[d+1] = swap;
       }
     }
+  }*/
+  
+  for (int i = 0; i < maxValue; i++) {
+	  sortCount[i] = 0;
   }
+
+  for (int i = 0; i < n; i++) {
+	  sortCount[visibleLightIndices[i]]++;
+  }
+
+  int curIndex = 0;
+  for (int i = 0; i < maxValue; i++) {
+	  while (sortCount[i] > 0) {
+		  sortCount[i]--;
+		  visibleLightIndices[curIndex++] = i;
+	  }
+  }
+
 }
 
 
@@ -190,7 +208,19 @@ void CSMain(
 		totalLight.rgb += visibleDecalCount * float3(0.5, 0.0, 0.0) * 0;
 		
 		if (groupThreadId.x==0 && groupThreadId.y==0) {
-			sortIndices( visibleDecalCount );
+			int maxValue = visibleLightIndices[0];
+			for (int j = 0; j < visibleDecalCount; j++) {
+				if (visibleLightIndices[j] > maxValue) {
+					maxValue = visibleLightIndices[j];
+				}
+			}
+			if (maxValue < 0) {
+				maxValue = 0;
+			}
+			if (maxValue > 1024) {
+				maxValue = 1024;
+			}
+			sortIndices( visibleDecalCount, 1024);
 		}
 		
 		GroupMemoryBarrierWithGroupSync();
