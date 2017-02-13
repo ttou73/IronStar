@@ -136,7 +136,7 @@ namespace IronStar.Mapping {
 
 
 
-		public override void Draw( DebugRender dr, Color color )
+		public override void Draw( DebugRender dr, Color color, bool selected )
 		{
 			var transform	=	WorldMatrix;
 

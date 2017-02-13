@@ -50,7 +50,7 @@ namespace IronStar.Mapping {
 
 
 
-		public override void Draw( DebugRender dr, Color color )
+		public override void Draw( DebugRender dr, Color color, bool selected )
 		{
 			dr.DrawBasis( WorldMatrix, 1 );
 			Factory.Draw( dr, WorldMatrix, color );

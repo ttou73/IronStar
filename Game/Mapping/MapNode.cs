@@ -98,6 +98,6 @@ namespace IronStar.Mapping {
 		/// 
 		/// </summary>
 		/// <param name="dr"></param>
-		public abstract void Draw ( DebugRender dr, Color color );
+		public abstract void Draw ( DebugRender dr, Color color, bool selected );
 	}
 }

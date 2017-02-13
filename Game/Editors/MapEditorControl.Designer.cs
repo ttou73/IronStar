@@ -30,6 +30,10 @@
 			this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.createToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.decalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.modelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.lightProbeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.displayToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.refreshWorldToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
@@ -52,10 +56,8 @@
 			this.gridFactory = new System.Windows.Forms.PropertyGrid();
 			this.tabEnv = new System.Windows.Forms.TabPage();
 			this.gridEnv = new System.Windows.Forms.PropertyGrid();
-			this.decalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.modelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.lightProbeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+			this.omniLightToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.spotLightToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.mapMenu.SuspendLayout();
 			this.tabControl1.SuspendLayout();
 			this.tabNode.SuspendLayout();
@@ -89,14 +91,14 @@
 			// saveToolStripMenuItem
 			// 
 			this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-			this.saveToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.saveToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
 			this.saveToolStripMenuItem.Text = "Save";
 			this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
 			// 
 			// saveAsToolStripMenuItem
 			// 
 			this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-			this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
 			this.saveAsToolStripMenuItem.Text = "Save As...";
 			// 
 			// createToolStripMenuItem
@@ -105,10 +107,36 @@
             this.decalToolStripMenuItem,
             this.modelToolStripMenuItem,
             this.lightProbeToolStripMenuItem,
+            this.omniLightToolStripMenuItem,
+            this.spotLightToolStripMenuItem,
             this.toolStripSeparator1});
 			this.createToolStripMenuItem.Name = "createToolStripMenuItem";
 			this.createToolStripMenuItem.Size = new System.Drawing.Size(53, 20);
 			this.createToolStripMenuItem.Text = "Create";
+			// 
+			// decalToolStripMenuItem
+			// 
+			this.decalToolStripMenuItem.Name = "decalToolStripMenuItem";
+			this.decalToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.decalToolStripMenuItem.Text = "Decal";
+			this.decalToolStripMenuItem.Click += new System.EventHandler(this.decalToolStripMenuItem_Click);
+			// 
+			// modelToolStripMenuItem
+			// 
+			this.modelToolStripMenuItem.Name = "modelToolStripMenuItem";
+			this.modelToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.modelToolStripMenuItem.Text = "Model";
+			// 
+			// lightProbeToolStripMenuItem
+			// 
+			this.lightProbeToolStripMenuItem.Name = "lightProbeToolStripMenuItem";
+			this.lightProbeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.lightProbeToolStripMenuItem.Text = "Light Probe";
+			// 
+			// toolStripSeparator1
+			// 
+			this.toolStripSeparator1.Name = "toolStripSeparator1";
+			this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
 			// 
 			// displayToolStripMenuItem
 			// 
@@ -294,29 +322,19 @@
 			this.gridEnv.TabIndex = 7;
 			this.gridEnv.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.gridEnv_PropertyValueChanged);
 			// 
-			// decalToolStripMenuItem
+			// omniLightToolStripMenuItem
 			// 
-			this.decalToolStripMenuItem.Name = "decalToolStripMenuItem";
-			this.decalToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-			this.decalToolStripMenuItem.Text = "Decal";
-			this.decalToolStripMenuItem.Click += new System.EventHandler(this.decalToolStripMenuItem_Click);
+			this.omniLightToolStripMenuItem.Name = "omniLightToolStripMenuItem";
+			this.omniLightToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.omniLightToolStripMenuItem.Text = "Omni Light";
+			this.omniLightToolStripMenuItem.Click += new System.EventHandler(this.omniLightToolStripMenuItem_Click);
 			// 
-			// modelToolStripMenuItem
+			// spotLightToolStripMenuItem
 			// 
-			this.modelToolStripMenuItem.Name = "modelToolStripMenuItem";
-			this.modelToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-			this.modelToolStripMenuItem.Text = "Model";
-			// 
-			// lightProbeToolStripMenuItem
-			// 
-			this.lightProbeToolStripMenuItem.Name = "lightProbeToolStripMenuItem";
-			this.lightProbeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-			this.lightProbeToolStripMenuItem.Text = "Light Probe";
-			// 
-			// toolStripSeparator1
-			// 
-			this.toolStripSeparator1.Name = "toolStripSeparator1";
-			this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
+			this.spotLightToolStripMenuItem.Name = "spotLightToolStripMenuItem";
+			this.spotLightToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.spotLightToolStripMenuItem.Text = "Spot Light";
+			this.spotLightToolStripMenuItem.Click += new System.EventHandler(this.spotLightToolStripMenuItem_Click);
 			// 
 			// MapEditorControl
 			// 
@@ -371,5 +389,7 @@
 		private System.Windows.Forms.ToolStripMenuItem modelToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem lightProbeToolStripMenuItem;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+		private System.Windows.Forms.ToolStripMenuItem omniLightToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem spotLightToolStripMenuItem;
 	}
 }

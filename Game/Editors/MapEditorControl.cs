@@ -138,7 +138,23 @@ namespace IronStar.Editors {
 
 		private void decalToolStripMenuItem_Click( object sender, EventArgs e )
 		{
-			MapEditor.Map.Nodes.Add( new MapDecal() );
+			var node = new MapDecal();
+			MapEditor.Map.Nodes.Add( node );
+			MapEditor.Select( node );
+		}
+
+		private void omniLightToolStripMenuItem_Click( object sender, EventArgs e )
+		{
+			var node = new MapOmniLight();
+			MapEditor.Map.Nodes.Add( node );
+			MapEditor.Select( node );
+		}
+
+		private void spotLightToolStripMenuItem_Click( object sender, EventArgs e )
+		{
+			var node = new MapSpotLight();
+			MapEditor.Map.Nodes.Add( node );
+			MapEditor.Select( node );
 		}
 	}
 }
