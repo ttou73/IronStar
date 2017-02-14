@@ -156,5 +156,12 @@ namespace IronStar.Editors {
 			MapEditor.Map.Nodes.Add( node );
 			MapEditor.Select( node );
 		}
+
+		private void modelToolStripMenuItem_Click( object sender, EventArgs e )
+		{
+			var node = new MapModel();
+			MapEditor.Map.Nodes.Add( node );
+			MapEditor.Select( node );
+		}
 	}
 }

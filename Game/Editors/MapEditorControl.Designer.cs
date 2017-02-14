@@ -33,6 +33,8 @@
 			this.decalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.modelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.lightProbeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.omniLightToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.spotLightToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.displayToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.refreshWorldToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -56,8 +58,6 @@
 			this.gridFactory = new System.Windows.Forms.PropertyGrid();
 			this.tabEnv = new System.Windows.Forms.TabPage();
 			this.gridEnv = new System.Windows.Forms.PropertyGrid();
-			this.omniLightToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.spotLightToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.mapMenu.SuspendLayout();
 			this.tabControl1.SuspendLayout();
 			this.tabNode.SuspendLayout();
@@ -126,12 +126,27 @@
 			this.modelToolStripMenuItem.Name = "modelToolStripMenuItem";
 			this.modelToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
 			this.modelToolStripMenuItem.Text = "Model";
+			this.modelToolStripMenuItem.Click += new System.EventHandler(this.modelToolStripMenuItem_Click);
 			// 
 			// lightProbeToolStripMenuItem
 			// 
 			this.lightProbeToolStripMenuItem.Name = "lightProbeToolStripMenuItem";
 			this.lightProbeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
 			this.lightProbeToolStripMenuItem.Text = "Light Probe";
+			// 
+			// omniLightToolStripMenuItem
+			// 
+			this.omniLightToolStripMenuItem.Name = "omniLightToolStripMenuItem";
+			this.omniLightToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.omniLightToolStripMenuItem.Text = "Omni Light";
+			this.omniLightToolStripMenuItem.Click += new System.EventHandler(this.omniLightToolStripMenuItem_Click);
+			// 
+			// spotLightToolStripMenuItem
+			// 
+			this.spotLightToolStripMenuItem.Name = "spotLightToolStripMenuItem";
+			this.spotLightToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.spotLightToolStripMenuItem.Text = "Spot Light";
+			this.spotLightToolStripMenuItem.Click += new System.EventHandler(this.spotLightToolStripMenuItem_Click);
 			// 
 			// toolStripSeparator1
 			// 
@@ -321,20 +336,6 @@
 			this.gridEnv.Size = new System.Drawing.Size(387, 492);
 			this.gridEnv.TabIndex = 7;
 			this.gridEnv.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.gridEnv_PropertyValueChanged);
-			// 
-			// omniLightToolStripMenuItem
-			// 
-			this.omniLightToolStripMenuItem.Name = "omniLightToolStripMenuItem";
-			this.omniLightToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-			this.omniLightToolStripMenuItem.Text = "Omni Light";
-			this.omniLightToolStripMenuItem.Click += new System.EventHandler(this.omniLightToolStripMenuItem_Click);
-			// 
-			// spotLightToolStripMenuItem
-			// 
-			this.spotLightToolStripMenuItem.Name = "spotLightToolStripMenuItem";
-			this.spotLightToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-			this.spotLightToolStripMenuItem.Text = "Spot Light";
-			this.spotLightToolStripMenuItem.Click += new System.EventHandler(this.spotLightToolStripMenuItem_Click);
 			// 
 			// MapEditorControl
 			// 

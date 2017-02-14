@@ -13,6 +13,8 @@ using Fusion.Development;
 using System.Drawing.Design;
 using Fusion;
 using IronStar.Physics;
+using BEPUphysics.BroadPhaseEntries;
+using BEPUTransform = BEPUutilities.AffineTransform;  
 
 namespace IronStar.Mapping {
 
@@ -36,7 +38,7 @@ namespace IronStar.Mapping {
 
 
 		MeshInstance[] instances = null;
-		StaticCollisionModel[] collidables = null;
+		StaticMesh[] collidables = null;
 
 
 		/// <summary>
@@ -50,6 +52,68 @@ namespace IronStar.Mapping {
 
 		public override void SpawnEntity( GameWorld world )
 		{
+			if (string.IsNullOrWhiteSpace(ScenePath)) {
+				return;
+			}
+
+			var rs			=	world.Game.RenderSystem;
+
+			var pm			=	world.Physics;
+
+			var scene		=	world.Content.Load<Scene>( ScenePath );
+
+			var transforms	=	new Matrix[ scene.Nodes.Count ];
+			instances		=	new MeshInstance[ scene.Nodes.Count ];
+			collidables		=	new StaticMesh[ scene.Nodes.Count ];
+
+			scene.ComputeAbsoluteTransforms( transforms );
+
+
+			//
+			//	add static collision mesh :
+			//
+			for ( int i=0; i<scene.Nodes.Count; i++ ) {
+
+				var node = scene.Nodes[i];
+
+				if (node.MeshIndex<0) {
+					continue;
+				}
+
+				var mesh		=	scene.Meshes[ node.MeshIndex ];
+				var indices     =   mesh.GetIndices();
+				var vertices    =   mesh.Vertices
+									.Select( v1 => Vector3.TransformCoordinate( v1.Position, transforms[i] ) )
+									.Select( v2 => MathConverter.Convert( v2 ) )
+									.ToArray();
+
+				var staticMesh = new StaticMesh( vertices, indices );
+				staticMesh.Sidedness = BEPUutilities.TriangleSidedness.Clockwise;
+
+				var q = MathConverter.Convert( Rotation );
+				var p = MathConverter.Convert( Position );
+				staticMesh.WorldTransform = new BEPUTransform( q, p );
+
+				collidables[i] =	staticMesh;
+	
+				pm.PhysSpace.Add( staticMesh );
+			}
+
+
+			//
+			//	add visible mesh instance :
+			//
+			for ( int i=0; i<scene.Nodes.Count; i++ ) {
+				var meshIndex = scene.Nodes[i].MeshIndex;
+				
+				if (meshIndex>=0) {
+					instances[i] = new MeshInstance( rs, scene, scene.Meshes[meshIndex] );
+					instances[i].World = transforms[ i ] * WorldMatrix;
+					rs.RenderWorld.Instances.Add( instances[i] );
+				} else {
+					instances[i] = null;
+				}
+			}
 		}
 
 
@@ -83,14 +147,37 @@ namespace IronStar.Mapping {
 
 		public override void KillEntity( GameWorld world )
 		{
-			//world.Game.RenderSystem.RenderWorld.LightSet.SpotLights.Remove( light );
+			var rs = world.Game.RenderSystem;
+			var pm = world.Physics;
+
+			if (instances!=null) {
+				foreach ( var instance in instances ) {
+					if ( instance!=null ) {
+						rs.RenderWorld.Instances.Remove( instance );
+					}
+				}
+			}
+
+			if (collidables!=null) {
+				foreach ( var collidable in collidables ) {
+					if ( collidable!=null ) {
+						pm.PhysSpace.Remove( collidable );
+					}
+				}
+			}
+
+			instances	=	null;
+			collidables	=	null;
 		}
 
 
 		public override MapNode Duplicate()
 		{
 			var newNode = (MapModel)MemberwiseClone();
-			//newNode.light = null;
+
+			instances	=	null;
+			collidables	=	null;
+
 			return newNode;
 		}
 	}
