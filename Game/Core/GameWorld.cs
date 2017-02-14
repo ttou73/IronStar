@@ -93,6 +93,7 @@ namespace IronStar.Core {
 				modelManager	=	new SFX.ModelManager( this );
 
 				rw.LightSet.SpotAtlas		=	Content.Load<TextureAtlas>(@"spots\spots");
+				rw.LightSet.DecalAtlas		=	Content.Load<TextureAtlas>(@"decals\decals");
 			}
 		}
 
@@ -106,6 +107,7 @@ namespace IronStar.Core {
 			atoms.AddRange( Content.EnumerateAssets( "fx" ) );
 			atoms.AddRange( Content.EnumerateAssets( "entities" ) );
 			atoms.AddRange( Content.EnumerateAssets( "models" ) );
+			atoms.AddRange( Content.EnumerateAssets( "decals" ) );
 
 			Atoms.AddRange( atoms );
 		}
@@ -198,9 +200,9 @@ namespace IronStar.Core {
 			//
 			//	update environment :
 			//
-			rw.HdrSettings.BloomAmount  = 0.1f;
-			rw.HdrSettings.DirtAmount   = 0.0f;
-			rw.HdrSettings.KeyValue     = 0.18f;
+			rw.HdrSettings.BloomAmount			= 0.1f;
+			rw.HdrSettings.DirtAmount			= 0.0f;
+			rw.HdrSettings.KeyValue				= 0.18f;
 
 			rw.SkySettings.SunPosition			=	environment.SunDirection;
 			rw.SkySettings.SunLightIntensity	=	environment.SunIntensity;
@@ -320,7 +322,7 @@ namespace IronStar.Core {
 		/// <param name="orient"></param>
 		public void SpawnFX ( string fxName, uint parentID, Vector3 origin, Vector3 velocity, Quaternion rotation )
 		{
-			LogTrace("fx : {0}", fxName);
+			//LogTrace("fx : {0}", fxName);
 			var fxID = Atoms[ fxName ];
 
 			if (fxID<0) {

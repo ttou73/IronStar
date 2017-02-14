@@ -11,22 +11,14 @@ using Fusion.Engine.Graphics;
 using IronStar.SFX;
 
 namespace IronStar.Mapping {
-	public class MapNode {
+	public abstract class MapNode {
 
 		/// <summary>
 		/// 
 		/// </summary>
 		public MapNode ()
 		{
-			Factory		=	null;
 		}
-
-
-		/// <summary>
-		/// for editor use only
-		/// </summary>
-		[XmlIgnore]
-		public Entity Entity = null;
 
 
 		[Category("Entity")]
@@ -41,7 +33,6 @@ namespace IronStar.Mapping {
 		[Description( "Node object scaling" )]
 		public bool Frozen { get; set; }
 
-		
 		[Category("Transform")]
 		[Description("Node translation vector")]
 		public Vector3 Position { get; set; }
@@ -53,13 +44,6 @@ namespace IronStar.Mapping {
 		[Category("Transform")]
 		[Description( "Node object scaling" )]
 		public float Scaling { get; set; } = 1;
-
-
-		/// <summary>
-		/// Entity factory
-		/// </summary>
-		[Browsable(false)]
-		public EntityFactory Factory { get; set; }
 
 
 		/// <summary>
@@ -76,79 +60,44 @@ namespace IronStar.Mapping {
 
 
 		/// <summary>
+		/// Creates instance of map object
+		/// </summary>
+		/// <returns></returns>
+		public abstract void SpawnEntity ( GameWorld world );
+
+		/// <summary>
+		/// Initiates entity activation
+		/// </summary>
+		public abstract void ActivateEntity ();
+
+		/// <summary>
+		/// Resets entity
+		/// </summary>
+		/// <param name="world"></param>
+		public abstract void ResetEntity ( GameWorld world );
+
+		/// <summary>
+		/// Performs hard reset of the object
+		/// </summary>
+		/// <param name="world"></param>
+		public abstract void HardResetEntity ( GameWorld world );
+
+		/// <summary>
+		/// Eliminates object
+		/// </summary>
+		/// <param name="world"></param>
+		public abstract void KillEntity ( GameWorld world );
+
+		/// <summary>
 		/// 
 		/// </summary>
 		/// <returns></returns>
-		public Entity SpawnEntity ( GameWorld world )
-		{
-			Entity = world.Spawn( Factory, 0,0, Position, Rotation );
-			return Entity;
-		}
-
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="world"></param>
-		public void ResetEntity ( GameWorld world )
-		{
-			if (Entity==null) {
-				HardResetEntity(world);
-				return;
-			}
-			if (world.IsAlive(Entity.ID)) {
-				Entity.Position = Entity.PositionOld = Position;
-				Entity.Rotation = Entity.RotationOld = Rotation;
-				Entity.LinearVelocity = Vector3.Zero;
-				Entity.AngularVelocity = Vector3.Zero;
-				Entity.Controller?.Reset();
-			} else {
-				HardResetEntity(world);
-			}
-		}
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="world"></param>
-		public void HardResetEntity ( GameWorld world )
-		{
-			KillEntity( world );
-			SpawnEntity( world );
-		}
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="world"></param>
-		public void KillEntity ( GameWorld world )
-		{
-			if (Entity!=null) {
-				world.Kill( Entity.ID );
-			}
-		}
-
+		public abstract MapNode Duplicate ();
 
 		/// <summary>
 		/// 
 		/// </summary>
 		/// <param name="dr"></param>
-		public void Draw ( DebugRender dr )
-		{
-			dr.DrawBasis( WorldMatrix, 1 );
-		}
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <returns></returns>
-		public override string ToString()
-		{
-			return "[" + Factory.ToString() + "] ";
-		}
+		public abstract void Draw ( DebugRender dr, Color color, bool selected );
 	}
 }

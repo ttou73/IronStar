@@ -40,10 +40,7 @@ namespace Native {
 					throw gcnew RecastException("Can't build PolyMeshDetail");
 				}
 			}
-		internal:
-			PolyMeshDetail(rcPolyMeshDetail* mesh) {
-				nativeMeshDetail = mesh;
-			}
+		internal: 
 			rcPolyMeshDetail* nativeMeshDetail;
 		};
 	}

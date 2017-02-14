@@ -319,12 +319,12 @@ namespace Fusion.Engine.Graphics {
 		}
 
 
-		public void DrawPoint(Vector3 p, float size, Color color)
+		public void DrawPoint(Vector3 p, float size, Color color, float width=1)
 		{
 			float h = size / 2;	// half size
-			DrawLine(p + Vector3.UnitX * h, p - Vector3.UnitX * h, color);
-			DrawLine(p + Vector3.UnitY * h, p - Vector3.UnitY * h, color);
-			DrawLine(p + Vector3.UnitZ * h, p - Vector3.UnitZ * h, color);
+			DrawLine(p + Vector3.UnitX * h, p - Vector3.UnitX * h, color, color, width, width);
+			DrawLine(p + Vector3.UnitY * h, p - Vector3.UnitY * h, color, color, width, width);
+			DrawLine(p + Vector3.UnitZ * h, p - Vector3.UnitZ * h, color, color, width, width);
 		}
 
 

@@ -76,7 +76,8 @@ namespace IronStar.Core {
 		public UserCtrlFlags UserCtrlFlags;
 
 		/// <summary>
-		/// Linear object velocity
+		/// Linear object velocity.
+		/// Linear velocity XYZ also means decal bounds.
 		/// </summary>
 		public Vector3 LinearVelocity;
 
@@ -102,7 +103,10 @@ namespace IronStar.Core {
 		/// </summary>
 		public short Model {
 			get { return model; }
-			set { model = value; modelDirty = true; }
+			set { 
+				modelDirty = model != value; 
+				model = value; 
+			}
 		}
 		private short model = -1;
 		private bool modelDirty = true;
@@ -121,11 +125,11 @@ namespace IronStar.Core {
 		private bool sfxDirty = true;
 
 
+
 		/// <summary>
 		/// 
 		/// </summary>
 		public FXInstance FXInstance { get; private set; }
-
 
 		/// <summary>
 		/// 
@@ -371,7 +375,6 @@ namespace IronStar.Core {
 
 			Model		=	reader.ReadInt16();
 			Sfx			=	reader.ReadInt16();
-
 
 			//	entity teleported - reset position and rotation :
 			if (oldTeleport!=TeleportCount) {

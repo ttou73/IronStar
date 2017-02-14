@@ -127,8 +127,14 @@
     <Compile Include="Entities\StartPoint.cs" />
     <Compile Include="Entities\StaticModel.cs" />
     <Compile Include="Entities\StaticModelFactory.cs" />
+    <Compile Include="Mapping\LightPreset.cs" />
     <Compile Include="Mapping\Map.Build.cs" />
+    <Compile Include="Mapping\MapDecal.cs" />
+    <Compile Include="Mapping\MapEntity.cs" />
     <Compile Include="Mapping\MapEnvironment.cs" />
+    <Compile Include="Mapping\MapModel.cs" />
+    <Compile Include="Mapping\MapSpotLight.cs" />
+    <Compile Include="Mapping\MapOmniLight.cs" />
     <Compile Include="Mapping\MapNode.cs" />
     <Compile Include="Mapping\Map.cs" />
     <Compile Include="Physics\AnimatedCModel.cs" />

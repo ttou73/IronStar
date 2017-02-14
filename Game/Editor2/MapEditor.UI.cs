@@ -45,6 +45,9 @@ namespace IronStar.Editor2 {
 
 		private void Keyboard_KeyDown( object sender, KeyEventArgs e )
 		{
+			bool shift = Game.Keyboard.IsKeyDown(Keys.LeftShift) ||	Game.Keyboard.IsKeyDown(Keys.RightShift);
+			bool ctrl = Game.Keyboard.IsKeyDown(Keys.LeftControl) ||	Game.Keyboard.IsKeyDown(Keys.RightControl);
+
 			if (e.Key==Keys.F) {
 				Focus();
 			}
@@ -76,6 +79,14 @@ namespace IronStar.Editor2 {
 				}
 				if (e.Key==Keys.Enter) {
 					ActivateSelected();
+				}
+				if (e.Key==Keys.D) {
+					if (ctrl || shift) {
+						DuplicateSelection();
+					}
+				}
+				if (e.Key==Keys.G) {
+					Game.RenderSystem.SkipDebugRendering = !Game.RenderSystem.SkipDebugRendering;
 				}
 			}
 		}

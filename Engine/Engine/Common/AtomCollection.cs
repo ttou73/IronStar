@@ -9,6 +9,7 @@ using Fusion.Core;
 using Fusion.Core.Content;
 using Fusion.Core.Extensions;
 using Lidgren.Network;
+using System.IO.Compression;
 
 namespace Fusion.Engine.Common {
 

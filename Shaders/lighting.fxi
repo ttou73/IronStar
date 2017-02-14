@@ -53,6 +53,22 @@ struct ENVLIGHT {
 	float4  InnerOuterRadius;
 };
 
+struct DECAL {
+	float4x4 DecalMatrixInv;
+	float4	 BasisX;
+	float4	 BasisY;
+	float4	 BasisZ;
+	float4 	 EmissionRoughness;
+	float4	 BaseColorMetallic;
+	float4	 ImageScaleOffset;
+	float4	 ExtentMin;	// x,y, depth
+	float4	 ExtentMax;	// x,y, depth
+	float	 ColorFactor;
+	float	 SpecularFactor;
+	float	 NormalMapFactor;
+	float	 FalloffFactor;
+};
+
 struct SPOTLIGHT {
 	float4x4	ViewProjection;
 	float4		PositionRadius;

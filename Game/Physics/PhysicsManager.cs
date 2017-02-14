@@ -84,6 +84,7 @@ namespace IronStar.Physics {
 		/// 
 		/// </summary>
 		/// <param name="modelAtom"></param>
+		[Obsolete()]
 		public StaticCollisionModel AddStaticCollisionModel ( short modelAtom, Entity entity )
 		{
 			var modelName	=	World.Atoms[modelAtom];

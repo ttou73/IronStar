@@ -110,6 +110,44 @@ namespace Fusion.Development {
 	}
 
 
+	public class DecalFileLocationEditor : FileLocationEditor {
+		public override string Filter {
+			get {
+				return "TGA Images (*.tga)|*.tga";
+			}
+		}
+		public override string InitialDirectory {
+			get {
+				return "decals";
+			}
+		}
+
+		public override object EditValue( ITypeDescriptorContext context, IServiceProvider provider, object value )
+		{
+			return Path.GetFileNameWithoutExtension( (string)base.EditValue( context, provider, value ) );
+		}
+	}
+
+
+	public class SpotFileLocationEditor : FileLocationEditor {
+		public override string Filter {
+			get {
+				return "TGA Images (*.tga)|*.tga";
+			}
+		}
+		public override string InitialDirectory {
+			get {
+				return "spots";
+			}
+		}
+
+		public override object EditValue( ITypeDescriptorContext context, IServiceProvider provider, object value )
+		{
+			return Path.GetFileNameWithoutExtension( (string)base.EditValue( context, provider, value ) );
+		}
+	}
+
+
 	public class SoundFileLocationEditor : FileLocationEditor {
 		public override string Filter {
 			get {

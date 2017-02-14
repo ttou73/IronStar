@@ -110,8 +110,8 @@ namespace Fusion.Engine.Graphics {
 					context.ShadowProjection	=	spot.Projection;
 					context.ShadowViewport		=	new Viewport( smSize * dx, smSize * dy, smSize, smSize );
 					context.FarDistance			=	far;
-					context.SlopeBias			=	SpotSlopeBias;
-					context.DepthBias			=	SpotDepthBias;
+					context.SlopeBias			=	spot.SlopeBias;
+					context.DepthBias			=	spot.DepthBias;
 					context.ColorBuffer			=	spotColor.Surface;
 					context.DepthBuffer			=	spotDepth.Surface;
 

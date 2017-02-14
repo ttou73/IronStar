@@ -38,10 +38,7 @@ namespace Native {
 					throw gcnew RecastException("Can't build ContourSet");
 				}
 			}
-		internal:
-			ContourSet(rcContourSet* set) {
-				nativeSet = set;
-			}
+		internal: 
 			rcContourSet* nativeSet;
 		};
 	}

@@ -76,10 +76,6 @@ namespace Native {
 				}
 			}
 
-		internal:
-			CompactHeightField(rcCompactHeightfield* native) {
-				nativeCHF = native;
-			}
 
 			rcCompactHeightfield* nativeCHF;
 		};

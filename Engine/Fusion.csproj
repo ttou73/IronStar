@@ -150,6 +150,10 @@
     <Compile Include="Core\Content\IPrecachable.cs" />
     <Compile Include="Core\Extensions\KeyDataCollectionExtension.cs" />
     <Compile Include="Core\Extensions\LinkedListExtensions.cs" />
+    <Compile Include="Core\Mathematics\Byte3.cs" />
+    <Compile Include="Core\Mathematics\UShort3.cs" />
+    <Compile Include="Core\Mathematics\Segment.cs" />
+    <Compile Include="Core\Mathematics\WaveLength.cs" />
     <Compile Include="Core\Shell\TestCommand.cs" />
     <Compile Include="Development\CheckListDialog.cs">
       <SubType>Form</SubType>
@@ -227,6 +231,7 @@
     <Compile Include="Engine\Common\IUserInterface.cs" />
     <Compile Include="Engine\Graphics\Commands\VTRestart.cs" />
     <Compile Include="Engine\Graphics\Effects\FogSettings.cs" />
+    <Compile Include="Engine\Graphics\Lights\Decal.cs" />
     <Compile Include="Engine\Graphics\RenderComponent.cs" />
     <Compile Include="Engine\Graphics\RequireShaderAttribute.cs" />
     <Compile Include="Core\Collection\ConcurrentPriorityQueue.cs" />

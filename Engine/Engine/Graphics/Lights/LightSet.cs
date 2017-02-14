@@ -42,6 +42,16 @@ namespace Fusion.Engine.Graphics {
 
 
 		/// <summary>
+		/// Collection of environment lights.
+		/// </summary>
+		public ICollection<Decal> Decals {
+			get {
+				return decals;	
+			}
+		}
+
+
+		/// <summary>
 		/// Due to technical limitations only one source of direct 
 		/// light is avaiable foreach LightSet.
 		/// </summary>
@@ -62,6 +72,14 @@ namespace Fusion.Engine.Graphics {
 
 
 		/// <summary>
+		/// Spot-light mask atlas.
+		/// </summary>
+		public TextureAtlas DecalAtlas {
+			get; set;
+		}
+
+
+		/// <summary>
 		/// Average ambient level.
 		/// </summary>
 		public Color4 AmbientLevel {
@@ -73,6 +91,7 @@ namespace Fusion.Engine.Graphics {
 		List<OmniLight> omniLights = new List<OmniLight>();
 		List<SpotLight> spotLights = new List<SpotLight>();
 		List<EnvLight>  envLights  = new List<EnvLight>();
+		List<Decal>		decals		= new List<Decal>();
 
 
 		/// <summary>

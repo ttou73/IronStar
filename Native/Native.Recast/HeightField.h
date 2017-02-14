@@ -66,10 +66,7 @@ namespace Native {
 				rcFilterWalkableLowHeightSpans(buildContext->nativeContext, configuration->WalkableHeight, *nativeHeightField);
 			}
 
-		internal:
-			HeightField(rcHeightfield* native) {
-				nativeHeightField = native;
-			}
+		internal: 
 			rcHeightfield* nativeHeightField;
 		};
 

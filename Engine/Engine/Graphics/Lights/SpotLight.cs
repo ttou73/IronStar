@@ -40,5 +40,15 @@ namespace Fusion.Engine.Graphics {
 		/// Spot-light outer radius.
 		/// </summary>
 		public float	RadiusOuter;
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public float	SlopeBias = 2;
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public float	DepthBias = 1f / 1024f;
 	}
 }
