@@ -11,6 +11,7 @@ using Fusion.Engine.Graphics;
 using IronStar.SFX;
 using Fusion.Development;
 using System.Drawing.Design;
+using Fusion;
 
 namespace IronStar.Mapping {
 
@@ -23,9 +24,6 @@ namespace IronStar.Mapping {
 		
 		[Category("Spot-light")]
 		public float Intensity { get; set; } = 500;
-		
-		[Category("Spot-light")]
-		public int Temperature { get; set; } = 2400;
 		
 		[Category("Spot-light")]
 		public float Radius { get; set; } = 5;
@@ -42,21 +40,17 @@ namespace IronStar.Mapping {
 		[Category("Spot-light")]
 		public float FovHorizontal { get; set; } = 30;
 
+		[Category("Spot-light")]
+		public LightPreset LightPreset { get; set; } = LightPreset.White;
 
-		public LightTemperature TemperaturePreset { get; set; } = LightTemperature.IncandescentStandard;
+		[Category("Depth biasing")]
+		public float DepthBias { get; set; } = 1f / 1024f;
+
+		[Category("Depth biasing")]
+		public float SlopeBias { get; set; } = 2;
 
 
 		SpotLight	light;
-
-
-		[XmlIgnore]
-		public Color4 LightColor {
-			get {
-				var temp	=	(TemperaturePreset == LightTemperature.Custom) ? Temperature : (int)TemperaturePreset;
-				var color	=	Fusion.Core.Mathematics.Temperature.Get( temp );
-				return 	new Color4( color.X * Intensity, color.Y * Intensity, color.Z * Intensity, 0 );
-			}
-		}
 
 
 		Matrix SpotView {
@@ -69,8 +63,8 @@ namespace IronStar.Mapping {
 			get {
 				float n		=	NearPlane;
 				float f		=	FarPlane;
-				float w		=	(float)Math.Tan( MathUtil.DegreesToRadians( FovHorizontal/2 ) ) * Radius / 32.0f;
-				float h		=	(float)Math.Tan( MathUtil.DegreesToRadians( FovVertical/2   ) ) * Radius / 32.0f;
+				float w		=	(float)Math.Tan( MathUtil.DegreesToRadians( FovHorizontal/2 ) ) * NearPlane;
+				float h		=	(float)Math.Tan( MathUtil.DegreesToRadians( FovVertical/2   ) ) * NearPlane;
 				return	Matrix.PerspectiveRH( w, h, n, f );
 			}
 		}
@@ -88,6 +82,15 @@ namespace IronStar.Mapping {
 
 		public override void SpawnEntity( GameWorld world )
 		{
+			var lightSet	=	world.Game.RenderSystem.RenderWorld.LightSet;
+
+			var index		=	lightSet.SpotAtlas.IndexOf( SpotMaskName );
+
+			if (index<0) {
+				Log.Warning("Can not spawn spot light with spot mask : {0}", SpotMaskName );
+				return;
+			}
+
 			light		=	new SpotLight();
 
 			float n		=	NearPlane;
@@ -95,12 +98,15 @@ namespace IronStar.Mapping {
 			float w		=	(float)Math.Tan( MathUtil.DegreesToRadians( FovHorizontal/2 ) ) * Radius / 32.0f;
 			float h		=	(float)Math.Tan( MathUtil.DegreesToRadians( FovVertical/2   ) ) * Radius / 32.0f;
 
-			light.Intensity		=	LightColor;
+			light.Intensity		=	LightPresetColor.GetColor( LightPreset, Intensity );;
 			light.SpotView		=	SpotView;
 			light.Projection	=	SpotProjection;
 			light.RadiusOuter	=	Radius;
 			light.RadiusInner	=	0;
-			light.TextureIndex	=	0;
+			light.TextureIndex	=	index;
+
+			light.DepthBias		=	DepthBias;
+			light.SlopeBias		=	SlopeBias;
 
 			world.Game.RenderSystem.RenderWorld.LightSet.SpotLights.Add( light );
 		}
@@ -117,9 +123,11 @@ namespace IronStar.Mapping {
 		{
 			var transform	=	WorldMatrix;
 
-			var max			= Math.Max( Math.Max( LightColor.Red, LightColor.Green ), Math.Max( LightColor.Blue, 1 ) );
+			var lightColor	=	LightPresetColor.GetColor( LightPreset, Intensity );;
 
-			var dispColor   = new Color( (byte)(LightColor.Red / max * 255), (byte)(LightColor.Green / max * 255), (byte)(LightColor.Blue / max * 255), (byte)255 ); 
+			var max			= Math.Max( Math.Max( lightColor.Red, lightColor.Green ), Math.Max( lightColor.Blue, 1 ) );
+
+			var dispColor   = new Color( (byte)(lightColor.Red / max * 255), (byte)(lightColor.Green / max * 255), (byte)(lightColor.Blue / max * 255), (byte)255 ); 
 
 			dr.DrawPoint( transform.TranslationVector, 1, color, 2 );
 

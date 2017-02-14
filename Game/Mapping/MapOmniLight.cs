@@ -14,27 +14,6 @@ using System.Drawing.Design;
 
 namespace IronStar.Mapping {
 
-	public enum LightTemperature {
-		Custom					=	0,
-		MatchFlame				=	1700,
-		CandleFlame				=	1850,
-		IncandescentStandard	=	2400,
-		IncandescentSoftWhite	=	2550,
-		FlourescentSoftWhite	=	2700,
-		FlourescentWarmWhite	=	3000,
-		StudioLight				=	3200,
-		Moonlight				=	4100,
-		FluorescentTubular		=	5000,
-		DaylightHorizon			=	5000,
-		DaylightZenith			=	5750,
-		XenonShortArcLamp		=	6200,
-		DaylightOvercast		=	6500,
-		CRTScreenWarm			=	5000,
-		CRTScreenSRGB			=	6500,
-		CRTScreenCool			=	9300,
-		PolarClearBlueSky		=	15000,
-	}
-
 
 	public class MapOmniLight : MapNode {
 
@@ -47,25 +26,12 @@ namespace IronStar.Mapping {
 		public float Intensity { get; set; } = 500;
 		
 		[Category("Omni-light")]
-		public int Temperature { get; set; } = 2400;
-		
-		[Category("Omni-light")]
 		public float Radius { get; set; } = 5;
 
-		public LightTemperature TemperaturePreset { get; set; } = LightTemperature.IncandescentStandard;
-
+		[Category("Omni-light")]
+		public LightPreset LightPreset { get; set; } = LightPreset.White;
 
 		OmniLight	light;
-
-
-		[XmlIgnore]
-		public Color4 LightColor {
-			get {
-				var temp	=	(TemperaturePreset == LightTemperature.Custom) ? Temperature : (int)TemperaturePreset;
-				var color	=	Fusion.Core.Mathematics.Temperature.Get( temp );
-				return 	new Color4( color.X * Intensity, color.Y * Intensity, color.Z * Intensity, 0 );
-			}
-		}
 
 
 		/// <summary>
@@ -81,7 +47,7 @@ namespace IronStar.Mapping {
 		{
 			light		=	new OmniLight();
 
-			light.Intensity		=	LightColor;
+			light.Intensity		=	LightPresetColor.GetColor( LightPreset, Intensity );;
 			light.Position		=	WorldMatrix.TranslationVector;
 			light.RadiusOuter	=	Radius;
 			light.RadiusInner	=	0;
@@ -101,9 +67,11 @@ namespace IronStar.Mapping {
 		{
 			var transform	=	WorldMatrix;
 
-			var max			= Math.Max( Math.Max( LightColor.Red, LightColor.Green ), Math.Max( LightColor.Blue, 1 ) );
+			var lightColor	=	LightPresetColor.GetColor( LightPreset, Intensity );;
 
-			var dispColor   = new Color( (byte)(LightColor.Red / max * 255), (byte)(LightColor.Green / max * 255), (byte)(LightColor.Blue / max * 255), (byte)255 ); 
+			var max			=	Math.Max( Math.Max( lightColor.Red, lightColor.Green ), Math.Max( lightColor.Blue, 1 ) );
+
+			var dispColor   =	new Color( (byte)(lightColor.Red / max * 255), (byte)(lightColor.Green / max * 255), (byte)(lightColor.Blue / max * 255), (byte)255 ); 
 
 			dr.DrawPoint( transform.TranslationVector, 1, color, 1 );
 

@@ -206,7 +206,7 @@ void CSMain(
 		totalLight.rgb += visibleDecalCount * float3(0.5, 0.0, 0.0) * 0;
 		
 		if (groupThreadId.x==0 && groupThreadId.y==0) {
-			//sortIndices( visibleDecalCount, DECAL_COUNT);
+			sortIndices( visibleDecalCount, DECAL_COUNT);
 		}
 		
 		GroupMemoryBarrierWithGroupSync();

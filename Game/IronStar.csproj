@@ -128,6 +128,7 @@
     <Compile Include="Entities\StaticModel.cs" />
     <Compile Include="Entities\WorldspawnFactory.cs" />
     <Compile Include="Entities\StaticModelFactory.cs" />
+    <Compile Include="Mapping\LightPreset.cs" />
     <Compile Include="Mapping\Map.Build.cs" />
     <Compile Include="Mapping\MapDecal.cs" />
     <Compile Include="Mapping\MapEntity.cs" />

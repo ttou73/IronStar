@@ -2,10 +2,10 @@
 <Map xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <Environment>
     <Gravity>16</Gravity>
-    <SkyTrubidity>8</SkyTrubidity>
-    <SunPosition X="-1" Y="0.5" Z="1" />
+    <SkyTrubidity>4</SkyTrubidity>
+    <SunPosition X="-1" Y="1" Z="1" />
     <SunIntensity>100</SunIntensity>
-    <FogDensity>0.001</FogDensity>
+    <FogDensity>0.0001</FogDensity>
     <CharacterHeight>2</CharacterHeight>
     <CharacterSize>1.2</CharacterSize>
     <WalkableSlope>45</WalkableSlope>
@@ -112,8 +112,8 @@
     <MapNode xsi:type="MapEntity">
       <Visible>true</Visible>
       <Frozen>false</Frozen>
-      <Position X="-3.375" Y="0.375" Z="1" />
-      <Rotation X="4.453722E-07" Y="0.992167056" Z="-4.34458173E-07" W="-0.1249183" />
+      <Position X="-3.42067266" Y="0.490577638" Z="1.15518" />
+      <Rotation X="-0.680928648" Y="0.68206054" Z="-0.188676879" W="0.188495681" />
       <Scaling>1</Scaling>
       <Factory xsi:type="ProxyFactory">
         <Classname>box</Classname>
@@ -242,20 +242,20 @@
     <MapNode xsi:type="MapDecal">
       <Visible>true</Visible>
       <Frozen>false</Frozen>
-      <Position X="-4.5" Y="-0.5" Z="7.375" />
+      <Position X="1.875" Y="0" Z="7.375" />
       <Rotation X="-0.271671474" Y="-0.654732049" Z="-0.6498807" W="0.274181724" />
       <Scaling>1</Scaling>
-      <ImageName />
-      <Width>1</Width>
+      <ImageName>rust</ImageName>
+      <Width>10</Width>
       <Height>5</Height>
-      <Depth>0.25</Depth>
+      <Depth>1</Depth>
       <Emission Red="0" Green="0" Blue="0" Alpha="0" />
-      <BaseColor R="128" G="0" B="128" A="255" />
-      <Roughness>0.05</Roughness>
-      <Metallic>0.5</Metallic>
+      <BaseColor R="183" G="65" B="14" A="255" />
+      <Roughness>0.3</Roughness>
+      <Metallic>0</Metallic>
       <ColorFactor>1</ColorFactor>
       <SpecularFactor>1</SpecularFactor>
-      <NormalMapFactor>1</NormalMapFactor>
+      <NormalMapFactor>0</NormalMapFactor>
       <FalloffFactor>0.5</FalloffFactor>
     </MapNode>
     <MapNode xsi:type="MapEntity">
@@ -349,7 +349,7 @@
     <MapNode xsi:type="MapDecal">
       <Visible>true</Visible>
       <Frozen>false</Frozen>
-      <Position X="-3.125" Y="0" Z="-0.125" />
+      <Position X="-2.875" Y="0" Z="0.75" />
       <Rotation X="0.199937284" Y="-0.6738854" Z="0.682031155" W="0.201834425" />
       <Scaling>1</Scaling>
       <ImageName>blood3</ImageName>
@@ -387,25 +387,6 @@
     <MapNode xsi:type="MapDecal">
       <Visible>true</Visible>
       <Frozen>false</Frozen>
-      <Position X="-3.125" Y="0.75" Z="0.875" />
-      <Rotation X="-0.09659922" Y="-0.6975246" Z="0.7027011" W="-0.10168241" />
-      <Scaling>1</Scaling>
-      <ImageName>blood3</ImageName>
-      <Width>2</Width>
-      <Height>2</Height>
-      <Depth>1</Depth>
-      <Emission Red="0" Green="0" Blue="0" Alpha="0" />
-      <BaseColor R="64" G="3" B="3" A="255" />
-      <Roughness>0.02</Roughness>
-      <Metallic>0</Metallic>
-      <ColorFactor>1</ColorFactor>
-      <SpecularFactor>1</SpecularFactor>
-      <NormalMapFactor>1</NormalMapFactor>
-      <FalloffFactor>1</FalloffFactor>
-    </MapNode>
-    <MapNode xsi:type="MapDecal">
-      <Visible>true</Visible>
-      <Frozen>false</Frozen>
       <Position X="7.125" Y="1.5" Z="8.75" />
       <Rotation X="0.492815644" Y="-0.502995849" Z="0.349278539" W="-0.6181687" />
       <Scaling>1</Scaling>
@@ -420,25 +401,6 @@
       <ColorFactor>1</ColorFactor>
       <SpecularFactor>1</SpecularFactor>
       <NormalMapFactor>2</NormalMapFactor>
-      <FalloffFactor>0.5</FalloffFactor>
-    </MapNode>
-    <MapNode xsi:type="MapDecal">
-      <Visible>true</Visible>
-      <Frozen>false</Frozen>
-      <Position X="-5.5" Y="3.875" Z="0.5" />
-      <Rotation X="-0.09659922" Y="-0.6975246" Z="0.7027011" W="-0.10168241" />
-      <Scaling>1</Scaling>
-      <ImageName>bulletHit</ImageName>
-      <Width>0.2</Width>
-      <Height>0.2</Height>
-      <Depth>0.25</Depth>
-      <Emission Red="0" Green="0" Blue="0" Alpha="0" />
-      <BaseColor R="0" G="0" B="0" A="255" />
-      <Roughness>0.2</Roughness>
-      <Metallic>1</Metallic>
-      <ColorFactor>1</ColorFactor>
-      <SpecularFactor>1</SpecularFactor>
-      <NormalMapFactor>5</NormalMapFactor>
       <FalloffFactor>0.5</FalloffFactor>
     </MapNode>
     <MapNode xsi:type="MapDecal">
@@ -486,9 +448,8 @@
       <Rotation X="0" Y="0" Z="0" W="1" />
       <Scaling>1</Scaling>
       <Intensity>500</Intensity>
-      <Temperature>50000</Temperature>
       <Radius>5</Radius>
-      <TemperaturePreset>IncandescentStandard</TemperaturePreset>
+      <LightPreset>White</LightPreset>
     </MapNode>
     <MapNode xsi:type="MapOmniLight">
       <Visible>true</Visible>
@@ -497,20 +458,18 @@
       <Rotation X="0" Y="0" Z="0" W="1" />
       <Scaling>1</Scaling>
       <Intensity>500</Intensity>
-      <Temperature>2400</Temperature>
       <Radius>5</Radius>
-      <TemperaturePreset>IncandescentStandard</TemperaturePreset>
+      <LightPreset>White</LightPreset>
     </MapNode>
     <MapNode xsi:type="MapOmniLight">
       <Visible>true</Visible>
       <Frozen>false</Frozen>
-      <Position X="-21.875" Y="2.125" Z="-1.375" />
+      <Position X="-22.75" Y="2.125" Z="-3.125" />
       <Rotation X="0" Y="0" Z="0" W="1" />
       <Scaling>1</Scaling>
       <Intensity>500</Intensity>
-      <Temperature>2400</Temperature>
       <Radius>5.2</Radius>
-      <TemperaturePreset>IncandescentStandard</TemperaturePreset>
+      <LightPreset>MatchFlame</LightPreset>
     </MapNode>
     <MapNode xsi:type="MapOmniLight">
       <Visible>true</Visible>
@@ -519,9 +478,8 @@
       <Rotation X="0" Y="0" Z="0" W="1" />
       <Scaling>1</Scaling>
       <Intensity>500</Intensity>
-      <Temperature>2400</Temperature>
       <Radius>5</Radius>
-      <TemperaturePreset>IncandescentStandard</TemperaturePreset>
+      <LightPreset>White</LightPreset>
     </MapNode>
     <MapNode xsi:type="MapOmniLight">
       <Visible>true</Visible>
@@ -530,9 +488,8 @@
       <Rotation X="0" Y="0" Z="0" W="1" />
       <Scaling>1</Scaling>
       <Intensity>500</Intensity>
-      <Temperature>2400</Temperature>
       <Radius>5</Radius>
-      <TemperaturePreset>IncandescentStandard</TemperaturePreset>
+      <LightPreset>White</LightPreset>
     </MapNode>
     <MapNode xsi:type="MapOmniLight">
       <Visible>true</Visible>
@@ -541,41 +498,44 @@
       <Rotation X="0" Y="0" Z="0" W="1" />
       <Scaling>1</Scaling>
       <Intensity>500</Intensity>
-      <Temperature>2400</Temperature>
       <Radius>5</Radius>
-      <TemperaturePreset>IncandescentStandard</TemperaturePreset>
+      <LightPreset>White</LightPreset>
     </MapNode>
     <MapNode xsi:type="MapSpotLight">
       <Visible>true</Visible>
       <Frozen>false</Frozen>
-      <Position X="-5.75" Y="2.25" Z="-2" />
-      <Rotation X="-0.03439544" Y="-0.906440437" Z="-0.2560792" W="0.334075421" />
+      <Position X="-5.75" Y="2.25" Z="-1.75" />
+      <Rotation X="0.0607691854" Y="-0.906535864" Z="-0.265611947" W="0.322412878" />
       <Scaling>1</Scaling>
-      <SpotMaskName />
-      <Intensity>5000</Intensity>
-      <Temperature>2400</Temperature>
+      <SpotMaskName>grid</SpotMaskName>
+      <Intensity>250</Intensity>
       <Radius>10</Radius>
-      <NearPlane>0.125</NearPlane>
+      <NearPlane>1</NearPlane>
       <FarPlane>10</FarPlane>
-      <FovVertical>30</FovVertical>
-      <FovHorizontal>30</FovHorizontal>
-      <TemperaturePreset>IncandescentStandard</TemperaturePreset>
+      <FovVertical>90</FovVertical>
+      <FovHorizontal>90</FovHorizontal>
+      <LightPreset>FluorescentTubular</LightPreset>
+      <DepthBias>0.001</DepthBias>
+      <SlopeBias>4</SlopeBias>
     </MapNode>
-    <MapNode xsi:type="MapSpotLight">
+    <MapNode xsi:type="MapDecal">
       <Visible>true</Visible>
       <Frozen>false</Frozen>
-      <Position X="-4.125" Y="7.375" Z="8.625" />
-      <Rotation X="-0.418753266" Y="-0.5758137" Z="-0.5217645" W="0.469942838" />
+      <Position X="0.375" Y="0" Z="13.375" />
+      <Rotation X="0.110515013" Y="-0.701102257" Z="-0.695655644" W="-0.110929787" />
       <Scaling>1</Scaling>
-      <SpotMaskName />
-      <Intensity>5000</Intensity>
-      <Temperature>2400</Temperature>
-      <Radius>10</Radius>
-      <NearPlane>0.125</NearPlane>
-      <FarPlane>10</FarPlane>
-      <FovVertical>60</FovVertical>
-      <FovHorizontal>30</FovHorizontal>
-      <TemperaturePreset>IncandescentStandard</TemperaturePreset>
+      <ImageName>rust</ImageName>
+      <Width>10</Width>
+      <Height>5</Height>
+      <Depth>1</Depth>
+      <Emission Red="0" Green="0" Blue="0" Alpha="0" />
+      <BaseColor R="183" G="65" B="14" A="255" />
+      <Roughness>0.3</Roughness>
+      <Metallic>0</Metallic>
+      <ColorFactor>1</ColorFactor>
+      <SpecularFactor>1</SpecularFactor>
+      <NormalMapFactor>0</NormalMapFactor>
+      <FalloffFactor>0.5</FalloffFactor>
     </MapNode>
   </Nodes>
 </Map>

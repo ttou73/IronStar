@@ -85,6 +85,9 @@ namespace IronStar.Editor2 {
 						DuplicateSelection();
 					}
 				}
+				if (e.Key==Keys.G) {
+					Game.RenderSystem.SkipDebugRendering = !Game.RenderSystem.SkipDebugRendering;
+				}
 			}
 		}
 
