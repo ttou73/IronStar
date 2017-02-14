@@ -126,7 +126,6 @@
     <Compile Include="Entities\ProxyFactory.cs" />
     <Compile Include="Entities\StartPoint.cs" />
     <Compile Include="Entities\StaticModel.cs" />
-    <Compile Include="Entities\WorldspawnFactory.cs" />
     <Compile Include="Entities\StaticModelFactory.cs" />
     <Compile Include="Mapping\Map.Build.cs" />
     <Compile Include="Mapping\MapEnvironment.cs" />
