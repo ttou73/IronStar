@@ -72,8 +72,8 @@
     <MapNode xsi:type="MapEntity">
       <Visible>true</Visible>
       <Frozen>false</Frozen>
-      <Position X="-3.5" Y="0.375" Z="10" />
-      <Rotation X="2.31204558E-05" Y="-0.6354782" Z="4.458851E-06" W="0.772118747" />
+      <Position X="-3.29733753" Y="0.372003019" Z="9.927986" />
+      <Rotation X="0.0587123446" Y="-0.7671458" Z="0.01452821" W="0.638614953" />
       <Scaling>1</Scaling>
       <Factory xsi:type="ProxyFactory">
         <Classname>box</Classname>
@@ -82,8 +82,8 @@
     <MapNode xsi:type="MapEntity">
       <Visible>true</Visible>
       <Frozen>false</Frozen>
-      <Position X="-2.5" Y="0.375" Z="10" />
-      <Rotation X="0.8969319" Y="-0.000821731752" Z="0.44216764" W="0.000564866932" />
+      <Position X="-2.30692649" Y="0.3826971" Z="10.174511" />
+      <Rotation X="0.8433184" Y="-0.0367434248" Z="0.5286813" W="-0.08921853" />
       <Scaling>1</Scaling>
       <Factory xsi:type="ProxyFactory">
         <Classname>box</Classname>
@@ -92,7 +92,7 @@
     <MapNode xsi:type="MapEntity">
       <Visible>true</Visible>
       <Frozen>false</Frozen>
-      <Position X="-0.5" Y="0.375" Z="9.875" />
+      <Position X="-0.5" Y="0.3716576" Z="9.875" />
       <Rotation X="0.176898167" Y="-0.684619844" Z="0.684623539" W="0.176898986" />
       <Scaling>1</Scaling>
       <Factory xsi:type="ProxyFactory">
@@ -102,8 +102,8 @@
     <MapNode xsi:type="MapEntity">
       <Visible>true</Visible>
       <Frozen>false</Frozen>
-      <Position X="-1.5" Y="0.375" Z="11" />
-      <Rotation X="0.552434564" Y="0.4414833" Z="0.4417905" W="-0.5520234" />
+      <Position X="-1.48908877" Y="0.368376017" Z="11.0170078" />
+      <Rotation X="0.553069234" Y="0.433888465" Z="0.443190545" W="-0.556271" />
       <Scaling>1</Scaling>
       <Factory xsi:type="ProxyFactory">
         <Classname>box</Classname>
@@ -122,7 +122,7 @@
     <MapNode xsi:type="MapEntity">
       <Visible>true</Visible>
       <Frozen>false</Frozen>
-      <Position X="-2.5" Y="0.375" Z="11.375" />
+      <Position X="-2.5" Y="0.3716576" Z="11.375" />
       <Rotation X="0.66896385" Y="-3.60322119E-05" Z="-0.7432949" W="-1.81223174E-06" />
       <Scaling>1</Scaling>
       <Factory xsi:type="ProxyFactory">
@@ -142,8 +142,8 @@
     <MapNode xsi:type="MapEntity">
       <Visible>true</Visible>
       <Frozen>false</Frozen>
-      <Position X="-3" Y="0.375" Z="8.875" />
-      <Rotation X="0.00042388367" Y="-0.7979786" Z="-0.00025145337" W="0.60268563" />
+      <Position X="-3.024147" Y="0.344017923" Z="8.85640049" />
+      <Rotation X="-0.00375049282" Y="-0.7744101" Z="-0.015118314" W="0.6324921" />
       <Scaling>1</Scaling>
       <Factory xsi:type="ProxyFactory">
         <Classname>box</Classname>
@@ -152,8 +152,8 @@
     <MapNode xsi:type="MapEntity">
       <Visible>true</Visible>
       <Frozen>false</Frozen>
-      <Position X="-1.875" Y="0.875" Z="9.625" />
-      <Rotation X="0.867935359" Y="-0.07182546" Z="0.361018062" W="-0.333459437" />
+      <Position X="-1.74614239" Y="1.25781226" Z="9.909548" />
+      <Rotation X="0.7933944" Y="-0.0677094" Z="0.3695286" W="-0.47894612" />
       <Scaling>1</Scaling>
       <Factory xsi:type="ProxyFactory">
         <Classname>box</Classname>
@@ -162,8 +162,8 @@
     <MapNode xsi:type="MapEntity">
       <Visible>true</Visible>
       <Frozen>false</Frozen>
-      <Position X="-4.5" Y="0.375" Z="9.875" />
-      <Rotation X="0.698039353" Y="-0.11288809" Z="0.11289034" W="0.6980352" />
+      <Position X="-4.35567331" Y="1.958113" Z="10.2113161" />
+      <Rotation X="0.755313933" Y="-0.5447232" Z="-0.363868415" W="0.019423157" />
       <Scaling>1</Scaling>
       <Factory xsi:type="ProxyFactory">
         <Classname>box</Classname>
@@ -172,8 +172,8 @@
     <MapNode xsi:type="MapEntity">
       <Visible>true</Visible>
       <Frozen>false</Frozen>
-      <Position X="-4.75" Y="0.5" Z="7.875" />
-      <Rotation X="-0.63773185" Y="-0.637738049" Z="-0.305439055" W="-0.30544278" />
+      <Position X="-4.275435" Y="0.5304433" Z="7.401268" />
+      <Rotation X="-0.638627768" Y="-0.677170038" Z="-0.295982778" W="-0.214451641" />
       <Scaling>1</Scaling>
       <Factory xsi:type="ProxyFactory">
         <Classname>box</Classname>
@@ -182,8 +182,8 @@
     <MapNode xsi:type="MapEntity">
       <Visible>true</Visible>
       <Frozen>false</Frozen>
-      <Position X="-4" Y="0.375" Z="8.875" />
-      <Rotation X="0.0004231338" Y="-0.871899" Z="0.000361618324" W="0.4896854" />
+      <Position X="-4" Y="0.371657968" Z="8.875" />
+      <Rotation X="0.000423133" Y="-0.871899" Z="0.000361617916" W="0.4896854" />
       <Scaling>1</Scaling>
       <Factory xsi:type="ProxyFactory">
         <Classname>box</Classname>
@@ -192,8 +192,8 @@
     <MapNode xsi:type="MapEntity">
       <Visible>true</Visible>
       <Frozen>false</Frozen>
-      <Position X="-2" Y="0.375" Z="8.875" />
-      <Rotation X="0.9941337" Y="1.21064431E-05" Z="0.108157307" W="-0.0003410054" />
+      <Position X="-2.02292466" Y="0.273660868" Z="8.44558048" />
+      <Rotation X="0.992622137" Y="-0.00183722831" Z="0.119364366" W="0.0212171469" />
       <Scaling>1</Scaling>
       <Factory xsi:type="ProxyFactory">
         <Classname>box</Classname>
@@ -202,8 +202,8 @@
     <MapNode xsi:type="MapEntity">
       <Visible>true</Visible>
       <Frozen>false</Frozen>
-      <Position X="-5.125" Y="0.375" Z="8.5" />
-      <Rotation X="0.6380566" Y="-0.304767072" Z="0.304766983" W="0.638058" />
+      <Position X="-4.55006456" Y="3.223488" Z="8.628239" />
+      <Rotation X="-0.0327735357" Y="-0.701286852" Z="-0.2772375" W="0.6559436" />
       <Scaling>1</Scaling>
       <Factory xsi:type="ProxyFactory">
         <Classname>box</Classname>
@@ -222,8 +222,8 @@
     <MapNode xsi:type="MapEntity">
       <Visible>true</Visible>
       <Frozen>false</Frozen>
-      <Position X="-4" Y="1.125" Z="8.875" />
-      <Rotation X="0.9257019" Y="0.00189319835" Z="0.3782485" W="-0.000679762743" />
+      <Position X="-3.86982441" Y="1.236309" Z="8.831311" />
+      <Rotation X="0.8976597" Y="-0.107808016" Z="0.422674775" W="0.0626946241" />
       <Scaling>1</Scaling>
       <Factory xsi:type="ProxyFactory">
         <Classname>box</Classname>
@@ -449,7 +449,7 @@
       <Scaling>1</Scaling>
       <Intensity>500</Intensity>
       <Radius>5</Radius>
-      <LightPreset>White</LightPreset>
+      <LightPreset>IncandescentStandard</LightPreset>
     </MapNode>
     <MapNode xsi:type="MapOmniLight">
       <Visible>true</Visible>
@@ -459,12 +459,12 @@
       <Scaling>1</Scaling>
       <Intensity>500</Intensity>
       <Radius>5</Radius>
-      <LightPreset>White</LightPreset>
+      <LightPreset>IncandescentStandard</LightPreset>
     </MapNode>
     <MapNode xsi:type="MapOmniLight">
       <Visible>true</Visible>
       <Frozen>false</Frozen>
-      <Position X="-22.75" Y="2.125" Z="-3.125" />
+      <Position X="-26.5" Y="2.125" Z="-3.125" />
       <Rotation X="0" Y="0" Z="0" W="1" />
       <Scaling>1</Scaling>
       <Intensity>500</Intensity>
@@ -474,12 +474,12 @@
     <MapNode xsi:type="MapOmniLight">
       <Visible>true</Visible>
       <Frozen>false</Frozen>
-      <Position X="-32.5" Y="1.5" Z="0" />
+      <Position X="-34.75" Y="1" Z="4.25" />
       <Rotation X="0" Y="0" Z="0" W="1" />
       <Scaling>1</Scaling>
       <Intensity>500</Intensity>
       <Radius>5</Radius>
-      <LightPreset>White</LightPreset>
+      <LightPreset>FlourescentSoftWhite</LightPreset>
     </MapNode>
     <MapNode xsi:type="MapOmniLight">
       <Visible>true</Visible>
@@ -489,7 +489,7 @@
       <Scaling>1</Scaling>
       <Intensity>500</Intensity>
       <Radius>5</Radius>
-      <LightPreset>White</LightPreset>
+      <LightPreset>IncandescentStandard</LightPreset>
     </MapNode>
     <MapNode xsi:type="MapOmniLight">
       <Visible>true</Visible>
@@ -499,16 +499,16 @@
       <Scaling>1</Scaling>
       <Intensity>500</Intensity>
       <Radius>5</Radius>
-      <LightPreset>White</LightPreset>
+      <LightPreset>IncandescentStandard</LightPreset>
     </MapNode>
     <MapNode xsi:type="MapSpotLight">
       <Visible>true</Visible>
       <Frozen>false</Frozen>
       <Position X="-5.75" Y="2.25" Z="-1.75" />
-      <Rotation X="0.0607691854" Y="-0.906535864" Z="-0.265611947" W="0.322412878" />
+      <Rotation X="0.0881822556" Y="-0.9352553" Z="-0.25781095" W="0.2259533" />
       <Scaling>1</Scaling>
-      <SpotMaskName>grid</SpotMaskName>
-      <Intensity>250</Intensity>
+      <SpotMaskName>color</SpotMaskName>
+      <Intensity>2500</Intensity>
       <Radius>10</Radius>
       <NearPlane>1</NearPlane>
       <FarPlane>10</FarPlane>

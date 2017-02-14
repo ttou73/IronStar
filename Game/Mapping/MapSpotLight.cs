@@ -41,7 +41,7 @@ namespace IronStar.Mapping {
 		public float FovHorizontal { get; set; } = 30;
 
 		[Category("Spot-light")]
-		public LightPreset LightPreset { get; set; } = LightPreset.White;
+		public LightPreset LightPreset { get; set; } = LightPreset.IncandescentStandard;
 
 		[Category("Depth biasing")]
 		public float DepthBias { get; set; } = 1f / 1024f;

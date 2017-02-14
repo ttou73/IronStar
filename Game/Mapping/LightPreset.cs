@@ -22,7 +22,15 @@ namespace IronStar.Mapping {
 		White					=	7,
 		Magenta					=	6,
 
-		//	TODO: wave lengths...
+		Wave380					=	380,
+		Wave430					=	430,
+		Wave480					=	480,
+		Wave530					=	530,
+		Wave580					=	580,
+		Wave630					=	630,
+		Wave680					=	680,
+		Wave730					=	730,
+		Wave780					=	780,
 
 		MatchFlame				=	1700,
 		CandleFlame				=	1850,
@@ -32,11 +40,11 @@ namespace IronStar.Mapping {
 		FlourescentWarmWhite	=	3000,
 		StudioLight				=	3200,
 		Moonlight				=	4100,
-		FluorescentTubular		=	5000,
-		DaylightHorizon			=	5000,
+		FluorescentTubular		=	4950,
+		DaylightHorizon			=	4990,
 		DaylightZenith			=	5750,
 		XenonShortArcLamp		=	6200,
-		DaylightOvercast		=	6500,
+		DaylightOvercast		=	6490,
 		CRTScreenWarm			=	5000,
 		CRTScreenSRGB			=	6500,
 		CRTScreenCool			=	9300,
@@ -63,6 +71,10 @@ namespace IronStar.Mapping {
 				case LightPreset.Magenta:	return new Color4(1,0,1,0) * intensity;
 				case LightPreset.Cyan	:	return new Color4(0,1,1,0) * intensity;
 				case LightPreset.White	:	return new Color4(1,1,1,0) * intensity;
+			} //*/
+
+			if (temp<=780) {
+				return new Color4( WaveLength.GetColor(temp), 0 );
 			}
 			
 			var color	=	Temperature.Get( temp );

@@ -29,7 +29,7 @@ namespace IronStar.Mapping {
 		public float Radius { get; set; } = 5;
 
 		[Category("Omni-light")]
-		public LightPreset LightPreset { get; set; } = LightPreset.White;
+		public LightPreset LightPreset { get; set; } = LightPreset.IncandescentStandard;
 
 		OmniLight	light;
 
