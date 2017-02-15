@@ -122,7 +122,7 @@
     <MapNode xsi:type="MapEntity">
       <Visible>true</Visible>
       <Frozen>false</Frozen>
-      <Position X="11.625" Y="2.125" Z="2.375" />
+      <Position X="3.125" Y="2.125" Z="2.375" />
       <Rotation X="-0.124374941" Y="-9.00169042E-08" Z="-0.992235243" W="8.15199144E-08" />
       <Scaling>1</Scaling>
       <Factory xsi:type="ProxyFactory">
@@ -232,7 +232,7 @@
     <MapNode xsi:type="MapDecal">
       <Visible>true</Visible>
       <Frozen>false</Frozen>
-      <Position X="1.875" Y="0" Z="0.5" />
+      <Position X="-9.375" Y="0" Z="0.5" />
       <Rotation X="-0.271671474" Y="-0.654732049" Z="-0.6498807" W="0.274181724" />
       <Scaling>1</Scaling>
       <ImageName>rust</ImageName>
@@ -251,8 +251,8 @@
     <MapNode xsi:type="MapEntity">
       <Visible>true</Visible>
       <Frozen>false</Frozen>
-      <Position X="-6.004671" Y="1.23560929" Z="-11.5076265" />
-      <Rotation X="-0.09748955" Y="-0.94585073" Z="0.3070304" W="-0.0399303734" />
+      <Position X="-6.625" Y="9.125" Z="-7.625" />
+      <Rotation X="-0.0859397" Y="-0.980851769" Z="0.17146118" W="-0.03383983" />
       <Scaling>1</Scaling>
       <Factory xsi:type="ProxyFactory">
         <Classname>box</Classname>
@@ -494,8 +494,8 @@
     <MapNode xsi:type="MapSpotLight">
       <Visible>true</Visible>
       <Frozen>false</Frozen>
-      <Position X="-11.125" Y="2.25" Z="-1.75" />
-      <Rotation X="0.0881822556" Y="-0.9352553" Z="-0.25781095" W="0.2259533" />
+      <Position X="-11.625" Y="2.25" Z="-1.75" />
+      <Rotation X="0.07004438" Y="-0.9172826" Z="-0.263318032" W="0.290430784" />
       <Scaling>1</Scaling>
       <SpotMaskName>color</SpotMaskName>
       <Intensity>2500</Intensity>
@@ -511,7 +511,7 @@
     <MapNode xsi:type="MapDecal">
       <Visible>true</Visible>
       <Frozen>false</Frozen>
-      <Position X="-5.31454229" Y="-0.151697457" Z="11.6448574" />
+      <Position X="-5.375" Y="-0.75" Z="11.625" />
       <Rotation X="0.110515013" Y="-0.701102257" Z="-0.695655644" W="-0.110929787" />
       <Scaling>1</Scaling>
       <ImageName>rust</ImageName>
@@ -559,7 +559,7 @@
     <MapNode xsi:type="MapModel">
       <Visible>true</Visible>
       <Frozen>false</Frozen>
-      <Position X="0" Y="0" Z="14.375" />
+      <Position X="-6.75" Y="-0" Z="9.25" />
       <Rotation X="0" Y="0" Z="0" W="1" />
       <Scaling>1</Scaling>
       <ScenePath>scenes\mtrlTest.fbx</ScenePath>

@@ -173,9 +173,9 @@ namespace IronStar.Editor2 {
 					} else {
 						target.Position = pos + (currentPoint - initialPoint);
 					}
-				}
 
-				editor.ResetWorld(false);
+					target.ResetNode( this.editor.World );
+				}
 			}
 		}
 

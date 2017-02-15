@@ -66,6 +66,7 @@ namespace IronStar.Mapping {
 
 			transforms	=	new Matrix[ scene.Nodes.Count ];
 			collidables	=	new StaticMesh[ scene.Nodes.Count ];
+			instances	=	new MeshInstance[ scene.Nodes.Count ];
 
 			scene.ComputeAbsoluteTransforms( transforms );
 
@@ -78,6 +79,8 @@ namespace IronStar.Mapping {
 			for ( int i=0; i<scene.Nodes.Count; i++ ) {
 
 				var node = scene.Nodes[i];
+
+				collidables[i] = null;
 
 				if (node.MeshIndex<0) {
 					continue;
@@ -107,8 +110,6 @@ namespace IronStar.Mapping {
 			//	add visible mesh instance :
 			//
 			if (world.IsPresentationEnabled) {
-
-				instances	=	new MeshInstance[ scene.Nodes.Count ];
 
 				for ( int i=0; i<scene.Nodes.Count; i++ ) {
 					var meshIndex = scene.Nodes[i].MeshIndex;
@@ -154,7 +155,27 @@ namespace IronStar.Mapping {
 
 		public override void ResetNode( GameWorld world )
 		{
-			HardResetNode( world );
+			if (scene==null) {
+				return;
+			}
+
+			for (int i=0; i<scene.Nodes.Count; i++) {
+
+				var collidable = collidables[i];
+
+				if (collidable!=null) {
+					var q = MathConverter.Convert( Rotation );
+					var p = MathConverter.Convert( Position );
+
+					collidable.WorldTransform = new BEPUTransform( q, p );
+				}
+
+				var instance = instances[i];
+
+				if (instance!=null) {
+					instances[i].World = transforms[ i ] * WorldMatrix;
+				}
+			}
 		}
 
 
@@ -191,6 +212,7 @@ namespace IronStar.Mapping {
 			instances	=	null;
 			collidables	=	null;
 		}
+
 
 
 		public override MapNode DuplicateNode()

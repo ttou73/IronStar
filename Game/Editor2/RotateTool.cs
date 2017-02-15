@@ -184,9 +184,9 @@ namespace IronStar.Editor2 {
 					var addRot	=	Quaternion.RotationAxis( direction, angle );
 
 					target.Rotation = addRot * rot;
-				}
 
-				editor.ResetWorld(false);
+					target.ResetNode( this.editor.World );
+				}
 			}
 		}
 

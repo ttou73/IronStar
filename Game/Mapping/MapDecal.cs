@@ -176,7 +176,8 @@ namespace IronStar.Mapping {
 
 		public override void ResetNode( GameWorld world )
 		{
-			HardResetNode( world );
+			decal.DecalMatrix		=	Matrix.Scaling( Width/2, Height/2, Depth/2 ) * WorldMatrix;
+			decal.DecalMatrixInverse=	Matrix.Invert( decal.DecalMatrix );
 		}
 
 

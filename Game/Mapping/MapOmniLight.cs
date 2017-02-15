@@ -71,7 +71,7 @@ namespace IronStar.Mapping {
 		{
 			var transform	=	WorldMatrix;
 
-			var lightColor	=	LightPresetColor.GetColor( LightPreset, Intensity );;
+			var lightColor	=	LightPresetColor.GetColor( LightPreset, Intensity );
 
 			var max			=	Math.Max( Math.Max( lightColor.Red, lightColor.Green ), Math.Max( lightColor.Blue, 1 ) );
 
@@ -89,7 +89,7 @@ namespace IronStar.Mapping {
 
 		public override void ResetNode( GameWorld world )
 		{
-			HardResetNode( world );
+			light.Position		=	WorldMatrix.TranslationVector;
 		}
 
 

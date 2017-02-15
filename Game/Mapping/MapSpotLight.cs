@@ -164,7 +164,8 @@ namespace IronStar.Mapping {
 
 		public override void ResetNode( GameWorld world )
 		{
-			HardResetNode( world );
+			light.SpotView		=	SpotView;
+			light.Projection	=	SpotProjection;
 		}
 
 

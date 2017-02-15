@@ -239,6 +239,7 @@ namespace IronStar.Editor2 {
 		}
 
 
+
 		/// <summary>
 		/// 
 		/// </summary>
@@ -260,6 +261,10 @@ namespace IronStar.Editor2 {
 		}
 
 
+
+		/// <summary>
+		/// 
+		/// </summary>
 		public void SetToEntity ()
 		{
 			foreach ( var se in selection ) {
@@ -272,6 +277,10 @@ namespace IronStar.Editor2 {
 		}
 
 
+
+		/// <summary>
+		/// 
+		/// </summary>
 		public void ActivateSelected ()
 		{
 			foreach ( var se in selection ) {

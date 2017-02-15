@@ -98,12 +98,12 @@ namespace IronStar.Editors {
 
 		private void refreshWorldToolStripMenuItem_Click( object sender, EventArgs e )
 		{
-			MapEditor.ResetWorld(false);
+			MapEditor.ResetWorld(true);
 		}
 
 		private void gridTransform_PropertyValueChanged( object s, PropertyValueChangedEventArgs e )
 		{
-			MapEditor.ResetWorld(false);
+			MapEditor.ResetWorld(true);
 		}
 
 		private void gridFactory_PropertyValueChanged( object s, PropertyValueChangedEventArgs e )
@@ -113,7 +113,6 @@ namespace IronStar.Editors {
 
 		private void gridEnv_PropertyValueChanged( object s, PropertyValueChangedEventArgs e )
 		{
-			MapEditor.ResetWorld(false);
 			MapEditor.Map.UpdateEnvironment( MapEditor.World );
 		}
 
