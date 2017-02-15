@@ -61,7 +61,7 @@ namespace IronStar.Mapping {
 			UpdateEnvironment( gameWorld );
 
 			foreach ( var node in Nodes ) {
-				node.SpawnEntity( gameWorld );
+				node.SpawnNode( gameWorld );
 			}
 		}
 

@@ -69,12 +69,17 @@ namespace IronStar.Core {
 		public Environment environment;
 
 
+		public readonly bool IsPresentationEnabled;
+
+
 		/// <summary>
 		/// 
 		/// </summary>
 		/// <param name="game"></param>
 		public GameWorld( Game game, bool enablePresentation, Guid userGuid )
 		{
+			IsPresentationEnabled	=	enablePresentation;
+
 			this.Game	=	game;
 
 			this.UserGuid	=	userGuid;

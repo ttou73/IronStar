@@ -36,21 +36,21 @@ namespace IronStar.Mapping {
 
 
 
-		public override void SpawnEntity( GameWorld world )
+		public override void SpawnNode( GameWorld world )
 		{
 			Entity = world.Spawn( Factory, 0,0, Position, Rotation );
 		}
 
 
 
-		public override void ActivateEntity()
+		public override void ActivateNode()
 		{
 			Entity?.Controller?.Activate( null );
 		}
 
 
 
-		public override void Draw( DebugRender dr, Color color, bool selected )
+		public override void DrawNode( DebugRender dr, Color color, bool selected )
 		{
 			dr.DrawBasis( WorldMatrix, 1 );
 			Factory.Draw( dr, WorldMatrix, color );
@@ -58,10 +58,10 @@ namespace IronStar.Mapping {
 
 
 
-		public override void ResetEntity( GameWorld world )
+		public override void ResetNode( GameWorld world )
 		{
 			if (Entity==null) {
-				HardResetEntity(world);
+				HardResetNode(world);
 				return;
 			}
 			if (world.IsAlive(Entity.ID)) {
@@ -71,21 +71,21 @@ namespace IronStar.Mapping {
 				Entity.AngularVelocity = Vector3.Zero;
 				Entity.Controller?.Reset();
 			} else {
-				HardResetEntity(world);
+				HardResetNode(world);
 			}
 		}
 
 
 
-		public override void HardResetEntity( GameWorld world )
+		public override void HardResetNode( GameWorld world )
 		{
-			KillEntity( world );
-			SpawnEntity( world );
+			KillNode( world );
+			SpawnNode( world );
 		}
 
 
 
-		public override void KillEntity( GameWorld world )
+		public override void KillNode( GameWorld world )
 		{
 			if (Entity!=null) {
 				world.Kill( Entity.ID );
@@ -93,7 +93,7 @@ namespace IronStar.Mapping {
 		}
 
 
-		public override MapNode Duplicate()
+		public override MapNode DuplicateNode()
 		{
 			var newNode = (MapEntity)MemberwiseClone();
 			newNode.Factory = Factory.Duplicate();

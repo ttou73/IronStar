@@ -36,9 +36,11 @@ namespace IronStar.Mapping {
 		
 
 
-
-		MeshInstance[] instances = null;
-		StaticMesh[] collidables = null;
+		Scene			scene		= null;
+		BoundingBox[]	bboxes		= null;
+		MeshInstance[]	instances	= null;
+		StaticMesh[]	collidables = null;
+		Matrix[]		transforms	= null;
 
 
 		/// <summary>
@@ -50,23 +52,24 @@ namespace IronStar.Mapping {
 
 
 
-		public override void SpawnEntity( GameWorld world )
+		public override void SpawnNode( GameWorld world )
 		{
 			if (string.IsNullOrWhiteSpace(ScenePath)) {
 				return;
 			}
 
-			var rs			=	world.Game.RenderSystem;
+			var rs		=	world.Game.RenderSystem;
 
-			var pm			=	world.Physics;
+			var pm		=	world.Physics;
 
-			var scene		=	world.Content.Load<Scene>( ScenePath );
+			scene		=	world.Content.Load<Scene>( ScenePath );
 
-			var transforms	=	new Matrix[ scene.Nodes.Count ];
-			instances		=	new MeshInstance[ scene.Nodes.Count ];
-			collidables		=	new StaticMesh[ scene.Nodes.Count ];
+			transforms	=	new Matrix[ scene.Nodes.Count ];
+			collidables	=	new StaticMesh[ scene.Nodes.Count ];
 
 			scene.ComputeAbsoluteTransforms( transforms );
+
+			bboxes		=	scene.Meshes.Select( m => m.ComputeBoundingBox() ).ToArray();
 
 
 			//
@@ -103,49 +106,68 @@ namespace IronStar.Mapping {
 			//
 			//	add visible mesh instance :
 			//
-			for ( int i=0; i<scene.Nodes.Count; i++ ) {
-				var meshIndex = scene.Nodes[i].MeshIndex;
+			if (world.IsPresentationEnabled) {
+
+				instances	=	new MeshInstance[ scene.Nodes.Count ];
+
+				for ( int i=0; i<scene.Nodes.Count; i++ ) {
+					var meshIndex = scene.Nodes[i].MeshIndex;
 				
-				if (meshIndex>=0) {
-					instances[i] = new MeshInstance( rs, scene, scene.Meshes[meshIndex] );
-					instances[i].World = transforms[ i ] * WorldMatrix;
-					rs.RenderWorld.Instances.Add( instances[i] );
-				} else {
-					instances[i] = null;
+					if (meshIndex>=0) {
+						instances[i] = new MeshInstance( rs, scene, scene.Meshes[meshIndex] );
+						instances[i].World = transforms[ i ] * WorldMatrix;
+						rs.RenderWorld.Instances.Add( instances[i] );
+					} else {
+						instances[i] = null;
+					}
 				}
 			}
 		}
 
 
 
-		public override void ActivateEntity()
+		public override void ActivateNode()
 		{
 		}
 
 
 
-		public override void Draw( DebugRender dr, Color color, bool selected )
+		public override void DrawNode( DebugRender dr, Color color, bool selected )
 		{
+			dr.DrawBasis( WorldMatrix, 1, 2 );
+
+			if (scene!=null && selected) {
+				for ( int i=0; i<scene.Nodes.Count; i++ ) {
+
+					var node = scene.Nodes[i];
+
+					if (node.MeshIndex<0) {
+						continue;
+					}
+
+					dr.DrawBox( bboxes[node.MeshIndex], transforms[ i ] * WorldMatrix, color, 1 ); 
+				}
+			}
 		}
 
 
 
-		public override void ResetEntity( GameWorld world )
+		public override void ResetNode( GameWorld world )
 		{
-			HardResetEntity( world );
+			HardResetNode( world );
 		}
 
 
 
-		public override void HardResetEntity( GameWorld world )
+		public override void HardResetNode( GameWorld world )
 		{
-			KillEntity( world );
-			SpawnEntity( world );
+			KillNode( world );
+			SpawnNode( world );
 		}
 
 
 
-		public override void KillEntity( GameWorld world )
+		public override void KillNode( GameWorld world )
 		{
 			var rs = world.Game.RenderSystem;
 			var pm = world.Physics;
@@ -171,7 +193,7 @@ namespace IronStar.Mapping {
 		}
 
 
-		public override MapNode Duplicate()
+		public override MapNode DuplicateNode()
 		{
 			var newNode = (MapModel)MemberwiseClone();
 

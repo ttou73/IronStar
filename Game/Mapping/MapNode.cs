@@ -63,41 +63,41 @@ namespace IronStar.Mapping {
 		/// Creates instance of map object
 		/// </summary>
 		/// <returns></returns>
-		public abstract void SpawnEntity ( GameWorld world );
+		public abstract void SpawnNode ( GameWorld world );
 
 		/// <summary>
 		/// Initiates entity activation
 		/// </summary>
-		public abstract void ActivateEntity ();
+		public abstract void ActivateNode ();
 
 		/// <summary>
 		/// Resets entity
 		/// </summary>
 		/// <param name="world"></param>
-		public abstract void ResetEntity ( GameWorld world );
+		public abstract void ResetNode ( GameWorld world );
 
 		/// <summary>
 		/// Performs hard reset of the object
 		/// </summary>
 		/// <param name="world"></param>
-		public abstract void HardResetEntity ( GameWorld world );
+		public abstract void HardResetNode ( GameWorld world );
 
 		/// <summary>
 		/// Eliminates object
 		/// </summary>
 		/// <param name="world"></param>
-		public abstract void KillEntity ( GameWorld world );
+		public abstract void KillNode ( GameWorld world );
 
 		/// <summary>
 		/// 
 		/// </summary>
 		/// <returns></returns>
-		public abstract MapNode Duplicate ();
+		public abstract MapNode DuplicateNode ();
 
 		/// <summary>
 		/// 
 		/// </summary>
 		/// <param name="dr"></param>
-		public abstract void Draw ( DebugRender dr, Color color, bool selected );
+		public abstract void DrawNode ( DebugRender dr, Color color, bool selected );
 	}
 }

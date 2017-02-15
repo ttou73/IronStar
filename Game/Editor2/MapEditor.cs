@@ -210,7 +210,7 @@ namespace IronStar.Editor2 {
 		public void DeleteSelection ()
 		{
 			foreach ( var se in selection ) {
-				se.KillEntity( world );
+				se.KillNode( world );
 				map.Nodes.Remove( se );
 			}
 
@@ -223,13 +223,13 @@ namespace IronStar.Editor2 {
 		public void DuplicateSelection ()
 		{
 			var newItems = selection
-				.Select( item => item.Duplicate() )
+				.Select( item => item.DuplicateNode() )
 				.ToArray();
 
 			Map.Nodes.AddRange( newItems );
 
 			foreach ( var newItem in newItems ) {
-				newItem.SpawnEntity(world);
+				newItem.SpawnNode(world);
 			}
 
 			ResetWorld(true);
@@ -248,12 +248,12 @@ namespace IronStar.Editor2 {
 
 			if (hardResetSelection) {
 				foreach ( var se in selection ) {
-					se.HardResetEntity( world );
+					se.HardResetNode( world );
 				}
 			}
 
 			foreach ( var node in map.Nodes ) {
-				node.ResetEntity( world );
+				node.ResetNode( world );
 			}
 
 			world.SimulateWorld(0);
@@ -275,7 +275,7 @@ namespace IronStar.Editor2 {
 		public void ActivateSelected ()
 		{
 			foreach ( var se in selection ) {
-				se.ActivateEntity();
+				se.ActivateNode();
 			}
 		}
 
@@ -318,7 +318,7 @@ namespace IronStar.Editor2 {
 
 				var color = item.Frozen ? Utils.GridColor : Utils.WireColor;
 
-				item.Draw( dr, color, false ); 
+				item.DrawNode( dr, color, false ); 
 			}
 
 			//
@@ -333,7 +333,7 @@ namespace IronStar.Editor2 {
 				}
 
 				dr.DrawBasis( item.WorldMatrix, 0.5f, 3 );
-				item.Draw( dr, color, true ); 
+				item.DrawNode( dr, color, true ); 
 			}
 
 			var mp = Game.Mouse.Position;
@@ -343,7 +343,9 @@ namespace IronStar.Editor2 {
 
 
 
-
+		/// <summary>
+		/// 
+		/// </summary>
 		public void UnfreezeAll ()
 		{
 			foreach ( var node in map.Nodes ) {
@@ -352,6 +354,10 @@ namespace IronStar.Editor2 {
 		}
 
 
+
+		/// <summary>
+		/// 
+		/// </summary>
 		public void FreezeSelected ()
 		{
 			foreach ( var node in Selection ) {
@@ -359,6 +365,7 @@ namespace IronStar.Editor2 {
 			}
 			ClearSelection();
 		}
+
 
 
 		/// <summary>

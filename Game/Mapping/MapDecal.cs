@@ -99,8 +99,12 @@ namespace IronStar.Mapping {
 
 
 
-		public override void SpawnEntity( GameWorld world )
+		public override void SpawnNode( GameWorld world )
 		{
+			if (!world.IsPresentationEnabled) {
+				return;
+			}
+
 			if ( string.IsNullOrWhiteSpace(ImageName)) {
 				return;
 			}
@@ -130,13 +134,13 @@ namespace IronStar.Mapping {
 
 
 
-		public override void ActivateEntity()
+		public override void ActivateNode()
 		{
 		}
 
 
 
-		public override void Draw( DebugRender dr, Color color, bool selected )
+		public override void DrawNode( DebugRender dr, Color color, bool selected )
 		{
 			var transform	=	WorldMatrix;
 
@@ -170,28 +174,28 @@ namespace IronStar.Mapping {
 
 
 
-		public override void ResetEntity( GameWorld world )
+		public override void ResetNode( GameWorld world )
 		{
-			HardResetEntity( world );
+			HardResetNode( world );
 		}
 
 
 
-		public override void HardResetEntity( GameWorld world )
+		public override void HardResetNode( GameWorld world )
 		{
-			KillEntity( world );
-			SpawnEntity( world );
+			KillNode( world );
+			SpawnNode( world );
 		}
 
 
 
-		public override void KillEntity( GameWorld world )
+		public override void KillNode( GameWorld world )
 		{
 			world.Game.RenderSystem.RenderWorld.LightSet.Decals.Remove( decal );
 		}
 
 
-		public override MapNode Duplicate()
+		public override MapNode DuplicateNode()
 		{
 			var newNode = (MapDecal)MemberwiseClone();
 			newNode.decal = null;
