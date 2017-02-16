@@ -56,11 +56,16 @@ namespace IronStar.Mapping {
 		/// <summary>
 		/// 
 		/// </summary>
-		public void ActivateMap ( GameWorld gameWorld )
+		public void ActivateMap ( GameWorld gameWorld, bool activateEntities )
 		{
 			UpdateEnvironment( gameWorld );
 
 			foreach ( var node in Nodes ) {
+				
+				if (node is MapEntity && !activateEntities) {
+					continue;
+				}
+
 				node.SpawnNode( gameWorld );
 			}
 		}

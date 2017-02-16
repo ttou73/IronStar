@@ -28,6 +28,7 @@ namespace IronStar {
 		GameInput gameInput;
 		GameCamera camera;
 		readonly Guid userGuid;
+		Map map;
 
 		public UserCommand UserCommand {
 			get { return userCommand; }
@@ -48,6 +49,9 @@ namespace IronStar {
 
 		public void Initialize( string serverInfo )
 		{
+			map		=   world.Content.Load<Map>( @"maps\" + serverInfo );
+			world.InitServerAtoms();
+			map.ActivateMap( world, false );
 		}
 
 

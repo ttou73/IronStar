@@ -227,6 +227,7 @@ namespace Fusion.Engine.Graphics {
 			LightSet.OmniLights.Clear();
 			LightSet.SpotLights.Clear();
 			LightSet.SpotAtlas	=	null;
+			LightSet.Decals.Clear();
 
 			Instances.Clear();
 

@@ -127,6 +127,9 @@ namespace IronStar.Core {
 		protected override void Dispose( bool disposing )
 		{
 			if (disposing) {
+
+				Game.RenderSystem.RenderWorld.ClearWorld();
+
 				SafeDispose( ref fxPlayback );
 				SafeDispose( ref modelManager );
 			}

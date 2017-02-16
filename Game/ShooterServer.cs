@@ -36,7 +36,7 @@ namespace IronStar {
 		{
 			map		=   world.Content.Load<Map>( @"maps\" + mapName );
 			world.InitServerAtoms();
-			map.ActivateMap( world );
+			map.ActivateMap( world, true );
 
 			//EntityKilled += MPWorld_EntityKilled;
 		}

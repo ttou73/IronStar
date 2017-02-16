@@ -101,7 +101,7 @@ namespace IronStar.Editor2 {
 				this.map = new Map();
 			}
 
-			map.ActivateMap( world );
+			map.ActivateMap( world, true );
 			world.SimulateWorld( 0 );
 			world.PresentWorld( 0.016f, 1 );
 		}
