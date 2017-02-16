@@ -78,6 +78,18 @@ namespace Fusion.Core.Mathematics
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="BoundingBox"/> struct.
+        /// </summary>
+        /// <param name="width">The width of the bounding box.</param>
+        /// <param name="height">The height of the bounding box.</param>
+        /// <param name="depth">The depth of the bounding box.</param>
+        public BoundingBox( float width, float height, float depth )
+        {
+            this.Minimum = new Vector3( -width/2, -height/2, -depth/2 );
+            this.Maximum = new Vector3(  width/2,  height/2,  depth/2 );
+        }
+
+        /// <summary>
         /// Retrieves the eight corners of the bounding box.
         /// </summary>
         /// <returns>An array of points representing the eight corners of the bounding box.</returns>

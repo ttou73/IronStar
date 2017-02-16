@@ -514,6 +514,56 @@ namespace Fusion.Engine.Graphics {
 
 
 
+		public void RenderRadiance ( Vector3 point )
+		{
+			var sw = new Stopwatch();
+
+			//Log.Message("Radiance capture...");
+
+			sw.Start();
+			using (new PixEvent("Capture Radiance")) {
+
+				var sun	=	SkySettings.SunGlowIntensity;
+				SkySettings.SunGlowIntensity = 0;
+
+				int index = 0;
+
+				for (int i=0; i<6; i++) {
+					
+					ClearBuffers( radianceFrame );
+
+					var camera = new Camera();
+					camera.SetupCameraCubeFace( point, (CubeFace)i, 0.125f, 4096 );
+
+					//	render g-buffer :
+					rs.SceneRenderer.RenderGBuffer( new GameTime(0,0,0), StereoEye.Mono, camera, radianceFrame, this );
+
+					//	render sky :
+					rs.Sky.Render( camera, StereoEye.Mono, radianceFrame, SkySettings );
+
+					//	render lights :
+					rs.LightRenderer.RenderLighting( StereoEye.Mono, camera, radianceFrame, this, rs.Sky.SkyCube );
+
+					//	downsample captured frame to cube face.
+					rs.Filter.StretchRect4x4( Radiance.GetSurface( 0, (CubeFace)i ), radianceFrame.HdrBuffer, SamplerState.LinearClamp, true );
+
+					//	prefilter cubemap :
+					rs.Filter.PrefilterEnvMap( Radiance );
+				}
+				
+				RadianceCache.CopyFromRenderTargetCube( index, Radiance );
+				index ++;
+	
+				SkySettings.SunGlowIntensity = sun;
+			}
+
+			//Log.Message("{0} light probes - {1} ms", LightSet.EnvLights.Count, sw.ElapsedMilliseconds);
+		}
+
+
+
+
+
 		void BuildVisibility ()
 		{
 		}

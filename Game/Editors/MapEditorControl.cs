@@ -138,6 +138,7 @@ namespace IronStar.Editors {
 		private void decalToolStripMenuItem_Click( object sender, EventArgs e )
 		{
 			var node = new MapDecal();
+			node.SpawnNode( MapEditor.World );
 			MapEditor.Map.Nodes.Add( node );
 			MapEditor.Select( node );
 		}
@@ -145,6 +146,7 @@ namespace IronStar.Editors {
 		private void omniLightToolStripMenuItem_Click( object sender, EventArgs e )
 		{
 			var node = new MapOmniLight();
+			node.SpawnNode( MapEditor.World );
 			MapEditor.Map.Nodes.Add( node );
 			MapEditor.Select( node );
 		}
@@ -152,6 +154,7 @@ namespace IronStar.Editors {
 		private void spotLightToolStripMenuItem_Click( object sender, EventArgs e )
 		{
 			var node = new MapSpotLight();
+			node.SpawnNode( MapEditor.World );
 			MapEditor.Map.Nodes.Add( node );
 			MapEditor.Select( node );
 		}
@@ -159,6 +162,15 @@ namespace IronStar.Editors {
 		private void modelToolStripMenuItem_Click( object sender, EventArgs e )
 		{
 			var node = new MapModel();
+			node.SpawnNode( MapEditor.World );
+			MapEditor.Map.Nodes.Add( node );
+			MapEditor.Select( node );
+		}
+
+		private void lightProbeToolStripMenuItem_Click( object sender, EventArgs e )
+		{
+			var node = new MapLightProbe();
+			node.SpawnNode( MapEditor.World );
 			MapEditor.Map.Nodes.Add( node );
 			MapEditor.Select( node );
 		}

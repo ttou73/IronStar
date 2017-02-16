@@ -143,6 +143,8 @@ namespace IronStar.Editor2 {
 
 					SaveMap();
 
+					rs.RenderWorld.ClearWorld();
+
 					Builder.SafeBuild(false, null, null);
 				}
 

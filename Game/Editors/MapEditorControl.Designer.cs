@@ -133,6 +133,7 @@
 			this.lightProbeToolStripMenuItem.Name = "lightProbeToolStripMenuItem";
 			this.lightProbeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
 			this.lightProbeToolStripMenuItem.Text = "Light Probe";
+			this.lightProbeToolStripMenuItem.Click += new System.EventHandler(this.lightProbeToolStripMenuItem_Click);
 			// 
 			// omniLightToolStripMenuItem
 			// 
