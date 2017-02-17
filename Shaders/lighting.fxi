@@ -47,10 +47,9 @@ struct OMNILIGHT {
 
 struct ENVLIGHT {
 	float4	Position;
-	float4	Intensity;
+	float4	Dimensions;
 	float4	ExtentMin;
 	float4	ExtentMax;
-	float4  InnerOuterRadius;
 };
 
 struct DECAL {

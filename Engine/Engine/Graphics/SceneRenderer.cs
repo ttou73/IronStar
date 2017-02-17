@@ -163,7 +163,7 @@ namespace Fusion.Engine.Graphics {
 		/// <param name="diffuse"></param>
 		/// <param name="specular"></param>
 		/// <param name="normals"></param>
-		internal void RenderGBuffer ( GameTime gameTime, StereoEye stereoEye, Camera camera, HdrFrame frame, RenderWorld rw )
+		internal void RenderGBuffer ( GameTime gameTime, StereoEye stereoEye, Camera camera, HdrFrame frame, RenderWorld rw, bool staticOnly )
 		{		
 			using ( new PixEvent("RenderGBuffer") ) {
 
@@ -210,6 +210,10 @@ namespace Fusion.Engine.Graphics {
 				foreach ( var instance in instances ) {
 
 					if (!instance.Visible) {
+						continue;
+					}
+
+					if ( staticOnly && !instance.Static ) {
 						continue;
 					}
 

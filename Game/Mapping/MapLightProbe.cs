@@ -16,11 +16,6 @@ using Fusion;
 namespace IronStar.Mapping {
 
 	public class MapLightProbe : MapNode {
-
-		[Category("Light probe")]
-		[Editor( typeof( SpotFileLocationEditor ), typeof( UITypeEditor ) )]
-		public string SpotMaskName { get; set; } = "";
-		
 		
 		[Category("Light probe")]
 		public float Width { get; set; } = 2;
@@ -30,6 +25,9 @@ namespace IronStar.Mapping {
 		
 		[Category("Light probe")]
 		public float Depth { get; set; } = 2;
+		
+		[Category("Light probe")]
+		public float Factor { get; set; } = 1;
 
 
 		EnvLight	light;
@@ -53,7 +51,9 @@ namespace IronStar.Mapping {
 
 			var lightSet	=	world.Game.RenderSystem.RenderWorld.LightSet;
 
-			light	=	new EnvLight( WorldMatrix.TranslationVector, 2, 4 );
+			light	=	new EnvLight( WorldMatrix.TranslationVector, Width, Height, Depth, Factor );
+
+			ResetNode( world );
 
 			lightSet.EnvLights.Add( light );
 		}
@@ -68,15 +68,16 @@ namespace IronStar.Mapping {
 
 		public override void DrawNode( DebugRender dr, Color color, bool selected )
 		{
-			dr.DrawPoint( WorldMatrix.TranslationVector, 1, color, 2 );
+			dr.DrawPoint( WorldMatrix.TranslationVector, 0.5f, color, 1 );
 
-			var bbox	=	new BoundingBox( Width, Height, Depth );
+			var bbox1	=	new BoundingBox( Width, Height, Depth );
+			var bbox2	=	new BoundingBox( 0.5f, 0.5f, 0.5f );
 
 			if (selected) {
-				
-				dr.DrawBox( bbox, WorldMatrix, color );
-
-			} 
+				dr.DrawBox( bbox1, WorldMatrix, color );
+			} else {
+				dr.DrawBox( bbox2, WorldMatrix, color );
+			}
 		}
 
 

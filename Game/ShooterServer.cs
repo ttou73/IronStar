@@ -58,7 +58,9 @@ namespace IronStar {
 
 		public byte[] Update( GameTime gameTime )
 		{
-			world.SimulateWorld( gameTime.ElapsedSec );
+			var dt = 1 / world.Game.GameServer.TargetFrameRate;
+
+			world.SimulateWorld( dt );
 
 			//	write world to stream :
 			using ( var ms = new MemoryStream() ) {

@@ -122,6 +122,13 @@ namespace Fusion.Drivers.Graphics {
 		}
 
 
+
+		internal protected int CalcSubresource ( int mipSlice, int arraySlice, int mipLevels )
+		{
+			return mipSlice + (arraySlice * mipLevels);
+		}
+
+
 		/// <summary>
 		/// Makes Typless format from UNorm or SRgb
 		/// </summary>

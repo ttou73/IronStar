@@ -72,7 +72,7 @@ namespace IronStar.Physics {
 				return;
 			}
 
-			var dt	=	1 / Game.GameServer.TargetFrameRate;
+			var dt	=	elapsedTime;
 			physSpace.TimeStepSettings.MaximumTimeStepsPerFrame = 6;
 			physSpace.TimeStepSettings.TimeStepDuration = 1.0f/60.0f;
 			physSpace.Update(dt);

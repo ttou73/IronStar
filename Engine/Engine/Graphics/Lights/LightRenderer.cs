@@ -95,10 +95,9 @@ namespace Fusion.Engine.Graphics {
 
 		struct EnvLightGPU {
 			public Vector4	Position;
-			public Vector4	Intensity;
+			public Vector4	Dimensions;
 			public Vector4	ExtentMin;	// x,y, depth
 			public Vector4	ExtentMax;	// x,y, depth
-			public Vector4	InnerOuterRadius;
 		}
 
 

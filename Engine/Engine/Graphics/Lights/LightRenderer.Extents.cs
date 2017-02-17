@@ -146,19 +146,6 @@ namespace Fusion.Engine.Graphics {
 				viewPoints[i] = Vector3.TransformCoordinate( viewPoints[i], view );
 			}
 
-			//this.rs.RenderWorld.Debug.DrawLine( viewPoints[0], viewPoints[1], Color.Magenta );
-			//this.rs.RenderWorld.Debug.DrawLine( viewPoints[1], viewPoints[2], Color.Magenta );
-			//this.rs.RenderWorld.Debug.DrawLine( viewPoints[2], viewPoints[3], Color.Magenta );
-			//this.rs.RenderWorld.Debug.DrawLine( viewPoints[3], viewPoints[0], Color.Magenta );
-			//this.rs.RenderWorld.Debug.DrawLine( viewPoints[4], viewPoints[5], Color.Magenta );
-			//this.rs.RenderWorld.Debug.DrawLine( viewPoints[5], viewPoints[6], Color.Magenta );
-			//this.rs.RenderWorld.Debug.DrawLine( viewPoints[6], viewPoints[7], Color.Magenta );
-			//this.rs.RenderWorld.Debug.DrawLine( viewPoints[7], viewPoints[4], Color.Magenta );
-			//this.rs.RenderWorld.Debug.DrawLine( viewPoints[0], viewPoints[4], Color.Magenta );
-			//this.rs.RenderWorld.Debug.DrawLine( viewPoints[1], viewPoints[5], Color.Magenta );
-			//this.rs.RenderWorld.Debug.DrawLine( viewPoints[2], viewPoints[6], Color.Magenta );
-			//this.rs.RenderWorld.Debug.DrawLine( viewPoints[3], viewPoints[7], Color.Magenta );
-
 			var lines = new[]{
 				new Line( viewPoints[0], viewPoints[1] ),
 				new Line( viewPoints[1], viewPoints[2] ),

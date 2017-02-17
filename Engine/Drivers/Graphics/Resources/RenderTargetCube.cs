@@ -11,7 +11,7 @@ using SharpDX.Direct3D11;
 using Fusion.Core.Mathematics;
 using D3D = SharpDX.Direct3D11;
 using DXGI = SharpDX.DXGI;
-
+using System.Runtime.InteropServices;
 
 namespace Fusion.Drivers.Graphics {
 
@@ -43,6 +43,7 @@ namespace Fusion.Drivers.Graphics {
 		}
 
 		D3D.Texture2D			texCube;
+		D3D.Texture2D			staging;
 		RenderTargetSurface[,]	surfaces;
 			
 
@@ -140,6 +141,14 @@ namespace Fusion.Drivers.Graphics {
 			SRV		=	new ShaderResourceView( device.Device, texCube );
 
 
+			texDesc.BindFlags		=	BindFlags.None;
+			texDesc.CpuAccessFlags	=	CpuAccessFlags.Write | CpuAccessFlags.Read;
+			texDesc.Usage			=	ResourceUsage.Staging;
+			texDesc.OptionFlags		=	ResourceOptionFlags.TextureCube;
+
+			staging	=	new D3D.Texture2D( device.Device, texDesc );
+
+
 			//
 			//	Top mipmap level :
 			//
@@ -196,6 +205,72 @@ namespace Fusion.Drivers.Graphics {
 		public RenderTargetSurface FaceNegY { get {	return GetSurface( 0, CubeFace.FaceNegY );	} }
 		public RenderTargetSurface FacePosZ { get {	return GetSurface( 0, CubeFace.FacePosZ );	} }
 		public RenderTargetSurface FaceNegZ { get {	return GetSurface( 0, CubeFace.FaceNegZ );	} }
+
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="face"></param>
+		/// <param name="level"></param>
+		/// <param name="data"></param>
+		/// <returns></returns>
+		public void GetData<T>( CubeFace face, int level, T[] data ) where T : struct
+		{
+			int startIndex		=	0;
+			int elementCount	=	data.Length;
+
+            if (data == null || data.Length == 0) {
+                throw new ArgumentException("data cannot be null");
+			}
+            
+			if (data.Length < startIndex + elementCount) {
+                throw new ArgumentException("The data passed has a length of " + data.Length + " but " + elementCount + " pixels have been requested.");
+			}
+
+			var d3dContext = device.DeviceContext;
+
+
+			lock (d3dContext) {
+
+				//
+                // Copy the data from the GPU to the staging texture.
+				//
+                int elementsInRow;
+                int rows;
+                    
+				elementsInRow = Width;
+                rows = Height;
+
+				int subres	=	CalcSubresource( level, (int)face, MipCount );
+
+                d3dContext.CopySubresourceRegion( texCube, subres, null, staging, 0, 0, 0, 0);
+
+                // Copy the data to the array :
+                DataStream stream;
+                var databox = d3dContext.MapSubresource(staging, 0, D3D.MapMode.Read, D3D.MapFlags.None, out stream);
+
+                // Some drivers may add pitch to rows.
+                // We need to copy each row separatly and skip trailing zeros.
+                var currentIndex	=	startIndex;
+                var elementSize		=	Marshal.SizeOf(typeof(T));
+                    
+				for (var row = 0; row < rows; row++) {
+
+                    stream.ReadRange(data, currentIndex, elementsInRow);
+                    stream.Seek(databox.RowPitch - (elementSize * elementsInRow), SeekOrigin.Current);
+                    currentIndex += elementsInRow;
+
+                }
+
+				d3dContext.UnmapSubresource( staging, 0 );
+
+                stream.Dispose();
+            }
+		}
+
+
 
 
 
@@ -258,6 +333,7 @@ namespace Fusion.Drivers.Graphics {
 
 				SafeDispose( ref SRV );
 				SafeDispose( ref texCube );
+				SafeDispose( ref staging );
 			}
 
 			base.Dispose(disposing);

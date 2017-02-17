@@ -25,6 +25,14 @@ namespace Fusion.Engine.Graphics {
 		}
 
 		/// <summary>
+		/// Indicates whether mesh instance visible.
+		/// Default value is True.
+		/// </summary>
+		public bool Static {
+			get; set;
+		}
+
+		/// <summary>
 		/// Instance world matrix. Default value is Matrix.Identity.
 		/// </summary>
 		public Matrix World {

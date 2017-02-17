@@ -360,27 +360,35 @@ void CSMain(
 		GroupMemoryBarrierWithGroupSync();
 				
 		totalLight.rgb += visibleLightCountEnv * float3(0.0, 0.5, 0.0) * Params.ShowCSLoadEnv;
+		
+		float4 totalEnvContrib = float4(0,0,0,0.001f);
 
 		for (uint i = 0; i < visibleLightCountEnv; i++) {
 		
 			uint lightIndex = visibleLightIndices[i];
 			ENVLIGHT light = EnvLights[lightIndex];
 
-			float3 intensity = light.Intensity.rgb;
 			float3 position	 = light.Position.rgb;
-			float  radius    = light.InnerOuterRadius.y;
+			float3 dims      = light.Dimensions.xyz;
+			float  factor	 = light.Dimensions.w;
 			float3 lightDir	 = position.xyz - worldPos.xyz;
-			float  falloff	 = LinearFalloff( length(lightDir), radius );
 			
-			totalLight.xyz	+=	EnvMap.SampleLevel( SamplerLinearClamp, float4(normal.xyz, lightIndex), 4).rgb * diffuse * falloff * ssao.rgb;
+			float3  falloff3 = abs((position.xyz - worldPos.xyz) / dims.xyz)*2;
+			float   falloff  = pow(saturate(1 - max( max(falloff3.x, falloff3.y), falloff3.z )),1);
+			
+			totalEnvContrib.w 	+= falloff;
+			
+			//totalEnvContrib.xyz	+=	EnvMap.SampleLevel( SamplerLinearClamp, float4(normal.xyz, lightIndex), 4).rgb * diffuse * falloff * ssao.rgb;
 
 			float	NoV = dot(viewDirN, normal.xyz);
 
 			float2 ab	=	EnvLut.SampleLevel( SamplerLinearClamp, float2(roughness, 1-NoV), 0 ).xy;
 			float3 env	=	EnvMap.SampleLevel( SamplerLinearClamp, float4(reflect(-viewDir, normal.xyz), lightIndex), sqrt(roughness)*6 ).rgb;
 
-			totalLight.xyz	+=	env * ( specular * ab.x + ab.y ) * falloff * ssao.rgb;
+			totalEnvContrib.xyz	+=	env * ( specular * ab.x + ab.y ) * falloff * ssao.rgb;
 		}
+		
+		totalLight.rgb += (totalEnvContrib.xyz / totalEnvContrib.w);
 	}
 
 	//-----------------------------------------------------

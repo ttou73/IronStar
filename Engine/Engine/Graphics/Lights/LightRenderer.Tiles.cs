@@ -71,7 +71,7 @@ namespace Fusion.Engine.Graphics {
 
 			envLightData = Enumerable
 					.Range(0,RenderSystem.MaxEnvLights)
-					.Select( i => new EnvLightGPU(){ Position = Vector4.Zero, Intensity = Vector4.Zero })
+					.Select( i => new EnvLightGPU(){ Position = Vector4.Zero, Dimensions = Vector4.Zero })
 					.ToArray();
 
 			int index = 0;
@@ -80,17 +80,19 @@ namespace Fusion.Engine.Graphics {
 
 				Vector4 min, max;
 
-				var visible = GetSphereExtent( view, proj, light.Position, vp, light.RadiusOuter, out min, out max );
+				var m = Matrix.Scaling( light.Dimensions ) * 
+						Matrix.Translation( light.Position );
+
+				var visible = GetBasisExtent( view, proj, vp, m, out min, out max );
 
 				/*if (!visible) {
 					continue;
 				} */
 
-				envLightData[index].Position		=	new Vector4( light.Position, light.RadiusOuter );
-				envLightData[index].Intensity		=	new Vector4( light.Intensity.ToVector3(), 1.0f / light.RadiusOuter / light.RadiusOuter );
+				envLightData[index].Position		=	new Vector4( light.Position, 1 );
+				envLightData[index].Dimensions		=	new Vector4( light.Dimensions, light.Factor );
 				envLightData[index].ExtentMax		=	max;
 				envLightData[index].ExtentMin		=	min;
-				envLightData[index].InnerOuterRadius=	new Vector4( light.RadiusInner, light.RadiusOuter, 0, 0 );
 
 				index++;
 			}

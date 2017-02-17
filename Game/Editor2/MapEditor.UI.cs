@@ -74,6 +74,9 @@ namespace IronStar.Editor2 {
 				if (e.Key==Keys.K) {
 					ResetWorld(true);
 				}
+				if (e.Key==Keys.R) {
+					Game.RenderSystem.RenderWorld.CaptureRadiance();
+				}
 				if (e.Key==Keys.L) {
 					SetToEntity();
 				}
