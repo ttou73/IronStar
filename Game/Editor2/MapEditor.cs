@@ -238,6 +238,8 @@ namespace IronStar.Editor2 {
 			ClearSelection();
 
 			selection.AddRange( newItems );
+
+			FeedSelection();
 		}
 
 
@@ -308,6 +310,8 @@ namespace IronStar.Editor2 {
 			camera.Update( gameTime );
 
 			var dr = rs.RenderWorld.Debug;
+
+			dr.DrawBox( map.Environment.IrradianceVolume, Color.Cyan );
 
 			//RefreshAppearance();
 

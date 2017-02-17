@@ -58,5 +58,9 @@ namespace IronStar.Mapping {
 		[Category("AI")]
 		[Description("Cell width for Recast voxelization")]
 		public float RecastCellSize { get; set; } = 0.25f;
+
+		[Category("GI")]
+		[TypeConverter( typeof( ExpandableObjectConverter ) )]
+		public BoundingBox IrradianceVolume { get; set; } = new BoundingBox(128,64,128);
 	}
 }

@@ -128,10 +128,12 @@ namespace IronStar.Core {
 		{
 			if (disposing) {
 
-				Game.RenderSystem.RenderWorld.ClearWorld();
+				if (IsPresentationEnabled) {
+					Game.RenderSystem.RenderWorld.ClearWorld();
 
-				SafeDispose( ref fxPlayback );
-				SafeDispose( ref modelManager );
+					SafeDispose( ref fxPlayback );
+					SafeDispose( ref modelManager );
+				}
 			}
 
 			base.Dispose( disposing );
