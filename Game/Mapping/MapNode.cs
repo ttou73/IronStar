@@ -21,10 +21,6 @@ namespace IronStar.Mapping {
 		}
 
 
-		[Category("Entity")]
-		[Description("Entity target name")]
-		public string TargetName { get; set; }
-
 		[Category("Display")]
 		[Description( "Node object scaling" )]
 		public bool Visible { get; set; } = true;
@@ -98,6 +94,6 @@ namespace IronStar.Mapping {
 		/// 
 		/// </summary>
 		/// <param name="dr"></param>
-		public abstract void DrawNode ( DebugRender dr, Color color, bool selected );
+		public abstract void DrawNode ( GameWorld world, DebugRender dr, Color color, bool selected );
 	}
 }

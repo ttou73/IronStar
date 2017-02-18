@@ -21,6 +21,10 @@ using IronStar.Editor2;
 namespace IronStar.Core {
 
 	public abstract class EntityFactory {
+
+		[Category("General")]
+		public string Target { get; set; }
+
 		
 		public abstract EntityController Spawn (Entity entity, GameWorld world);
 

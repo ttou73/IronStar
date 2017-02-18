@@ -54,6 +54,38 @@ namespace IronStar.Core {
 
 
 		/// <summary>
+		/// Get list of target entities.
+		/// </summary>
+		/// <param name="targetName"></param>
+		/// <returns></returns>
+		public IEnumerable<Entity> GetTargets ( string targetName )
+		{
+			if (string.IsNullOrWhiteSpace(targetName)) {
+				return new Entity[0];
+			}
+
+			return GetEntities()
+				.Where( e => e.TargetName == targetName )
+				.ToArray();
+		}
+
+
+
+		/// <summary>
+		/// Activates given targets
+		/// </summary>
+		/// <param name="targetName"></param>
+		public void ActivateTargets ( Entity activator, string targetName )
+		{
+			var targets = GetTargets( targetName );
+			foreach ( var target in targets ) {
+				target.Controller?.Activate( activator );
+			}
+		}
+
+
+
+		/// <summary>
 		/// Gets entity with current id.
 		/// If entity does not exist returns null
 		/// </summary>

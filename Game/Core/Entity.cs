@@ -24,6 +24,11 @@ namespace IronStar.Core {
 		public readonly uint ID;
 
 		/// <summary>
+		/// Entity's target name.
+		/// </summary>
+		public readonly string TargetName = null;
+
+		/// <summary>
 		/// Players guid. Zero if no player.
 		/// </summary>
 		public Guid UserGuid;// { get; private set; }
@@ -154,10 +159,12 @@ namespace IronStar.Core {
 		/// Used to spawn entity on server side.
 		/// </summary>
 		/// <param name="id"></param>
-		public Entity ( uint id, short classId, uint parentId, Vector3 position, Quaternion rotation )
+		public Entity ( uint id, short classId, uint parentId, Vector3 position, Quaternion rotation, string targetName )
 		{
 			ClassID		=	classId;
 			this.ID		=	id;
+
+			this.TargetName	=	targetName;
 
 			TeleportCount	=	0;
 

@@ -140,7 +140,7 @@ namespace IronStar.Mapping {
 
 
 
-		public override void DrawNode( DebugRender dr, Color color, bool selected )
+		public override void DrawNode( GameWorld world, DebugRender dr, Color color, bool selected )
 		{
 			var transform	=	WorldMatrix;
 

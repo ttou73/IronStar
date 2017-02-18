@@ -242,7 +242,7 @@ namespace IronStar.Core {
 		/// <param name="origin"></param>
 		/// <param name="orient"></param>
 		/// <returns></returns>
-		public Entity Spawn( EntityFactory factory, short classID, uint parentId, Vector3 origin, Quaternion orient )
+		public Entity Spawn( EntityFactory factory, short classID, uint parentId, Vector3 origin, Quaternion orient, string targetName )
 		{
 			//	get ID :
 			uint id = idCounter;
@@ -258,7 +258,7 @@ namespace IronStar.Core {
 			//	Create instance.
 			//	If creation failed later, entity become dummy.
 			//
-			var entity = new Entity(id, classID, parentId, origin, orient);
+			var entity = new Entity( id, classID, parentId, origin, orient, targetName );
 			entities.Add( id, entity );
 
 			entity.Controller = factory?.Spawn( entity, this );
@@ -283,7 +283,7 @@ namespace IronStar.Core {
 			var classID	=	Atoms[classname];
 			var factory	=	Content.Load(@"entities\" + classname, (EntityFactory)null );
 
-			return Spawn( factory, classID, parentId, origin, orient );
+			return Spawn( factory, classID, parentId, origin, orient, null );
 		}
 
 

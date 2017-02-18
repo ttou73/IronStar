@@ -21,6 +21,13 @@ namespace IronStar.Mapping {
 		public Entity Entity = null;
 
 		/// <summary>
+		/// Entity target name
+		/// </summary>
+		[Category("Entity")]
+		[Description("Entity target name")]
+		public string TargetName { get; set; }
+
+		/// <summary>
 		/// Entity factory
 		/// </summary>
 		[Browsable(false)]
@@ -38,7 +45,7 @@ namespace IronStar.Mapping {
 
 		public override void SpawnNode( GameWorld world )
 		{
-			Entity = world.Spawn( Factory, 0,0, Position, Rotation );
+			Entity = world.Spawn( Factory, 0,0, Position, Rotation, TargetName );
 		}
 
 
@@ -50,10 +57,32 @@ namespace IronStar.Mapping {
 
 
 
-		public override void DrawNode( DebugRender dr, Color color, bool selected )
+		public override void DrawNode( GameWorld world, DebugRender dr, Color color, bool selected )
 		{
 			dr.DrawBasis( WorldMatrix, 1 );
 			Factory.Draw( dr, WorldMatrix, color );
+
+			if (selected) {
+				if (Entity!=null) {
+				
+					var targets = world.GetTargets(Factory.Target);
+
+					if (targets.Any()) {
+						dr.DrawBox( new BoundingBox(0.5f, 0.5f, 0.5f), WorldMatrix, Color.Yellow );					}
+
+					foreach ( var target in targets ) {
+
+						var dir	= target.Position - Entity.Position;
+						var len	= dir.Length();
+						var dirn= dir.Normalized();
+
+						var p0	= Entity.Position;
+						var p1	= target.Position;
+	
+						dr.DrawLine( p0, p1, Color.Yellow, Color.Yellow, 1, 1 );
+					}
+				}
+			}
 		}
 
 

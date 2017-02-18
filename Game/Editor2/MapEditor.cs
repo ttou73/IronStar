@@ -333,7 +333,7 @@ namespace IronStar.Editor2 {
 
 				var color = item.Frozen ? Utils.GridColor : Utils.WireColor;
 
-				item.DrawNode( dr, color, false ); 
+				item.DrawNode( world, dr, color, false ); 
 			}
 
 			//
@@ -348,7 +348,7 @@ namespace IronStar.Editor2 {
 				}
 
 				dr.DrawBasis( item.WorldMatrix, 0.5f, 3 );
-				item.DrawNode( dr, color, true ); 
+				item.DrawNode( world, dr, color, true ); 
 			}
 
 			var mp = Game.Mouse.Position;
