@@ -378,7 +378,8 @@ void CSMain(
 			
 			totalEnvContrib.w 	+= falloff;
 			
-			//totalEnvContrib.xyz	+=	EnvMap.SampleLevel( SamplerLinearClamp, float4(normal.xyz, lightIndex), 4).rgb * diffuse * falloff * ssao.rgb;
+			//	bad simulation of diffuse light
+			totalEnvContrib.xyz	+=	EnvMap.SampleLevel( SamplerLinearClamp, float4(normal.xyz, lightIndex), 4).rgb * diffuse * falloff * ssao.rgb;
 
 			float	NoV = dot(viewDirN, normal.xyz);
 
@@ -485,7 +486,7 @@ void CSMain(
 		
 		float3 totalPrtLight	=	lightColor * csmFactor;
 
-		#if 0
+		#if 1
 		//
 		//	Spot lights :
 		//
@@ -519,10 +520,10 @@ void CSMain(
 		//
 		//	Ambient light :
 		//
+		#if 0
 		for (i=0; i<ENV_LIGHT_COUNT; i++) {
 			ENVLIGHT light = EnvLights[i];
 
-			float3 intensity = light.Intensity.rgb;
 			float3 position	 = light.Position.rgb;
 			float  radius    = light.InnerOuterRadius.y;
 			float3 lightDir	 = position.xyz - worldPos.xyz;
@@ -538,6 +539,7 @@ void CSMain(
 							  
 			totalPrtLight.xyz	+=	envFactor * falloff / 6;
 		}
+		#endif
 		
 		#endif
 		
