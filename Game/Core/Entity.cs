@@ -91,6 +91,10 @@ namespace IronStar.Core {
 		/// </summary>
 		public Vector3 AngularVelocity;
 
+		/// <summary>
+		/// Animation frame multiplied by 8.
+		/// </summary>
+		public float AnimFrame;
 
 		/// <summary>
 		/// Inventory
@@ -333,6 +337,8 @@ namespace IronStar.Core {
 			writer.Write( LinearVelocity );
 			writer.Write( AngularVelocity );
 
+			writer.Write( AnimFrame );
+
 			for (int i=0; i<inventory.Length; i++) {
 				writer.Write( inventory[i] );
 			}
@@ -373,6 +379,7 @@ namespace IronStar.Core {
 			LinearVelocity	=	reader.Read<Vector3>();
 			AngularVelocity	=	reader.Read<Vector3>();	
 
+			AnimFrame		=	reader.ReadSingle();
 
 			for (int i=0; i<inventory.Length; i++) {
 				inventory[i]	=	reader.ReadInt16();

@@ -117,6 +117,8 @@
     <Compile Include="Entities\Character.Weaponry.cs" />
     <Compile Include="Entities\Character.cs" />
     <Compile Include="Entities\CharacterFactory.cs" />
+    <Compile Include="Entities\FuncMotor.cs" />
+    <Compile Include="Entities\FuncDoor.cs" />
     <Compile Include="Entities\FuncFX.cs" />
     <Compile Include="Entities\NullFactory.cs" />
     <Compile Include="Entities\ProjectileFactory.cs" />
@@ -136,8 +138,7 @@
     <Compile Include="Mapping\MapOmniLight.cs" />
     <Compile Include="Mapping\MapNode.cs" />
     <Compile Include="Mapping\Map.cs" />
-    <Compile Include="Physics\AnimatedCModel.cs" />
-    <Compile Include="Physics\StaticCollisionModel.cs" />
+    <Compile Include="Physics\KinematicModel.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

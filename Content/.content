@@ -32,7 +32,7 @@ scenes/*.jpg
 *.bmfc
 
 [Scenes]
-*.fbx /geom /report
+*.fbx /geom /report /anim
 
 [Sounds]
 *.wav

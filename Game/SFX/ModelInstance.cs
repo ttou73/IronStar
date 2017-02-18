@@ -26,6 +26,7 @@ namespace IronStar.SFX {
 		readonly Scene scene;
 
 		Matrix[] globalTransforms;
+		Matrix[] animSnapshot;
 		MeshInstance[] meshInstances;
 
 		readonly int nodeCount;
@@ -54,7 +55,9 @@ namespace IronStar.SFX {
 			nodeCount			=	scene.Nodes.Count;
 
 			globalTransforms	=	new Matrix[ scene.Nodes.Count ];
+			animSnapshot		=	new Matrix[ scene.Nodes.Count ];
 			scene.ComputeAbsoluteTransforms( globalTransforms );
+
 
 			meshInstances		=	new MeshInstance[ scene.Nodes.Count ];
 
@@ -81,9 +84,29 @@ namespace IronStar.SFX {
 		{
 			var worldMatrix = entity.GetWorldMatrix( lerpFactor );
 
+			//
+			//	do animation stuff :
+			//
+			var animFrame = entity.AnimFrame;
+
+			if (animFrame>scene.LastFrame) {
+				Log.Warning("Anim frame: {0} > {1}", animFrame, scene.LastFrame);
+			}
+			if (animFrame<scene.FirstFrame) {
+				Log.Warning("Anim frame: {0} < {1}", animFrame, scene.FirstFrame);
+			}
+			animFrame = MathUtil.Clamp( animFrame, scene.FirstFrame, scene.LastFrame );
+
+			scene.GetAnimSnapshot( animFrame, scene.FirstFrame, scene.LastFrame, AnimationMode.Clamp, animSnapshot );
+			scene.ComputeAbsoluteTransforms( animSnapshot, animSnapshot );
+
+			
+			//
+			//	apply transforms and colors
+			//
 			for ( int i = 0; i<nodeCount; i++ ) {
 				if (meshInstances[i]!=null) {
-					meshInstances[i].World = globalTransforms[i] * preTransform * worldMatrix;
+					meshInstances[i].World = animSnapshot[i] * preTransform * worldMatrix;
 					meshInstances[i].Color = color;
 				}
 			}

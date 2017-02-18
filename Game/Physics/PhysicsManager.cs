@@ -12,13 +12,14 @@ using Fusion.Engine.Common;
 using IronStar.SFX;
 using Fusion.Engine.Graphics;
 using Fusion.Core.Mathematics;
+using Fusion.Core.Extensions;
 
 namespace IronStar.Physics {
 	public class PhysicsManager {
 
-		Space physSpace = new BEPUphysics.Space();
+		Space physSpace = new Space();
 
-		LinkedList<StaticCollisionModel> staticModels = new LinkedList<StaticCollisionModel>();
+		LinkedList<KinematicModel> kinematics = new LinkedList<KinematicModel>();
 
 		readonly Game	Game;
 		readonly GameWorld World;
@@ -61,8 +62,8 @@ namespace IronStar.Physics {
 		/// <param name="dt"></param>
 		public void Update ( float elapsedTime )
 		{
-			foreach ( var sm in staticModels ) {
-				sm.Update();
+			foreach ( var k in kinematics ) {
+				k.Update();
 			}
 
 			if (elapsedTime==0) {
@@ -84,8 +85,7 @@ namespace IronStar.Physics {
 		/// 
 		/// </summary>
 		/// <param name="modelAtom"></param>
-		[Obsolete()]
-		public StaticCollisionModel AddStaticCollisionModel ( short modelAtom, Entity entity )
+		public KinematicModel AddKinematicModel ( short modelAtom, Entity entity )
 		{
 			var modelName	=	World.Atoms[modelAtom];
 
@@ -93,9 +93,9 @@ namespace IronStar.Physics {
 
 			var scene		=	World.Content.Load<Scene>( modelDesc.ScenePath );
 
-			var model		=	new StaticCollisionModel( this, modelDesc, scene, entity ); 
+			var model		=	new KinematicModel( this, modelDesc, scene, entity ); 
 
-			staticModels.AddLast( model );
+			kinematics.AddLast( model );
 
 			return model;
 		}
@@ -107,10 +107,10 @@ namespace IronStar.Physics {
 		/// </summary>
 		/// <param name="staticModel"></param>
 		/// <returns></returns>
-		public bool Remove ( StaticCollisionModel staticModel )
+		public bool Remove ( KinematicModel staticModel )
 		{
 			staticModel.Destroy();
-			return staticModels.Remove( staticModel );
+			return kinematics.Remove( staticModel );
 		}
 	}
 }
