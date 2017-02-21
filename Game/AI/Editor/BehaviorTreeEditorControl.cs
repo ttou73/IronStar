@@ -112,7 +112,7 @@ namespace IronStar.AI.Editor
             Brush brush = new SolidBrush(Workspace.BackColor);
 
             g.FillPolygon(brush, points);
-            Pen pen = new Pen(Color.Khaki, 5f);
+            Pen pen = new Pen(Color.Khaki, 3f);
             foreach (var kvp in edges)
             {
                 var pt1 = new Point(kvp.Key.Location.X + kvp.Key.Start.Location.X + 10, kvp.Key.Location.Y + kvp.Key.Start.Location.Y + 10);
@@ -221,9 +221,9 @@ namespace IronStar.AI.Editor
                         control.Top += e.Y - mousePoint.Y;
                     }
                 }
+                Workspace.Invalidate();
             }
             mousePoint = e.Location;
-            Workspace.Invalidate();
         }
 
         private void Workspace_MouseDown(object sender, MouseEventArgs e)

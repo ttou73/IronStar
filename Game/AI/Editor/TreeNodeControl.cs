@@ -52,8 +52,8 @@ namespace IronStar.AI.Editor
             {
                 this.Left += e.X - mouseInitPos.X;
                 this.Top += e.Y - mouseInitPos.Y;
+                editor.Workspace.Invalidate();
             }
-            editor.Workspace.Invalidate();
         }
 
         private void Start_MouseClick(object sender, MouseEventArgs e)
