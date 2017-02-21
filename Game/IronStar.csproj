@@ -57,9 +57,34 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AI\AISystem.cs" />
+    <Compile Include="AI\BehaviorContext.cs" />
+    <Compile Include="AI\BehaviorNode.cs" />
+    <Compile Include="AI\BehaviorTree.cs" />
+    <Compile Include="AI\Editor\BehaviorTreeEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AI\Editor\BehaviorTreeEditor.Designer.cs">
+      <DependentUpon>BehaviorTreeEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AI\Editor\BehaviorTreeEditorControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="AI\Editor\BehaviorTreeEditorControl.Designer.cs">
+      <DependentUpon>BehaviorTreeEditorControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AI\Editor\BTEditor.cs" />
+    <Compile Include="AI\Editor\TreeNodeControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="AI\Editor\TreeNodeControl.Designer.cs">
+      <DependentUpon>TreeNodeControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AI\SequenceNode.cs" />
     <Compile Include="Client\GameCamera.cs" />
     <Compile Include="Client\GameInput.cs" />
     <Compile Include="Commands\ShowWorldState.cs" />
+    <Compile Include="Core\GameWorld.AI.cs" />
     <Compile Include="Editor2\EditorConfig.cs" />
     <Compile Include="Editor2\EditorHud.cs" />
     <Compile Include="Editor2\MapEditor.Selection.cs" />
@@ -200,6 +225,15 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="AI\Editor\BehaviorTreeEditor.resx">
+      <DependentUpon>BehaviorTreeEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AI\Editor\BehaviorTreeEditorControl.resx">
+      <DependentUpon>BehaviorTreeEditorControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AI\Editor\TreeNodeControl.resx">
+      <DependentUpon>TreeNodeControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Editors\EditorForm.resx">
       <DependentUpon>EditorForm.cs</DependentUpon>
       <SubType>Designer</SubType>
