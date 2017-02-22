@@ -15,6 +15,7 @@ namespace IronStar.AI.Editor
         private bool isDragging = false;
         private Point mouseInitPos;
         public readonly BehaviorNode Node;
+        public Point lastPosition;
         BehaviorTreeEditorControl editor;
 
         public TreeNodeControl(BehaviorTreeEditorControl editor, BehaviorNode node )
@@ -48,6 +49,7 @@ namespace IronStar.AI.Editor
 
         private void TreeNodeControl_MouseMove(object sender, MouseEventArgs e)
         {
+            lastPosition = Location;
             if (isDragging && e.Button == MouseButtons.Left)
             {
                 this.Left += e.X - mouseInitPos.X;

@@ -13,11 +13,7 @@ namespace IronStar.AI.Editor
 {
     public partial class BehaviorTreeEditorControl : UserControl , IMessageFilter
     {
-
-        //TODO: make moveable panel.
-        private bool isWorkspaceMoving;
-        private Point mousePoint;
-        //
+        public readonly MoveablePanel Workspace;
 
         BehaviorTree activeTree;
 
@@ -27,7 +23,11 @@ namespace IronStar.AI.Editor
 
         public BehaviorTreeEditorControl()
         {
+
             Application.AddMessageFilter(this);
+            Workspace = new MoveablePanel() { Dock = DockStyle.Fill };
+            Workspace.Name = "Workspace";
+            this.Controls.Add(Workspace);
             InitializeComponent();
 
         }
@@ -47,6 +47,8 @@ namespace IronStar.AI.Editor
 
             AddButton.Enabled = false;
             NodeList.Enabled = false;
+
+            Workspace.Paint += Workspace_Paint;
         }
 
         private void AddButton_Click(object sender, EventArgs e)
@@ -100,7 +102,7 @@ namespace IronStar.AI.Editor
             var p = sender as Panel;
             var g = e.Graphics;
 
-            g.FillRectangle(new SolidBrush(Color.FromArgb(0, Color.Black)), p.DisplayRectangle);
+           /* g.FillRectangle(new SolidBrush(Color.FromArgb(0, Color.Black)), p.DisplayRectangle);
 
             Point[] points = new Point[4];
 
@@ -111,8 +113,21 @@ namespace IronStar.AI.Editor
 
             Brush brush = new SolidBrush(Workspace.BackColor);
 
-            g.FillPolygon(brush, points);
-            Pen pen = new Pen(Color.Khaki, 3f);
+
+            g.FillPolygon(brush, points);*/
+
+            Pen pen = new Pen(Workspace.BackColor, 3f);
+            foreach (var kvp in edges)
+            {
+                var pt1 = new Point(kvp.Key.lastPosition.X + kvp.Key.Start.Location.X + 10, kvp.Key.lastPosition.Y + kvp.Key.Start.Location.Y + 10);
+                foreach (var s in kvp.Value)
+                {
+                    var pt2 = new Point(s.lastPosition.X + s.End.Location.X + 10, s.lastPosition.Y + s.End.Location.Y + 10);
+                    g.DrawLine(pen, pt1, pt2);
+                }
+            }
+
+            pen = new Pen(Color.Khaki, 3f);
             foreach (var kvp in edges)
             {
                 var pt1 = new Point(kvp.Key.Location.X + kvp.Key.Start.Location.X + 10, kvp.Key.Location.Y + kvp.Key.Start.Location.Y + 10);
@@ -202,37 +217,8 @@ namespace IronStar.AI.Editor
             }
             return false;
         }
+         
 
-        private void Workspace_MouseLeave(object sender, EventArgs e)
-        {
-            isWorkspaceMoving = false;
-        }
-
-        private void Workspace_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (isWorkspaceMoving && e.Button == MouseButtons.Middle)
-            {
-                foreach (var c in Workspace.Controls)
-                {
-                    if (c is TreeNodeControl)
-                    {
-                        var control = c as TreeNodeControl;
-                        control.Left += e.X - mousePoint.X;
-                        control.Top += e.Y - mousePoint.Y;
-                    }
-                }
-                Workspace.Invalidate();
-            }
-            mousePoint = e.Location;
-        }
-
-        private void Workspace_MouseDown(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Middle)
-            {
-                mousePoint = e.Location;
-                isWorkspaceMoving = true;
-            }
-        }
+     
     }
 }

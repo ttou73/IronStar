@@ -40,7 +40,6 @@ namespace IronStar.AI.Editor
             this.Right = new System.Windows.Forms.Panel();
             this.ButtonPanel = new System.Windows.Forms.Panel();
             this.AddButton = new System.Windows.Forms.Button();
-            this.Workspace = new System.Windows.Forms.Panel();
             this.Header.SuspendLayout();
             this.Right.SuspendLayout();
             this.ButtonPanel.SuspendLayout();
@@ -133,23 +132,10 @@ namespace IronStar.AI.Editor
             this.AddButton.UseVisualStyleBackColor = true;
             this.AddButton.Click += new System.EventHandler(this.AddButton_Click);
             // 
-            // Workspace
-            // 
-            this.Workspace.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.Workspace.Location = new System.Drawing.Point(217, 48);
-            this.Workspace.Name = "Workspace";
-            this.Workspace.Size = new System.Drawing.Size(614, 665);
-            this.Workspace.TabIndex = 2;
-            this.Workspace.Paint += new System.Windows.Forms.PaintEventHandler(this.Workspace_Paint);
-            this.Workspace.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Workspace_MouseDown);
-            this.Workspace.MouseLeave += new System.EventHandler(this.Workspace_MouseLeave);
-            this.Workspace.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Workspace_MouseMove);
-            // 
             // BehaviorTreeEditorControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.Workspace);
             this.Controls.Add(this.Right);
             this.Controls.Add(this.Header);
             this.Name = "BehaviorTreeEditorControl";
@@ -174,6 +160,5 @@ namespace IronStar.AI.Editor
         private System.Windows.Forms.Button AddButton;
         private System.Windows.Forms.Button AddTree;
         private System.Windows.Forms.ComboBox TreesComboBox;
-        public System.Windows.Forms.Panel Workspace;
     }
 }

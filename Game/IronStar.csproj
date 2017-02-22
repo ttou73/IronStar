@@ -74,6 +74,12 @@
       <DependentUpon>BehaviorTreeEditorControl.cs</DependentUpon>
     </Compile>
     <Compile Include="AI\Editor\BTEditor.cs" />
+    <Compile Include="AI\Editor\MoveablePanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="AI\Editor\MoveablePanel.Designer.cs">
+      <DependentUpon>MoveablePanel.cs</DependentUpon>
+    </Compile>
     <Compile Include="AI\Editor\TreeNodeControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -230,6 +236,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AI\Editor\BehaviorTreeEditorControl.resx">
       <DependentUpon>BehaviorTreeEditorControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AI\Editor\MoveablePanel.resx">
+      <DependentUpon>MoveablePanel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="AI\Editor\TreeNodeControl.resx">
       <DependentUpon>TreeNodeControl.cs</DependentUpon>
