@@ -39,7 +39,7 @@ namespace Fusion.Engine.Graphics {
 			LightAccumulator	=	new RenderTarget2D( game.GraphicsDevice, ColorFormat.Rgba16F,		width,	height,	false, true );
 			DepthBuffer			=	new DepthStencil2D( game.GraphicsDevice, DepthFormat.D24S8,			width,	height,	1 );
 			GBuffer0			=	new RenderTarget2D( game.GraphicsDevice, ColorFormat.Rgba8_sRGB,	width,	height,	false, false );
-			GBuffer1			=	new RenderTarget2D( game.GraphicsDevice, ColorFormat.Rgb10A2,		width,	height,	false, false );
+			GBuffer1			=	new RenderTarget2D( game.GraphicsDevice, ColorFormat.Rgba8,			width,	height,	false, false );
 			SSAOBuffer			=	new RenderTarget2D( game.GraphicsDevice, ColorFormat.Rgba8,			width,	height, false, false );
 			FeedbackBuffer		=	new RenderTarget2D( game.GraphicsDevice, ColorFormat.Rgb10A2,		width,	height, false, false );
 

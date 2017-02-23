@@ -200,10 +200,10 @@ namespace Fusion.Engine.Graphics {
 				var instances	=	rw.Instances;
 
 				if (instances.Any()) {
-					device.PixelShaderResources[1]	= rs.VirtualTexture.PageTable;
-					device.PixelShaderResources[2]	= rs.VirtualTexture.PhysicalPages0;
-					device.PixelShaderResources[3]	= rs.VirtualTexture.PhysicalPages1;
-					device.PixelShaderResources[4]	= rs.VirtualTexture.PhysicalPages2;
+					device.PixelShaderResources[1]	= rs.VTSystem.PageTable;
+					device.PixelShaderResources[2]	= rs.VTSystem.PhysicalPages0;
+					device.PixelShaderResources[3]	= rs.VTSystem.PhysicalPages1;
+					device.PixelShaderResources[4]	= rs.VTSystem.PhysicalPages2;
 				}
 
 				//#warning INSTANSING!
@@ -223,7 +223,7 @@ namespace Fusion.Engine.Graphics {
 					cbData.ViewPos			=	viewPosition;
 					cbData.Color			=	instance.Color;
 					cbData.ViewBounds		=	new Vector4( hdr.Width, hdr.Height, hdr.Width, hdr.Height );
-					cbData.VTPageScaleRCP	=	rs.VirtualTexture.PageScaleRCP;
+					cbData.VTPageScaleRCP	=	rs.VTSystem.PageScaleRCP;
 
 					constBuffer.SetData( cbData );
 
@@ -272,7 +272,7 @@ namespace Fusion.Engine.Graphics {
 
 				var feedbackBuffer = new VTAddress[ HdrFrame.FeedbackBufferWidth * HdrFrame.FeedbackBufferHeight ];
 				frame.FeedbackBufferRB.GetFeedback( feedbackBuffer );
-				rs.VirtualTexture.Update( feedbackBuffer, gameTime );
+				rs.VTSystem.Update( feedbackBuffer, gameTime );
 			}
 		}
 

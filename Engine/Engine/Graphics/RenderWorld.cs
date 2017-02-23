@@ -115,11 +115,15 @@ namespace Fusion.Engine.Graphics {
 				return virtualTexture;
 			}
 			set {
-				virtualTexture = value;
 				if (value==null) {
-					rs.VirtualTexture.Stop();
+					rs.VTSystem.Stop();
+					virtualTexture = value;
 				} else {
-					rs.VirtualTexture.Start(value);
+					if (virtualTexture!=value) {
+						rs.VTSystem.Stop();
+						rs.VTSystem.Start(value);
+						virtualTexture = value;
+					}
 				}
 			}
 		}
@@ -423,12 +427,12 @@ namespace Fusion.Engine.Graphics {
 				case 9 : rs.Filter.StretchRect( targetSurface, viewHdrFrame.FeedbackBufferRB, SamplerState.PointClamp ); return;
 			}
 
-			if (rs.VirtualTexture.ShowPhysicalTextures) {
-				rs.Filter.StretchRect( targetSurface, rs.VirtualTexture.PhysicalPages0 );
+			if (rs.VTSystem.ShowPhysicalTextures) {
+				rs.Filter.StretchRect( targetSurface, rs.VTSystem.PhysicalPages0 );
 				return;
 			}
-			if (rs.VirtualTexture.ShowPageTexture) {
-				rs.Filter.Copy( targetSurface, rs.VirtualTexture.PageTable );
+			if (rs.VTSystem.ShowPageTexture) {
+				rs.Filter.Copy( targetSurface, rs.VTSystem.PageTable );
 				return;
 			}
 

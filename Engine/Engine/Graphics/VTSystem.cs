@@ -130,6 +130,8 @@ namespace Fusion.Engine.Graphics {
 
 			Game.Reloading += (s,e) => LoadContent();
 
+			tileLoader		=	new VTTileLoader( this, Game.Content.VTStorage );
+
 			LoadContent();
 		}
 
@@ -191,9 +193,7 @@ namespace Fusion.Engine.Graphics {
 		{
 			if (disposing) {
 
-				if (tileLoader!=null) {
-					tileLoader.Stop();
-				}
+				SafeDispose( ref tileLoader );
 				
 				SafeDispose( ref PhysicalPages0	);
 				SafeDispose( ref PhysicalPages1	);
@@ -215,7 +215,6 @@ namespace Fusion.Engine.Graphics {
 		{
 			var storage			=	vt.TileStorage;
 
-			tileLoader			=	new VTTileLoader( this, storage );
 			tileStamper			=	new VTStamper();
 
 			fontImage			=	Imaging.Image.LoadTga( new MemoryStream( Fusion.Properties.Resources.conchars ) );
@@ -230,7 +229,7 @@ namespace Fusion.Engine.Graphics {
 		/// </summary>
 		public void Stop ()
 		{
-			tileLoader.Stop();
+			tileLoader.Purge();
 			tileCache.Purge();
 		}
 
@@ -387,7 +386,7 @@ namespace Fusion.Engine.Graphics {
 							}
 
 							//PhysicalPages.SetData( 0, rect, tile.Data, 0, tile.Data.Length );
-							tileStamper.Add( tile, rect );
+							tileStamper?.Add( tile, rect );
 						}
 
 					}
@@ -396,7 +395,7 @@ namespace Fusion.Engine.Graphics {
 
 
 				//	emboss tiles to physical texture
-				tileStamper.Update( this, gameTime.ElapsedSec );
+				tileStamper?.Update( this, gameTime.ElapsedSec );
 
 				//	update page table :
 				UpdatePageTable();

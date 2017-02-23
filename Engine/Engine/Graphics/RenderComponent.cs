@@ -33,7 +33,8 @@ namespace Fusion.Engine.Graphics {
 		/// </summary>
 		public override void Initialize ()
 		{
-		}
+		}
+
 
 
 		/// <summary>

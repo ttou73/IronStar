@@ -40,8 +40,8 @@ namespace Fusion.Engine.Graphics {
 		internal SceneRenderer	SceneRenderer { get { return sceneRenderer; } }
 		SceneRenderer	sceneRenderer;
 		
-		internal VTSystem	VirtualTexture { get { return virtualTexture; } }
-		VTSystem	virtualTexture;
+		internal VTSystem	VTSystem { get { return vtSystem; } }
+		VTSystem	vtSystem;
 		
 		internal Sky	Sky { get { return sky; } }
 		Sky	sky;
@@ -121,11 +121,11 @@ namespace Fusion.Engine.Graphics {
 			sceneRenderer	=	new SceneRenderer( this );
 			sky				=	new Sky( this );
 			bitonicSort		=	new BitonicSort( this );
-			virtualTexture	=	new VTSystem( this );
+			vtSystem	=	new VTSystem( this );
 
 			Game.Config.ExposeConfig( lightRenderer,  "LightRenderer"	, "light" );
 			Game.Config.ExposeConfig( ssaoFilter,     "SSAO"			, "ssao"  );
-			Game.Config.ExposeConfig( virtualTexture, "VirtualTexture"	, "vt"	  );
+			Game.Config.ExposeConfig( vtSystem, "VirtualTexture"	, "vt"	  );
 
 			Device.DisplayBoundsChanged += (s,e) => {
 				DisplayBoundsChanged?.Invoke( s, e );
@@ -168,7 +168,7 @@ namespace Fusion.Engine.Graphics {
 			InitializeComponent( sceneRenderer	);
 			InitializeComponent( sky			);	
 			InitializeComponent( bitonicSort	);
-			InitializeComponent( virtualTexture );
+			InitializeComponent( vtSystem );
 
 			//	create default textures :
 			whiteTexture	=	new DynamicTexture( this, 4,4, typeof(Color), false, false );

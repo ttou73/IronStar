@@ -14,6 +14,13 @@ using Fusion.Core.Content;
 
 
 namespace Fusion.Engine.Server {
+
+	enum ServerState {
+		NotRunning,
+		Starting,
+		Running,
+		ShutdownRequested,
+	}
 	
 
 	public partial class GameServer : GameComponent {
@@ -24,6 +31,9 @@ namespace Fusion.Engine.Server {
 		object lockObj = new object();
 
 
+		Thread serverThread = null;
+		ServerState serverState = ServerState.NotRunning;
+
 
 		/// <summary>
 		/// Initiate server thread.
@@ -33,7 +43,24 @@ namespace Fusion.Engine.Server {
 		public bool Start ( string map, string options )
 		{
 			lock (lockObj) {
-				
+
+			#if true
+				if (serverState!=ServerState.NotRunning) {
+					Log.Warning("Server is still running");
+					return false;
+				}
+
+				serverState	=	ServerState.Starting;
+
+				ThreadStart ts				=	delegate { ServerTaskFunc(map, options); };
+				serverThread				=	new Thread( ts );
+				serverThread.Name			=	"Game Server Thread";
+				serverThread.IsBackground	=	true;
+				serverThread.Start();
+
+				return true;
+
+			#else
 				if (serverTask!=null) {
 					if (!serverTask.IsCompleted) {
 						Log.Warning("Server is still running.");
@@ -45,6 +72,7 @@ namespace Fusion.Engine.Server {
 				serverTask	=	new Task( () => ServerTaskFunc(map, options, killToken.Token ) );
 				serverTask.Start();
 				return true;
+			#endif
 			}
 		}
 
@@ -56,14 +84,23 @@ namespace Fusion.Engine.Server {
 		/// <param name="wait"></param>
 		public bool Kill ()
 		{
+			#if true
 			lock (lockObj) {
-				if (serverTask==null || serverTask.IsCompleted) {
+				if (serverState==ServerState.NotRunning) {
 					Log.Warning("Server is not running");
 					return false;
+				}
+				serverState = ServerState.ShutdownRequested;
+				return true;
+			}
+			#else
+			lock (lockObj) {
+				if (serverTask==null || serverTask.IsCompleted) {
 				}
 				killToken?.Cancel();
 				return true;
 			}
+			#endif
 		}
 
 
@@ -73,12 +110,15 @@ namespace Fusion.Engine.Server {
 		/// </summary>
 		internal void Wait ()
 		{
+			#if true
+			#else
 			lock (lockObj) {
 				
 				killToken?.Cancel();
 				Log.Message("Waiting for server task...");
 				serverTask?.Wait();
 			}
+			#endif
 		}
 
 
@@ -98,8 +138,10 @@ namespace Fusion.Engine.Server {
 		/// 
 		/// </summary>
 		/// <param name="map"></param>
-		void ServerTaskFunc ( string map, string options, CancellationToken killToken )
+		void ServerTaskFunc ( string map, string options )
 		{
+			serverState	=	ServerState.Running;
+
 			try {
 				Log.Message("Server starting: {0} [{1}]", map, options);
 
@@ -122,7 +164,7 @@ namespace Fusion.Engine.Server {
 						//
 						//	server loop :
 						//	
-						while ( !killToken.IsCancellationRequested ) {
+						while ( serverState!=ServerState.ShutdownRequested ) {
 
 						_retryTick:
 							var targetDelta	=	TimeSpan.FromTicks( (long)(10000000 / TargetFrameRate) );
@@ -153,11 +195,11 @@ namespace Fusion.Engine.Server {
 							}
 						}
 
-						Log.Message("Server shut down");
 					}
 				}
-			} catch ( Exception e )
-			{
+
+			} catch ( Exception e )	{
+
 				Log.Error("");
 				Log.Error("-------- Server crashed --------");
 
@@ -165,7 +207,13 @@ namespace Fusion.Engine.Server {
 
 				Log.Error("----------------");
 				Log.Error("");
+
+			} finally {
+
+				serverState	=	ServerState.NotRunning;
+				Log.Message("Server shut down");
 			}
+
 		}
 	}
 }

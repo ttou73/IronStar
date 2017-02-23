@@ -19,13 +19,16 @@ using Fusion.Build.Mapping;
 
 namespace Fusion.Engine.Graphics {
 
+
 	/// <summary>
 	/// 
 	/// </summary>
-	internal class VTTileLoader {
+	internal class VTTileLoader : IDisposable {
 
 		readonly IStorage storage;
 		readonly VTSystem vt;
+
+		object lockObj = new object();
 
 		#if USE_PRIORITY_QUEUE
 		ConcurrentPriorityQueue<int,VTAddress>	requestQueue;
@@ -35,12 +38,9 @@ namespace Fusion.Engine.Graphics {
 		
 		ConcurrentQueue<VTTile>		loadedTiles;
 
-		Task	loaderTask;
-		CancellationTokenSource	cancelToken;
+		Thread	loaderThread;
+		bool	stopLoader = false;
 		
-
-		object syncLock = new object();
-
 
 		/// <summary>
 		/// 
@@ -59,9 +59,10 @@ namespace Fusion.Engine.Graphics {
 
 			loadedTiles			=	new ConcurrentQueue<VTTile>();
 
-			cancelToken		=	new CancellationTokenSource();
-			loaderTask		=	new Task( LoaderTask, cancelToken.Token );
-			loaderTask.Start();
+			loaderThread		=	new Thread( new ThreadStart( LoaderTask ) );
+			loaderThread.Name	=	"VT Tile Loader Thread";
+			loaderThread.IsBackground	=	true;
+			loaderThread.Start();
 		}
 
 
@@ -91,25 +92,45 @@ namespace Fusion.Engine.Graphics {
 
 
 
-		object lockObj = new object();
+		#region IDisposable Support
+		private bool disposedValue = false; // To detect redundant calls
+
+		protected virtual void Dispose( bool disposing )
+		{
+			if ( !disposedValue ) {
+				if ( disposing ) {
+					lock (lockObj) {
+						stopLoader	=	true;
+					}
+				}
+
+				disposedValue = true;
+			}
+		}
+
+
+		// This code added to correctly implement the disposable pattern.
+		public void Dispose()
+		{
+			Dispose( true );
+		}
+		#endregion
 
 
 
 		/// <summary>
-		/// 
+		/// Removes all loaded tiles and requests
 		/// </summary>
-		public void Stop()
+		public void Purge ()
 		{
 			lock (lockObj) {
-				if (cancelToken!=null) {
-					cancelToken.Cancel();
-				}
+				requestQueue.Clear();
 
-				if (loaderTask!=null) {
-					loaderTask.Wait();
+				VTTile t;
+
+				while (loadedTiles.TryDequeue(out t)) {
 				}
 			}
-
 		}
 
 
@@ -119,7 +140,7 @@ namespace Fusion.Engine.Graphics {
 		/// </summary>
 		void LoaderTask ()
 		{
-			while (!cancelToken.IsCancellationRequested) {
+			while (!stopLoader) {
 				
 				VTAddress address;
 

@@ -229,6 +229,7 @@
     <Compile Include="Engine\Common\IEditorInstance.cs" />
     <Compile Include="Engine\Common\IGameFactory.cs" />
     <Compile Include="Engine\Common\IUserInterface.cs" />
+    <Compile Include="Engine\Graphics\Commands\BuildRadiance.cs" />
     <Compile Include="Engine\Graphics\Commands\VTRestart.cs" />
     <Compile Include="Engine\Graphics\Effects\FogSettings.cs" />
     <Compile Include="Engine\Graphics\Lights\Decal.cs" />
