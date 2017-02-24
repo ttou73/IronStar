@@ -125,6 +125,10 @@ namespace Fusion.Engine.Graphics {
 			if (flags.HasFlag( SurfaceFlags.RIGID )) {
 				ps.VertexInputElements	=	VertexColorTextureTBNRigid.Elements;
 			}
+
+			if (flags.HasFlag( SurfaceFlags.SHADOW )) {
+				ps.RasterizerState = RasterizerState.CullNone;
+			}
 		}
 
 

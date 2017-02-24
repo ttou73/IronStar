@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-16"?>
 <EntityFactory xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RigidBodyFactory">
-  <Width>1</Width>
-  <Height>0.75</Height>
-  <Depth>0.75</Depth>
+  <Width>0.66667</Width>
+  <Height>0.5</Height>
+  <Depth>0.5</Depth>
   <Mass>5</Mass>
   <Model>box</Model>
 </EntityFactory>

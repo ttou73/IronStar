@@ -99,13 +99,13 @@ namespace IronStar.Views {
 			var ppos	=	player.LerpPosition(lerpFactor);
 
 			float backoffset = false ? 2 : 0;
-			var pos		=	ppos + Vector3.Up * 1.0f + m.Backward * backoffset;
+			var pos		=	ppos + Vector3.Up * 0.8f + m.Backward * backoffset;
 
 			var fwd	=	pos + m.Forward;
 			var up	=	m.Up;
 
 
-			var targetFov	=	MathUtil.Clamp( uc.CtrlFlags.HasFlag( UserCtrlFlags.Zoom ) ? 30 : 90, 10, 140 );
+			var targetFov	=	MathUtil.Clamp( uc.CtrlFlags.HasFlag( UserCtrlFlags.Zoom ) ? 30 : 110, 10, 140 );
 
 			currentFov		=	MathUtil.Drift( currentFov, targetFov, 360*elapsedTime, 360*elapsedTime );
 

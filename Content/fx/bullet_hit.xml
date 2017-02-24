@@ -2,7 +2,7 @@
 <FXFactory xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <Period>1</Period>
   <SoundStage Enabled="true" Sound="sound\weapon\machineGun3.wav" Attenuation="Normal" />
-  <LightStage Enabled="true" Period="0.3" InnerRadius="0" OuterRadius="2" PulseString="jzjzj" LightStyle="Saw" OffsetDirection="LocalForward" OffsetFactor="0.15">
+  <LightStage Enabled="true" Period="0.3" InnerRadius="0" OuterRadius="1" PulseString="jzjzj" LightStyle="Saw" LightType="Omni" SpotAngleX="60" SpotAngleY="60" LightMask="" OffsetDirection="LocalForward" OffsetFactor="0.15">
     <Intensity Red="50" Green="20" Blue="10" Alpha="1" />
   </LightStage>
   <CameraShake Enabled="false" />

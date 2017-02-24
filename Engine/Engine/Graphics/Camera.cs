@@ -113,8 +113,8 @@ namespace Fusion.Engine.Graphics {
 		/// <param name="aspectRatio">Viewport width divided by viewport height</param>
 		public void SetupCameraFov ( Vector3 origin, Vector3 target, Vector3 up, float fov, float near, float far, float convergence, float separation, float aspectRatio )
 		{
-			var nearHeight	=	near * (float)Math.Tan( fov/2 ) * 2;
-			var nearWidth	=	nearHeight * aspectRatio;
+			var nearWidth	=	near * (float)Math.Tan( fov/2 ) * 2;
+			var nearHeight	=	nearWidth / aspectRatio;
 			var view		=	Matrix.LookAtRH( origin, target, up );
 
 			SetupCamera( view, nearHeight, nearWidth, near, far, convergence, separation );
@@ -134,8 +134,8 @@ namespace Fusion.Engine.Graphics {
 		/// <param name="separation"></param>
 		public void SetupCameraFov ( Matrix view, float fov, float near, float far, float convergence, float separation, float aspectRatio )
 		{
-			var nearHeight	=	near * (float)Math.Tan( fov/2 ) * 2;
-			var nearWidth	=	nearHeight * aspectRatio;
+			var nearWidth	=	near * (float)Math.Tan( fov/2 ) * 2;
+			var nearHeight	=	nearWidth / aspectRatio;
 
 			SetupCamera( view, nearHeight, nearWidth, near, far, convergence, separation );
 		}
