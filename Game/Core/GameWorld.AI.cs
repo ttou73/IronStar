@@ -14,7 +14,7 @@ using Fusion.Core.Extensions;
 using IronStar.SFX;
 using Fusion.Core.IniParser.Model;
 using Fusion.Engine.Graphics;
-using IronStar.AI;
+//using IronStar.AI;
 
 namespace IronStar.Core {
 
@@ -22,6 +22,6 @@ namespace IronStar.Core {
 	/// World represents ai methods
 	/// </summary>
 	public partial class GameWorld {
-		public AISystem AISystem { get; set; }
+		//public AISystem AISystem { get; set; }
 	}
 }

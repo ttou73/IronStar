@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Fusion.Engine.Common;
+using Fusion.Engine.Client;
 
 
 
@@ -23,7 +24,7 @@ namespace Fusion.Engine.Server {
 		/// 
 		/// </summary>
 		/// <param name="capacity"></param>
-		public SnapshotQueue ( int capacity )
+		public SnapshotQueue ( int capacity = 32 )
 		{
 			this.capacity	=	capacity;
 			queue			=	new List<Snapshot>( capacity + 4 );	 //	why +4 ???
@@ -35,34 +36,14 @@ namespace Fusion.Engine.Server {
 		/// 
 		/// </summary>
 		/// <param name="snapshot"></param>
-		public void Push ( TimeSpan timestamp, byte[] snapshot )
+		public void Push ( byte[] snapshot )
 		{
 			frameCounter ++;
-			Push( new Snapshot(timestamp, frameCounter, snapshot) );			
+			Push( new Snapshot(frameCounter, snapshot) );			
 		}
 
 
 
-		/// <summary>
-		/// Gets time lag between client and server. Sum???
-		/// </summary>
-		/// <param name="clientSnapshotID"></param>
-		/// <param name="currentGameTime"></param>
-		/// <returns>Lag in seconds. Returned val</returns>
-		public float GetLag ( uint clientSnapshotID, GameTime currentGameTime)
-		{
-			foreach ( var snapshot in queue ) {
-				if (snapshot.Frame==clientSnapshotID) {
-					var lag = currentGameTime.Total - snapshot.Timestamp;
-
-					return Math.Min(1, (float)lag.TotalSeconds );
-				}
-			}
-
-			return 1;
-		}
-
-		
 		/// <summary>
 		/// 
 		/// </summary>
@@ -81,11 +62,12 @@ namespace Fusion.Engine.Server {
 		/// <summary>
 		/// 
 		/// </summary>
-		public uint LastFrame {
+		public uint LatestSnapshotID {
 			get {
 				return queue.Last().Frame;
 			}
 		}
+
 
 
 		/// <summary>

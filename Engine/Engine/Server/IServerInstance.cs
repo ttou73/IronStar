@@ -20,7 +20,16 @@ namespace Fusion.Engine.Server {
 		/// </summary>
 		/// <param name="gameTime"></param>
 		/// <returns>Snapshot bytes</returns>
-		byte[] Update ( GameTime gameTime );
+		void Update ( GameTime gameTime );
+
+		/// <summary>
+		/// Gets snapshot for given client
+		/// <remarks>Due to delta compression of snapshot keep data aligned. 
+		/// Even small layout change will cause significiant increase of sending data</remarks>
+		/// </summary>
+		/// <param name="clientGuid"></param>
+		/// <returns></returns>
+		byte[] MakeSnapshot ( Guid clientGuid );
 
 		/// <summary>
 		/// Gets atoms defined by server instance.

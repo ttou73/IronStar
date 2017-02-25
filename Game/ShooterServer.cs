@@ -56,12 +56,16 @@ namespace IronStar {
 		}
 
 
-		public byte[] Update( GameTime gameTime )
+		public void Update( GameTime gameTime )
 		{
 			var dt = 1 / world.Game.GameServer.TargetFrameRate;
 
 			world.SimulateWorld( dt );
+		}
 
+
+		public byte[] MakeSnapshot ( Guid clientGuid )
+		{
 			//	write world to stream :
 			using ( var ms = new MemoryStream() ) {
 				world.WriteToSnapshot( ms );

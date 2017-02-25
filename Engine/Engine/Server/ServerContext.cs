@@ -23,7 +23,6 @@ namespace Fusion.Engine.Server {
 
 		IServerInstance	serverInstance;
 		NetServer		netServer;
-		SnapshotQueue	snapshotQueue;
 
 		
 		/// <summary>
@@ -52,7 +51,6 @@ namespace Fusion.Engine.Server {
 			netConfig.EnableMessageType( NetIncomingMessageType.ConnectionLatencyUpdated );
 
 			notifications	=	new Queue<string>();
-			snapshotQueue   =   new SnapshotQueue(32);
 
 			netServer		=	new NetServer( netConfig );
 			netServer.Start();
@@ -96,19 +94,13 @@ namespace Fusion.Engine.Server {
 			#endif
 
 			//	read input messages :
-			DispatchIM( svTime, snapshotQueue, netServer );
-
-			//	update pings :
-			UpdatePings( netServer );
+			DispatchIM( svTime, netServer );
 
 			//	update frame and get snapshot :
-			var snapshot = serverInstance.Update( svTime );
-
-			//	push snapshot to queue :
-			snapshotQueue.Push( svTime.Total, snapshot );
+			serverInstance.Update( svTime );
 
 			//	send snapshot to clients :
-			SendSnapshot( netServer, snapshotQueue, svTime.Total.Ticks );
+			DispatchSnapshots( netServer, svTime.Total.Ticks );
 
 			//	send notifications to clients :
 			SendNotifications( netServer );
@@ -129,19 +121,12 @@ namespace Fusion.Engine.Server {
 		 * 
 		-----------------------------------------------------------------------------------------*/
 
-		Dictionary<Guid,float> pings = null;
-
-		void UpdatePings ( NetServer server )
-		{
-			pings	=	server.Connections.ToDictionary( conn => conn.GetHailGuid(), conn => conn.AverageRoundtripTime );
-		}
-		
 
 		/// <summary>
 		/// 
 		/// </summary>
 		/// <param name="message"></param>
-		void DispatchIM ( GameTime gameTime, SnapshotQueue queue, NetServer server )
+		void DispatchIM ( GameTime gameTime, NetServer server )
 		{
 			NetIncomingMessage msg;
 			while ((msg = server.ReadMessage()) != null)
@@ -188,7 +173,7 @@ namespace Fusion.Engine.Server {
 						break;
 					
 					case NetIncomingMessageType.Data:
-						DispatchDataIM( gameTime, queue, msg );
+						DispatchDataIM( gameTime, msg );
 						break;
 					
 					default:
@@ -234,7 +219,7 @@ namespace Fusion.Engine.Server {
 		/// 
 		/// </summary>
 		/// <param name="server"></param>
-		void SendSnapshot ( NetServer server, SnapshotQueue queue, long serverTicks )
+		void DispatchSnapshots ( NetServer server, long serverTicks )
 		{
 			//	snapshot request is stored in connection's tag.s
 			var debug	=	game.Network.ShowSnapshots;
@@ -246,12 +231,18 @@ namespace Fusion.Engine.Server {
 
 				sw.Reset();
 				sw.Start();
+
+				var state	=	conn.GetState();
+				var guid	=	state.ClientGuid;
+				var queue	=	state.SnapshotQueue;
+
+				queue.Push( serverInstance.MakeSnapshot( guid ) );
 					
-				var frame		=	queue.LastFrame;
-				var prevFrame	=	conn.GetRequestedSnapshotID();
+				var snapID		=	queue.LatestSnapshotID;
+				var ackSnapID	=	conn.GetAcknoldgedSnapshotID();
 				int size		=	0;
 				var commandID	=	conn.GetLastCommandID();
-				var snapshot	=	queue.Compress( ref prevFrame, out size);
+				var snapshot	=	conn.GetSnapshotQueue().Compress( ref ackSnapID, out size );
 
 				//	reset snapshot request :
 				conn.ResetRequestSnapshot();
@@ -259,8 +250,8 @@ namespace Fusion.Engine.Server {
 				var msg = server.CreateMessage( snapshot.Length + 4 * 4 + 8 + 1 );
 			
 				msg.Write( (byte)NetCommand.Snapshot );
-				msg.Write( frame );
-				msg.Write( prevFrame );
+				msg.Write( snapID );
+				msg.Write( ackSnapID );
 				msg.Write( commandID );
 				msg.Write( serverTicks );
 				msg.Write( snapshot.Length );
@@ -273,9 +264,9 @@ namespace Fusion.Engine.Server {
 
 				//	Zero snapshot frame index means that client is waiting for first snapshot.
 				//	and snapshot should reach the client.
-				var delivery	=	prevFrame == 0 ? NetDeliveryMethod.ReliableOrdered : NetDeliveryMethod.UnreliableSequenced;
+				var delivery	=	ackSnapID == 0 ? NetDeliveryMethod.ReliableOrdered : NetDeliveryMethod.UnreliableSequenced;
 
-				if (prevFrame==0) {
+				if (ackSnapID==0) {
 					Log.Message("SV: Sending initial snapshot to {0}", conn.GetHailGuid().ToString() );
 				}
 
@@ -285,7 +276,7 @@ namespace Fusion.Engine.Server {
 
 				if (debug) {
 					Log.Message("Snapshot: #{0} - #{1} : {2} / {3} to {4} at {5} msec", 
-						frame, prevFrame, snapshot.Length, size, conn.RemoteEndPoint.ToString(), sw.Elapsed.TotalMilliseconds );
+						snapID, ackSnapID, snapshot.Length, size, conn.RemoteEndPoint.ToString(), sw.Elapsed.TotalMilliseconds );
 				}
 			}
 		}
@@ -324,13 +315,13 @@ namespace Fusion.Engine.Server {
 		/// 
 		/// </summary>
 		/// <param name="msg"></param>
-		void DispatchDataIM ( GameTime gameTime, SnapshotQueue queue, NetIncomingMessage msg )
+		void DispatchDataIM ( GameTime gameTime, NetIncomingMessage msg )
 		{
 			var netCmd = (NetCommand)msg.ReadByte();
 
 			switch (netCmd) {
 				case NetCommand.UserCommand : 
-					DispatchUserCommand( gameTime, queue, msg );
+					DispatchUserCommand( gameTime, msg );
 					break;
 
 				case NetCommand.Notification :
@@ -345,7 +336,7 @@ namespace Fusion.Engine.Server {
 		/// 
 		/// </summary>
 		/// <param name="msg"></param>
-		void DispatchUserCommand ( GameTime gameTime, SnapshotQueue queue, NetIncomingMessage msg )
+		void DispatchUserCommand ( GameTime gameTime, NetIncomingMessage msg )
 		{	
 			var snapshotID	=	msg.ReadUInt32();
 			var commandID	=	msg.ReadUInt32();
@@ -361,7 +352,7 @@ namespace Fusion.Engine.Server {
 
 			//	do not feed server with empty command.
 			if (data.Length>0) {
-				serverInstance.FeedCommand( msg.SenderConnection.GetHailGuid(), data, commandID, queue.GetLag(snapshotID, gameTime) );
+				serverInstance.FeedCommand( msg.SenderConnection.GetHailGuid(), data, commandID, 0 );
 			}
 
 			//	set snapshot request when command get.
@@ -382,27 +373,5 @@ namespace Fusion.Engine.Server {
 				}
 			}
 		}
-
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <returns></returns>
-		float GetPingInternal ( Guid clientGuid )
-		{
-			if (pings==null) {
-				return float.MaxValue;
-			}
-
-			float ping;
-
-			if (pings.TryGetValue( clientGuid, out ping )) {
-				return ping;
-			} else {
-				return float.MaxValue;
-			}
-		}
-
 	}
 }

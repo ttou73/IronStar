@@ -44,7 +44,6 @@ namespace Fusion.Engine.Server {
 		{
 			lock (lockObj) {
 
-			#if true
 				if (serverState!=ServerState.NotRunning) {
 					Log.Warning("Server is still running");
 					return false;
@@ -59,20 +58,6 @@ namespace Fusion.Engine.Server {
 				serverThread.Start();
 
 				return true;
-
-			#else
-				if (serverTask!=null) {
-					if (!serverTask.IsCompleted) {
-						Log.Warning("Server is still running.");
-						return false;
-					}
-				}
-
-				killToken	=	new CancellationTokenSource();
-				serverTask	=	new Task( () => ServerTaskFunc(map, options, killToken.Token ) );
-				serverTask.Start();
-				return true;
-			#endif
 			}
 		}
 
@@ -84,7 +69,6 @@ namespace Fusion.Engine.Server {
 		/// <param name="wait"></param>
 		public bool Kill ()
 		{
-			#if true
 			lock (lockObj) {
 				if (serverState==ServerState.NotRunning) {
 					Log.Warning("Server is not running");
@@ -93,14 +77,6 @@ namespace Fusion.Engine.Server {
 				serverState = ServerState.ShutdownRequested;
 				return true;
 			}
-			#else
-			lock (lockObj) {
-				if (serverTask==null || serverTask.IsCompleted) {
-				}
-				killToken?.Cancel();
-				return true;
-			}
-			#endif
 		}
 
 
@@ -110,15 +86,15 @@ namespace Fusion.Engine.Server {
 		/// </summary>
 		internal void Wait ()
 		{
-			#if true
-			#else
-			lock (lockObj) {
-				
-				killToken?.Cancel();
-				Log.Message("Waiting for server task...");
-				serverTask?.Wait();
+			serverState	=	ServerState.ShutdownRequested;
+
+			Log.Message("Waiting for server thread...");
+			for (int i=1; i<=10; i++) {
+				Log.Message("...{0}/{1}", i, 10);
+				if (serverThread.Join(1000)) {
+					break;
+				}
 			}
-			#endif
 		}
 
 

@@ -9,22 +9,24 @@ namespace Fusion.Engine.Server {
 
 	public static class NetConnExt {
 
-		class ClientState {
+		public class ClientState {
 
 			public readonly Guid ClientGuid;
 			public readonly string UserInfo;
 			public bool RequestSnapshot;
-			public uint SnapshotID;
+			public uint AckSnapshotID;
 			public uint CommandID;
 			public uint CommandCounter;
+			internal SnapshotQueue SnapshotQueue;
 
 			public ClientState ( Guid clientGuid, string userInfo ) 
 			{
 				ClientGuid		=	clientGuid;
 				UserInfo		=	userInfo;
-				SnapshotID		=	0;
+				AckSnapshotID	=	0;
 				CommandID		=	0;
 				CommandCounter	=	0;
+				SnapshotQueue	=	new SnapshotQueue();
 			}
 		}
 
@@ -66,7 +68,7 @@ namespace Fusion.Engine.Server {
 
 
 
-		static ClientState GetState ( this NetConnection conn )
+		public static ClientState GetState ( this NetConnection conn )
 		{
 			return conn.Tag as ClientState;
 		}
@@ -79,9 +81,9 @@ namespace Fusion.Engine.Server {
 		}
 
 
-		public static uint GetRequestedSnapshotID ( this NetConnection conn )
+		public static uint GetAcknoldgedSnapshotID ( this NetConnection conn )
 		{
-			return conn.GetState().SnapshotID;
+			return conn.GetState().AckSnapshotID;
 		}
 
 
@@ -91,11 +93,11 @@ namespace Fusion.Engine.Server {
 		}
 
 
-		public static void SetRequestSnapshot ( this NetConnection conn, uint snapshotID, uint commandID )
+		public static void SetRequestSnapshot ( this NetConnection conn, uint snapshotAckID, uint commandID )
 		{
 			var state = conn.GetState();
 			state.RequestSnapshot	=	true;
-			state.SnapshotID		=	snapshotID;
+			state.AckSnapshotID		=	snapshotAckID;
 			state.CommandID			=	commandID;
 			state.CommandCounter++;
 		}
@@ -106,6 +108,11 @@ namespace Fusion.Engine.Server {
 			conn.GetState().RequestSnapshot	=	false;
 		}
 		
+
+		internal static SnapshotQueue GetSnapshotQueue ( this NetConnection conn )
+		{
+			return conn.GetState().SnapshotQueue;
+		}
 
 
 		public static uint GetCommandCount ( this NetConnection conn )

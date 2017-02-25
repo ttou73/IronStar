@@ -44,7 +44,7 @@ namespace Fusion.Engine.Client {
 				this.context	=	context;
 
 				queue	=	new SnapshotQueue(32);
-				queue.Push( new Snapshot( new TimeSpan(0), snapshotId, initialSnapshot) );
+				queue.Push( new Snapshot( snapshotId, initialSnapshot) );
 
 				lastServerTicks		=	svTicks;
 				lastSnapshotID		=	snapshotId;
@@ -176,6 +176,7 @@ namespace Fusion.Engine.Client {
 			}
 
 
+
 			/// <summary>
 			/// 
 			/// </summary>
@@ -234,7 +235,7 @@ namespace Fusion.Engine.Client {
 					if (snapshot!=null) {
 
 						FeedSnapshot( snapshot, ackCmdID, index, serverTicks, index );
-						queue.Push( new Snapshot(new TimeSpan(0), index, snapshot) );
+						queue.Push( new Snapshot(index, snapshot) );
 
 					} else {
 						lastSnapshotFrame = 0;
