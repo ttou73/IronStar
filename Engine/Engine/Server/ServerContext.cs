@@ -155,8 +155,8 @@ namespace Fusion.Engine.Server {
 
 					case NetIncomingMessageType.ConnectionApproval:
 						
-						var userGuid	=	msg.SenderConnection.GetHailGuid();
-						var userInfo	=	msg.SenderConnection.GetHailUserInfo();
+						var userGuid	=	msg.SenderConnection.PeekHailGuid();
+						var userInfo	=	msg.SenderConnection.PeekHailUserInfo();
 						var reason		=	"";
 						var approve		=	serverInstance.ApproveClient( userGuid, userInfo, out reason );
 
@@ -201,12 +201,12 @@ namespace Fusion.Engine.Server {
 			switch (connStatus) {
 				case NetConnectionStatus.Connected :
 					msg.SenderConnection.InitClientState(); 
-					serverInstance.ClientConnected( msg.SenderConnection.GetHailGuid(), msg.SenderConnection.GetHailUserInfo() );
+					serverInstance.ClientConnected( msg.SenderConnection.PeekHailGuid(), msg.SenderConnection.PeekHailUserInfo() );
 					break;
 
 				case NetConnectionStatus.Disconnected :
-					serverInstance.ClientDeactivated( msg.SenderConnection.GetHailGuid() );
-					serverInstance.ClientDisconnected( msg.SenderConnection.GetHailGuid() );
+					serverInstance.ClientDeactivated( msg.SenderConnection.PeekHailGuid() );
+					serverInstance.ClientDisconnected( msg.SenderConnection.PeekHailGuid() );
 					break;
 
 				default:
@@ -223,29 +223,38 @@ namespace Fusion.Engine.Server {
 		{
 			//	snapshot request is stored in connection's tag.s
 			var debug	=	game.Network.ShowSnapshots;
-			var conns	=	server.Connections.Where ( c => c.IsSnapshotRequested() );
+			var conns	=	server.Connections.ToArray();
 
 			var sw		=	new Stopwatch();
 
 			foreach ( var conn in conns ) {
 
+				var state	=	conn.GetState();
+
+				if (state==null) {
+					continue;
+				}
+
+				if (!state.IsSnapshotRequested) {
+					return;
+				}
+
 				sw.Reset();
 				sw.Start();
 
-				var state	=	conn.GetState();
 				var guid	=	state.ClientGuid;
 				var queue	=	state.SnapshotQueue;
 
 				queue.Push( serverInstance.MakeSnapshot( guid ) );
 					
 				var snapID		=	queue.LatestSnapshotID;
-				var ackSnapID	=	conn.GetAcknoldgedSnapshotID();
+				var ackSnapID	=	state.AckSnapshotID;
 				int size		=	0;
-				var commandID	=	conn.GetLastCommandID();
-				var snapshot	=	conn.GetSnapshotQueue().Compress( ref ackSnapID, out size );
+				var commandID	=	state.LastCommandID;
+				var snapshot	=	queue.Compress( ref ackSnapID, out size );
 
 				//	reset snapshot request :
-				conn.ResetRequestSnapshot();
+				state.IsSnapshotRequested = false;
 
 				var msg = server.CreateMessage( snapshot.Length + 4 * 4 + 8 + 1 );
 			
@@ -267,7 +276,7 @@ namespace Fusion.Engine.Server {
 				var delivery	=	ackSnapID == 0 ? NetDeliveryMethod.ReliableOrdered : NetDeliveryMethod.UnreliableSequenced;
 
 				if (ackSnapID==0) {
-					Log.Message("SV: Sending initial snapshot to {0}", conn.GetHailGuid().ToString() );
+					Log.Message("SV: Sending initial snapshot to {0}", conn.PeekHailGuid().ToString() );
 				}
 
 				sw.Stop();
@@ -325,7 +334,7 @@ namespace Fusion.Engine.Server {
 					break;
 
 				case NetCommand.Notification :
-					serverInstance.FeedNotification( msg.SenderConnection.GetHailGuid(), msg.ReadString() );
+					serverInstance.FeedNotification( msg.SenderConnection.PeekHailGuid(), msg.ReadString() );
 					break;
 			}
 		}
@@ -344,19 +353,21 @@ namespace Fusion.Engine.Server {
 
 			var data		=	msg.ReadBytes( size );
 
+			var state		=	msg.SenderConnection.GetState();
+
 			//	we got user command and (command count=1)
 			//	this means that client receives snapshot:
-			if (msg.SenderConnection.GetCommandCount()==1) {
-				serverInstance.ClientActivated( msg.SenderConnection.GetHailGuid() );
+			if (state.CommandCounter==1) {
+				serverInstance.ClientActivated( msg.SenderConnection.PeekHailGuid() );
 			}
 
 			//	do not feed server with empty command.
 			if (data.Length>0) {
-				serverInstance.FeedCommand( msg.SenderConnection.GetHailGuid(), data, commandID, 0 );
+				serverInstance.FeedCommand( msg.SenderConnection.PeekHailGuid(), data, commandID, 0 );
 			}
 
 			//	set snapshot request when command get.
-			msg.SenderConnection.SetRequestSnapshot( snapshotID, commandID );
+			msg.SenderConnection.GetState().RequestSnapshot( snapshotID, commandID );
 		}
 
 

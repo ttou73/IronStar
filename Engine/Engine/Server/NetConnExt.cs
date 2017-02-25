@@ -13,20 +13,28 @@ namespace Fusion.Engine.Server {
 
 			public readonly Guid ClientGuid;
 			public readonly string UserInfo;
-			public bool RequestSnapshot;
-			public uint AckSnapshotID;
-			public uint CommandID;
-			public uint CommandCounter;
-			internal SnapshotQueue SnapshotQueue;
+			public bool IsSnapshotRequested;
+			public uint AckSnapshotID { get; private set; }
+			public uint LastCommandID { get; private set; }
+			public uint CommandCounter { get; private set; }
+			internal readonly SnapshotQueue SnapshotQueue;
 
 			public ClientState ( Guid clientGuid, string userInfo ) 
 			{
 				ClientGuid		=	clientGuid;
 				UserInfo		=	userInfo;
 				AckSnapshotID	=	0;
-				CommandID		=	0;
+				LastCommandID		=	0;
 				CommandCounter	=	0;
 				SnapshotQueue	=	new SnapshotQueue();
+			}
+
+			public void RequestSnapshot ( uint snapshotAckID, uint commandID )
+			{
+				IsSnapshotRequested	=	true;
+				AckSnapshotID		=	snapshotAckID;
+				LastCommandID		=	commandID;
+				CommandCounter++;
 			}
 		}
 
@@ -37,7 +45,7 @@ namespace Fusion.Engine.Server {
 		/// </summary>
 		/// <param name="conn"></param>
 		/// <returns></returns>
-		public static Guid GetHailGuid ( this NetConnection conn )
+		public static Guid PeekHailGuid ( this NetConnection conn )
 		{
 			return new Guid( conn.RemoteHailMessage.PeekBytes(16) );
 		}
@@ -49,7 +57,7 @@ namespace Fusion.Engine.Server {
 		/// </summary>
 		/// <param name="conn"></param>
 		/// <returns></returns>
-		public static string GetHailUserInfo ( this NetConnection conn )
+		public static string PeekHailUserInfo ( this NetConnection conn )
 		{
 			var bytes = conn.RemoteHailMessage.PeekDataBuffer();
 			return Encoding.UTF8.GetString( bytes, 16, bytes.Length-16);
@@ -63,7 +71,7 @@ namespace Fusion.Engine.Server {
 		/// <param name="conn"></param>
 		public static void InitClientState ( this NetConnection conn )
 		{
-			conn.Tag	=	new ClientState( GetHailGuid(conn), GetHailUserInfo(conn) );
+			conn.Tag	=	new ClientState( PeekHailGuid(conn), PeekHailUserInfo(conn) );
 		}
 
 
@@ -71,53 +79,6 @@ namespace Fusion.Engine.Server {
 		public static ClientState GetState ( this NetConnection conn )
 		{
 			return conn.Tag as ClientState;
-		}
-
-
-
-		public static bool IsSnapshotRequested ( this NetConnection conn )
-		{
-			return (conn.GetState()!=null) && (conn.GetState().RequestSnapshot);
-		}
-
-
-		public static uint GetAcknoldgedSnapshotID ( this NetConnection conn )
-		{
-			return conn.GetState().AckSnapshotID;
-		}
-
-
-		public static uint GetLastCommandID ( this NetConnection conn )
-		{
-			return conn.GetState().CommandID;
-		}
-
-
-		public static void SetRequestSnapshot ( this NetConnection conn, uint snapshotAckID, uint commandID )
-		{
-			var state = conn.GetState();
-			state.RequestSnapshot	=	true;
-			state.AckSnapshotID		=	snapshotAckID;
-			state.CommandID			=	commandID;
-			state.CommandCounter++;
-		}
-
-
-		public static void ResetRequestSnapshot ( this NetConnection conn )
-		{
-			conn.GetState().RequestSnapshot	=	false;
-		}
-		
-
-		internal static SnapshotQueue GetSnapshotQueue ( this NetConnection conn )
-		{
-			return conn.GetState().SnapshotQueue;
-		}
-
-
-		public static uint GetCommandCount ( this NetConnection conn )
-		{
-			return conn.GetState().CommandCounter;
 		}
 	}
 }
