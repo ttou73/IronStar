@@ -50,6 +50,17 @@ namespace IronStar.Core {
 		}
 
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="user"></param>
+		public virtual void Use ( Entity user )
+		{
+		}
+
+
+
 		/// <summary>
 		/// Updates controller.
 		/// </summary>

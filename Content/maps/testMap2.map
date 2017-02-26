@@ -278,5 +278,33 @@
       <Radius>12</Radius>
       <LightPreset>FluorescentTubular</LightPreset>
     </MapNode>
+    <MapNode xsi:type="MapEntity">
+      <Visible>true</Visible>
+      <Frozen>false</Frozen>
+      <Position X="-9" Y="0" Z="0" />
+      <Rotation X="0" Y="0" Z="0" W="1" />
+      <Scaling>1</Scaling>
+      <Factory xsi:type="FuncMotorFactory">
+        <Model>baseDoor</Model>
+        <FXStart />
+        <FXMove />
+        <FXStop />
+        <Once>false</Once>
+        <Start>true</Start>
+        <FramesPerSecond>15</FramesPerSecond>
+        <StartFrame>1</StartFrame>
+        <EndFrame>30</EndFrame>
+      </Factory>
+    </MapNode>
+    <MapNode xsi:type="MapModel">
+      <Visible>true</Visible>
+      <Frozen>false</Frozen>
+      <Position X="-4" Y="0" Z="-4" />
+      <Rotation X="0" Y="-0.258819044" Z="0" W="0.9659258" />
+      <Scaling>1</Scaling>
+      <ScenePath>scenes\baseDoors\baseDoor.fbx</ScenePath>
+      <Scale>1</Scale>
+      <Color Red="10" Green="10" Blue="10" Alpha="1" />
+    </MapNode>
   </Nodes>
 </Map>

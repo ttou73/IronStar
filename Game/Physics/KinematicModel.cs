@@ -16,18 +16,20 @@ using Fusion.Engine.Graphics;
 using Fusion.Core.Mathematics;
 using Matrix = Fusion.Core.Mathematics.Matrix;
 using Vector3 = Fusion.Core.Mathematics.Vector3;
+using BepuEntity = BEPUphysics.Entities.Entity;
 using BEPUphysics.BroadPhaseEntries.MobileCollidables;
 using BEPUphysics.Entities.Prefabs;
 using BEPUphysics.EntityStateManagement;
 using Fusion;
 using BEPUphysics.Paths.PathFollowing;
+using BEPUphysics.CollisionShapes.ConvexShapes;
 
 namespace IronStar.Physics {
 	public class KinematicModel {
 
 		readonly Matrix preTransform;
 		readonly PhysicsManager physicsManager;
-		readonly ConvexHull[] convexHulls;
+		readonly BepuEntity[] convexHulls;
 		readonly Entity entity;
 		readonly Scene scene;
 		readonly int nodeCount;
@@ -35,6 +37,7 @@ namespace IronStar.Physics {
 		Matrix[] animSnapshot;
 		EntityMover[] movers;
 		EntityRotator[] rotators;
+		Vector3[] offsets;
 
 		/// <summary>
 		/// 
@@ -51,9 +54,10 @@ namespace IronStar.Physics {
 			this.preTransform   =   descriptor.ComputePreTransformMatrix();
 			this.nodeCount		=	scene.Nodes.Count;
 			
-			convexHulls		=	new ConvexHull[ nodeCount ];
+			convexHulls		=	new BepuEntity[ nodeCount ];
 			var transforms	=	new Matrix[ nodeCount ];
 			animSnapshot	=	new Matrix[ nodeCount ];
+			offsets			=	new Vector3[ nodeCount ];
 
 			movers			=	new EntityMover[ nodeCount ];
 			rotators		=	new EntityRotator[ nodeCount ];
@@ -86,8 +90,13 @@ namespace IronStar.Physics {
 				ms.Orientation		=	MathConverter.Convert( q );
 				ms.Position			=	MathConverter.Convert( p );
 
-				var convexHull = new ConvexHull( ms, vertices );
-				convexHull.Mass	= 0;
+				//	recenter shape :
+				//	https://bepuphysics.codeplex.com/wikipage?title=Shape%20Recentering
+				var offset			=	BEPUVector3.Zero;
+				var convexShape		=	new ConvexHullShape( vertices, out offset );
+				var convexHull		=	new BepuEntity( convexShape, 0 );
+
+				offsets[i]		=	MathConverter.Convert( offset );
 
 				convexHull.Tag	=	entity;
 
@@ -106,6 +115,8 @@ namespace IronStar.Physics {
 
 		public void Update ()
 		{
+			var dr = physicsManager.Game.RenderSystem.RenderWorld.Debug;
+
 			//
 			//	do animation stuff :
 			//
@@ -128,7 +139,9 @@ namespace IronStar.Physics {
 			for ( int i = 0; i<nodeCount; i++ ) {
 				if (convexHulls[i]!=null) {
 
-					var transform	=	animSnapshot[i] * preTransform * worldMatrix;
+					var offset		=	Matrix.Translation( offsets[i] );
+
+					var transform	=	offset * animSnapshot[i] * preTransform * worldMatrix;
 
 					var p			=	transform.TranslationVector;
 					var q			=   Fusion.Core.Mathematics.Quaternion.RotationMatrix( transform );

@@ -91,7 +91,12 @@ namespace Fusion.Engine.Server {
 			Log.Message("Waiting for server thread...");
 			for (int i=1; i<=10; i++) {
 				Log.Message("...{0}/{1}", i, 10);
-				if (serverThread.Join(1000)) {
+
+				if (serverThread!=null) {
+					if (serverThread.Join(1000)) {
+						break;
+					}
+				} else {
 					break;
 				}
 			}

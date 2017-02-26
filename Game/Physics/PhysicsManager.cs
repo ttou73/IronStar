@@ -21,8 +21,8 @@ namespace IronStar.Physics {
 
 		LinkedList<KinematicModel> kinematics = new LinkedList<KinematicModel>();
 
-		readonly Game	Game;
-		readonly GameWorld World;
+		public readonly Game	Game;
+		public readonly GameWorld World;
 
 
 		public Space PhysSpace {
