@@ -90,8 +90,8 @@ namespace IronStar.Entities {
 			if (enabled) {
 				frameCounter += framesPerSecond * elapsedTime;
 
-				if (frameCounter>=animLength) {
-					frameCounter = 0;
+				while (frameCounter>=animLength) {
+					frameCounter -= animLength;
 				}
 			}
 

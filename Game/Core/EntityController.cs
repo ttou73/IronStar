@@ -55,8 +55,9 @@ namespace IronStar.Core {
 		/// 
 		/// </summary>
 		/// <param name="user"></param>
-		public virtual void Use ( Entity user )
+		public virtual bool Use ( Entity user )
 		{
+			return false;
 		}
 
 
@@ -68,6 +69,14 @@ namespace IronStar.Core {
 		public virtual void Update ( float elapsedTime ) 
 		{
 		}
+
+
+
+		/// <summary>
+		/// Indicates whether given entity could be used by player
+		/// </summary>
+		public virtual bool AllowUse { get { return false; } }
+
 
 
 		/// <summary>

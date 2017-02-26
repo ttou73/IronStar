@@ -134,6 +134,12 @@ namespace IronStar.Mapping {
 
 
 
+		public override void UseNode()
+		{
+		}
+
+
+
 		public override void DrawNode( GameWorld world, DebugRender dr, Color color, bool selected )
 		{
 			dr.DrawBasis( WorldMatrix, 1, 2 );

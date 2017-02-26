@@ -32,6 +32,8 @@ namespace IronStar.Entities {
 		bool		rlStep		= false;
 		bool		oldTraction = true;
 		Vector3		oldVelocity = Vector3.Zero;
+		readonly	float heightStand;
+		readonly	float heightCrouch;
 
 
 		/// <summary>
@@ -44,6 +46,9 @@ namespace IronStar.Entities {
 			this.space	=	world.PhysSpace;
 
 			var pos = MathConverter.Convert( entity.Position );
+
+			heightCrouch	=	factory.CrouchingHeight;
+			heightStand		=	factory.Height;
 
 			controller = new CharacterController( pos, 
 					factory.Height				, 
@@ -88,6 +93,17 @@ namespace IronStar.Entities {
 
 			entity.SetItemCount( Inventory.Cells			,	999	);
 			entity.SetItemCount( Inventory.HyperBlaster		,	1	);
+		}
+
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
+		public virtual Vector3 GetPOV ()
+		{
+			return Entity.Position + Vector3.Up * heightStand / 2;
 		}
 
 

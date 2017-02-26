@@ -17,11 +17,18 @@ using IronStar.Core;
 
 namespace IronStar.Entities {
 
+	public class NullController : EntityController {
+		public NullController( Entity entity, GameWorld world ) : base( entity, world )
+		{
+		}
+	}
+
+
 	public class NullFactory : EntityFactory {
 
 		public override EntityController Spawn( Entity entity, GameWorld world )
 		{
-			return null;
+			return new NullController( entity, world );
 		}
 	}
 }

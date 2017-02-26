@@ -293,6 +293,17 @@ namespace IronStar.Editor2 {
 		}
 
 
+		/// <summary>
+		/// 
+		/// </summary>
+		public void UseSelected ()
+		{
+			foreach ( var se in selection ) {
+				se.UseNode();
+			}
+		}
+
+
 		public bool EnableSimulation { get; set; } = false;
 
 		/*-----------------------------------------------------------------------------------------

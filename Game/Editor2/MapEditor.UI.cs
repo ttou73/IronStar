@@ -83,6 +83,9 @@ namespace IronStar.Editor2 {
 				if (e.Key==Keys.Enter) {
 					ActivateSelected();
 				}
+				if (e.Key==Keys.U) {
+					UseSelected();
+				}
 				if (e.Key==Keys.D) {
 					if (ctrl || shift) {
 						DuplicateSelection();

@@ -21,6 +21,8 @@ namespace IronStar.Core {
 		Zoom			=	1 << 6,
 		Attack			=	1 << 7,
 
+		Use				=	1 << 8,
+
 		/// <summary>
 		/// To clear weapon activation request.
 		/// </summary>

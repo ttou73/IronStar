@@ -281,30 +281,33 @@
     <MapNode xsi:type="MapEntity">
       <Visible>true</Visible>
       <Frozen>false</Frozen>
+      <Position X="5" Y="-0" Z="4" />
+      <Rotation X="0" Y="0.6087614" Z="0" W="0.7933533" />
+      <Scaling>1</Scaling>
+      <Factory xsi:type="StartPointFactory">
+        <StartPointType>SinglePlayer</StartPointType>
+      </Factory>
+    </MapNode>
+    <MapNode xsi:type="MapEntity">
+      <Visible>true</Visible>
+      <Frozen>false</Frozen>
       <Position X="-9" Y="0" Z="0" />
       <Rotation X="0" Y="0" Z="0" W="1" />
       <Scaling>1</Scaling>
-      <Factory xsi:type="FuncMotorFactory">
+      <Factory xsi:type="FuncDoorFactory">
         <Model>baseDoor</Model>
         <FXStart />
         <FXMove />
         <FXStop />
         <Once>false</Once>
-        <Start>true</Start>
-        <FramesPerSecond>15</FramesPerSecond>
-        <StartFrame>1</StartFrame>
-        <EndFrame>30</EndFrame>
+        <DoorMode>OpenAndCloseAfterDelay</DoorMode>
+        <WaitingDelay>1000</WaitingDelay>
+        <FramesPerSecond>30</FramesPerSecond>
+        <OpeningStartFrame>1</OpeningStartFrame>
+        <OpeningEndFrame>15</OpeningEndFrame>
+        <ClosingStartFrame>15</ClosingStartFrame>
+        <ClosingEndFrame>30</ClosingEndFrame>
       </Factory>
-    </MapNode>
-    <MapNode xsi:type="MapModel">
-      <Visible>true</Visible>
-      <Frozen>false</Frozen>
-      <Position X="-4" Y="0" Z="-4" />
-      <Rotation X="0" Y="-0.258819044" Z="0" W="0.9659258" />
-      <Scaling>1</Scaling>
-      <ScenePath>scenes\baseDoors\baseDoor.fbx</ScenePath>
-      <Scale>1</Scale>
-      <Color Red="10" Green="10" Blue="10" Alpha="1" />
     </MapNode>
   </Nodes>
 </Map>

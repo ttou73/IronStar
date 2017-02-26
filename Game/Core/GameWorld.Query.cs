@@ -14,6 +14,7 @@ using Fusion.Core.Extensions;
 using IronStar.SFX;
 using Fusion.Core.IniParser.Model;
 using Fusion.Engine.Graphics;
+using IronStar.Entities;
 
 namespace IronStar.Core {
 
@@ -81,6 +82,42 @@ namespace IronStar.Core {
 			foreach ( var target in targets ) {
 				target.Controller?.Activate( activator );
 			}
+		}
+
+
+
+		public bool TryUse ( Entity user )
+		{
+			var character = user.Controller as Character;
+
+			if (character==null) {
+				Log.Warning("TryUse: user is not a character!");
+				return false;
+			}
+
+			var dr = Game.RenderSystem.RenderWorld.Debug;
+
+			foreach ( var ent in GetEntities().Where( e=>e.Controller.AllowUse ) ) {
+				
+				var from	=	character.GetPOV();
+				var dir		=	Matrix.RotationQuaternion( user.Rotation ).Forward;
+				var to		=	from + dir * 2.0f;
+
+				Vector3 n, p;
+				Entity e;
+				
+				var r = RayCastAgainstAll( from, to, out n, out p, out e, user );
+
+				if (!r || e==null) {
+					return false;
+				}
+
+				Log.Verbose("try use: {0}", e.Controller.GetType().Name);
+
+				return e.Controller.Use( user );
+			}	
+
+			return false;
 		}
 
 

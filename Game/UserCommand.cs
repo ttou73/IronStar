@@ -7,6 +7,7 @@ using System.Runtime.InteropServices;
 using System.IO;
 using Fusion.Core.Mathematics;
 using IronStar.Core;
+using Fusion;
 
 namespace IronStar {
 	
@@ -73,6 +74,20 @@ namespace IronStar {
 
 			return userCmd;
 		}
+
+
+
+		public static void FireUserCommandAction ( UserCommand oldCmd, UserCommand newCmd, Action<UserCtrlFlags> ctrlAction )
+		{
+			var values = Enum.GetValues( typeof(UserCtrlFlags) ).Cast<UserCtrlFlags>().ToArray();
+
+			foreach ( var flag in values ) {
+				if ( newCmd.CtrlFlags.HasFlag(flag) && !oldCmd.CtrlFlags.HasFlag(flag) ) {
+					ctrlAction(flag);
+				}
+			}
+		}
+
 
 
 		public override string ToString ()

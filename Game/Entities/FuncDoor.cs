@@ -27,6 +27,7 @@ namespace IronStar.Entities {
 		readonly FuncDoorMode doorMode;
 		readonly bool once;
 		readonly GameWorld world;
+		DoorState doorState = DoorState.Closed;
 
 		readonly short model;
 
@@ -37,14 +38,15 @@ namespace IronStar.Entities {
 		readonly int openingEndFrame	;
 		readonly int closingStartFrame	;
 		readonly int closingEndFrame	;
+		readonly int waitingDelay;
 
 		int activationCount = 0;
-		float timer = 0;
-		bool enabled;
+		float frame = 0;
+		float waiting = 0;
 
 		enum DoorState {
 			Closed,
-			Openning,
+			Opening,
 			Waiting,
 			Closing,
 		}
@@ -69,7 +71,10 @@ namespace IronStar.Entities {
 			openingStartFrame	=	factory.OpeningStartFrame;
 			openingEndFrame		=	factory.OpeningEndFrame;
 			closingStartFrame	=	factory.ClosingStartFrame;
-			closingEndFrame		=	factory.CloseEndFrame;
+			closingEndFrame		=	factory.ClosingEndFrame;
+			waitingDelay		=	factory.WaitingDelay;
+
+			frame				=	openingStartFrame;
 
 			Reset();
 		}
@@ -88,6 +93,26 @@ namespace IronStar.Entities {
 				return;
 			}
 
+
+
+		}
+
+
+		public override bool Use( Entity user )
+		{
+			if (AllowUse) {
+				doorState = DoorState.Opening;
+				return true;
+			} else {
+				return false;
+			}
+		}
+
+
+		public override bool AllowUse {
+			get {
+				return doorState==DoorState.Closed;
+			}
 		}
 
 
@@ -99,7 +124,47 @@ namespace IronStar.Entities {
 
 		public override void Update( float elapsedTime )
 		{
-			Log.Warning("FUNC DOOR NOT IMPLEMENTED");
+			switch (doorState) {
+				case DoorState.Closed:
+					frame	=	openingStartFrame;
+					break;
+
+				case DoorState.Opening: 
+					frame += elapsedTime * framesPerSecond;
+
+					if (frame>openingEndFrame) {
+						doorState	= DoorState.Waiting;
+						frame		= openingEndFrame;
+						waiting		= 0;
+					}
+					
+					break;
+
+				case DoorState.Waiting: 
+
+					waiting += elapsedTime;
+
+					if (waiting>waitingDelay/1000.0f) {
+						doorState	= DoorState.Closing;
+						frame		= closingStartFrame;
+					}
+
+					break;
+
+				case DoorState.Closing: 
+					frame += elapsedTime * framesPerSecond;
+
+					if (frame>closingEndFrame) {
+						doorState	= DoorState.Closed;
+						frame		= closingEndFrame;
+						waiting		= 0;
+					}
+					
+					break;
+			}
+
+			Entity.AnimFrame	= frame;
+			Entity.Model		= model;
 		}
 	}
 
@@ -145,7 +210,7 @@ namespace IronStar.Entities {
 
 		[Category("Movement")]
 		[Description("Min interval (msec) before door closes")]
-		public int CloseDelay { get; set; } = 500;
+		public int WaitingDelay { get; set; } = 500;
 
 
 		[Category("Animation")]
@@ -158,15 +223,15 @@ namespace IronStar.Entities {
 
 		[Category("Animation")]
 		[Description("Opening animation end inclusive frame")]
-		public int OpeningEndFrame { get; set; } = 30;
+		public int OpeningEndFrame { get; set; } = 15;
 
 		[Category("Animation")]
 		[Description("Closing animation start inclusive frame")]
-		public int ClosingStartFrame { get; set; } = 30;
+		public int ClosingStartFrame { get; set; } = 15;
 
 		[Category("Animation")]
 		[Description("Closing animation end inclusive frame")]
-		public int CloseEndFrame { get; set; } = 0;
+		public int ClosingEndFrame { get; set; } = 30;
 
 
 		public override EntityController Spawn( Entity entity, GameWorld world )

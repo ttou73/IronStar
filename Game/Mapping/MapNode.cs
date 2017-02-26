@@ -67,6 +67,11 @@ namespace IronStar.Mapping {
 		public abstract void ActivateNode ();
 
 		/// <summary>
+		/// Initiates entity activation
+		/// </summary>
+		public abstract void UseNode ();
+
+		/// <summary>
 		/// Resets entity
 		/// </summary>
 		/// <param name="world"></param>

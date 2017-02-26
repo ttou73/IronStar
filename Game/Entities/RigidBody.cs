@@ -102,6 +102,20 @@ namespace IronStar.Entities {
 		}
 
 
+		public override bool AllowUse {
+			get {
+				return true;
+			}
+		}
+
+
+		public override bool Use( Entity user )
+		{
+			Log.Message("Box used");
+			return true;
+		}
+
+
 		/// <summary>
 		/// 
 		/// </summary>

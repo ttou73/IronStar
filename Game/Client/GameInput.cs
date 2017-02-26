@@ -45,6 +45,7 @@ namespace IronStar.Client {
 		[Config] public Keys Attack			{ get; set; }
 		[Config] public Keys Zoom			{ get; set; }
 		[Config] public Keys ThrowGrenade	{ get; set; }
+		[Config] public Keys Use			{ get; set; }
 
 		[Config] public Keys UseWeapon1		{ get; set; }
 		[Config] public Keys UseWeapon2		{ get; set; }
@@ -89,6 +90,8 @@ namespace IronStar.Client {
 			Attack			=	Keys.LeftButton;
 			Zoom			=	Keys.D;
 			ThrowGrenade	=	Keys.G;
+
+			Use				=	Keys.LeftControl;
 								
 			UseWeapon1		=	Keys.D1;
 			UseWeapon2		=	Keys.D2;
@@ -182,14 +185,15 @@ namespace IronStar.Client {
 		{
 			var flags = UserCtrlFlags.None;
 			
-			if (Game.Keyboard.IsKeyDown( MoveForward		)) flags |= UserCtrlFlags.Forward;
+			if (Game.Keyboard.IsKeyDown( MoveForward	)) flags |= UserCtrlFlags.Forward;
 			if (Game.Keyboard.IsKeyDown( MoveBackward	)) flags |= UserCtrlFlags.Backward;
 			if (Game.Keyboard.IsKeyDown( StrafeLeft		)) flags |= UserCtrlFlags.StrafeLeft;
-			if (Game.Keyboard.IsKeyDown( StrafeRight		)) flags |= UserCtrlFlags.StrafeRight;
+			if (Game.Keyboard.IsKeyDown( StrafeRight	)) flags |= UserCtrlFlags.StrafeRight;
 			if (Game.Keyboard.IsKeyDown( Jump			)) flags |= UserCtrlFlags.Jump;
 			if (Game.Keyboard.IsKeyDown( Crouch			)) flags |= UserCtrlFlags.Crouch;
 			if (Game.Keyboard.IsKeyDown( Zoom			)) flags |= UserCtrlFlags.Zoom;
 			if (Game.Keyboard.IsKeyDown( Attack			)) flags |= UserCtrlFlags.Attack;
+			if (Game.Keyboard.IsKeyDown( Use			)) flags |= UserCtrlFlags.Use;
 
 
 			//	http://eliteownage.com/mousesensitivity.html 

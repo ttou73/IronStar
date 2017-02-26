@@ -93,7 +93,7 @@ namespace IronStar.Core {
 		{
 			var p = GetPlayer(guid);
 			if (p!=null) {
-				p.FeedCommand(command);
+				p.FeedCommand(this,command);
 			}
 		}
 

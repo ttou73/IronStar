@@ -45,5 +45,18 @@ namespace IronStar.Entities {
 		{
 			return new StartPoint( entity, world, StartPointType );
 		}
+
+
+		public override void Draw( DebugRender dr, Matrix transform, Color color )
+		{
+			var p0 = transform.TranslationVector;
+			var p1 = transform.TranslationVector + Vector3.Up*2;
+			var pf = transform.TranslationVector + transform.Forward;
+
+
+			dr.DrawRing( p0, 0.50f, color, 16 );
+			dr.DrawRing( p1, 0.50f, color, 16 );
+			dr.DrawLine( p0, pf, color, color, 5, 1 );
+		}
 	}
 }

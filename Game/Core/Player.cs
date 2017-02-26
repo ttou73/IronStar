@@ -82,9 +82,22 @@ namespace IronStar {
 		/// 
 		/// </summary>
 		/// <param name="cmdData"></param>
-		public void FeedCommand ( byte[] cmdData )
+		public void FeedCommand ( GameWorld world, byte[] cmdData )
 		{
-			UserCmd	=	UserCommand.FromBytes( cmdData );
+			var oldCmd	=	UserCmd;
+			UserCmd		=	UserCommand.FromBytes( cmdData );
+
+			UserCommand.FireUserCommandAction( oldCmd, UserCmd, (f) => ControlEventAction(world,f) );
+		}
+
+
+
+		void ControlEventAction ( GameWorld world, UserCtrlFlags ctrlFlag )
+		{
+			if (ctrlFlag.HasFlag(UserCtrlFlags.Use)) {
+				var player = world.GetEntityOrNull( "player", e => e.UserGuid==Guid );
+				world.TryUse( player );
+			}
 		}
 
 
@@ -134,16 +147,7 @@ namespace IronStar {
 			Entity ent;
 
 			if (sp==null) {
-				#warning do not spawn player
-				Log.Warning("No 'startPoint' found");
-
-				ent = world.Spawn( "player", 0, Vector3.Up*10, Quaternion.Identity );
-				world.SpawnFX( "TeleportOut", ent.ID, Vector3.Up*10 );
-				ent.UserGuid = Guid;
-
-				PlayerEntity = ent;
-
-				return ent;
+				throw new GameException("No start point");
 			}
 
 			ent = world.Spawn( "player", 0, sp.Position, sp.Rotation );
