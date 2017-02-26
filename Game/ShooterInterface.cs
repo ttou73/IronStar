@@ -13,29 +13,35 @@ using Fusion;
 using Fusion.Engine.Client;
 using Fusion.Engine.Common;
 using Fusion.Engine.Server;
+using IronStar.UI;
+using IronStar.UI.Pages;
+using IronStar.UI.Controls;
 
 namespace IronStar {
 
 	class ShooterInterface : IUserInterface {
 
 		readonly Game Game;
+        readonly IMenuGenerator menuGenerator;
 
-		DiscTexture	background;
+        DiscTexture	background;
 		SpriteLayer uiLayer;
 		SpriteFont	headerFont;
 		SpriteFont	textFont;
 		SpriteFont	titleFont;
 
-
-		/// <summary>
-		/// Creates instance of ShooterDemoUserInterface
-		/// </summary>
-		/// <param name="engine"></param>
-		public ShooterInterface ( Game game )
+        Page StartMenu;
+        /// <summary>
+        /// Creates instance of ShooterDemoUserInterface
+        /// </summary>
+        /// <param name="engine"></param>
+        public ShooterInterface ( Game game )
 		{
 			this.Game	=	game;
 			ShowMenu	=	true;
-		}
+            menuGenerator = new PrimitiveMenuGenerator(game);
+
+        }
 
 
 
@@ -54,6 +60,18 @@ namespace IronStar {
 			Game.Reloading += (s,e) => LoadContent();
 
 			Game.GameClient.ClientStateChanged += GameClient_ClientStateChanged;
+
+            Game.Frames.DefaultFont = Game.Content.Load<SpriteFont>(@"fonts\armata");
+
+            StartMenu = menuGenerator.CreateMenu("startMenu", new StartPageOptions(Game));
+            Game.Frames.RootFrame.Add(StartMenu);
+
+            Game.Frames.RootFrame.Resize += (s, e) =>
+            {
+                Game.Frames.RootFrame.Remove(StartMenu);
+                StartMenu = menuGenerator.CreateMenu("startMenu", new StartPageOptions(Game));
+                Game.Frames.RootFrame.Add(StartMenu);
+            };
 		}
 
 		
@@ -123,14 +141,14 @@ namespace IronStar {
 
 
 
-			switch (clientState) {
+			/*switch (clientState) {
 				case ClientState.StandBy		: DrawStandByScreen(); break;
 				case ClientState.Connecting		: DrawLoadingScreen("Connecting..."); break;
 				case ClientState.Loading		: DrawLoadingScreen("Loading..."); break;
 				case ClientState.Awaiting		: DrawLoadingScreen("Awaiting snapshot..."); break;
 				case ClientState.Disconnected	: DrawLoadingScreen("Disconnected."); break;
 				case ClientState.Active			: break;
-			}
+			}*/
 
 			if (ShowMenu) {
 
