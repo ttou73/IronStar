@@ -158,7 +158,7 @@ namespace IronStar {
 				Game.Mouse.IsMouseHidden	=	false;
 
 			} else {
-
+                StartMenu.Visible = false;
 				if (!Game.Console.IsShown) {
 					Game.Keyboard.ScanKeyboard	=	true;
 					Game.Mouse.IsMouseCentered	=	true;
