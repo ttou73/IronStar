@@ -127,6 +127,7 @@ namespace IronStar {
 
 
 			if (Game.GameEditor.Instance!=null) {
+                StartMenu.Visible = false;
 				return;
 			}
 

@@ -47,6 +47,7 @@ namespace IronStar.Core {
 		HasTraction			=	0x0001,
 		CameraEntity		=	0x0002,
 		UseInlineModel		=	0x0004,
+		Crouching			=	0x0008,
 	}
 
 

@@ -281,7 +281,7 @@
     <MapNode xsi:type="MapEntity">
       <Visible>true</Visible>
       <Frozen>false</Frozen>
-      <Position X="5" Y="-0" Z="4" />
+      <Position X="5" Y="0" Z="4" />
       <Rotation X="0" Y="0.6087614" Z="0" W="0.7933533" />
       <Scaling>1</Scaling>
       <Factory xsi:type="StartPointFactory">

@@ -77,8 +77,9 @@ namespace IronStar.Entities {
 
 		Vector3 AttackPos ( Entity e )
 		{
+			var c = e.Controller as Character;
 			var m = Matrix.RotationQuaternion(e.Rotation);
-			return e.Position + Vector3.Up + m.Right * 0.1f + m.Down * 0.1f + m.Forward * 0.3f;
+			return c.GetPOV() + m.Right * 0.1f + m.Down * 0.1f + m.Forward * 0.3f;
 		}
 
 

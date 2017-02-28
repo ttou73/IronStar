@@ -115,7 +115,7 @@ namespace BEPUphysics.Character
             this.characterBody = characterBody;
             standingHeight = characterBody.Height;
             if (crouchingHeight < standingHeight)
-                this.crouchingHeight = StandingHeight * .7f;
+                this.crouchingHeight = crouchingHeight;//StandingHeight * .7f;
             else
                 throw new ArgumentException("Crouching height must be less than standing height.");
 

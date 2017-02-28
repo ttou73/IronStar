@@ -32,9 +32,10 @@ namespace IronStar.Entities {
 		bool		rlStep		= false;
 		bool		oldTraction = true;
 		Vector3		oldVelocity = Vector3.Zero;
-		readonly	float heightStand;
+		readonly	float heightStanding;
 		readonly	float heightCrouch;
-
+		readonly	Vector3 offsetCrouch;
+		readonly	Vector3 offsetStanding;
 
 		/// <summary>
 		/// 
@@ -45,10 +46,13 @@ namespace IronStar.Entities {
 		{
 			this.space	=	world.PhysSpace;
 
-			var pos = MathConverter.Convert( entity.Position );
-
 			heightCrouch	=	factory.CrouchingHeight;
-			heightStand		=	factory.Height;
+			heightStanding	=	factory.Height;
+			offsetCrouch	=	Vector3.Up * heightCrouch / 2;
+			offsetStanding	=	Vector3.Up * heightStanding / 2;
+
+
+			var pos = MathConverter.Convert( entity.Position + offsetStanding );
 
 			controller = new CharacterController( pos, 
 					factory.Height				, 
@@ -103,9 +107,23 @@ namespace IronStar.Entities {
 		/// <returns></returns>
 		public virtual Vector3 GetPOV ()
 		{
-			return Entity.Position + Vector3.Up * heightStand / 2;
+			return Entity.Position + Vector3.Up * (IsCrouching ? 0.8f : 1.8f);
 		}
 
+
+
+		bool IsCrouching {
+			get {
+				return controller.StanceManager.CurrentStance == Stance.Crouching;
+			}
+		}
+
+
+
+		Vector3 GetPovOffset ()
+		{
+			return IsCrouching ? offsetCrouch : offsetStanding;
+		}
 
 
 		/// <summary>
@@ -194,7 +212,7 @@ namespace IronStar.Entities {
 
 			Move();
 
-			e.Position			=	MathConverter.Convert( c.Body.Position ); 
+			e.Position			=	MathConverter.Convert( c.Body.Position ) - GetPovOffset(); 
 			e.LinearVelocity	=	MathConverter.Convert( c.Body.LinearVelocity );
 			e.AngularVelocity	=	MathConverter.Convert( c.Body.AngularVelocity );
 
@@ -202,6 +220,12 @@ namespace IronStar.Entities {
 				e.State |= EntityState.HasTraction;
 			} else {
 				e.State &= ~EntityState.HasTraction;
+			}
+
+			if (c.StanceManager.CurrentStance==Stance.Crouching) {
+				e.State |= EntityState.Crouching;
+			} else {
+				e.State &= ~EntityState.Crouching;
 			}
 
 
@@ -282,11 +306,13 @@ namespace IronStar.Entities {
 
 			var move = Vector3.Zero;
 			var jump = false;
+			var crouch = false;
 			if (ent.UserCtrlFlags.HasFlag( UserCtrlFlags.Forward )) move += m.Forward;
 			if (ent.UserCtrlFlags.HasFlag( UserCtrlFlags.Backward )) move += m.Backward;
 			if (ent.UserCtrlFlags.HasFlag( UserCtrlFlags.StrafeLeft )) move += m.Left;
 			if (ent.UserCtrlFlags.HasFlag( UserCtrlFlags.StrafeRight )) move += m.Right;
 			if (ent.UserCtrlFlags.HasFlag( UserCtrlFlags.Jump )) jump = true;
+			if (ent.UserCtrlFlags.HasFlag( UserCtrlFlags.Crouch )) crouch = true;
 
 			if (controller==null) {
 				return;
@@ -294,6 +320,8 @@ namespace IronStar.Entities {
 
 			controller.HorizontalMotionConstraint.MovementDirection = new BEPUutilities.Vector2( move.X, -move.Z );
 			controller.HorizontalMotionConstraint.TargetSpeed	=	8.0f;
+
+			controller.StanceManager.DesiredStance	=	crouch ? Stance.Crouching : Stance.Standing;
 
 			controller.TryToJump = jump;
 			

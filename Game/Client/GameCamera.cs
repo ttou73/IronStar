@@ -16,8 +16,7 @@ using IronStar.Core;
 using BEPUphysics;
 using BEPUphysics.Character;
 using Fusion.Engine.Audio;
-
-
+using IronStar.Entities;
 
 namespace IronStar.Views {
 	public class GameCamera {
@@ -68,7 +67,7 @@ namespace IronStar.Views {
 		
 			//rw.Camera.SetupCameraFov( new Vector3(10,4,10), new Vector3(0,4,0), Vector3.Up, MathUtil.Rad(90), 0.125f, 1024f, 1, 0, aspect );
 
-			var player	=	World.GetEntityOrNull( "player", e => e.UserGuid == World.UserGuid );
+			var player		=	World.GetEntityOrNull( "player", e => e.UserGuid == World.UserGuid );
 
 			if (player==null) {
 
@@ -99,7 +98,8 @@ namespace IronStar.Views {
 			var ppos	=	player.LerpPosition(lerpFactor);
 
 			float backoffset = false ? 2 : 0;
-			var pos		=	ppos + Vector3.Up * 0.8f + m.Backward * backoffset;
+			var h		=	player.State.HasFlag( EntityState.Crouching ) ? 0.8f : 1.8f;
+			var pos		=	player.Position + Vector3.Up * h; 
 
 			var fwd	=	pos + m.Forward;
 			var up	=	m.Up;
