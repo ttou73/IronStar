@@ -25,7 +25,7 @@ turtle/*
 *.jpg
 
 [TextureAtlas]
-*spots.atlas /width:512 /height:512
+*spots.atlas /width:1024 /height:1024
 *particles.atlas  /width:2048 /height:1024 /fill:"0, 0, 0, 0" /pad:16
 *decals.atlas  /width:2048 /height:1024 /fill:"0, 0, 0, 0" /pad:16
 

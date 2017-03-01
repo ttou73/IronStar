@@ -68,7 +68,7 @@ namespace Fusion.Engine.Graphics {
 					context.ColorBuffer			=	cascadedShadowMap.ColorBuffer.Surface;
 					context.DepthBuffer			=	cascadedShadowMap.DepthBuffer.Surface;
 
-					Game.RenderSystem.SceneRenderer.RenderShadowMapCascade( context, instances );
+					Game.RenderSystem.ForwardRenderer.RenderShadowMap( context, instances );
 				}
 			}
 
@@ -115,7 +115,7 @@ namespace Fusion.Engine.Graphics {
 					context.ColorBuffer			=	spotColor.Surface;
 					context.DepthBuffer			=	spotDepth.Surface;
 
-					Game.RenderSystem.SceneRenderer.RenderShadowMapCascade( context, instances );
+					Game.RenderSystem.ForwardRenderer.RenderShadowMap( context, instances );
 				}
 			}
 		}

@@ -37,8 +37,8 @@ namespace Fusion.Engine.Graphics {
 		internal LightRenderer	LightRenderer { get { return lightRenderer; } }
 		LightRenderer	lightRenderer;
 		
-		internal SceneRenderer	SceneRenderer { get { return sceneRenderer; } }
-		SceneRenderer	sceneRenderer;
+		internal ForwardRenderer ForwardRenderer { get { return forwardRenderer; } }
+		ForwardRenderer	forwardRenderer;
 		
 		internal VTSystem	VTSystem { get { return vtSystem; } }
 		VTSystem	vtSystem;
@@ -118,7 +118,7 @@ namespace Fusion.Engine.Graphics {
 			hdrFilter		=	new HdrFilter( this );
 			dofFilter		=	new DofFilter( this );
 			lightRenderer	=	new LightRenderer( this );
-			sceneRenderer	=	new SceneRenderer( this );
+			forwardRenderer	=	new ForwardRenderer( this );
 			sky				=	new Sky( this );
 			bitonicSort		=	new BitonicSort( this );
 			vtSystem	=	new VTSystem( this );
@@ -165,7 +165,7 @@ namespace Fusion.Engine.Graphics {
 			InitializeComponent( hdrFilter		);
 			InitializeComponent( dofFilter		);
 			InitializeComponent( lightRenderer	);
-			InitializeComponent( sceneRenderer	);
+			InitializeComponent( forwardRenderer);
 			InitializeComponent( sky			);	
 			InitializeComponent( bitonicSort	);
 			InitializeComponent( vtSystem );

@@ -1,10 +1,8 @@
 
 
 static const float 	VTVirtualPageCount	= 1024;
-//static const float 	VTPhysicalPageCount	= 7;
 static const int 	VTPageSize			= 128;
 static const int 	VTMaxMip	  		= 6;
-//static const float	VTPageScale			= 1024/VTPageSize;
 
 struct BATCH {
 	float4x4	Projection		;
@@ -50,9 +48,7 @@ struct PSInput {
 
 struct GBuffer {
 	float4	hdr		 	: SV_Target0;
-	float4	gbuffer0 	: SV_Target1;
-	float4	gbuffer1 	: SV_Target2;
-	float4	feedback	: SV_Target3;
+	float4	feedback	: SV_Target1;
 };
 
 cbuffer 		CBBatch 			: 	register(b0) { BATCH    Batch      : packoffset( c0 ); }	
@@ -61,10 +57,13 @@ cbuffer 		CBBatch 			: 	register(b3) { float4x4 Bones[128] : packoffset( c0 ); }
 SamplerState	SamplerLinear		: 	register(s0);
 SamplerState	SamplerPoint		: 	register(s1);
 SamplerState	SamplerAnisotropic	: 	register(s2);
-Texture2D		Textures[6]			: 	register(t0);
+Texture2D		VTPageTable			: register(t1);
+Texture2D		VTTexture1			: register(t2);
+Texture2D		VTTexture2			: register(t3);
+Texture2D		VTTexture3			: register(t4);
 
 #ifdef _UBERSHADER
-$ubershader GBUFFER RIGID|SKINNED
+$ubershader FORWARD RIGID|SKINNED
 $ubershader SHADOW RIGID|SKINNED
 #endif
 
@@ -197,7 +196,7 @@ float MipLevel( float2 uv )
 
 
 
-#ifdef GBUFFER
+#ifdef FORWARD
 GBuffer PSMain( PSInput input )
 {
 	GBuffer output;
@@ -218,7 +217,7 @@ GBuffer PSMain( PSInput input )
 	input.TexCoord.y	=	mad( input.TexCoord.y, Subset.Rectangle.w, Subset.Rectangle.y );
 	
 	//---------------------------------
-	//	Compute miplevel :
+	//	Compute mip-level :
 	//---------------------------------
 	float mip		=	max(0,floor( MipLevel( input.TexCoord.xy ) ));
 	float scale		=	exp2(mip);
@@ -239,7 +238,7 @@ GBuffer PSMain( PSInput input )
 	//float4 physPageTC	=	Textures[1].SampleLevel( SamplerPoint, input.TexCoord + atiHack, (int)(mip) ).xyzw;
 
 	int2 indexXY 		=	(int2)floor((input.TexCoord + atiHack) * VTVirtualPageCount / scale);
-	float4 physPageTC	=	Textures[1].Load( int3(indexXY, (int)(mip)) ).xyzw;
+	float4 physPageTC	=	VTPageTable.Load( int3(indexXY, (int)(mip)) ).xyzw;
 	
 	if (physPageTC.w>0) {
 		float2 	withinPageTC	=	vtexTC * VTVirtualPageCount / exp2(physPageTC.z);
@@ -248,16 +247,11 @@ GBuffer PSMain( PSInput input )
 		
 		float2	finalTC			=	physPageTC.xy + withinPageTC;
 		
-		baseColor	=	Textures[2].Sample( SamplerLinear, finalTC ).rgb;
-		localNormal	=	Textures[3].Sample( SamplerLinear, finalTC ).rgb * 2 - 1;
-		roughness	=	Textures[4].Sample( SamplerLinear, finalTC ).r;
-		metallic	=	Textures[4].Sample( SamplerLinear, finalTC ).g;
-		emission	=	Textures[4].Sample( SamplerLinear, finalTC ).b;
-		/*baseColor	=	Textures[2].Sample( SamplerPoint, finalTC ).rgb;
-		localNormal	=	Textures[3].Sample( SamplerPoint, finalTC ).rgb * 2 - 1;
-		roughness	=	Textures[4].Sample( SamplerPoint, finalTC ).r;
-		metallic	=	Textures[4].Sample( SamplerPoint, finalTC ).g;
-		emission	=	Textures[4].Sample( SamplerPoint, finalTC ).b;//*/
+		baseColor	=	VTTexture1.Sample( SamplerLinear, finalTC ).rgb;
+		localNormal	=	VTTexture2.Sample( SamplerLinear, finalTC ).rgb * 2 - 1;
+		roughness	=	VTTexture3.Sample( SamplerLinear, finalTC ).r;
+		metallic	=	VTTexture3.Sample( SamplerLinear, finalTC ).g;
+		emission	=	VTTexture3.Sample( SamplerLinear, finalTC ).b;
 	}
 
 	if ( Subset.Rectangle.z==Subset.Rectangle.w && Subset.Rectangle.z==0 ) {
@@ -269,6 +263,18 @@ GBuffer PSMain( PSInput input )
 	}
 
 	//---------------------------------
+	//	Apply decals :
+	//---------------------------------
+
+	//---------------------------------
+	//	Compute direct light :
+	//---------------------------------
+	
+	//---------------------------------
+	//	Compute omni and spot lights :
+	//---------------------------------
+	
+	//---------------------------------
 	//	G-buffer output stuff :
 	//---------------------------------
 	//	NB: Multiply normal length by local normal projection on surface normal.
@@ -279,9 +285,7 @@ GBuffer PSMain( PSInput input )
 	float3 entityColor	=	input.Color.rgb;
 	
 	//	Use sRGB texture for better color intensity distribution
-	output.hdr			=	float4( emission * entityColor, 0 );		// <-- Multiply on entity color!!!
-	output.gbuffer0		=	float4( baseColor, roughness );
-	output.gbuffer1 	=	float4( worldNormal * 0.5f + 0.5f, metallic );
+	output.hdr			=	float4( emission * entityColor, 0 ) + diffuse;
 	output.feedback		=	feedback;
 	
 	return output;
@@ -293,11 +297,11 @@ GBuffer PSMain( PSInput input )
 #ifdef SHADOW
 float4 PSMain( PSInput input ) : SV_TARGET0
 {
-	float z		= input.ProjPos.z / Batch.BiasSlopeFar.z;
-
-	float dzdx	 = ddx(z);
-	float dzdy	 = ddy(z);
-	float slope = abs(dzdx) + abs(dzdy);
+	float z		=	input.ProjPos.z / Batch.BiasSlopeFar.z;
+	
+	float dzdx	=	ddx(z);
+	float dzdy	=	ddy(z);
+	float slope	=	abs(dzdx) + abs(dzdy);
 
 	return z + Batch.BiasSlopeFar.x + slope * Batch.BiasSlopeFar.y;
 }

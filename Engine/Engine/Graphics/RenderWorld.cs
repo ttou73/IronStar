@@ -316,18 +316,6 @@ namespace Fusion.Engine.Graphics {
 
 
 
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="path"></param>
-		/// <returns></returns>
-		[Obsolete]
-		public IEnumerable<MeshInstance> CreateModelInstances ()
-		{
-			throw new NotImplementedException();
-		}
-
-
 		/*-----------------------------------------------------------------------------------------
 		 * 
 		 *	Rendering :
@@ -410,7 +398,7 @@ namespace Fusion.Engine.Graphics {
 
 
 			//	render g-buffer :
-			rs.SceneRenderer.RenderGBuffer( gameTime, stereoEye, Camera, viewHdrFrame, this, false );
+			rs.ForwardRenderer.RenderGBuffer( gameTime, stereoEye, Camera, viewHdrFrame, this, false );
 
 			//	render ssao :
 			rs.SsaoFilter.Render( stereoEye, Camera, viewHdrFrame.DepthBuffer, viewHdrFrame.GBuffer1 );
@@ -495,7 +483,7 @@ namespace Fusion.Engine.Graphics {
 						camera.SetupCameraCubeFace( envLight.Position, (CubeFace)i, 0.125f, 5000 );
 
 						//	render g-buffer :
-						rs.SceneRenderer.RenderGBuffer( new GameTime(0,0,0), StereoEye.Mono, camera, radianceFrame, this, true );
+						rs.ForwardRenderer.RenderGBuffer( new GameTime(0,0,0), StereoEye.Mono, camera, radianceFrame, this, true );
 
 						//	render sky :
 						rs.Sky.Render( camera, StereoEye.Mono, radianceFrame, SkySettings );

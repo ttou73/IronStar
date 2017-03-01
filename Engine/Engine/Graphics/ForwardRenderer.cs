@@ -14,7 +14,15 @@ using Fusion.Development;
 
 namespace Fusion.Engine.Graphics {
 
-	internal class SceneRenderer : RenderComponent {
+	[RequireShader("forward")]
+	internal class ForwardRenderer : RenderComponent {
+
+		public enum SurfaceFlags {
+			FORWARD					=	1 << 0,
+			SHADOW					=	1 << 1,
+			RIGID					=	1 << 4,
+			SKINNED					=	1 << 5,
+		}
 
 		internal const int MaxBones = 128;
 
@@ -62,7 +70,7 @@ namespace Fusion.Engine.Graphics {
 		/// 
 		/// </summary>
 		/// <param name="Game"></param>
-		public SceneRenderer ( RenderSystem rs ) : base( rs )
+		public ForwardRenderer ( RenderSystem rs ) : base( rs )
 		{
 		}
 
@@ -103,7 +111,7 @@ namespace Fusion.Engine.Graphics {
 		/// </summary>
 		void LoadContent ()
 		{
-			surfaceShader	=	Game.RenderSystem.Shaders.Load("surface");
+			surfaceShader	=	Game.RenderSystem.Shaders.Load("forward");
 			factory			=	surfaceShader.CreateFactory( typeof(SurfaceFlags), (ps,i) => Enum(ps, (SurfaceFlags)i ) );
 		}
 
@@ -190,13 +198,11 @@ namespace Fusion.Engine.Graphics {
 
 				var hdr			=	frame.HdrBuffer.Surface;
 				var depth		=	frame.DepthBuffer.Surface;
-				var gbuffer0	=	frame.GBuffer0.Surface;
-				var gbuffer1	=	frame.GBuffer1.Surface;
 				var feedback	=	frame.FeedbackBuffer.Surface;
 
 				device.ResetStates();
 
-				device.SetTargets( depth, hdr, gbuffer0, gbuffer1, feedback );
+				device.SetTargets( depth, hdr, feedback );
 				device.PixelShaderSamplers[0]	= SamplerState.LinearPointClamp ;
 				device.PixelShaderSamplers[1]	= SamplerState.PointClamp;
 				device.PixelShaderSamplers[2]	= SamplerState.AnisotropicClamp;
@@ -244,7 +250,7 @@ namespace Fusion.Engine.Graphics {
 
 					try {
 
-						device.PipelineState	=	factory[ (int)( SurfaceFlags.GBUFFER | SurfaceFlags.RIGID ) ];
+						device.PipelineState	=	factory[ (int)( SurfaceFlags.FORWARD | SurfaceFlags.RIGID ) ];
 
 
 						foreach ( var subset in instance.Subsets ) {
@@ -305,7 +311,7 @@ namespace Fusion.Engine.Graphics {
 		/// 
 		/// </summary>
 		/// <param name="context"></param>
-		internal void RenderShadowMapCascade ( ShadowContext shadowRenderCtxt, IEnumerable<MeshInstance> instances )
+		internal void RenderShadowMap ( ShadowContext shadowRenderCtxt, IEnumerable<MeshInstance> instances )
 		{
 			using ( new PixEvent("ShadowMap") ) {
 				if (surfaceShader==null) {
