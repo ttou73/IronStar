@@ -103,7 +103,7 @@ namespace Fusion.Engine.Graphics {
 		/// </summary>
 		void LoadContent ()
 		{
-			surfaceShader	=	Game.RenderSystem.Shaders.Load("surface");
+			surfaceShader	=	Game.Content.Load<Ubershader>("surface");
 			factory			=	surfaceShader.CreateFactory( typeof(SurfaceFlags), (ps,i) => Enum(ps, (SurfaceFlags)i ) );
 		}
 

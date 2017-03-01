@@ -8,6 +8,7 @@ using Fusion.Core.Mathematics;
 using Fusion.Drivers.Graphics;
 using Fusion.Core;
 using Fusion.Engine.Common;
+using Fusion.Engine.Graphics.Ubershaders;
 
 namespace Fusion.Engine.Graphics {
 	[RequireShader("sprite")]
@@ -63,7 +64,7 @@ namespace Fusion.Engine.Graphics {
 
 		void LoadContent ()
 		{
-			shader		=	rs.Shaders.Load("sprite");
+			shader		=	Game.Content.Load<Ubershader>("sprite");
 			factory		=	shader.CreateFactory( typeof(Flags), (ps,i) => StateEnum( ps, (Flags)i) );
 		}
 

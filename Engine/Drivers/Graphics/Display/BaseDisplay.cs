@@ -18,6 +18,7 @@ using Fusion.Input.Touch;
 using Fusion.Input;
 using System.Runtime.InteropServices;
 using Fusion.Engine.Graphics;
+using Fusion.Engine.Graphics.Ubershaders;
 
 
 namespace Fusion.Drivers.Graphics.Display {
@@ -70,7 +71,7 @@ namespace Fusion.Drivers.Graphics.Display {
 		/// </summary>
 		void LoadContent ()
 		{
-			stereo	=	Game.RenderSystem.Shaders.Load("stereo");
+			stereo	=	Game.Content.Load<Ubershader>("stereo");
 
 			SafeDispose( ref factory );
 			factory	=	stereo.CreateFactory( typeof(Flags), Primitive.TriangleList, VertexInputElement.Empty, BlendState.Opaque, RasterizerState.CullNone, DepthStencilState.None );

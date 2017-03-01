@@ -10,7 +10,7 @@ using Fusion.Core.Content;
 using Fusion.Core.Configuration;
 using Fusion.Drivers.Graphics;
 using Fusion.Engine.Common;
-
+using Fusion.Engine.Graphics.Ubershaders;
 
 namespace Fusion.Engine.Graphics {
 	/// <summary>
@@ -168,7 +168,7 @@ namespace Fusion.Engine.Graphics {
 		void LoadContent ()
 		{
 			SafeDispose( ref factory );
-			shader	=	rs.Shaders.Load("ssao");
+			shader	=	Game.Content.Load<Ubershader>("ssao");
 			factory	=	shader.CreateFactory( typeof(Flags), Primitive.TriangleList, VertexInputElement.Empty, BlendState.Opaque, RasterizerState.CullNone, DepthStencilState.None ); 
 		}
 

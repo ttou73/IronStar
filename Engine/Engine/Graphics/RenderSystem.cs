@@ -46,9 +46,6 @@ namespace Fusion.Engine.Graphics {
 		internal Sky	Sky { get { return sky; } }
 		Sky	sky;
 
-		internal ShaderManager Shaders { get { return shaders; } }
-		ShaderManager shaders;
-
 		/// <summary>
 		/// Gets render counters.
 		/// </summary>
@@ -110,8 +107,6 @@ namespace Fusion.Engine.Graphics {
 
 			this.Device	=	Game.GraphicsDevice;
 
-			shaders	=	new ShaderManager( this );
-
 			spriteEngine	=	new SpriteEngine( this );
 			filter			=	new Filter( this );
 			ssaoFilter		=	new SsaoFilter( this );
@@ -157,8 +152,6 @@ namespace Fusion.Engine.Graphics {
 		public override void Initialize ()
 		{
 			//	init components :
-			InitializeComponent( shaders );
-
 			InitializeComponent( spriteEngine	);
 			InitializeComponent( filter			);
 			InitializeComponent( ssaoFilter		);

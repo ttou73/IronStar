@@ -14,6 +14,7 @@ using Fusion.Core.Extensions;
 using Fusion.Engine.Graphics;
 using System.Net;
 using Fusion.Build.Mapping;
+using Fusion.Engine.Graphics.Ubershaders;
 
 namespace Fusion.Build {
 	public class Builder {
@@ -403,33 +404,27 @@ namespace Fusion.Build {
 		/// <returns></returns>
 		public IEnumerable<AssetSource> GatherRequiredShaders ( BuildContext context, BuildResult result )
 		{
-			var list = new List<string>();
-
-			var attributes = 	
-				Misc.GetAllClassesWithAttribute<RequireShaderAttribute>()
-					.Select( type1 => type1.GetCustomAttribute<RequireShaderAttribute>() )
-					.ToArray();
-
-			foreach ( var attr in attributes ) {	
-				list.AddRange( attr.RequiredShaders );
-			}
-
-			
-			list	=	list.Distinct().ToList();
-
-
 			var options = context.Options;
-
 			var srcList = new List<AssetSource>();
 
-			foreach ( var name in list ) {
 
-				var nameExt = Path.ChangeExtension( name, ".hlsl" );
+			var shaderList = Misc.GetAllClassesWithAttribute<RequireShaderAttribute>()
+					.Select( type1 => new { Type=type1, Name=type1.GetCustomAttribute<RequireShaderAttribute>().RequiredShader } )
+					.DistinctBy( shader => shader.Name )
+					.ToArray();
+
+
+			foreach ( var shader in shaderList ) {
+
+				var nameExt = Path.ChangeExtension( shader.Name, ".hlsl" );
 				
 				try {
 					var baseDir		=	"";
 					var fullPath	=	context.ResolveContentPath( nameExt, out baseDir );
 					var assetSrc	=	new AssetSource( nameExt, baseDir, typeof(UbershaderProcessor), new string[0], context );
+					assetSrc.ReflectingType = shader.Type;
+
+					UbershaderGenerator.GenerateVirtualHeader( shader.Type );
 
 					srcList.Add( assetSrc );
 

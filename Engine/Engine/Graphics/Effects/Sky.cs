@@ -11,6 +11,7 @@ using Fusion.Drivers.Graphics;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
 using Fusion.Core.Extensions;
+using Fusion.Engine.Graphics.Ubershaders;
 
 namespace Fusion.Engine.Graphics {
 
@@ -116,7 +117,7 @@ namespace Fusion.Engine.Graphics {
 		/// </summary>
 		void LoadContent ()
 		{
-			sky			=	Game.RenderSystem.Shaders.Load("sky");
+			sky			=	Game.Content.Load<Ubershader>("sky");
 			factory		=	sky.CreateFactory( typeof(SkyFlags), (ps,i) => EnumFunc(ps, (SkyFlags)i) );
 		}
 

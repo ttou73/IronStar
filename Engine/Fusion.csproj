@@ -161,32 +161,6 @@
     <Compile Include="Development\CheckListDialog.Designer.cs">
       <DependentUpon>CheckListDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Development\Dashboard.Config.cs">
-      <DependentUpon>Dashboard.cs</DependentUpon>
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Development\Dashboard.Maps.cs">
-      <DependentUpon>Dashboard.cs</DependentUpon>
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Development\Dashboard.Shaders.cs">
-      <DependentUpon>Dashboard.cs</DependentUpon>
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Development\Dashboard.SFX.cs">
-      <DependentUpon>Dashboard.cs</DependentUpon>
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Development\Dashboard.RawFiles.cs">
-      <DependentUpon>Dashboard.cs</DependentUpon>
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Development\Dashboard.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Development\Dashboard.Designer.cs">
-      <DependentUpon>Dashboard.cs</DependentUpon>
-    </Compile>
     <Compile Include="Development\FileLocationEditor.cs" />
     <Compile Include="Development\LaunchBox.cs" />
     <Compile Include="Development\NameDialog.cs">
@@ -234,7 +208,10 @@
     <Compile Include="Engine\Graphics\Effects\FogSettings.cs" />
     <Compile Include="Engine\Graphics\Lights\Decal.cs" />
     <Compile Include="Engine\Graphics\RenderComponent.cs" />
-    <Compile Include="Engine\Graphics\RequireShaderAttribute.cs" />
+    <Compile Include="Engine\Graphics\Ubershaders\ShaderDefineAttribute.cs" />
+    <Compile Include="Engine\Graphics\Ubershaders\ShaderResourceAttribute.cs" />
+    <Compile Include="Engine\Graphics\Ubershaders\ShaderStructureAttribute.cs" />
+    <Compile Include="Engine\Graphics\Ubershaders\RequireShaderAttribute.cs" />
     <Compile Include="Core\Collection\ConcurrentPriorityQueue.cs" />
     <Compile Include="Core\Configuration\ConfigVariable.cs" />
     <Compile Include="Core\Content\AssetStream.cs" />
@@ -361,7 +338,7 @@
     <Compile Include="Engine\Common\Commands\CrashServer.cs" />
     <Compile Include="Core\Configuration\ConfigManager.cs" />
     <Compile Include="Engine\Graphics\Scene\SceneMapping.cs" />
-    <Compile Include="Engine\Graphics\ShaderManager.cs" />
+    <Compile Include="Engine\Graphics\Ubershaders\UbershaderGenerator.cs" />
     <Compile Include="Engine\Graphics\VirtualTexture.cs" />
     <Compile Include="Engine\Graphics\VTStamper.cs" />
     <Compile Include="Engine\Graphics\VTTileLoader.cs" />
@@ -638,9 +615,6 @@
   <ItemGroup>
     <EmbeddedResource Include="Development\CheckListDialog.resx">
       <DependentUpon>CheckListDialog.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Development\Dashboard.resx">
-      <DependentUpon>Dashboard.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Development\ExceptionDialog.resx">
       <DependentUpon>ExceptionDialog.cs</DependentUpon>

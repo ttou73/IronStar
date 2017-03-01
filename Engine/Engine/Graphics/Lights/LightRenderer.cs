@@ -10,16 +10,18 @@ using Fusion.Engine.Common;
 using Fusion.Drivers.Graphics;
 using System.Runtime.InteropServices;
 using System.IO;
+using Fusion.Engine.Graphics.Ubershaders;
+
 
 namespace Fusion.Engine.Graphics {
 	[RequireShader("lighting")]
 	internal partial class LightRenderer : RenderComponent {
 
-		const int	BlockSizeX		=	16;
-		const int	BlockSizeY		=	16;
+		[ShaderDefine]		const int	BlockSizeX		=	16;
+		[ShaderDefine]		const int	BlockSizeY		=	16;
+		[ShaderDefine]		const int	VoxelSize		=	64;
+		[ShaderDefine]		const int	VoxelCount		=	VoxelSize * VoxelSize * VoxelSize;
 
-		const int	VoxelSize		=	64;
-		const int	VoxelCount		=	VoxelSize * VoxelSize * VoxelSize;
 
 		DepthStencil2D		spotDepth		;
 		RenderTarget2D		spotColor		;
@@ -55,6 +57,7 @@ namespace Fusion.Engine.Graphics {
 			CLEAR_VOXEL				=	0x0004,
 		}
 
+		[ShaderStructure]
 		[StructLayout(LayoutKind.Explicit, Size=656)]
 		struct LightingParams {
 			[FieldOffset(  0)] public Matrix	View;
@@ -85,6 +88,7 @@ namespace Fusion.Engine.Graphics {
 		}
 
 
+		[ShaderStructure]
 		struct OmniLightGPU {
 			public Vector4	PositionRadius;
 			public Vector4	Intensity;
@@ -93,6 +97,7 @@ namespace Fusion.Engine.Graphics {
 		}
 
 
+		[ShaderStructure]
 		struct EnvLightGPU {
 			public Vector4	Position;
 			public Vector4	Dimensions;
@@ -101,6 +106,7 @@ namespace Fusion.Engine.Graphics {
 		}
 
 
+		[ShaderStructure]
 		struct SpotLightGPU {
 			public Matrix	ViewProjection;
 			public Vector4	PositionRadius;
@@ -112,6 +118,7 @@ namespace Fusion.Engine.Graphics {
 		}
 
 
+		[ShaderStructure]
 		struct DecalGPU {
 			public Matrix	DecalMatrixInv;
 			public Vector4 	BasisX;
@@ -173,7 +180,7 @@ namespace Fusion.Engine.Graphics {
 		/// </summary>
 		void LoadContent ()
 		{
-			lightingShader	=	rs.Shaders.Load("lighting");
+			lightingShader	=	Game.Content.Load<Ubershader>("lighting");
 			factory			=	lightingShader.CreateFactory( typeof(LightingFlags), Primitive.TriangleList, VertexInputElement.Empty );
 		}
 

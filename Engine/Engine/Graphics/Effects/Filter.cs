@@ -9,6 +9,8 @@ using Fusion.Core.Configuration;
 using Fusion.Engine.Common;
 using Fusion.Drivers.Graphics;
 using System.Runtime.InteropServices;
+using Fusion.Engine.Graphics.Ubershaders;
+
 
 namespace Fusion.Engine.Graphics
 {
@@ -92,7 +94,7 @@ namespace Fusion.Engine.Graphics
 		/// </summary>
 		void LoadContent ()
 		{
-			shaders = Game.RenderSystem.Shaders.Load( "filter" );
+			shaders = Game.Content.Load<Ubershader>( "filter" );
 			factory	= shaders.CreateFactory( typeof(ShaderFlags), (ps,i) => Enum(ps, (ShaderFlags)i) );
 		}
 

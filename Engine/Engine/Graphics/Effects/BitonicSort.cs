@@ -10,6 +10,8 @@ using Fusion.Engine.Common;
 using Fusion.Engine.Input;
 using Fusion.Drivers.Graphics;
 using System.Runtime.InteropServices;
+using Fusion.Engine.Graphics.Ubershaders;
+
 
 namespace Fusion.Engine.Graphics
 {
@@ -70,7 +72,7 @@ namespace Fusion.Engine.Graphics
 		/// </summary>
 		void LoadContent ()
 		{
-			shader		=	rs.Shaders.Load("bitonicSort");
+			shader		=	Game.Content.Load<Ubershader>("bitonicSort");
 			factory		=	shader.CreateFactory( typeof(ShaderFlags), Primitive.TriangleList, VertexInputElement.Empty );
 		}
 

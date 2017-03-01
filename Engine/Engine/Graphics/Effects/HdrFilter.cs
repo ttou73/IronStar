@@ -12,6 +12,8 @@ using Fusion.Drivers.Graphics;
 using System.Runtime.InteropServices;
 using Fusion.Engine.Graphics;
 using Fusion.Engine.Imaging;
+using Fusion.Engine.Graphics.Ubershaders;
+
 
 namespace Fusion.Engine.Graphics {
 	[RequireShader("hdr")]
@@ -89,7 +91,7 @@ namespace Fusion.Engine.Graphics {
 		/// </summary>
 		void LoadContent ()
 		{
-			shader		=	Game.RenderSystem.Shaders.Load("hdr");
+			shader		=	Game.Content.Load<Ubershader>("hdr");
 			//noiseTex	=	Game.Content.Load<DiscTexture>(@"noise\hdrDitherNoise");
 			//noiseTex	=	Game.Content.Load<DiscTexture>(@"noise\bayerMatrix8x8");
 

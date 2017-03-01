@@ -15,6 +15,7 @@ using Fusion.Engine.Imaging;
 using System.Diagnostics;
 using Fusion.Engine.Storage;
 using Fusion.Build.Mapping;
+using Fusion.Engine.Graphics.Ubershaders;
 
 namespace Fusion.Engine.Graphics {
 
@@ -141,7 +142,7 @@ namespace Fusion.Engine.Graphics {
 		/// </summary>
 		void LoadContent ()
 		{
-			shader	=	Game.RenderSystem.Shaders.Load("vtcache");
+			shader	=	Game.Content.Load<Ubershader>("vtcache");
 			factory	=	shader.CreateFactory( typeof(Flags), Primitive.TriangleList, VertexInputElement.Empty );
 		}
 

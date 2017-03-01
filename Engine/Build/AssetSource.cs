@@ -57,6 +57,11 @@ namespace Fusion.Build {
 		}
 
 
+		/// <summary>
+		/// Gets and sets reflecting type (used for ubershaders).
+		/// </summary>
+		public Type ReflectingType { get; set; }
+
 
 		/// <summary>
 		/// Gets filename hash.

@@ -29,21 +29,6 @@ namespace Fusion.Development {
 				return false;
 			}
 		} 
-
-
-		public static void Show ( Game game, string config )
-		{
-			var openForms	=	Application.OpenForms.Cast<Form>();
-
-			var dashboard	=	openForms.FirstOrDefault( f => f is Dashboard );
-
-			if (dashboard==null) {
-				var form = new Dashboard( game, config, false );
-				form.Show();
-			} else {
-				dashboard.Focus();
-			}
-		} 
 	}
 
 }

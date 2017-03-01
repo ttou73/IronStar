@@ -9,7 +9,7 @@ using Fusion.Engine.Common;
 using Fusion.Drivers.Graphics;
 using System.Runtime.InteropServices;
 using Fusion.Core.Configuration;
-
+using Fusion.Engine.Graphics.Ubershaders;
 
 
 namespace Fusion.Engine.Graphics {
@@ -188,7 +188,7 @@ namespace Fusion.Engine.Graphics {
 		/// </summary>
 		void LoadContent ( object sender, EventArgs args )
 		{
-			shader	=	rs.Shaders.Load("particles");
+			shader	=	Game.Content.Load<Ubershader>("particles");
 			factory	=	shader.CreateFactory( typeof(Flags), (ps,i) => EnumAction( ps, (Flags)i ) );
 		}
 

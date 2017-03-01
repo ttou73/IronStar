@@ -10,6 +10,8 @@ using Fusion.Engine.Common;
 using Fusion.Drivers.Graphics;
 using System.Runtime.InteropServices;
 using Fusion.Engine.Graphics;
+using Fusion.Engine.Graphics.Ubershaders;
+
 
 namespace Fusion.Engine.Graphics {
 
@@ -64,7 +66,7 @@ namespace Fusion.Engine.Graphics {
 		/// </summary>
 		void LoadContent ()
 		{
-			shader	=	rs.Shaders.Load("dof");
+			shader	=	Game.Content.Load<Ubershader>("dof");
 			factory	=	shader.CreateFactory( typeof(Flags), (ps,i) => EnumAction(ps, (Flags)i ) );
 		}
 

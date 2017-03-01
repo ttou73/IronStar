@@ -8,6 +8,7 @@ using Fusion.Core;
 using Fusion.Drivers.Graphics;
 using Fusion.Engine.Common;
 using System.Runtime.InteropServices;
+using Fusion.Engine.Graphics.Ubershaders;
 
 
 namespace Fusion.Engine.Graphics {

@@ -13,6 +13,7 @@ using Fusion.Core.Extensions;
 using Fusion.Drivers.Graphics;
 using Fusion.Core;
 using Fusion.Core.Content;
+using Fusion.Engine.Graphics.Ubershaders;
 
 
 namespace Fusion.Engine.Graphics {
