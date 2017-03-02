@@ -80,3 +80,10 @@ struct DECAL {
 	float      FalloffFactor;                 // offset:  204
 };
 
+cbuffer __buffer0 : register(b0) {
+	LightingParams LightingCB : packoffset(c0);
+};
+StructuredBuffer<OMNILIGHT> OmniLightBuffer : register(t0);
+StructuredBuffer<SPOTLIGHT> SpotLightBuffer : register(t1);
+StructuredBuffer<ENVLIGHT> EnvLightBuffer : register(t2);
+StructuredBuffer<DECAL> DecalBuffer : register(t3);

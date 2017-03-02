@@ -209,6 +209,8 @@
     <Compile Include="Engine\Graphics\Lights\Decal.cs" />
     <Compile Include="Engine\Graphics\RenderComponent.cs" />
     <Compile Include="Engine\Graphics\Ubershaders\ShaderDefineAttribute.cs" />
+    <Compile Include="Engine\Graphics\Ubershaders\ShaderConstantBufferAttribute.cs" />
+    <Compile Include="Engine\Graphics\Ubershaders\ShaderSamplerAttribute.cs" />
     <Compile Include="Engine\Graphics\Ubershaders\ShaderResourceAttribute.cs" />
     <Compile Include="Engine\Graphics\Ubershaders\ShaderStructureAttribute.cs" />
     <Compile Include="Engine\Graphics\Ubershaders\RequireShaderAttribute.cs" />
@@ -338,6 +340,7 @@
     <Compile Include="Engine\Common\Commands\CrashServer.cs" />
     <Compile Include="Core\Configuration\ConfigManager.cs" />
     <Compile Include="Engine\Graphics\Scene\SceneMapping.cs" />
+    <Compile Include="Engine\Graphics\Ubershaders\UbershaderSetupContext.cs" />
     <Compile Include="Engine\Graphics\Ubershaders\UbershaderGenerator.cs" />
     <Compile Include="Engine\Graphics\VirtualTexture.cs" />
     <Compile Include="Engine\Graphics\VTStamper.cs" />

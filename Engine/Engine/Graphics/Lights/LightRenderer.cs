@@ -41,19 +41,19 @@ namespace Fusion.Engine.Graphics {
 		StructuredBuffer decalBuffer;
 
 
-		/*
-		[ShaderResource(ShaderResourceType.StructuredBuffer, typeof(OmniLightGPU))]
+		
+		[ShaderResource(ShaderResourceType.StructuredBuffer, typeof(OMNILIGHT))]
 		StructuredBuffer OmniLightBuffer  { get { return omniLightBuffer; } }
 
-		[ShaderResource(ShaderResourceType.StructuredBuffer, typeof(SpotLightGPU))]
+		[ShaderResource(ShaderResourceType.StructuredBuffer, typeof(SPOTLIGHT))]
 		StructuredBuffer SpotLightBuffer  { get { return spotLightBuffer; } }
 
-		[ShaderResource(ShaderResourceType.StructuredBuffer, typeof(EnvLightGPU))]
+		[ShaderResource(ShaderResourceType.StructuredBuffer, typeof(ENVLIGHT))]
 		StructuredBuffer EnvLightBuffer   { get { return envLightBuffer;  } }
 
-		[ShaderResource(ShaderResourceType.StructuredBuffer, typeof(DecalGPU))]
+		[ShaderResource(ShaderResourceType.StructuredBuffer, typeof(DECAL))]
 		StructuredBuffer DecalBuffer      { get { return decalBuffer;     } }
-		*/
+		//*/
 
 		internal RenderTarget2D	SpotColor { get { return spotColor; } }
 		internal DepthStencil2D	SpotDepth { get { return spotDepth; } }
@@ -154,7 +154,12 @@ namespace Fusion.Engine.Graphics {
 
 		Ubershader		lightingShader;
 		StateFactory	factory;
+
 		ConstantBuffer	lightingCB;
+
+
+		[ShaderConstantBuffer(typeof(LightingParams), 0)]
+		ConstantBuffer	LightingCB { get { return lightingCB; } }
 
 		
 		/// <summary>
