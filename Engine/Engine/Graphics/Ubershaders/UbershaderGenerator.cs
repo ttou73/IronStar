@@ -61,6 +61,9 @@ namespace Fusion.Engine.Graphics.Ubershaders {
 					if (member.MemberType==MemberTypes.NestedType) {
 						var nestedType	=  (Type)member;
 
+                        //	https://msdn.microsoft.com/en-us/library/windows/desktop/bb509632(v=vs.85).aspx
+						//CheckAlligmentRules(nestedType);
+
 						sb.AppendFormat("// {0}\r\n", nestedType);
 						sb.AppendFormat("// Marshal.SizeOf = {0}\r\n", Marshal.SizeOf(nestedType));
 						sb.AppendFormat("struct {0} {{\r\n", nestedType.Name);
@@ -69,9 +72,6 @@ namespace Fusion.Engine.Graphics.Ubershaders {
 
 							var offset	=	Marshal.OffsetOf( nestedType, field.Name );
 							var size	=	Marshal.SizeOf( field.FieldType );
-
-                            //	https://msdn.microsoft.com/en-us/library/windows/desktop/bb509632(v=vs.85).aspx
-                            CheckAlligmentRules(field.FieldType);
 
                             sb.AppendFormat("\t{0,-10} {1,-30} // offset: {2,4}\r\n", GetStructFieldHLSLType(field.FieldType), field.Name + ";", offset );
 						}
@@ -132,28 +132,27 @@ namespace Fusion.Engine.Graphics.Ubershaders {
 		}
 
 
+
         private static void CheckAlligmentRules(Type type)
         {
-
-            var t = type.GetRuntimeFields().Where(f => !f.IsStatic).ToList();
-            t.Sort((a, b) => Marshal.OffsetOf(type, a.Name).ToInt32().CompareTo(Marshal.OffsetOf(type, b.Name).ToInt32()));
+            var fields = type.GetFields().ToList();
+            fields.Sort((a, b) => Marshal.OffsetOf(type, a.Name).ToInt32().CompareTo(Marshal.OffsetOf(type, b.Name).ToInt32()));
             int accOffset = 0;
-            foreach (var fi in t)
-            {
-                int size = Marshal.SizeOf(fi);
+
+            foreach (var fi in fields) {
+                int size = Marshal.SizeOf(fi.FieldType);
                 int curOffset = Marshal.OffsetOf(type, fi.Name).ToInt32();
                 
                 //it means that user uses a FieldOffset attribute.
-                if (curOffset != accOffset)
-                {
-                    if (accOffset / 16 == curOffset / 16 && accOffset % 16 != 0 && accOffset % 16 + size >= 16)
-                    {
+                if (curOffset != accOffset) {
+
+                    if (accOffset / 16 == curOffset / 16 && accOffset % 16 != 0 && accOffset % 16 + size >= 16) {
                         throw new ArgumentException($"Field {fi.Name} in struct {type.Name} has wrong offset {curOffset}. Offset must be {accOffset / 16 * 17}");
                     }
-                }  else // we should
-                {
-                    if (accOffset % 16 + size >= 16)
-                    {
+
+                } else {
+
+                    if (accOffset % 16 + size >= 16) {
                         throw new ArgumentException($"Field {fi.Name} in struct {type.Name} has wrong offset {curOffset}. Offset must be {accOffset / 16 * 17}");
                     }
                 }
