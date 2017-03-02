@@ -2,7 +2,6 @@
 using Fusion.Engine.Common;
 using Fusion.Engine.Graphics;
 using IronStar.UI.Attributes;
-using IronStar.UI.Attributes.Controls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,22 +18,14 @@ namespace IronStar.UI.Pages
             this.game = game;
         }
 
-        [Image(@"ui\background")]
-        [UIInfo("Background", 0)]
-        [Background]
+        [Background(0, @"ui\background")]
         public void Background() { }
 
-        [UIInfo("Label", 1)]
-        [Label("Press any key")]
-        [Location("center", "70%")]
-        [Size("*", "*")]
-        public void Label() { }
-
-        [UIInfo("Logo", 2)]
-        [Image(@"ui\Logo")]
-        [Location("25%", "40%")]
-        [Size("50%", "25%")]
+        [Logo(1, @"ui\logo")]
         public void Logo() { }
+
+        [Label(2, "Press any key")]
+        public string Label;
 
     }
 }
