@@ -14,9 +14,12 @@ static const float PI = 3.141592f;
 
 #include "brdf.fxi"
 #include "fog.fxi"
-#include "lighting.fxi"
+//#include "lighting.fxi"
+#include "lighting.auto.hlsl"
+
 #include "shadows.fxi"
 #include "particles.fxi"
+
 
 /*-----------------------------------------------------------------------------
 	Cook-Torrance lighting model
@@ -28,6 +31,11 @@ cbuffer CBLightingParams : register(b0) {
 
 cbuffer CBSkyOcclusionMatricies : register(b1) { 
 	float4x4 SkyOcclusionMatricies[64] : packoffset( c0 ); 
+};
+
+struct PS_IN {
+    float4 position : SV_POSITION;
+	float4 projPos  : TEXCOORD0;
 };
 
 

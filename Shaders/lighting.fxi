@@ -33,11 +33,6 @@ struct LightingParams {
 	float		FogDensity;
 };
 
-struct PS_IN {
-    float4 position : SV_POSITION;
-	float4 projPos  : TEXCOORD0;
-};
-
 struct OMNILIGHT {
 	float4	PositionRadius;
 	float4	Intensity;

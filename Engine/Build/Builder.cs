@@ -425,8 +425,19 @@ namespace Fusion.Build {
 					assetSrc.ReflectingType = shader.Type;
 
 					if (shader.Type.GetCustomAttribute<RequireShaderAttribute>().AutoGenerateHeader) {
+
 						var headerName = assetSrc.FullSourcePath.Replace(".hlsl", ".auto.hlsl");
-						File.WriteAllText( headerName, UbershaderGenerator.GenerateVirtualHeader( shader.Type ) );
+
+						var headerText = UbershaderGenerator.GenerateVirtualHeader( shader.Type );
+
+						if (!File.Exists(headerName)) {
+							File.WriteAllText( headerName, headerText );
+						} else {
+							var oldText = File.ReadAllText( headerName );
+							if (oldText!=headerText) {
+								File.WriteAllText( headerName, headerText );
+							}
+						}
 					}
 
 					

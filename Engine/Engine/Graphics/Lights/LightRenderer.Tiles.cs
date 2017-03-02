@@ -22,7 +22,7 @@ namespace Fusion.Engine.Graphics {
 
 			omniLightData = Enumerable
 					.Range(0,RenderSystem.MaxOmniLights)
-					.Select( i => new OmniLightGPU(){ PositionRadius = Vector4.Zero, Intensity = Vector4.Zero })
+					.Select( i => new OMNILIGHT(){ PositionRadius = Vector4.Zero, Intensity = Vector4.Zero })
 					.ToArray();
 
 			int index = 0;
@@ -71,7 +71,7 @@ namespace Fusion.Engine.Graphics {
 
 			envLightData = Enumerable
 					.Range(0,RenderSystem.MaxEnvLights)
-					.Select( i => new EnvLightGPU(){ Position = Vector4.Zero, Dimensions = Vector4.Zero })
+					.Select( i => new ENVLIGHT(){ Position = Vector4.Zero, Dimensions = Vector4.Zero })
 					.ToArray();
 
 			int index = 0;
@@ -111,7 +111,7 @@ namespace Fusion.Engine.Graphics {
 
 			decalData = Enumerable
 					.Range(0,RenderSystem.MaxOmniLights)
-					.Select( i => new DecalGPU() )
+					.Select( i => new DECAL() )
 					.ToArray();
 
 			int index = 0;
@@ -164,7 +164,7 @@ namespace Fusion.Engine.Graphics {
 
 			spotLightData	=	Enumerable
 							.Range(0, RenderSystem.MaxSpotLights)
-							.Select( i => new SpotLightGPU() )
+							.Select( i => new SPOTLIGHT() )
 							.ToArray();
 
 			int index	=	0;

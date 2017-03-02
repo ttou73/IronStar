@@ -21,8 +21,33 @@ namespace Fusion.Engine.Graphics.Ubershaders {
 
 			ReflectConstants( sb, type );
 			ReflectStructures( sb, type );
+			ReflectResources( sb, type );
 
 			return sb.ToString();
+		}
+
+
+
+		static void ReflectResources ( StringBuilder sb, Type type )
+		{
+			int register = 0;
+
+			foreach ( var prop in type.GetProperties(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public) ) {
+
+				var srvAttr = prop.GetCustomAttribute<ShaderResourceAttribute>();
+
+				if (srvAttr==null) {
+					continue;
+				}
+
+				var prefix = "";
+				if (srvAttr.StructureType!=null) {
+					prefix = "<" + srvAttr.StructureType.Name + ">";
+				}
+
+				sb.AppendFormat("{0}{1} {2} : register({3});\r\n", srvAttr.ResourceType, prefix, prop.Name, register++);
+			}
+
 		}
 
 
@@ -51,7 +76,7 @@ namespace Fusion.Engine.Graphics.Ubershaders {
 							sb.AppendFormat("\t{0,-10} {1,-30} // offset: {2,4}\r\n", GetStructFieldHLSLType(field.FieldType), field.Name + ";", offset );
 						}
 
-						sb.AppendFormat("}}\r\n");
+						sb.AppendFormat("}};\r\n");
 						sb.AppendFormat("\r\n");
 					}
 				}

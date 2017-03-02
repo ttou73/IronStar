@@ -30,29 +30,29 @@ struct LightingParams {
 	int        CascadeCount;                  // offset:  636
 	float      CascadeScale;                  // offset:  640
 	float      FogDensity;                    // offset:  644
-}
+};
 
-// Fusion.Engine.Graphics.LightRenderer+OmniLightGPU
+// Fusion.Engine.Graphics.LightRenderer+OMNILIGHT
 // Marshal.SizeOf = 64
-struct OmniLightGPU {
+struct OMNILIGHT {
 	float4     PositionRadius;                // offset:    0
 	float4     Intensity;                     // offset:   16
 	float4     ExtentMin;                     // offset:   32
 	float4     ExtentMax;                     // offset:   48
-}
+};
 
-// Fusion.Engine.Graphics.LightRenderer+EnvLightGPU
+// Fusion.Engine.Graphics.LightRenderer+ENVLIGHT
 // Marshal.SizeOf = 64
-struct EnvLightGPU {
+struct ENVLIGHT {
 	float4     Position;                      // offset:    0
 	float4     Dimensions;                    // offset:   16
 	float4     ExtentMin;                     // offset:   32
 	float4     ExtentMax;                     // offset:   48
-}
+};
 
-// Fusion.Engine.Graphics.LightRenderer+SpotLightGPU
+// Fusion.Engine.Graphics.LightRenderer+SPOTLIGHT
 // Marshal.SizeOf = 160
-struct SpotLightGPU {
+struct SPOTLIGHT {
 	float4x4   ViewProjection;                // offset:    0
 	float4     PositionRadius;                // offset:   64
 	float4     IntensityFar;                  // offset:   80
@@ -60,11 +60,11 @@ struct SpotLightGPU {
 	float4     ExtentMax;                     // offset:  112
 	float4     MaskScaleOffset;               // offset:  128
 	float4     ShadowScaleOffset;             // offset:  144
-}
+};
 
-// Fusion.Engine.Graphics.LightRenderer+DecalGPU
+// Fusion.Engine.Graphics.LightRenderer+DECAL
 // Marshal.SizeOf = 208
-struct DecalGPU {
+struct DECAL {
 	float4x4   DecalMatrixInv;                // offset:    0
 	float4     BasisX;                        // offset:   64
 	float4     BasisY;                        // offset:   80
@@ -78,5 +78,5 @@ struct DecalGPU {
 	float      SpecularFactor;                // offset:  196
 	float      NormalMapFactor;               // offset:  200
 	float      FalloffFactor;                 // offset:  204
-}
+};
 

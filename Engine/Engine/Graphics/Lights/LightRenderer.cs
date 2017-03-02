@@ -30,14 +30,30 @@ namespace Fusion.Engine.Graphics {
 		UserTexture			envLut;
 
 
-		OmniLightGPU[]		omniLightData;
-		SpotLightGPU[]		spotLightData;
-		EnvLightGPU[]		envLightData;
-		DecalGPU[]			decalData;
-		StructuredBuffer	omniLightBuffer	;
-		StructuredBuffer	spotLightBuffer	;
-		StructuredBuffer	envLightBuffer	;
-		StructuredBuffer	decalBuffer		;
+		OMNILIGHT[]		omniLightData;
+		SPOTLIGHT[]		spotLightData;
+		ENVLIGHT[]		envLightData;
+		DECAL[]			decalData;
+
+		StructuredBuffer omniLightBuffer;
+		StructuredBuffer spotLightBuffer;
+		StructuredBuffer envLightBuffer;
+		StructuredBuffer decalBuffer;
+
+
+		/*
+		[ShaderResource(ShaderResourceType.StructuredBuffer, typeof(OmniLightGPU))]
+		StructuredBuffer OmniLightBuffer  { get { return omniLightBuffer; } }
+
+		[ShaderResource(ShaderResourceType.StructuredBuffer, typeof(SpotLightGPU))]
+		StructuredBuffer SpotLightBuffer  { get { return spotLightBuffer; } }
+
+		[ShaderResource(ShaderResourceType.StructuredBuffer, typeof(EnvLightGPU))]
+		StructuredBuffer EnvLightBuffer   { get { return envLightBuffer;  } }
+
+		[ShaderResource(ShaderResourceType.StructuredBuffer, typeof(DecalGPU))]
+		StructuredBuffer DecalBuffer      { get { return decalBuffer;     } }
+		*/
 
 		internal RenderTarget2D	SpotColor { get { return spotColor; } }
 		internal DepthStencil2D	SpotDepth { get { return spotDepth; } }
@@ -89,7 +105,7 @@ namespace Fusion.Engine.Graphics {
 
 
 		[ShaderStructure]
-		struct OmniLightGPU {
+		struct OMNILIGHT {
 			public Vector4	PositionRadius;
 			public Vector4	Intensity;
 			public Vector4	ExtentMin;	// x,y, depth
@@ -98,7 +114,7 @@ namespace Fusion.Engine.Graphics {
 
 
 		[ShaderStructure]
-		struct EnvLightGPU {
+		struct ENVLIGHT {
 			public Vector4	Position;
 			public Vector4	Dimensions;
 			public Vector4	ExtentMin;	// x,y, depth
@@ -107,7 +123,7 @@ namespace Fusion.Engine.Graphics {
 
 
 		[ShaderStructure]
-		struct SpotLightGPU {
+		struct SPOTLIGHT {
 			public Matrix	ViewProjection;
 			public Vector4	PositionRadius;
 			public Vector4	IntensityFar;
@@ -119,7 +135,7 @@ namespace Fusion.Engine.Graphics {
 
 
 		[ShaderStructure]
-		struct DecalGPU {
+		struct DECAL {
 			public Matrix	DecalMatrixInv;
 			public Vector4 	BasisX;
 			public Vector4 	BasisY;
@@ -158,10 +174,10 @@ namespace Fusion.Engine.Graphics {
 		public override void Initialize ()
 		{
 			lightingCB			=	new ConstantBuffer( Game.GraphicsDevice, typeof(LightingParams) );
-			omniLightBuffer		=	new StructuredBuffer( Game.GraphicsDevice, typeof(OmniLightGPU), RenderSystem.MaxOmniLights, StructuredBufferFlags.None );
-			spotLightBuffer		=	new StructuredBuffer( Game.GraphicsDevice, typeof(SpotLightGPU), RenderSystem.MaxSpotLights, StructuredBufferFlags.None );
-			envLightBuffer		=	new StructuredBuffer( Game.GraphicsDevice, typeof(EnvLightGPU),  RenderSystem.MaxEnvLights, StructuredBufferFlags.None );
-			decalBuffer			=	new StructuredBuffer( Game.GraphicsDevice, typeof(DecalGPU),	 RenderSystem.MaxDecals,	StructuredBufferFlags.None );
+			omniLightBuffer		=	new StructuredBuffer( Game.GraphicsDevice, typeof(OMNILIGHT), RenderSystem.MaxOmniLights, StructuredBufferFlags.None );
+			spotLightBuffer		=	new StructuredBuffer( Game.GraphicsDevice, typeof(SPOTLIGHT), RenderSystem.MaxSpotLights, StructuredBufferFlags.None );
+			envLightBuffer		=	new StructuredBuffer( Game.GraphicsDevice, typeof(ENVLIGHT),  RenderSystem.MaxEnvLights, StructuredBufferFlags.None );
+			decalBuffer			=	new StructuredBuffer( Game.GraphicsDevice, typeof(DECAL),	 RenderSystem.MaxDecals,	StructuredBufferFlags.None );
 
 			using ( var ms = new MemoryStream( Properties.Resources.envLut ) ) {
 				envLut    =   UserTexture.CreateFromTga( rs, ms, false );
