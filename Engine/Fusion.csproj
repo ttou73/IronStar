@@ -210,6 +210,7 @@
     <Compile Include="Engine\Graphics\RenderComponent.cs" />
     <Compile Include="Engine\Graphics\Ubershaders\ShaderDefineAttribute.cs" />
     <Compile Include="Engine\Graphics\Ubershaders\ShaderConstantBufferAttribute.cs" />
+    <Compile Include="Engine\Graphics\Ubershaders\ShaderSharedStructureAttribute.cs" />
     <Compile Include="Engine\Graphics\Ubershaders\ShaderSamplerAttribute.cs" />
     <Compile Include="Engine\Graphics\Ubershaders\ShaderResourceAttribute.cs" />
     <Compile Include="Engine\Graphics\Ubershaders\ShaderStructureAttribute.cs" />

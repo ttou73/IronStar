@@ -15,6 +15,7 @@ using Fusion.Engine.Graphics.Ubershaders;
 
 namespace Fusion.Engine.Graphics {
 	[RequireShader("lighting", true)]
+	[ShaderSharedStructure(typeof(Particle))]
 	internal partial class LightRenderer : RenderComponent {
 
 		[ShaderDefine]		const int	BlockSizeX		=	16;

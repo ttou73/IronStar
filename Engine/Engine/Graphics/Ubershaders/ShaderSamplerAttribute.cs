@@ -10,7 +10,7 @@ namespace Fusion.Engine.Graphics.Ubershaders {
 
 		public readonly bool IsComparison; 
 
-		ShaderSamplerAttribute ( bool comparison = false)
+		public ShaderSamplerAttribute ( bool comparison = false)
 		{
 			IsComparison = comparison;
 		}

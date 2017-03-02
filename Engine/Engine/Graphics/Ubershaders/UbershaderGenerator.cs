@@ -141,33 +141,58 @@ namespace Fusion.Engine.Graphics.Ubershaders {
 
 		static void ReflectStructures ( StringBuilder sb, Type type )
 		{
+			var sharedStruct = type.GetCustomAttribute<ShaderSharedStructureAttribute>();
+
+			if (sharedStruct!=null) {
+				foreach ( var structType in sharedStruct.StructTypes ) {
+					ReflectStructure( sb, structType );
+				}
+			}
+
 			foreach ( var member in type.GetMembers(BindingFlags.NonPublic|BindingFlags.Public) ) {
 
 				if (member.GetCustomAttributes().Any( attr => attr is ShaderStructureAttribute )) {
 
 					if (member.MemberType==MemberTypes.NestedType) {
 						var nestedType	=  (Type)member;
-
-                        //	https://msdn.microsoft.com/en-us/library/windows/desktop/bb509632(v=vs.85).aspx
-						//CheckAlligmentRules(nestedType);
-
-						sb.AppendFormat("// {0}\r\n", nestedType);
-						sb.AppendFormat("// Marshal.SizeOf = {0}\r\n", Marshal.SizeOf(nestedType));
-						sb.AppendFormat("struct {0} {{\r\n", nestedType.Name);
-
-						foreach ( var field in nestedType.GetFields() ) {
-
-							var offset	=	Marshal.OffsetOf( nestedType, field.Name );
-							var size	=	Marshal.SizeOf( field.FieldType );
-
-                            sb.AppendFormat("\t{0,-10} {1,-30} // offset: {2,4}\r\n", GetStructFieldHLSLType(field.FieldType), field.Name + ";", offset );
-						}
-
-						sb.AppendFormat("}};\r\n");
-						sb.AppendFormat("\r\n");
+						ReflectStructure( sb, nestedType );
 					}
 				}
 			}
+		}
+
+
+
+		static int SizeOf( Type type )
+		{
+			if (type.IsEnum) {
+				return Marshal.SizeOf(Enum.GetUnderlyingType(type));
+			} else {
+				return Marshal.SizeOf(type);
+			}
+		}
+
+
+
+		static void ReflectStructure ( StringBuilder sb, Type nestedType )
+		{			
+            //	https://msdn.microsoft.com/en-us/library/windows/desktop/bb509632(v=vs.85).aspx
+			//CheckAlligmentRules(nestedType);
+
+			sb.AppendFormat("// {0}\r\n", nestedType);
+			sb.AppendFormat("// Marshal.SizeOf = {0}\r\n", Marshal.SizeOf(nestedType));
+			sb.AppendFormat("struct {0} {{\r\n", nestedType.Name);
+
+			foreach ( var field in nestedType.GetFields() ) {
+
+				var offset	=	Marshal.OffsetOf( nestedType, field.Name );
+				var size	=	SizeOf( field.FieldType );
+
+                sb.AppendFormat("\t{0,-10} {1,-30} // offset: {2,4}\r\n", GetStructFieldHLSLType(field.FieldType), field.Name + ";", offset );
+			}
+
+			sb.AppendFormat("}};\r\n");
+			sb.AppendFormat("\r\n");
 		}
 
 
@@ -214,6 +239,7 @@ namespace Fusion.Engine.Graphics.Ubershaders {
 			if (type==typeof( Color3 )) return "float3";
 			if (type==typeof( Color4 )) return "float4";
 			if (type==typeof( Matrix )) return "float4x4";
+			if (type.IsEnum) return GetStructFieldHLSLType(Enum.GetUnderlyingType(type));
 
 			throw new Exception(string.Format("Bad HLSL type {0}", type));
 		}

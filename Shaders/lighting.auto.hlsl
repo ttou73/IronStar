@@ -3,6 +3,30 @@
 #define VoxelSize        64
 #define VoxelCount       262144
 
+// Fusion.Engine.Graphics.Particle
+// Marshal.SizeOf = 144
+struct Particle {
+	float3     Position;                      // offset:    0
+	float3     Velocity;                      // offset:   12
+	float3     Acceleration;                  // offset:   24
+	float3     TailPosition;                  // offset:   36
+	float4     Color0;                        // offset:   48
+	float4     Color1;                        // offset:   64
+	float4     LightLevel;                    // offset:   80
+	float      Gravity;                       // offset:   96
+	float      Damping;                       // offset:  100
+	float      Size0;                         // offset:  104
+	float      Size1;                         // offset:  108
+	float      Rotation0;                     // offset:  112
+	float      Rotation1;                     // offset:  116
+	float      LifeTime;                      // offset:  120
+	float      TimeLag;                       // offset:  124
+	float      FadeIn;                        // offset:  128
+	float      FadeOut;                       // offset:  132
+	int        ImageIndex;                    // offset:  136
+	uint       Effects;                       // offset:  140
+};
+
 // Fusion.Engine.Graphics.LightRenderer+LightingParams
 // Marshal.SizeOf = 656
 struct LightingParams {
