@@ -4,7 +4,6 @@ $ubershader INITIALIZE|INJECTION|SIMULATION|DRAW|DRAW_SHADOW
 #endif
 
 #include "particles.fxi"
-#include "lighting.fxi"
 
 cbuffer CB1 : register(b0) { 
 	PARAMS Params; 

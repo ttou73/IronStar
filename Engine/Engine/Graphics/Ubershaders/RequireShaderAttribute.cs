@@ -23,9 +23,18 @@ namespace Fusion.Engine.Graphics.Ubershaders {
 		/// <summary>
 		/// 
 		/// </summary>
+		public bool AutoGenerateHeader {
+			get; private set;
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
 		/// <param name="shaders"></param>
-		public RequireShaderAttribute ( string shader )
+		public RequireShaderAttribute ( string shader, bool auto = false )
 		{
+			AutoGenerateHeader	=	auto;
 			RequiredShader = shader;
 		}
 	}

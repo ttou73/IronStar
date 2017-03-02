@@ -424,7 +424,12 @@ namespace Fusion.Build {
 					var assetSrc	=	new AssetSource( nameExt, baseDir, typeof(UbershaderProcessor), new string[0], context );
 					assetSrc.ReflectingType = shader.Type;
 
-					UbershaderGenerator.GenerateVirtualHeader( shader.Type );
+					if (shader.Type.GetCustomAttribute<RequireShaderAttribute>().AutoGenerateHeader) {
+						var headerName = assetSrc.FullSourcePath.Replace(".hlsl", ".auto.hlsl");
+						File.WriteAllText( headerName, UbershaderGenerator.GenerateVirtualHeader( shader.Type ) );
+					}
+
+					
 
 					srcList.Add( assetSrc );
 
