@@ -17,7 +17,7 @@ namespace IronStar.UI.Controls
             
         }
 
-        public Image(FrameProcessor fp,Texture image, int posX, int posY, int width, int height) :
+        public Image(FrameProcessor fp, Texture image, int posX, int posY, int width, int height) :
             base(fp, posX, posY, width, height, "", new Color(0, 0, 0, 0))
         {
             this.Image = image;

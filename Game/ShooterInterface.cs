@@ -13,9 +13,9 @@ using Fusion;
 using Fusion.Engine.Client;
 using Fusion.Engine.Common;
 using Fusion.Engine.Server;
-using IronStar.UI;
-using IronStar.UI.Pages;
 using IronStar.UI.Controls;
+using IronStar.UI.Generators;
+using IronStar.UI.Pages;
 
 namespace IronStar {
 
@@ -39,7 +39,7 @@ namespace IronStar {
 		{
 			this.Game	=	game;
 			ShowMenu	=	true;
-            menuGenerator = new PrimitiveMenuGenerator(game);
+            menuGenerator = new MenuGenerator(game);
 
         }
 
