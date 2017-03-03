@@ -217,7 +217,9 @@ namespace Fusion.Engine.Graphics.Ubershaders {
 					else if (field.FieldType==typeof(uint)) value = field.GetValue(null);
 					else throw new Exception(string.Format("Bad type for HLSL definition : {0}", field.FieldType));
 
-					sb.AppendFormat("#define {0,-16} {1}\r\n", field.Name, value.ToString());
+					var typeName = GetStructFieldHLSLType( field.FieldType );
+
+					sb.AppendFormat("static const {0} {1} = {2};\r\n", typeName, field.Name, value.ToString());
 				}
 			}
 			sb.AppendFormat("\r\n");

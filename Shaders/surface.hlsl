@@ -1,10 +1,6 @@
 
 
-static const float 	VTVirtualPageCount	= 1024;
-//static const float 	VTPhysicalPageCount	= 7;
-static const int 	VTPageSize			= 128;
-static const int 	VTMaxMip	  		= 6;
-//static const float	VTPageScale			= 1024/VTPageSize;
+#include "surface.auto.hlsl"
 
 struct BATCH {
 	float4x4	Projection		;

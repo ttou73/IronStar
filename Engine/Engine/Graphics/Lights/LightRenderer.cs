@@ -43,7 +43,7 @@ namespace Fusion.Engine.Graphics {
 
 
 		
-		[ShaderResource(ShaderResourceType.StructuredBuffer, typeof(OMNILIGHT))]
+		/*[ShaderResource(ShaderResourceType.StructuredBuffer, typeof(OMNILIGHT))]
 		StructuredBuffer OmniLightBuffer  { get { return omniLightBuffer; } }
 
 		[ShaderResource(ShaderResourceType.StructuredBuffer, typeof(SPOTLIGHT))]
@@ -53,7 +53,7 @@ namespace Fusion.Engine.Graphics {
 		StructuredBuffer EnvLightBuffer   { get { return envLightBuffer;  } }
 
 		[ShaderResource(ShaderResourceType.StructuredBuffer, typeof(DECAL))]
-		StructuredBuffer DecalBuffer      { get { return decalBuffer;     } }
+		StructuredBuffer DecalBuffer      { get { return decalBuffer;     } }*/
 		//*/
 
 		internal RenderTarget2D	SpotColor { get { return spotColor; } }
@@ -159,8 +159,8 @@ namespace Fusion.Engine.Graphics {
 		ConstantBuffer	lightingCB;
 
 
-		[ShaderConstantBuffer(typeof(LightingParams), 0)]
-		ConstantBuffer	LightingCB { get { return lightingCB; } }
+		/*[ShaderConstantBuffer(typeof(LightingParams), 0)]
+		ConstantBuffer	LightingCB { get { return lightingCB; } }*/
 
 		
 		/// <summary>

@@ -17,7 +17,6 @@ using Fusion.Engine.Graphics.Ubershaders;
 
 
 namespace Fusion.Engine.Graphics {
-	[RequireShader("surface")]
 	public sealed class Scene : DisposableBase {
 
 		List<Node>			nodes		= new List<Node>();

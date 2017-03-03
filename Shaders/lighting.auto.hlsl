@@ -1,7 +1,7 @@
-#define BlockSizeX       16
-#define BlockSizeY       16
-#define VoxelSize        64
-#define VoxelCount       262144
+static const int BlockSizeX = 16;
+static const int BlockSizeY = 16;
+static const int VoxelSize = 64;
+static const int VoxelCount = 262144;
 
 // Fusion.Engine.Graphics.Particle
 // Marshal.SizeOf = 144
@@ -104,10 +104,3 @@ struct DECAL {
 	float      FalloffFactor;                 // offset:  204
 };
 
-cbuffer __buffer0 : register(b0) {
-	LightingParams LightingCB : packoffset(c0);
-};
-StructuredBuffer<OMNILIGHT> OmniLightBuffer : register(t0);
-StructuredBuffer<SPOTLIGHT> SpotLightBuffer : register(t1);
-StructuredBuffer<ENVLIGHT> EnvLightBuffer : register(t2);
-StructuredBuffer<DECAL> DecalBuffer : register(t3);

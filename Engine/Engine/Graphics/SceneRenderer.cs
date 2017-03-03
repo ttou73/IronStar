@@ -10,11 +10,16 @@ using Fusion.Engine.Common;
 using Fusion.Drivers.Graphics;
 using System.Runtime.InteropServices;
 using Fusion.Development;
-
+using Fusion.Engine.Graphics.Ubershaders;
 
 namespace Fusion.Engine.Graphics {
 
+	[RequireShader("surface", true)]
 	internal class SceneRenderer : RenderComponent {
+
+		[ShaderDefine]	const int VTVirtualPageCount	=	VTConfig.VirtualPageCount;
+		[ShaderDefine]	const int VTPageSize			=	VTConfig.PageSize;
+		[ShaderDefine]	const int VTMaxMip				=	VTConfig.MaxMipLevel;
 
 		internal const int MaxBones = 128;
 
@@ -29,7 +34,7 @@ namespace Fusion.Engine.Graphics {
 		Texture2D		defaultNormalMap;
 		Texture2D		defaultEmission	;
 
-
+		[ShaderStructure]
 		[StructLayout(LayoutKind.Explicit, Size=320)]
 		struct CBMeshInstanceData {
 			[FieldOffset(  0)] public Matrix	Projection;
@@ -43,6 +48,7 @@ namespace Fusion.Engine.Graphics {
 		}
 
 
+		[ShaderStructure]
 		struct CBSubsetData {
 			public Vector4 Rectangle;
 		}
