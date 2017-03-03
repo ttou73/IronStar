@@ -64,6 +64,7 @@ namespace Fusion.Engine.Graphics {
 		}
 
 
+
 		/// <summary>
 		/// 
 		/// </summary>
@@ -71,6 +72,7 @@ namespace Fusion.Engine.Graphics {
 		public SceneRenderer ( RenderSystem rs ) : base( rs )
 		{
 		}
+
 
 
 		/// <summary>

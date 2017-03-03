@@ -257,7 +257,8 @@ GBuffer PSMain( PSInput input )
 	}
 
 	if ( Subset.Rectangle.z==Subset.Rectangle.w && Subset.Rectangle.z==0 ) {
-		baseColor	=	0.25f;
+		float3	checker	=	floor(input.WorldPos.xyz-0.5f)/2;
+		baseColor	=	0.2*frac(checker.x + checker.y + checker.z)+0.3;
 		localNormal	=	float3(0,0,1);
 		roughness	=	0.5;
 		metallic	=	0;
@@ -279,6 +280,8 @@ GBuffer PSMain( PSInput input )
 	output.gbuffer0		=	float4( baseColor, roughness );
 	output.gbuffer1 	=	float4( worldNormal * 0.5f + 0.5f, metallic );
 	output.feedback		=	feedback;
+	
+	output.hdr.rgb += baseColor;
 	
 	return output;
 }

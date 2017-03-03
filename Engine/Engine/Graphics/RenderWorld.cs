@@ -441,7 +441,7 @@ namespace Fusion.Engine.Graphics {
 			rs.Sky.RenderFogTable( SkySettings );
 
 			//	render lights :
-			rs.LightRenderer.RenderLighting( stereoEye, Camera, viewHdrFrame, this, Radiance );
+			//rs.LightRenderer.RenderLighting( stereoEye, Camera, viewHdrFrame, this, Radiance );
 
 			//	render "solid" DOF :
 			rs.DofFilter.Render( gameTime, viewHdrFrame.LightAccumulator, viewHdrFrame.HdrBuffer, viewHdrFrame.DepthBuffer, this );
@@ -473,6 +473,7 @@ namespace Fusion.Engine.Graphics {
 		/// <param name="gameTime"></param>
 		public void RenderRadiance ()
 		{
+			#if false
 			var sw = new Stopwatch();
 
 			Log.Message("Radiance capture...");
@@ -519,6 +520,7 @@ namespace Fusion.Engine.Graphics {
 			}
 
 			Log.Message("{0} light probes - {1} ms", LightSet.EnvLights.Count, sw.ElapsedMilliseconds);
+			#endif
 		}
 
 
