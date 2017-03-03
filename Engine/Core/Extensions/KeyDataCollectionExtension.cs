@@ -25,7 +25,7 @@ namespace Fusion.Core.Extensions {
 
 				try {
 					return StringConverter.FromString<T>( stringValue );
-				} catch ( Exception e ) {
+				} catch ( Exception ) {
 					Log.Warning("Failed to parse key {0} = {1}, type {2}.default value {3} is used", keyName, typeof(T), stringValue, defaultValue);
 					return defaultValue;
 				}

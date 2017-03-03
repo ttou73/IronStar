@@ -32,7 +32,7 @@ namespace Fusion.Core.Shell
 			public readonly Type ArgumentType;
 		}
 
-        readonly Type optionsObjectType;
+        //readonly Type optionsObjectType;
 		readonly string name;
 
         List<PropertyInfo> requiredOptions = new List<PropertyInfo>();

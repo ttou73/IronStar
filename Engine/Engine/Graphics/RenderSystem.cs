@@ -34,8 +34,8 @@ namespace Fusion.Engine.Graphics {
 		internal DofFilter DofFilter { get{ return dofFilter; } }
 		DofFilter dofFilter;
 		
-		internal LightRenderer	LightRenderer { get { return lightRenderer; } }
-		LightRenderer	lightRenderer;
+		internal LightManager	LightManager { get { return lightManager; } }
+		LightManager	lightManager;
 		
 		internal SceneRenderer	SceneRenderer { get { return sceneRenderer; } }
 		SceneRenderer	sceneRenderer;
@@ -112,13 +112,13 @@ namespace Fusion.Engine.Graphics {
 			ssaoFilter		=	new SsaoFilter( this );
 			hdrFilter		=	new HdrFilter( this );
 			dofFilter		=	new DofFilter( this );
-			lightRenderer	=	new LightRenderer( this );
+			lightManager	=	new LightManager( this );
 			sceneRenderer	=	new SceneRenderer( this );
 			sky				=	new Sky( this );
 			bitonicSort		=	new BitonicSort( this );
 			vtSystem	=	new VTSystem( this );
 
-			Game.Config.ExposeConfig( lightRenderer,  "LightRenderer"	, "light" );
+			Game.Config.ExposeConfig( lightManager,  "LightRenderer"	, "light" );
 			Game.Config.ExposeConfig( ssaoFilter,     "SSAO"			, "ssao"  );
 			Game.Config.ExposeConfig( vtSystem, "VirtualTexture"	, "vt"	  );
 
@@ -157,7 +157,7 @@ namespace Fusion.Engine.Graphics {
 			InitializeComponent( ssaoFilter		);
 			InitializeComponent( hdrFilter		);
 			InitializeComponent( dofFilter		);
-			InitializeComponent( lightRenderer	);
+			InitializeComponent( lightManager	);
 			InitializeComponent( sceneRenderer	);
 			InitializeComponent( sky			);	
 			InitializeComponent( bitonicSort	);

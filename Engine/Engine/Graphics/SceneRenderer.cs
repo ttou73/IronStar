@@ -14,12 +14,7 @@ using Fusion.Engine.Graphics.Ubershaders;
 
 namespace Fusion.Engine.Graphics {
 
-	[RequireShader("surface", true)]
-	internal class SceneRenderer : RenderComponent {
-
-		[ShaderDefine]	const int VTVirtualPageCount	=	VTConfig.VirtualPageCount;
-		[ShaderDefine]	const int VTPageSize			=	VTConfig.PageSize;
-		[ShaderDefine]	const int VTMaxMip				=	VTConfig.MaxMipLevel;
+	internal partial class SceneRenderer : RenderComponent {
 
 		internal const int MaxBones = 128;
 
@@ -33,26 +28,6 @@ namespace Fusion.Engine.Graphics {
 		Texture2D		defaultSpecular	;
 		Texture2D		defaultNormalMap;
 		Texture2D		defaultEmission	;
-
-		[ShaderStructure]
-		[StructLayout(LayoutKind.Explicit, Size=320)]
-		struct CBMeshInstanceData {
-			[FieldOffset(  0)] public Matrix	Projection;
-			[FieldOffset( 64)] public Matrix	View;
-			[FieldOffset(128)] public Matrix	World;
-			[FieldOffset(192)] public Vector4	ViewPos			;
-			[FieldOffset(208)] public Vector4	BiasSlopeFar	;
-			[FieldOffset(224)] public Color4	Color;
-			[FieldOffset(240)] public Vector4	ViewBounds;
-			[FieldOffset(256)] public float		VTPageScaleRCP;
-		}
-
-
-		[ShaderStructure]
-		struct CBSubsetData {
-			public Vector4 Rectangle;
-		}
-
 
 		/// <summary>
 		/// Gets pipeline state factory
@@ -82,9 +57,9 @@ namespace Fusion.Engine.Graphics {
 		{
 			LoadContent();
 
-			constBuffer			=	new ConstantBuffer( Game.GraphicsDevice, typeof(CBMeshInstanceData) );
+			constBuffer			=	new ConstantBuffer( Game.GraphicsDevice, typeof(BATCH) );
 			constBufferBones	=	new ConstantBuffer( Game.GraphicsDevice, typeof(Matrix), MaxBones );
-			constBufferSubset	=	new ConstantBuffer( Game.GraphicsDevice, typeof(CBSubsetData) );
+			constBufferSubset	=	new ConstantBuffer( Game.GraphicsDevice, typeof(SUBSET) );
 
 
 			defaultDiffuse	=	new Texture2D( Game.GraphicsDevice, 4,4, ColorFormat.Rgba8, false );
@@ -175,9 +150,9 @@ namespace Fusion.Engine.Graphics {
 		/// <param name="diffuse"></param>
 		/// <param name="specular"></param>
 		/// <param name="normals"></param>
-		internal void RenderGBuffer ( GameTime gameTime, StereoEye stereoEye, Camera camera, HdrFrame frame, RenderWorld rw, bool staticOnly )
+		internal void RenderForward ( GameTime gameTime, StereoEye stereoEye, Camera camera, HdrFrame frame, RenderWorld rw, bool staticOnly )
 		{		
-			using ( new PixEvent("RenderGBuffer") ) {
+			using ( new PixEvent("RenderForward") ) {
 
 				if (surfaceShader==null) {	
 					return;
@@ -193,18 +168,16 @@ namespace Fusion.Engine.Graphics {
 				var projection		=	camera.GetProjectionMatrix( stereoEye );
 				var viewPosition	=	camera.GetCameraPosition4( stereoEye );
 
-				var cbData			=	new CBMeshInstanceData();
-				var cbDataSubset	=	new CBSubsetData();
+				var cbData			=	new BATCH();
+				var cbDataSubset	=	new SUBSET();
 
 				var hdr			=	frame.HdrBuffer.Surface;
 				var depth		=	frame.DepthBuffer.Surface;
-				var gbuffer0	=	frame.GBuffer0.Surface;
-				var gbuffer1	=	frame.GBuffer1.Surface;
 				var feedback	=	frame.FeedbackBuffer.Surface;
 
 				device.ResetStates();
 
-				device.SetTargets( depth, hdr, gbuffer0, gbuffer1, feedback );
+				device.SetTargets( depth, hdr, feedback );
 				device.PixelShaderSamplers[0]	= SamplerState.LinearPointClamp ;
 				device.PixelShaderSamplers[1]	= SamplerState.PointClamp;
 				device.PixelShaderSamplers[2]	= SamplerState.AnisotropicClamp;
@@ -212,10 +185,11 @@ namespace Fusion.Engine.Graphics {
 				var instances	=	rw.Instances;
 
 				if (instances.Any()) {
-					device.PixelShaderResources[1]	= rs.VTSystem.PageTable;
-					device.PixelShaderResources[2]	= rs.VTSystem.PhysicalPages0;
-					device.PixelShaderResources[3]	= rs.VTSystem.PhysicalPages1;
-					device.PixelShaderResources[4]	= rs.VTSystem.PhysicalPages2;
+					device.PixelShaderResources[0]	= rs.VTSystem.PageTable;
+					device.PixelShaderResources[1]	= rs.VTSystem.PhysicalPages0;
+					device.PixelShaderResources[2]	= rs.VTSystem.PhysicalPages1;
+					device.PixelShaderResources[3]	= rs.VTSystem.PhysicalPages2;
+					device.PixelShaderResources[4]	= rs.LightManager.LightGrid.GridTexture;
 				}
 
 				//#warning INSTANSING!
@@ -239,8 +213,8 @@ namespace Fusion.Engine.Graphics {
 
 					constBuffer.SetData( cbData );
 
-					device.PixelShaderConstants[0]	= constBuffer ;
-					device.VertexShaderConstants[0]	= constBuffer ;
+					device.PixelShaderConstants[0]	=	constBuffer ;
+					device.VertexShaderConstants[0]	=	constBuffer ;
 					device.PixelShaderConstants[1]	=	constBufferSubset;
 
 					device.SetupVertexInput( instance.vb, instance.ib );
@@ -252,7 +226,7 @@ namespace Fusion.Engine.Graphics {
 
 					try {
 
-						device.PipelineState	=	factory[ (int)( SurfaceFlags.GBUFFER | SurfaceFlags.RIGID ) ];
+						device.PipelineState	=	factory[ (int)( SurfaceFlags.FORWARD | SurfaceFlags.RIGID ) ];
 
 
 						foreach ( var subset in instance.Subsets ) {
@@ -322,7 +296,7 @@ namespace Fusion.Engine.Graphics {
 
 				var device			= Game.GraphicsDevice;
 
-				var cbData			= new CBMeshInstanceData();
+				var cbData			= new BATCH();
 
 				var viewPosition	= Matrix.Invert( shadowRenderCtxt.ShadowView ).TranslationVector;
 

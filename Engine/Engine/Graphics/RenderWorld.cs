@@ -404,13 +404,15 @@ namespace Fusion.Engine.Graphics {
 				//	get simulated particles for shadows.
 				ParticleSystem.Simulate( gameTime, Camera );
 
+				rs.LightManager.LightGrid.ClusterizeLightSet( stereoEye, Camera, LightSet );
 				//	render shadows :
-				rs.LightRenderer.RenderShadows( this, this.LightSet );
+				#warning SHADOWS
+				//rs.LightRenderer.RenderShadows( this, this.LightSet );
 			}
 
 
 			//	render g-buffer :
-			rs.SceneRenderer.RenderGBuffer( gameTime, stereoEye, Camera, viewHdrFrame, this, false );
+			rs.SceneRenderer.RenderForward( gameTime, stereoEye, Camera, viewHdrFrame, this, false );
 
 			//	render ssao :
 			rs.SsaoFilter.Render( stereoEye, Camera, viewHdrFrame.DepthBuffer, viewHdrFrame.GBuffer1 );
@@ -422,8 +424,8 @@ namespace Fusion.Engine.Graphics {
 				case 4 : rs.Filter.CopyAlpha( targetSurface, viewHdrFrame.GBuffer1 ); return;
 				case 5 : rs.Filter.CopyColor( targetSurface, viewHdrFrame.HdrBuffer ); return;
 				case 6 : rs.Filter.Copy( targetSurface, rs.SsaoFilter.OcclusionMap ); return;
-				case 7 : rs.Filter.StretchRect( targetSurface, rs.LightRenderer.CascadedShadowMap.ParticleShadow ); return;
-				case 8 : rs.Filter.StretchRect( targetSurface, rs.LightRenderer.CascadedShadowMap.ColorBuffer ); return;
+				//case 7 : rs.Filter.StretchRect( targetSurface, rs.LightRenderer.CascadedShadowMap.ParticleShadow ); return;
+				//case 8 : rs.Filter.StretchRect( targetSurface, rs.LightRenderer.CascadedShadowMap.ColorBuffer ); return;
 				case 9 : rs.Filter.StretchRect( targetSurface, viewHdrFrame.FeedbackBufferRB, SamplerState.PointClamp ); return;
 			}
 
@@ -496,13 +498,13 @@ namespace Fusion.Engine.Graphics {
 						camera.SetupCameraCubeFace( envLight.Position, (CubeFace)i, 0.125f, 5000 );
 
 						//	render g-buffer :
-						rs.SceneRenderer.RenderGBuffer( new GameTime(0,0,0), StereoEye.Mono, camera, radianceFrame, this, true );
+						rs.SceneRenderer.RenderForward( new GameTime(0,0,0), StereoEye.Mono, camera, radianceFrame, this, true );
 
 						//	render sky :
 						rs.Sky.Render( camera, StereoEye.Mono, radianceFrame, SkySettings );
 
 						//	render lights :
-						rs.LightRenderer.RenderLighting( StereoEye.Mono, camera, radianceFrame, this, rs.Sky.SkyCube );
+						rs.LightManager.RenderLighting( StereoEye.Mono, camera, radianceFrame, this, rs.Sky.SkyCube );
 
 						//	downsample captured frame to cube face.
 						rs.Filter.StretchRect4x4( Radiance.GetSurface( 0, (CubeFace)i ), radianceFrame.HdrBuffer, SamplerState.LinearClamp, true );

@@ -97,7 +97,7 @@ namespace IronStar.Views {
 
 			var ppos	=	player.LerpPosition(lerpFactor);
 
-			float backoffset = false ? 2 : 0;
+			//float backoffset = false ? 2 : 0;
 			var h		=	player.State.HasFlag( EntityState.Crouching ) ? 0.8f : 1.8f;
 			var pos		=	player.Position + Vector3.Up * h; 
 
