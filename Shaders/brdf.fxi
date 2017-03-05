@@ -7,6 +7,8 @@ float sqr(float a) {
 	return a * a;
 }
 
+static const float PI = 3.141592;
+
 
 float	LinearFalloff( float dist, float max_range )
 {

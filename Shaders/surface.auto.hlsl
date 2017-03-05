@@ -29,40 +29,22 @@ struct SUBSET {
 struct LIGHTDATA {
 	float4x4   View;                          // offset:    0
 	float4x4   Projection;                    // offset:   64
-	float4x4   InverseViewProjection;         // offset:  128
-	float4     FrustumVectorTR;               // offset:  192
-	float4     FrustumVectorBR;               // offset:  208
-	float4     FrustumVectorBL;               // offset:  224
-	float4     FrustumVectorTL;               // offset:  240
-	float4x4   CSMViewProjection0;            // offset:  256
-	float4x4   CSMViewProjection1;            // offset:  320
-	float4x4   CSMViewProjection2;            // offset:  384
-	float4x4   CSMViewProjection3;            // offset:  448
 	float4     ViewPosition;                  // offset:  512
-	float4     DirectLightDirection;          // offset:  528
-	float4     DirectLightIntensity;          // offset:  544
-	float4     ViewportSize;                  // offset:  560
-	float4     CSMFilterRadius;               // offset:  576
-	float4     AmbientColor;                  // offset:  592
-	float4     Viewport;                      // offset:  608
-	float      ShowCSLoadOmni;                // offset:  624
-	float      ShowCSLoadEnv;                 // offset:  628
-	float      ShowCSLoadSpot;                // offset:  632
-	int        CascadeCount;                  // offset:  636
-	float      CascadeScale;                  // offset:  640
-	float      FogDensity;                    // offset:  644
+};
+
+// Fusion.Engine.Graphics.SceneRenderer+LIGHTINDEX
+// Marshal.SizeOf = 8
+struct LIGHTINDEX {
+	uint       Offset;                        // offset:    0
+	uint       Count;                         // offset:    4
 };
 
 // Fusion.Engine.Graphics.SceneRenderer+LIGHT
-// Marshal.SizeOf = 256
+// Marshal.SizeOf = 64
 struct LIGHT {
-	float4x4   WorldMatrix;                   // offset:    0
-	float4x4   ViewProjection;                // offset:   64
-	float4     PositionRadius;                // offset:  128
-	float4     IntensityFar;                  // offset:  144
-	float4     MaskScaleOffset;               // offset:  160
-	float4     ShadowScaleOffset;             // offset:  176
-	int        LightType;                     // offset:  192
+	float4     PositionRadius;                // offset:    0
+	float4     IntensityFar;                  // offset:   16
+	int        LightType;                     // offset:   32
 };
 
 // Fusion.Engine.Graphics.SceneRenderer+DECAL

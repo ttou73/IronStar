@@ -73,7 +73,7 @@ namespace Fusion.Drivers.Graphics {
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
 		/// <param name="data"></param>
-        public void SetData(Int2[] data)
+        public void SetData<T>(T[] data) where T: struct
 		{
 			device.DeviceContext.UpdateSubresource(data, tex3D, 0, Width*8, Height*Width*8);
 		}

@@ -49,7 +49,7 @@ namespace Fusion.Engine.Graphics.Lights {
 		/// <param name="min"></param>
 		/// <param name="max"></param>
 		/// <returns></returns>
-		static bool GetFrustumExtent ( Matrix view, Matrix projection, Rectangle viewport, BoundingFrustum frustum, out Vector4 min, out Vector4 max )
+		public static bool GetFrustumExtent ( Matrix view, Matrix projection, Rectangle viewport, BoundingFrustum frustum, out Vector4 min, out Vector4 max )
 		{
 			min = max	=	Vector4.Zero;
 
@@ -117,7 +117,7 @@ namespace Fusion.Engine.Graphics.Lights {
 		/// <param name="min"></param>
 		/// <param name="max"></param>
 		/// <returns></returns>
-		static bool GetBasisExtent ( Matrix view, Matrix projection, Rectangle viewport, Matrix basis, out Vector4 min, out Vector4 max )
+		public static bool GetBasisExtent ( Matrix view, Matrix projection, Rectangle viewport, Matrix basis, out Vector4 min, out Vector4 max )
 		{
 			min = max	=	Vector4.Zero;
 
@@ -196,7 +196,7 @@ namespace Fusion.Engine.Graphics.Lights {
 		/// <param name="min"></param>
 		/// <param name="max"></param>
 		/// <returns></returns>
-		static bool GetSphereExtent ( Matrix view, Matrix projection, Vector3 position, Rectangle vp, float radius, out Vector4 min, out Vector4 max )
+		public static bool GetSphereExtent ( Matrix view, Matrix projection, Vector3 position, Rectangle vp, float radius, bool projectZ, out Vector4 min, out Vector4 max )
 		{
 			min = max	=	Vector4.Zero;
 
@@ -221,8 +221,13 @@ namespace Fusion.Engine.Graphics.Lights {
 			max.Y		=	( minP.Y * -0.5f + 0.5f ) * vp.Height;
 			min.Y		=	( maxP.Y * -0.5f + 0.5f ) * vp.Height;
 
-			min.Z		=	Vector3.TransformCoordinate( new Vector3(0,0, Math.Min( viewPos.Z + radius, znear )), projection ).Z;
-			max.Z		=	Vector3.TransformCoordinate( new Vector3(0,0, Math.Min( viewPos.Z - radius, znear )), projection ).Z;
+			if (projectZ) {
+				min.Z	=	Vector3.TransformCoordinate( new Vector3(0,0, Math.Min( viewPos.Z + radius, znear )), projection ).Z;
+				max.Z	=	Vector3.TransformCoordinate( new Vector3(0,0, Math.Min( viewPos.Z - radius, znear )), projection ).Z;
+			} else {
+				min.Z	=	Math.Min( viewPos.Z + radius, znear );
+				max.Z	=	Math.Min( viewPos.Z - radius, znear );
+			}
 
 			if (!r0) {
 				return false;

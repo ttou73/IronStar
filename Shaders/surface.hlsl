@@ -31,8 +31,6 @@ struct GBuffer {
 };
 
 #include "surface.auto.hlsl"
-#include "surface.lighting.hlsl"
-
 
 cbuffer 			CBBatch 			: 	register(b0) { BATCH    	Batch     	: packoffset( c0 ); }	
 cbuffer 			CBLayer 			: 	register(b1) { SUBSET		Subset    	: packoffset( c0 ); }	
@@ -43,12 +41,15 @@ SamplerState		SamplerPoint		: 	register(s1);
 SamplerState		SamplerAnisotropic	: 	register(s2);
 Texture2D			Textures[4]			: 	register(t0);
 Texture3D<uint2>	ClusterTable		: 	register(t4);
+Buffer<uint>		LightIndexTable		: 	register(t5);
+StructuredBuffer<LIGHT>	LightDataTable	:	register(t6);
 
 #ifdef _UBERSHADER
 $ubershader FORWARD RIGID|SKINNED
 $ubershader SHADOW RIGID|SKINNED
 #endif
 
+#include "surface.lighting.hlsl"
 
  
 /*-----------------------------------------------------------------------------

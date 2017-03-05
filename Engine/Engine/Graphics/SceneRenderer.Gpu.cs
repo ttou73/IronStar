@@ -25,13 +25,13 @@ namespace Fusion.Engine.Graphics {
 		}
 
 
-		[ShaderDefine]	const int VTVirtualPageCount	=	VTConfig.VirtualPageCount;
-		[ShaderDefine]	const int VTPageSize			=	VTConfig.PageSize;
-		[ShaderDefine]	const int VTMaxMip				=	VTConfig.MaxMipLevel;
+		[ShaderDefine]	public const int VTVirtualPageCount	=	VTConfig.VirtualPageCount;
+		[ShaderDefine]	public const int VTPageSize			=	VTConfig.PageSize;
+		[ShaderDefine]	public const int VTMaxMip				=	VTConfig.MaxMipLevel;
 
-		[ShaderDefine]	const int LightTypeOmni			=	1;
-		[ShaderDefine]	const int LightTypeOmniShadow	=	2;
-		[ShaderDefine]	const int LightTypeSpotShadow	=	3;
+		[ShaderDefine]	public const int LightTypeOmni			=	1;
+		[ShaderDefine]	public const int LightTypeOmniShadow	=	2;
+		[ShaderDefine]	public const int LightTypeSpotShadow	=	3;
 
 
 		[ShaderStructure]
@@ -59,41 +59,61 @@ namespace Fusion.Engine.Graphics {
 		struct LIGHTDATA {
 			[FieldOffset(  0)] public Matrix	View;
 			[FieldOffset( 64)] public Matrix	Projection;
-			[FieldOffset(128)] public Matrix	InverseViewProjection;
-			[FieldOffset(192)] public Vector4	FrustumVectorTR;
-			[FieldOffset(208)] public Vector4	FrustumVectorBR;
-			[FieldOffset(224)] public Vector4	FrustumVectorBL;
-			[FieldOffset(240)] public Vector4	FrustumVectorTL;
-			[FieldOffset(256)] public Matrix	CSMViewProjection0;
-			[FieldOffset(320)] public Matrix	CSMViewProjection1;
-			[FieldOffset(384)] public Matrix	CSMViewProjection2;
-			[FieldOffset(448)] public Matrix	CSMViewProjection3;
+			//[FieldOffset(128)] public Matrix	InverseViewProjection;
+			//[FieldOffset(192)] public Vector4	FrustumVectorTR;
+			//[FieldOffset(208)] public Vector4	FrustumVectorBR;
+			//[FieldOffset(224)] public Vector4	FrustumVectorBL;
+			//[FieldOffset(240)] public Vector4	FrustumVectorTL;
+			//[FieldOffset(256)] public Matrix	CSMViewProjection0;
+			//[FieldOffset(320)] public Matrix	CSMViewProjection1;
+			//[FieldOffset(384)] public Matrix	CSMViewProjection2;
+			//[FieldOffset(448)] public Matrix	CSMViewProjection3;
 			[FieldOffset(512)] public Vector4	ViewPosition;
-			[FieldOffset(528)] public Vector4	DirectLightDirection;
-			[FieldOffset(544)] public Vector4	DirectLightIntensity;
-			[FieldOffset(560)] public Vector4	ViewportSize;
-			[FieldOffset(576)] public Vector4	CSMFilterRadius;
-			[FieldOffset(592)] public Color4	AmbientColor;
-			[FieldOffset(608)] public Vector4	Viewport;
-			[FieldOffset(624)] public float		ShowCSLoadOmni;
-			[FieldOffset(628)] public float		ShowCSLoadEnv;
-			[FieldOffset(632)] public float		ShowCSLoadSpot;
-			[FieldOffset(636)] public int		CascadeCount;
-			[FieldOffset(640)] public float		CascadeScale;
-			[FieldOffset(644)] public float		FogDensity;
+			//[FieldOffset(528)] public Vector4	DirectLightDirection;
+			//[FieldOffset(544)] public Vector4	DirectLightIntensity;
+			//[FieldOffset(560)] public Vector4	ViewportSize;
+			//[FieldOffset(576)] public Vector4	CSMFilterRadius;
+			//[FieldOffset(592)] public Color4	AmbientColor;
+			//[FieldOffset(608)] public Vector4	Viewport;
+			//[FieldOffset(624)] public float		ShowCSLoadOmni;
+			//[FieldOffset(628)] public float		ShowCSLoadEnv;
+			//[FieldOffset(632)] public float		ShowCSLoadSpot;
+			//[FieldOffset(636)] public int		CascadeCount;
+			//[FieldOffset(640)] public float		CascadeScale;
+			//[FieldOffset(644)] public float		FogDensity;
+		}
+
+
+		[ShaderStructure]
+		[StructLayout(LayoutKind.Explicit)]
+		public struct LIGHTINDEX {
+			[FieldOffset( 0)]	public uint		Offset;		///	Light index buffer offset
+			[FieldOffset( 4)]	public uint		Count;		/// [Spot count][Omni count]
+															
+			public void AddDecal () {
+				Count += (1<<16);
+			}
+			public void AddLight () {
+				Count += (1<<0);
+			}
+
+			public ushort DecalCount { get { return (ushort)(Count >> 16); } }
+			public ushort LightCount { get { return (ushort)(Count &  0xFFFF); } }
+
+			public ushort TotalCount { get { return (ushort)(DecalCount + LightCount); } }
 		}
 
 
 
 		[ShaderStructure]
-		[StructLayout(LayoutKind.Sequential, Size=256)]
+		[StructLayout(LayoutKind.Sequential, Size=64)]
 		public struct LIGHT {	
-			public Matrix	WorldMatrix;
-			public Matrix	ViewProjection;
+			/*public Matrix	WorldMatrix;
+			public Matrix	ViewProjection;*/
 			public Vector4	PositionRadius;
 			public Vector4	IntensityFar;
-			public Vector4	MaskScaleOffset;
-			public Vector4	ShadowScaleOffset;
+			/*public Vector4	MaskScaleOffset;
+			public Vector4	ShadowScaleOffset;*/
 			public int		LightType;
 		}
 

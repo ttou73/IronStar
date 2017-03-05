@@ -31,6 +31,11 @@ namespace Fusion.Engine.Graphics {
 		public float	RadiusOuter;
 
 
+		internal bool	Visible;
+		internal Int3	MinExtent;
+		internal Int3	MaxExtent;
+
+
 		/// <summary>
 		/// 
 		/// </summary>

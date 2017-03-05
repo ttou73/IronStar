@@ -9,24 +9,34 @@ using Fusion.Core.Configuration;
 using Fusion.Engine.Common;
 using Fusion.Drivers.Graphics;
 using System.Runtime.InteropServices;
+using Fusion.Engine.Graphics.Lights;
 
 
 namespace Fusion.Engine.Graphics {
 	public class LightGrid : DisposableBase {
 
+		const int MaxLights = 4096;
+		const int MaxDecals = 4096;
+		const int IndexTableSize = 256 * 512;
+
+		public readonly Game Game;
 		public readonly int Width;
 		public readonly int Height;
 		public readonly int Depth;
 
-		public int Size { get { return Width * Height * Depth; } }
+		readonly RenderSystem rs;
+
+		public int GridLinearSize { get { return Width * Height * Depth; } }
 		
 		Texture3D gridTexture;
+		FormattedBuffer  indexData;
 		StructuredBuffer lightData;
 		StructuredBuffer decalData;
 
 		internal Texture3D GridTexture { get { return gridTexture;	} }
-		internal StructuredBuffer LightData { get { return lightData; } }
-		internal StructuredBuffer DecalData { get { return decalData; } }
+		internal StructuredBuffer LightDataGpu { get { return lightData; } }
+		internal StructuredBuffer DecalDataGpu { get { return decalData; } }
+		internal FormattedBuffer  IndexDataGpu { get { return indexData; } }
 
 
 		/// <summary>
@@ -38,17 +48,20 @@ namespace Fusion.Engine.Graphics {
 		/// <param name="depth"></param>
 		public LightGrid ( RenderSystem rs, int width, int height, int depth )
 		{
+			this.rs	=	rs;
+			Game	=	rs.Game;
 			Width	=	width;
 			Height	=	height;
 			Depth	=	depth;
 
 			gridTexture	=	new Texture3D( rs.Device, width, height, depth );
 
-			lightData	=	new StructuredBuffer( rs.Device, typeof(SceneRenderer.LIGHT), 4096, StructuredBufferFlags.None );
-			decalData	=	new StructuredBuffer( rs.Device, typeof(SceneRenderer.DECAL), 4096, StructuredBufferFlags.None );
+			lightData	=	new StructuredBuffer( rs.Device, typeof(SceneRenderer.LIGHT), MaxLights, StructuredBufferFlags.None );
+			decalData	=	new StructuredBuffer( rs.Device, typeof(SceneRenderer.DECAL), MaxDecals, StructuredBufferFlags.None );
+			indexData	=	new FormattedBuffer( rs.Device, Drivers.Graphics.VertexFormat.UInt, IndexTableSize, StructuredBufferFlags.None ); 
 
 			var rand = new Random();
-			var data = new Int2[Size];
+			var data = new Int2[GridLinearSize];
 
 			for (int i=0; i<Width; i++) {
 				for (int j=0; j<Height; j++) {
@@ -86,6 +99,7 @@ namespace Fusion.Engine.Graphics {
 		{
 			if (disposing) {
 				SafeDispose( ref gridTexture );
+				SafeDispose( ref indexData );
 				SafeDispose( ref lightData );
 				SafeDispose( ref decalData );
 			}
@@ -104,9 +118,44 @@ namespace Fusion.Engine.Graphics {
 			var view = camera.GetViewMatrix( stereoEye );
 			var proj = camera.GetProjectionMatrix( stereoEye );
 
+			UpdateOmniLightExtentsAndVisibility( view, proj, lightSet );
 			ClusterizeOmniLights( view, proj, lightSet );
 		}
 
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="view"></param>
+		/// <param name="proj"></param>
+		/// <param name="lightSet"></param>
+		void UpdateOmniLightExtentsAndVisibility ( Matrix view, Matrix proj, LightSet lightSet )
+		{
+			var vp = new Rectangle(0,0,1,1);
+
+			foreach ( var ol in lightSet.OmniLights ) {
+
+				Vector4 min, max;
+				ol.Visible	=	false;
+
+				if ( Extents.GetSphereExtent( view, proj, ol.Position, vp, ol.RadiusOuter, false, out min, out max ) ) {
+
+					min.Z	=	( 1 - (float)Math.Exp( 0.03f * ( min.Z ) ) );
+					max.Z	=	( 1 - (float)Math.Exp( 0.03f * ( max.Z ) ) );
+
+					ol.Visible		=	true;
+
+					ol.MaxExtent.X	=	Math.Min( Width,  (int)Math.Ceiling( max.X * Width  ) );
+					ol.MaxExtent.Y	=	Math.Min( Height, (int)Math.Ceiling( max.Y * Height ) );
+					ol.MaxExtent.Z	=	Math.Min( Depth,  (int)Math.Ceiling( max.Z * Depth  ) );
+
+					ol.MinExtent.X	=	Math.Max( 0, (int)Math.Floor( min.X * Width  ) );
+					ol.MinExtent.Y	=	Math.Max( 0, (int)Math.Floor( min.Y * Height ) );
+					ol.MinExtent.Z	=	Math.Max( 0, (int)Math.Floor( min.Z * Depth  ) );
+				}
+			}
+		}
 
 
 
@@ -116,46 +165,65 @@ namespace Fusion.Engine.Graphics {
 		/// <param name="lightSet"></param>
 		void ClusterizeOmniLights ( Matrix view, Matrix proj, LightSet lightSet )
 		{
-			//var vp = Game.GraphicsDevice.DisplayBounds;
+			var vp = new Rectangle(0,0,1,1);
 
-			//omniLightData = Enumerable
-			//		.Range(0,RenderSystem.MaxOmniLights)
-			//		.Select( i => new OMNILIGHT(){ PositionRadius = Vector4.Zero, Intensity = Vector4.Zero })
-			//		.ToArray();
+			var lightGrid	=	new SceneRenderer.LIGHTINDEX[GridLinearSize];
 
-			//int index = 0;
+			var lightData	=	new SceneRenderer.LIGHT[MaxLights];
 
-			//foreach ( var light in lightSet.OmniLights ) {
 
-			//	Vector4 min, max;
+			foreach ( var ol in lightSet.OmniLights ) {
+				if (ol.Visible) {
+					for (int i=ol.MinExtent.X; i<ol.MaxExtent.X; i++)
+					for (int j=ol.MinExtent.Y; j<ol.MaxExtent.Y; j++)
+					for (int k=ol.MinExtent.Z; k<ol.MaxExtent.Z; k++) {
+						int a = ComputeAddress(i,j,k);
+						lightGrid[a].AddLight();
+					}
+				}
+			}
 
-			//	var visible = GetSphereExtent( view, proj, light.Position, vp, light.RadiusOuter, out min, out max );
 
-			//	if (!visible) {
-			//		continue;
-			//	}
 
-			//	omniLightData[index].PositionRadius	=	new Vector4( light.Position, light.RadiusOuter );
-			//	omniLightData[index].Intensity		=	new Vector4( light.Intensity.ToVector3(), 1.0f / light.RadiusOuter / light.RadiusOuter );
-			//	omniLightData[index].ExtentMax		=	max;
-			//	omniLightData[index].ExtentMin		=	min;
+			uint offset = 0;
+			for ( int i=0; i<lightGrid.Length; i++ ) {
 
-			//	index++;
-			//}
+				lightGrid[i].Offset = offset;
 
-			////#warning Debug omni-lights.
-			//#if true
-			//if (ShowOmniLights) {
-			//	var dr	=	rs.RenderWorld.Debug;
+				offset += lightGrid[i].LightCount;
+				offset += lightGrid[i].DecalCount;
 
-			//	foreach ( var light in lightSet.OmniLights ) {
-			//		dr.DrawPoint( light.Position, 1, Color.LightYellow );
-			//		dr.DrawSphere( light.Position, light.RadiusOuter, Color.LightYellow, 16 );
-			//	}
-			//}
-			//#endif
+				lightGrid[i].Count	= 0;
+			}
 
-			//omniLightBuffer.SetData( omniLightData );
+			var indexData	=	new uint[ offset + 1 /* one extra element */ ];
+
+
+			uint index = 0;
+			foreach ( var ol in lightSet.OmniLights ) {
+				if (ol.Visible) {
+					for (int i=ol.MinExtent.X; i<ol.MaxExtent.X; i++)
+					for (int j=ol.MinExtent.Y; j<ol.MaxExtent.Y; j++)
+					for (int k=ol.MinExtent.Z; k<ol.MaxExtent.Z; k++) {
+						int a = ComputeAddress(i,j,k);
+						indexData[ lightGrid[a].Offset + lightGrid[a].LightCount ] = index;
+						lightGrid[a].AddLight();
+					}
+
+					lightData[index].LightType		=	SceneRenderer.LightTypeOmni;
+					lightData[index].PositionRadius	=	new Vector4( ol.Position, ol.RadiusOuter );
+					lightData[index].IntensityFar	=	new Vector4( ol.Intensity.Red, ol.Intensity.Green, ol.Intensity.Blue, 0 );
+
+					index++;
+				}
+			}
+
+
+			using ( new PixEvent( "Update cluster structures" ) ) {
+				LightDataGpu.SetData( lightData );
+				IndexDataGpu.SetData( indexData );
+				gridTexture.SetData( lightGrid );
+			}
 		}
 
 

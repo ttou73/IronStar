@@ -39,66 +39,6 @@
       <Scale>1</Scale>
       <Color Red="10" Green="10" Blue="10" Alpha="1" />
     </MapNode>
-    <MapNode xsi:type="MapOmniLight">
-      <Visible>true</Visible>
-      <Frozen>false</Frozen>
-      <Position X="0" Y="6" Z="0" />
-      <Rotation X="0" Y="0" Z="0" W="1" />
-      <Scaling>1</Scaling>
-      <Intensity>500</Intensity>
-      <Radius>12</Radius>
-      <LightPreset>FluorescentTubular</LightPreset>
-    </MapNode>
-    <MapNode xsi:type="MapOmniLight">
-      <Visible>true</Visible>
-      <Frozen>false</Frozen>
-      <Position X="-14" Y="3" Z="-13" />
-      <Rotation X="0" Y="0" Z="0" W="1" />
-      <Scaling>1</Scaling>
-      <Intensity>500</Intensity>
-      <Radius>5</Radius>
-      <LightPreset>IncandescentStandard</LightPreset>
-    </MapNode>
-    <MapNode xsi:type="MapOmniLight">
-      <Visible>true</Visible>
-      <Frozen>false</Frozen>
-      <Position X="-14" Y="3" Z="-19" />
-      <Rotation X="0" Y="0" Z="0" W="1" />
-      <Scaling>1</Scaling>
-      <Intensity>500</Intensity>
-      <Radius>5</Radius>
-      <LightPreset>IncandescentStandard</LightPreset>
-    </MapNode>
-    <MapNode xsi:type="MapOmniLight">
-      <Visible>true</Visible>
-      <Frozen>false</Frozen>
-      <Position X="-14" Y="3" Z="-26" />
-      <Rotation X="0" Y="0" Z="0" W="1" />
-      <Scaling>1</Scaling>
-      <Intensity>500</Intensity>
-      <Radius>5</Radius>
-      <LightPreset>IncandescentStandard</LightPreset>
-    </MapNode>
-    <MapNode xsi:type="MapOmniLight">
-      <Visible>true</Visible>
-      <Frozen>false</Frozen>
-      <Position X="-2" Y="7" Z="-26" />
-      <Rotation X="0" Y="0" Z="0" W="1" />
-      <Scaling>1</Scaling>
-      <Intensity>500</Intensity>
-      <Radius>5</Radius>
-      <LightPreset>IncandescentStandard</LightPreset>
-    </MapNode>
-    <MapNode xsi:type="MapOmniLight">
-      <Visible>true</Visible>
-      <Frozen>false</Frozen>
-      <Position X="-2" Y="7" Z="-30" />
-      <Rotation X="0" Y="0" Z="0" W="1" />
-      <Scaling>1</Scaling>
-      <Intensity>500</Intensity>
-      <Radius>5</Radius>
-      <LightPreset>IncandescentStandard</LightPreset>
-    </MapNode>
     <MapNode xsi:type="MapEntity">
       <Visible>true</Visible>
       <Frozen>false</Frozen>
@@ -249,17 +189,6 @@
     <MapNode xsi:type="MapLightProbe">
       <Visible>true</Visible>
       <Frozen>false</Frozen>
-      <Position X="0" Y="4" Z="0" />
-      <Rotation X="0" Y="0" Z="0" W="1" />
-      <Scaling>1</Scaling>
-      <Width>19</Width>
-      <Height>9</Height>
-      <Depth>18</Depth>
-      <Factor>1</Factor>
-    </MapNode>
-    <MapNode xsi:type="MapLightProbe">
-      <Visible>true</Visible>
-      <Frozen>false</Frozen>
       <Position X="-18" Y="4" Z="0" />
       <Rotation X="0" Y="0" Z="0" W="1" />
       <Scaling>1</Scaling>
@@ -268,20 +197,10 @@
       <Depth>18</Depth>
       <Factor>1</Factor>
     </MapNode>
-    <MapNode xsi:type="MapOmniLight">
-      <Visible>true</Visible>
-      <Frozen>false</Frozen>
-      <Position X="-18" Y="6" Z="0" />
-      <Rotation X="0" Y="0" Z="0" W="1" />
-      <Scaling>1</Scaling>
-      <Intensity>500</Intensity>
-      <Radius>12</Radius>
-      <LightPreset>FluorescentTubular</LightPreset>
-    </MapNode>
     <MapNode xsi:type="MapEntity">
       <Visible>true</Visible>
       <Frozen>false</Frozen>
-      <Position X="5" Y="0" Z="4" />
+      <Position X="5" Y="0" Z="5" />
       <Rotation X="0" Y="0.6087614" Z="0" W="0.7933533" />
       <Scaling>1</Scaling>
       <Factory xsi:type="StartPointFactory">
@@ -291,7 +210,7 @@
     <MapNode xsi:type="MapEntity">
       <Visible>true</Visible>
       <Frozen>false</Frozen>
-      <Position X="-9" Y="0" Z="0" />
+      <Position X="-8.75" Y="0" Z="0" />
       <Rotation X="0" Y="0" Z="0" W="1" />
       <Scaling>1</Scaling>
       <Factory xsi:type="FuncDoorFactory">
@@ -308,6 +227,896 @@
         <ClosingStartFrame>15</ClosingStartFrame>
         <ClosingEndFrame>30</ClosingEndFrame>
       </Factory>
+    </MapNode>
+    <MapNode xsi:type="MapOmniLight">
+      <Visible>true</Visible>
+      <Frozen>false</Frozen>
+      <Position X="-20" Y="1" Z="2" />
+      <Rotation X="0" Y="0" Z="0" W="1" />
+      <Scaling>1</Scaling>
+      <Intensity>500</Intensity>
+      <Radius>2</Radius>
+      <LightPreset>IncandescentStandard</LightPreset>
+    </MapNode>
+    <MapNode xsi:type="MapOmniLight">
+      <Visible>true</Visible>
+      <Frozen>false</Frozen>
+      <Position X="-21" Y="1" Z="2" />
+      <Rotation X="0" Y="0" Z="0" W="1" />
+      <Scaling>1</Scaling>
+      <Intensity>500</Intensity>
+      <Radius>2</Radius>
+      <LightPreset>IncandescentStandard</LightPreset>
+    </MapNode>
+    <MapNode xsi:type="MapOmniLight">
+      <Visible>true</Visible>
+      <Frozen>false</Frozen>
+      <Position X="-22" Y="1" Z="2" />
+      <Rotation X="0" Y="0" Z="0" W="1" />
+      <Scaling>1</Scaling>
+      <Intensity>500</Intensity>
+      <Radius>2</Radius>
+      <LightPreset>IncandescentStandard</LightPreset>
+    </MapNode>
+    <MapNode xsi:type="MapOmniLight">
+      <Visible>true</Visible>
+      <Frozen>false</Frozen>
+      <Position X="-23" Y="1" Z="2" />
+      <Rotation X="0" Y="0" Z="0" W="1" />
+      <Scaling>1</Scaling>
+      <Intensity>500</Intensity>
+      <Radius>2</Radius>
+      <LightPreset>IncandescentStandard</LightPreset>
+    </MapNode>
+    <MapNode xsi:type="MapOmniLight">
+      <Visible>true</Visible>
+      <Frozen>false</Frozen>
+      <Position X="-20" Y="1" Z="3" />
+      <Rotation X="0" Y="0" Z="0" W="1" />
+      <Scaling>1</Scaling>
+      <Intensity>500</Intensity>
+      <Radius>2</Radius>
+      <LightPreset>IncandescentStandard</LightPreset>
+    </MapNode>
+    <MapNode xsi:type="MapOmniLight">
+      <Visible>true</Visible>
+      <Frozen>false</Frozen>
+      <Position X="-21" Y="1" Z="3" />
+      <Rotation X="0" Y="0" Z="0" W="1" />
+      <Scaling>1</Scaling>
+      <Intensity>500</Intensity>
+      <Radius>2</Radius>
+      <LightPreset>IncandescentStandard</LightPreset>
+    </MapNode>
+    <MapNode xsi:type="MapOmniLight">
+      <Visible>true</Visible>
+      <Frozen>false</Frozen>
+      <Position X="-22" Y="1" Z="3" />
+      <Rotation X="0" Y="0" Z="0" W="1" />
+      <Scaling>1</Scaling>
+      <Intensity>500</Intensity>
+      <Radius>2</Radius>
+      <LightPreset>IncandescentStandard</LightPreset>
+    </MapNode>
+    <MapNode xsi:type="MapOmniLight">
+      <Visible>true</Visible>
+      <Frozen>false</Frozen>
+      <Position X="-23" Y="1" Z="3" />
+      <Rotation X="0" Y="0" Z="0" W="1" />
+      <Scaling>1</Scaling>
+      <Intensity>500</Intensity>
+      <Radius>2</Radius>
+      <LightPreset>IncandescentStandard</LightPreset>
+    </MapNode>
+    <MapNode xsi:type="MapOmniLight">
+      <Visible>true</Visible>
+      <Frozen>false</Frozen>
+      <Position X="-20" Y="1" Z="4" />
+      <Rotation X="0" Y="0" Z="0" W="1" />
+      <Scaling>1</Scaling>
+      <Intensity>500</Intensity>
+      <Radius>2</Radius>
+      <LightPreset>IncandescentStandard</LightPreset>
+    </MapNode>
+    <MapNode xsi:type="MapOmniLight">
+      <Visible>true</Visible>
+      <Frozen>false</Frozen>
+      <Position X="-21" Y="1" Z="4" />
+      <Rotation X="0" Y="0" Z="0" W="1" />
+      <Scaling>1</Scaling>
+      <Intensity>500</Intensity>
+      <Radius>2</Radius>
+      <LightPreset>IncandescentStandard</LightPreset>
+    </MapNode>
+    <MapNode xsi:type="MapOmniLight">
+      <Visible>true</Visible>
+      <Frozen>false</Frozen>
+      <Position X="-22" Y="1" Z="4" />
+      <Rotation X="0" Y="0" Z="0" W="1" />
+      <Scaling>1</Scaling>
+      <Intensity>500</Intensity>
+      <Radius>2</Radius>
+      <LightPreset>IncandescentStandard</LightPreset>
+    </MapNode>
+    <MapNode xsi:type="MapOmniLight">
+      <Visible>true</Visible>
+      <Frozen>false</Frozen>
+      <Position X="-23" Y="1" Z="4" />
+      <Rotation X="0" Y="0" Z="0" W="1" />
+      <Scaling>1</Scaling>
+      <Intensity>500</Intensity>
+      <Radius>2</Radius>
+      <LightPreset>IncandescentStandard</LightPreset>
+    </MapNode>
+    <MapNode xsi:type="MapOmniLight">
+      <Visible>true</Visible>
+      <Frozen>false</Frozen>
+      <Position X="-20" Y="1" Z="5" />
+      <Rotation X="0" Y="0" Z="0" W="1" />
+      <Scaling>1</Scaling>
+      <Intensity>500</Intensity>
+      <Radius>2</Radius>
+      <LightPreset>IncandescentStandard</LightPreset>
+    </MapNode>
+    <MapNode xsi:type="MapOmniLight">
+      <Visible>true</Visible>
+      <Frozen>false</Frozen>
+      <Position X="-21" Y="1" Z="5" />
+      <Rotation X="0" Y="0" Z="0" W="1" />
+      <Scaling>1</Scaling>
+      <Intensity>500</Intensity>
+      <Radius>2</Radius>
+      <LightPreset>IncandescentStandard</LightPreset>
+    </MapNode>
+    <MapNode xsi:type="MapOmniLight">
+      <Visible>true</Visible>
+      <Frozen>false</Frozen>
+      <Position X="-22" Y="1" Z="5" />
+      <Rotation X="0" Y="0" Z="0" W="1" />
+      <Scaling>1</Scaling>
+      <Intensity>500</Intensity>
+      <Radius>2</Radius>
+      <LightPreset>IncandescentStandard</LightPreset>
+    </MapNode>
+    <MapNode xsi:type="MapOmniLight">
+      <Visible>true</Visible>
+      <Frozen>false</Frozen>
+      <Position X="-23" Y="1" Z="5" />
+      <Rotation X="0" Y="0" Z="0" W="1" />
+      <Scaling>1</Scaling>
+      <Intensity>500</Intensity>
+      <Radius>2</Radius>
+      <LightPreset>IncandescentStandard</LightPreset>
+    </MapNode>
+    <MapNode xsi:type="MapOmniLight">
+      <Visible>true</Visible>
+      <Frozen>false</Frozen>
+      <Position X="-20" Y="2" Z="2" />
+      <Rotation X="0" Y="0" Z="0" W="1" />
+      <Scaling>1</Scaling>
+      <Intensity>500</Intensity>
+      <Radius>2</Radius>
+      <LightPreset>IncandescentStandard</LightPreset>
+    </MapNode>
+    <MapNode xsi:type="MapOmniLight">
+      <Visible>true</Visible>
+      <Frozen>false</Frozen>
+      <Position X="-21" Y="2" Z="2" />
+      <Rotation X="0" Y="0" Z="0" W="1" />
+      <Scaling>1</Scaling>
+      <Intensity>500</Intensity>
+      <Radius>2</Radius>
+      <LightPreset>IncandescentStandard</LightPreset>
+    </MapNode>
+    <MapNode xsi:type="MapOmniLight">
+      <Visible>true</Visible>
+      <Frozen>false</Frozen>
+      <Position X="-22" Y="2" Z="2" />
+      <Rotation X="0" Y="0" Z="0" W="1" />
+      <Scaling>1</Scaling>
+      <Intensity>500</Intensity>
+      <Radius>2</Radius>
+      <LightPreset>IncandescentStandard</LightPreset>
+    </MapNode>
+    <MapNode xsi:type="MapOmniLight">
+      <Visible>true</Visible>
+      <Frozen>false</Frozen>
+      <Position X="-23" Y="2" Z="2" />
+      <Rotation X="0" Y="0" Z="0" W="1" />
+      <Scaling>1</Scaling>
+      <Intensity>500</Intensity>
+      <Radius>2</Radius>
+      <LightPreset>IncandescentStandard</LightPreset>
+    </MapNode>
+    <MapNode xsi:type="MapOmniLight">
+      <Visible>true</Visible>
+      <Frozen>false</Frozen>
+      <Position X="-20" Y="2" Z="3" />
+      <Rotation X="0" Y="0" Z="0" W="1" />
+      <Scaling>1</Scaling>
+      <Intensity>500</Intensity>
+      <Radius>2</Radius>
+      <LightPreset>IncandescentStandard</LightPreset>
+    </MapNode>
+    <MapNode xsi:type="MapOmniLight">
+      <Visible>true</Visible>
+      <Frozen>false</Frozen>
+      <Position X="-21" Y="2" Z="3" />
+      <Rotation X="0" Y="0" Z="0" W="1" />
+      <Scaling>1</Scaling>
+      <Intensity>500</Intensity>
+      <Radius>2</Radius>
+      <LightPreset>IncandescentStandard</LightPreset>
+    </MapNode>
+    <MapNode xsi:type="MapOmniLight">
+      <Visible>true</Visible>
+      <Frozen>false</Frozen>
+      <Position X="-22" Y="2" Z="3" />
+      <Rotation X="0" Y="0" Z="0" W="1" />
+      <Scaling>1</Scaling>
+      <Intensity>500</Intensity>
+      <Radius>2</Radius>
+      <LightPreset>IncandescentStandard</LightPreset>
+    </MapNode>
+    <MapNode xsi:type="MapOmniLight">
+      <Visible>true</Visible>
+      <Frozen>false</Frozen>
+      <Position X="-23" Y="2" Z="3" />
+      <Rotation X="0" Y="0" Z="0" W="1" />
+      <Scaling>1</Scaling>
+      <Intensity>500</Intensity>
+      <Radius>2</Radius>
+      <LightPreset>IncandescentStandard</LightPreset>
+    </MapNode>
+    <MapNode xsi:type="MapOmniLight">
+      <Visible>true</Visible>
+      <Frozen>false</Frozen>
+      <Position X="-20" Y="2" Z="4" />
+      <Rotation X="0" Y="0" Z="0" W="1" />
+      <Scaling>1</Scaling>
+      <Intensity>500</Intensity>
+      <Radius>2</Radius>
+      <LightPreset>IncandescentStandard</LightPreset>
+    </MapNode>
+    <MapNode xsi:type="MapOmniLight">
+      <Visible>true</Visible>
+      <Frozen>false</Frozen>
+      <Position X="-21" Y="2" Z="4" />
+      <Rotation X="0" Y="0" Z="0" W="1" />
+      <Scaling>1</Scaling>
+      <Intensity>500</Intensity>
+      <Radius>2</Radius>
+      <LightPreset>IncandescentStandard</LightPreset>
+    </MapNode>
+    <MapNode xsi:type="MapOmniLight">
+      <Visible>true</Visible>
+      <Frozen>false</Frozen>
+      <Position X="-22" Y="2" Z="4" />
+      <Rotation X="0" Y="0" Z="0" W="1" />
+      <Scaling>1</Scaling>
+      <Intensity>500</Intensity>
+      <Radius>2</Radius>
+      <LightPreset>IncandescentStandard</LightPreset>
+    </MapNode>
+    <MapNode xsi:type="MapOmniLight">
+      <Visible>true</Visible>
+      <Frozen>false</Frozen>
+      <Position X="-23" Y="2" Z="4" />
+      <Rotation X="0" Y="0" Z="0" W="1" />
+      <Scaling>1</Scaling>
+      <Intensity>500</Intensity>
+      <Radius>2</Radius>
+      <LightPreset>IncandescentStandard</LightPreset>
+    </MapNode>
+    <MapNode xsi:type="MapOmniLight">
+      <Visible>true</Visible>
+      <Frozen>false</Frozen>
+      <Position X="-20" Y="2" Z="5" />
+      <Rotation X="0" Y="0" Z="0" W="1" />
+      <Scaling>1</Scaling>
+      <Intensity>500</Intensity>
+      <Radius>2</Radius>
+      <LightPreset>IncandescentStandard</LightPreset>
+    </MapNode>
+    <MapNode xsi:type="MapOmniLight">
+      <Visible>true</Visible>
+      <Frozen>false</Frozen>
+      <Position X="-21" Y="2" Z="5" />
+      <Rotation X="0" Y="0" Z="0" W="1" />
+      <Scaling>1</Scaling>
+      <Intensity>500</Intensity>
+      <Radius>2</Radius>
+      <LightPreset>IncandescentStandard</LightPreset>
+    </MapNode>
+    <MapNode xsi:type="MapOmniLight">
+      <Visible>true</Visible>
+      <Frozen>false</Frozen>
+      <Position X="-22" Y="2" Z="5" />
+      <Rotation X="0" Y="0" Z="0" W="1" />
+      <Scaling>1</Scaling>
+      <Intensity>500</Intensity>
+      <Radius>2</Radius>
+      <LightPreset>IncandescentStandard</LightPreset>
+    </MapNode>
+    <MapNode xsi:type="MapOmniLight">
+      <Visible>true</Visible>
+      <Frozen>false</Frozen>
+      <Position X="-23" Y="2" Z="5" />
+      <Rotation X="0" Y="0" Z="0" W="1" />
+      <Scaling>1</Scaling>
+      <Intensity>500</Intensity>
+      <Radius>2</Radius>
+      <LightPreset>IncandescentStandard</LightPreset>
+    </MapNode>
+    <MapNode xsi:type="MapOmniLight">
+      <Visible>true</Visible>
+      <Frozen>false</Frozen>
+      <Position X="-20" Y="3" Z="2" />
+      <Rotation X="0" Y="0" Z="0" W="1" />
+      <Scaling>1</Scaling>
+      <Intensity>500</Intensity>
+      <Radius>2</Radius>
+      <LightPreset>IncandescentStandard</LightPreset>
+    </MapNode>
+    <MapNode xsi:type="MapOmniLight">
+      <Visible>true</Visible>
+      <Frozen>false</Frozen>
+      <Position X="-21" Y="3" Z="2" />
+      <Rotation X="0" Y="0" Z="0" W="1" />
+      <Scaling>1</Scaling>
+      <Intensity>500</Intensity>
+      <Radius>2</Radius>
+      <LightPreset>IncandescentStandard</LightPreset>
+    </MapNode>
+    <MapNode xsi:type="MapOmniLight">
+      <Visible>true</Visible>
+      <Frozen>false</Frozen>
+      <Position X="-22" Y="3" Z="2" />
+      <Rotation X="0" Y="0" Z="0" W="1" />
+      <Scaling>1</Scaling>
+      <Intensity>500</Intensity>
+      <Radius>2</Radius>
+      <LightPreset>IncandescentStandard</LightPreset>
+    </MapNode>
+    <MapNode xsi:type="MapOmniLight">
+      <Visible>true</Visible>
+      <Frozen>false</Frozen>
+      <Position X="-23" Y="3" Z="2" />
+      <Rotation X="0" Y="0" Z="0" W="1" />
+      <Scaling>1</Scaling>
+      <Intensity>500</Intensity>
+      <Radius>2</Radius>
+      <LightPreset>IncandescentStandard</LightPreset>
+    </MapNode>
+    <MapNode xsi:type="MapOmniLight">
+      <Visible>true</Visible>
+      <Frozen>false</Frozen>
+      <Position X="-20" Y="3" Z="3" />
+      <Rotation X="0" Y="0" Z="0" W="1" />
+      <Scaling>1</Scaling>
+      <Intensity>500</Intensity>
+      <Radius>2</Radius>
+      <LightPreset>IncandescentStandard</LightPreset>
+    </MapNode>
+    <MapNode xsi:type="MapOmniLight">
+      <Visible>true</Visible>
+      <Frozen>false</Frozen>
+      <Position X="-21" Y="3" Z="3" />
+      <Rotation X="0" Y="0" Z="0" W="1" />
+      <Scaling>1</Scaling>
+      <Intensity>500</Intensity>
+      <Radius>2</Radius>
+      <LightPreset>IncandescentStandard</LightPreset>
+    </MapNode>
+    <MapNode xsi:type="MapOmniLight">
+      <Visible>true</Visible>
+      <Frozen>false</Frozen>
+      <Position X="-22" Y="3" Z="3" />
+      <Rotation X="0" Y="0" Z="0" W="1" />
+      <Scaling>1</Scaling>
+      <Intensity>500</Intensity>
+      <Radius>2</Radius>
+      <LightPreset>IncandescentStandard</LightPreset>
+    </MapNode>
+    <MapNode xsi:type="MapOmniLight">
+      <Visible>true</Visible>
+      <Frozen>false</Frozen>
+      <Position X="-23" Y="3" Z="3" />
+      <Rotation X="0" Y="0" Z="0" W="1" />
+      <Scaling>1</Scaling>
+      <Intensity>500</Intensity>
+      <Radius>2</Radius>
+      <LightPreset>IncandescentStandard</LightPreset>
+    </MapNode>
+    <MapNode xsi:type="MapOmniLight">
+      <Visible>true</Visible>
+      <Frozen>false</Frozen>
+      <Position X="-20" Y="3" Z="4" />
+      <Rotation X="0" Y="0" Z="0" W="1" />
+      <Scaling>1</Scaling>
+      <Intensity>500</Intensity>
+      <Radius>2</Radius>
+      <LightPreset>IncandescentStandard</LightPreset>
+    </MapNode>
+    <MapNode xsi:type="MapOmniLight">
+      <Visible>true</Visible>
+      <Frozen>false</Frozen>
+      <Position X="-21" Y="3" Z="4" />
+      <Rotation X="0" Y="0" Z="0" W="1" />
+      <Scaling>1</Scaling>
+      <Intensity>500</Intensity>
+      <Radius>2</Radius>
+      <LightPreset>IncandescentStandard</LightPreset>
+    </MapNode>
+    <MapNode xsi:type="MapOmniLight">
+      <Visible>true</Visible>
+      <Frozen>false</Frozen>
+      <Position X="-22" Y="3" Z="4" />
+      <Rotation X="0" Y="0" Z="0" W="1" />
+      <Scaling>1</Scaling>
+      <Intensity>500</Intensity>
+      <Radius>2</Radius>
+      <LightPreset>IncandescentStandard</LightPreset>
+    </MapNode>
+    <MapNode xsi:type="MapOmniLight">
+      <Visible>true</Visible>
+      <Frozen>false</Frozen>
+      <Position X="-23" Y="3" Z="4" />
+      <Rotation X="0" Y="0" Z="0" W="1" />
+      <Scaling>1</Scaling>
+      <Intensity>500</Intensity>
+      <Radius>2</Radius>
+      <LightPreset>IncandescentStandard</LightPreset>
+    </MapNode>
+    <MapNode xsi:type="MapOmniLight">
+      <Visible>true</Visible>
+      <Frozen>false</Frozen>
+      <Position X="-20" Y="3" Z="5" />
+      <Rotation X="0" Y="0" Z="0" W="1" />
+      <Scaling>1</Scaling>
+      <Intensity>500</Intensity>
+      <Radius>2</Radius>
+      <LightPreset>IncandescentStandard</LightPreset>
+    </MapNode>
+    <MapNode xsi:type="MapOmniLight">
+      <Visible>true</Visible>
+      <Frozen>false</Frozen>
+      <Position X="-21" Y="3" Z="5" />
+      <Rotation X="0" Y="0" Z="0" W="1" />
+      <Scaling>1</Scaling>
+      <Intensity>500</Intensity>
+      <Radius>2</Radius>
+      <LightPreset>IncandescentStandard</LightPreset>
+    </MapNode>
+    <MapNode xsi:type="MapOmniLight">
+      <Visible>true</Visible>
+      <Frozen>false</Frozen>
+      <Position X="-22" Y="3" Z="5" />
+      <Rotation X="0" Y="0" Z="0" W="1" />
+      <Scaling>1</Scaling>
+      <Intensity>500</Intensity>
+      <Radius>2</Radius>
+      <LightPreset>IncandescentStandard</LightPreset>
+    </MapNode>
+    <MapNode xsi:type="MapOmniLight">
+      <Visible>true</Visible>
+      <Frozen>false</Frozen>
+      <Position X="-23" Y="3" Z="5" />
+      <Rotation X="0" Y="0" Z="0" W="1" />
+      <Scaling>1</Scaling>
+      <Intensity>500</Intensity>
+      <Radius>2</Radius>
+      <LightPreset>IncandescentStandard</LightPreset>
+    </MapNode>
+    <MapNode xsi:type="MapOmniLight">
+      <Visible>true</Visible>
+      <Frozen>false</Frozen>
+      <Position X="-20" Y="4" Z="2" />
+      <Rotation X="0" Y="0" Z="0" W="1" />
+      <Scaling>1</Scaling>
+      <Intensity>500</Intensity>
+      <Radius>2</Radius>
+      <LightPreset>IncandescentStandard</LightPreset>
+    </MapNode>
+    <MapNode xsi:type="MapOmniLight">
+      <Visible>true</Visible>
+      <Frozen>false</Frozen>
+      <Position X="-21" Y="4" Z="2" />
+      <Rotation X="0" Y="0" Z="0" W="1" />
+      <Scaling>1</Scaling>
+      <Intensity>500</Intensity>
+      <Radius>2</Radius>
+      <LightPreset>IncandescentStandard</LightPreset>
+    </MapNode>
+    <MapNode xsi:type="MapOmniLight">
+      <Visible>true</Visible>
+      <Frozen>false</Frozen>
+      <Position X="-22" Y="4" Z="2" />
+      <Rotation X="0" Y="0" Z="0" W="1" />
+      <Scaling>1</Scaling>
+      <Intensity>500</Intensity>
+      <Radius>2</Radius>
+      <LightPreset>IncandescentStandard</LightPreset>
+    </MapNode>
+    <MapNode xsi:type="MapOmniLight">
+      <Visible>true</Visible>
+      <Frozen>false</Frozen>
+      <Position X="-23" Y="4" Z="2" />
+      <Rotation X="0" Y="0" Z="0" W="1" />
+      <Scaling>1</Scaling>
+      <Intensity>500</Intensity>
+      <Radius>2</Radius>
+      <LightPreset>IncandescentStandard</LightPreset>
+    </MapNode>
+    <MapNode xsi:type="MapOmniLight">
+      <Visible>true</Visible>
+      <Frozen>false</Frozen>
+      <Position X="-20" Y="4" Z="3" />
+      <Rotation X="0" Y="0" Z="0" W="1" />
+      <Scaling>1</Scaling>
+      <Intensity>500</Intensity>
+      <Radius>2</Radius>
+      <LightPreset>IncandescentStandard</LightPreset>
+    </MapNode>
+    <MapNode xsi:type="MapOmniLight">
+      <Visible>true</Visible>
+      <Frozen>false</Frozen>
+      <Position X="-21" Y="4" Z="3" />
+      <Rotation X="0" Y="0" Z="0" W="1" />
+      <Scaling>1</Scaling>
+      <Intensity>500</Intensity>
+      <Radius>2</Radius>
+      <LightPreset>IncandescentStandard</LightPreset>
+    </MapNode>
+    <MapNode xsi:type="MapOmniLight">
+      <Visible>true</Visible>
+      <Frozen>false</Frozen>
+      <Position X="-22" Y="4" Z="3" />
+      <Rotation X="0" Y="0" Z="0" W="1" />
+      <Scaling>1</Scaling>
+      <Intensity>500</Intensity>
+      <Radius>2</Radius>
+      <LightPreset>IncandescentStandard</LightPreset>
+    </MapNode>
+    <MapNode xsi:type="MapOmniLight">
+      <Visible>true</Visible>
+      <Frozen>false</Frozen>
+      <Position X="-23" Y="4" Z="3" />
+      <Rotation X="0" Y="0" Z="0" W="1" />
+      <Scaling>1</Scaling>
+      <Intensity>500</Intensity>
+      <Radius>2</Radius>
+      <LightPreset>IncandescentStandard</LightPreset>
+    </MapNode>
+    <MapNode xsi:type="MapOmniLight">
+      <Visible>true</Visible>
+      <Frozen>false</Frozen>
+      <Position X="-20" Y="4" Z="4" />
+      <Rotation X="0" Y="0" Z="0" W="1" />
+      <Scaling>1</Scaling>
+      <Intensity>500</Intensity>
+      <Radius>2</Radius>
+      <LightPreset>IncandescentStandard</LightPreset>
+    </MapNode>
+    <MapNode xsi:type="MapOmniLight">
+      <Visible>true</Visible>
+      <Frozen>false</Frozen>
+      <Position X="-21" Y="4" Z="4" />
+      <Rotation X="0" Y="0" Z="0" W="1" />
+      <Scaling>1</Scaling>
+      <Intensity>500</Intensity>
+      <Radius>2</Radius>
+      <LightPreset>IncandescentStandard</LightPreset>
+    </MapNode>
+    <MapNode xsi:type="MapOmniLight">
+      <Visible>true</Visible>
+      <Frozen>false</Frozen>
+      <Position X="-22" Y="4" Z="4" />
+      <Rotation X="0" Y="0" Z="0" W="1" />
+      <Scaling>1</Scaling>
+      <Intensity>500</Intensity>
+      <Radius>2</Radius>
+      <LightPreset>IncandescentStandard</LightPreset>
+    </MapNode>
+    <MapNode xsi:type="MapOmniLight">
+      <Visible>true</Visible>
+      <Frozen>false</Frozen>
+      <Position X="-23" Y="4" Z="4" />
+      <Rotation X="0" Y="0" Z="0" W="1" />
+      <Scaling>1</Scaling>
+      <Intensity>500</Intensity>
+      <Radius>2</Radius>
+      <LightPreset>IncandescentStandard</LightPreset>
+    </MapNode>
+    <MapNode xsi:type="MapOmniLight">
+      <Visible>true</Visible>
+      <Frozen>false</Frozen>
+      <Position X="-20" Y="4" Z="5" />
+      <Rotation X="0" Y="0" Z="0" W="1" />
+      <Scaling>1</Scaling>
+      <Intensity>500</Intensity>
+      <Radius>2</Radius>
+      <LightPreset>IncandescentStandard</LightPreset>
+    </MapNode>
+    <MapNode xsi:type="MapOmniLight">
+      <Visible>true</Visible>
+      <Frozen>false</Frozen>
+      <Position X="-21" Y="4" Z="5" />
+      <Rotation X="0" Y="0" Z="0" W="1" />
+      <Scaling>1</Scaling>
+      <Intensity>500</Intensity>
+      <Radius>2</Radius>
+      <LightPreset>IncandescentStandard</LightPreset>
+    </MapNode>
+    <MapNode xsi:type="MapOmniLight">
+      <Visible>true</Visible>
+      <Frozen>false</Frozen>
+      <Position X="-22" Y="4" Z="5" />
+      <Rotation X="0" Y="0" Z="0" W="1" />
+      <Scaling>1</Scaling>
+      <Intensity>500</Intensity>
+      <Radius>2</Radius>
+      <LightPreset>IncandescentStandard</LightPreset>
+    </MapNode>
+    <MapNode xsi:type="MapOmniLight">
+      <Visible>true</Visible>
+      <Frozen>false</Frozen>
+      <Position X="-23" Y="4" Z="5" />
+      <Rotation X="0" Y="0" Z="0" W="1" />
+      <Scaling>1</Scaling>
+      <Intensity>500</Intensity>
+      <Radius>2</Radius>
+      <LightPreset>IncandescentStandard</LightPreset>
+    </MapNode>
+    <MapNode xsi:type="MapOmniLight">
+      <Visible>true</Visible>
+      <Frozen>false</Frozen>
+      <Position X="6" Y="2" Z="-6" />
+      <Rotation X="0" Y="0" Z="0" W="1" />
+      <Scaling>1</Scaling>
+      <Intensity>500</Intensity>
+      <Radius>5</Radius>
+      <LightPreset>IncandescentStandard</LightPreset>
+    </MapNode>
+    <MapNode xsi:type="MapOmniLight">
+      <Visible>true</Visible>
+      <Frozen>false</Frozen>
+      <Position X="0" Y="2" Z="-6" />
+      <Rotation X="0" Y="0" Z="0" W="1" />
+      <Scaling>1</Scaling>
+      <Intensity>500</Intensity>
+      <Radius>5</Radius>
+      <LightPreset>FluorescentTubular</LightPreset>
+    </MapNode>
+    <MapNode xsi:type="MapOmniLight">
+      <Visible>true</Visible>
+      <Frozen>false</Frozen>
+      <Position X="-6" Y="2" Z="-6" />
+      <Rotation X="0" Y="0" Z="0" W="1" />
+      <Scaling>1</Scaling>
+      <Intensity>500</Intensity>
+      <Radius>5</Radius>
+      <LightPreset>IncandescentStandard</LightPreset>
+    </MapNode>
+    <MapNode xsi:type="MapOmniLight">
+      <Visible>true</Visible>
+      <Frozen>false</Frozen>
+      <Position X="6" Y="2" Z="0" />
+      <Rotation X="0" Y="0" Z="0" W="1" />
+      <Scaling>1</Scaling>
+      <Intensity>500</Intensity>
+      <Radius>5</Radius>
+      <LightPreset>FlourescentWarmWhite</LightPreset>
+    </MapNode>
+    <MapNode xsi:type="MapOmniLight">
+      <Visible>true</Visible>
+      <Frozen>false</Frozen>
+      <Position X="0" Y="2" Z="0" />
+      <Rotation X="0" Y="0" Z="0" W="1" />
+      <Scaling>1</Scaling>
+      <Intensity>500</Intensity>
+      <Radius>5</Radius>
+      <LightPreset>IncandescentStandard</LightPreset>
+    </MapNode>
+    <MapNode xsi:type="MapOmniLight">
+      <Visible>true</Visible>
+      <Frozen>false</Frozen>
+      <Position X="-6" Y="2" Z="0" />
+      <Rotation X="0" Y="0" Z="0" W="1" />
+      <Scaling>1</Scaling>
+      <Intensity>500</Intensity>
+      <Radius>5</Radius>
+      <LightPreset>IncandescentStandard</LightPreset>
+    </MapNode>
+    <MapNode xsi:type="MapOmniLight">
+      <Visible>true</Visible>
+      <Frozen>false</Frozen>
+      <Position X="6" Y="2" Z="4" />
+      <Rotation X="0" Y="0" Z="0" W="1" />
+      <Scaling>1</Scaling>
+      <Intensity>500</Intensity>
+      <Radius>5</Radius>
+      <LightPreset>IncandescentStandard</LightPreset>
+    </MapNode>
+    <MapNode xsi:type="MapOmniLight">
+      <Visible>true</Visible>
+      <Frozen>false</Frozen>
+      <Position X="0" Y="2" Z="4" />
+      <Rotation X="0" Y="0" Z="0" W="1" />
+      <Scaling>1</Scaling>
+      <Intensity>500</Intensity>
+      <Radius>5</Radius>
+      <LightPreset>IncandescentStandard</LightPreset>
+    </MapNode>
+    <MapNode xsi:type="MapOmniLight">
+      <Visible>true</Visible>
+      <Frozen>false</Frozen>
+      <Position X="-6" Y="2" Z="4" />
+      <Rotation X="0" Y="0" Z="0" W="1" />
+      <Scaling>1</Scaling>
+      <Intensity>500</Intensity>
+      <Radius>5</Radius>
+      <LightPreset>IncandescentStandard</LightPreset>
+    </MapNode>
+    <MapNode xsi:type="MapOmniLight">
+      <Visible>true</Visible>
+      <Frozen>false</Frozen>
+      <Position X="-12" Y="2" Z="4" />
+      <Rotation X="0" Y="0" Z="0" W="1" />
+      <Scaling>1</Scaling>
+      <Intensity>500</Intensity>
+      <Radius>5</Radius>
+      <LightPreset>IncandescentStandard</LightPreset>
+    </MapNode>
+    <MapNode xsi:type="MapOmniLight">
+      <Visible>true</Visible>
+      <Frozen>false</Frozen>
+      <Position X="-18" Y="2" Z="4" />
+      <Rotation X="0" Y="0" Z="0" W="1" />
+      <Scaling>1</Scaling>
+      <Intensity>500</Intensity>
+      <Radius>5</Radius>
+      <LightPreset>IncandescentStandard</LightPreset>
+    </MapNode>
+    <MapNode xsi:type="MapOmniLight">
+      <Visible>true</Visible>
+      <Frozen>false</Frozen>
+      <Position X="-24" Y="2" Z="4" />
+      <Rotation X="0" Y="0" Z="0" W="1" />
+      <Scaling>1</Scaling>
+      <Intensity>500</Intensity>
+      <Radius>5</Radius>
+      <LightPreset>IncandescentStandard</LightPreset>
+    </MapNode>
+    <MapNode xsi:type="MapOmniLight">
+      <Visible>true</Visible>
+      <Frozen>false</Frozen>
+      <Position X="-12" Y="2" Z="-6" />
+      <Rotation X="0" Y="0" Z="0" W="1" />
+      <Scaling>1</Scaling>
+      <Intensity>500</Intensity>
+      <Radius>5</Radius>
+      <LightPreset>IncandescentStandard</LightPreset>
+    </MapNode>
+    <MapNode xsi:type="MapOmniLight">
+      <Visible>true</Visible>
+      <Frozen>false</Frozen>
+      <Position X="-18" Y="2" Z="-6" />
+      <Rotation X="0" Y="0" Z="0" W="1" />
+      <Scaling>1</Scaling>
+      <Intensity>500</Intensity>
+      <Radius>5</Radius>
+      <LightPreset>IncandescentStandard</LightPreset>
+    </MapNode>
+    <MapNode xsi:type="MapOmniLight">
+      <Visible>true</Visible>
+      <Frozen>false</Frozen>
+      <Position X="-24" Y="2" Z="-6" />
+      <Rotation X="0" Y="0" Z="0" W="1" />
+      <Scaling>1</Scaling>
+      <Intensity>500</Intensity>
+      <Radius>5</Radius>
+      <LightPreset>IncandescentStandard</LightPreset>
+    </MapNode>
+    <MapNode xsi:type="MapOmniLight">
+      <Visible>true</Visible>
+      <Frozen>false</Frozen>
+      <Position X="-12" Y="2" Z="0" />
+      <Rotation X="0" Y="0" Z="0" W="1" />
+      <Scaling>1</Scaling>
+      <Intensity>500</Intensity>
+      <Radius>5</Radius>
+      <LightPreset>IncandescentStandard</LightPreset>
+    </MapNode>
+    <MapNode xsi:type="MapOmniLight">
+      <Visible>true</Visible>
+      <Frozen>false</Frozen>
+      <Position X="-18" Y="2" Z="0" />
+      <Rotation X="0" Y="0" Z="0" W="1" />
+      <Scaling>1</Scaling>
+      <Intensity>500</Intensity>
+      <Radius>5</Radius>
+      <LightPreset>IncandescentStandard</LightPreset>
+    </MapNode>
+    <MapNode xsi:type="MapOmniLight">
+      <Visible>true</Visible>
+      <Frozen>false</Frozen>
+      <Position X="-24" Y="2" Z="0" />
+      <Rotation X="0" Y="0" Z="0" W="1" />
+      <Scaling>1</Scaling>
+      <Intensity>500</Intensity>
+      <Radius>5</Radius>
+      <LightPreset>IncandescentStandard</LightPreset>
+    </MapNode>
+    <MapNode xsi:type="MapOmniLight">
+      <Visible>true</Visible>
+      <Frozen>false</Frozen>
+      <Position X="-14" Y="2" Z="-12" />
+      <Rotation X="0" Y="0" Z="0" W="1" />
+      <Scaling>1</Scaling>
+      <Intensity>500</Intensity>
+      <Radius>5</Radius>
+      <LightPreset>CandleFlame</LightPreset>
+    </MapNode>
+    <MapNode xsi:type="MapOmniLight">
+      <Visible>true</Visible>
+      <Frozen>false</Frozen>
+      <Position X="-14" Y="2" Z="-22" />
+      <Rotation X="0" Y="0" Z="0" W="1" />
+      <Scaling>1</Scaling>
+      <Intensity>500</Intensity>
+      <Radius>5</Radius>
+      <LightPreset>IncandescentStandard</LightPreset>
+    </MapNode>
+    <MapNode xsi:type="MapOmniLight">
+      <Visible>true</Visible>
+      <Frozen>false</Frozen>
+      <Position X="-14" Y="2" Z="-16" />
+      <Rotation X="0" Y="0" Z="0" W="1" />
+      <Scaling>1</Scaling>
+      <Intensity>500</Intensity>
+      <Radius>5</Radius>
+      <LightPreset>IncandescentStandard</LightPreset>
+    </MapNode>
+    <MapNode xsi:type="MapOmniLight">
+      <Visible>true</Visible>
+      <Frozen>false</Frozen>
+      <Position X="-14" Y="2" Z="-26" />
+      <Rotation X="0" Y="0" Z="0" W="1" />
+      <Scaling>1</Scaling>
+      <Intensity>500</Intensity>
+      <Radius>5</Radius>
+      <LightPreset>IncandescentStandard</LightPreset>
+    </MapNode>
+    <MapNode xsi:type="MapOmniLight">
+      <Visible>true</Visible>
+      <Frozen>false</Frozen>
+      <Position X="-8" Y="4" Z="-26" />
+      <Rotation X="0" Y="0" Z="0" W="1" />
+      <Scaling>1</Scaling>
+      <Intensity>500</Intensity>
+      <Radius>5</Radius>
+      <LightPreset>IncandescentStandard</LightPreset>
+    </MapNode>
+    <MapNode xsi:type="MapOmniLight">
+      <Visible>true</Visible>
+      <Frozen>false</Frozen>
+      <Position X="-2" Y="6" Z="-26" />
+      <Rotation X="0" Y="0" Z="0" W="1" />
+      <Scaling>1</Scaling>
+      <Intensity>500</Intensity>
+      <Radius>5</Radius>
+      <LightPreset>IncandescentStandard</LightPreset>
+    </MapNode>
+    <MapNode xsi:type="MapOmniLight">
+      <Visible>true</Visible>
+      <Frozen>false</Frozen>
+      <Position X="-2" Y="6" Z="-30" />
+      <Rotation X="0" Y="0" Z="0" W="1" />
+      <Scaling>1</Scaling>
+      <Intensity>500</Intensity>
+      <Radius>5</Radius>
+      <LightPreset>IncandescentStandard</LightPreset>
     </MapNode>
   </Nodes>
 </Map>

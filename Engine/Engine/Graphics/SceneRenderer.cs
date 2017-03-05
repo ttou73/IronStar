@@ -190,6 +190,8 @@ namespace Fusion.Engine.Graphics {
 					device.PixelShaderResources[2]	= rs.VTSystem.PhysicalPages1;
 					device.PixelShaderResources[3]	= rs.VTSystem.PhysicalPages2;
 					device.PixelShaderResources[4]	= rs.LightManager.LightGrid.GridTexture;
+					device.PixelShaderResources[5]	= rs.LightManager.LightGrid.IndexDataGpu;
+					device.PixelShaderResources[6]	= rs.LightManager.LightGrid.LightDataGpu;
 				}
 
 				//#warning INSTANSING!
